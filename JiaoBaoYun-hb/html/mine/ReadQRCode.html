@@ -37,13 +37,13 @@
 			mui.plusReady(function() {
 				setTimeout(startRecognize,500);
 				var barHeight=plus.navigator.getStatusbarHeight();
-				console.log("状态栏高度："+barHeight);
+				//console.log("状态栏高度："+barHeight);
 				document.getElementById("bcid").style.top=(45-barHeight)+'px';
 			});
 			// 条码识别成功事件
 			function onmarked(type, result) {
 				scan.cancel();
-				console.log('扫描到的信息为:' + result);
+				//console.log('扫描到的信息为:' + result);
 				var text = '未知: ';
 				switch(type) {
 					case plus.barcode.QR:
@@ -60,7 +60,7 @@
 				var QRCodeArr = result.split('@');
 				if(QRCodeArr.length > 0) {
 					var temp = QRCodeArr[0];
-					console.log('tempretemp=' + temp + ',' + JSON.stringify(QRCodeArr));
+					//console.log('tempretemp=' + temp + ',' + JSON.stringify(QRCodeArr));
 
 					if(temp == 'jby1') { //1为申请加入群
 						var temp1 = QRCodeArr[1];
@@ -74,7 +74,7 @@
 						QRCodeModel.gimg = temp3; //班级头像
 						QRCodeModel.gnote = temp4; //班级说明
 						QRCodeModel.statrDate = temp5; //班级说明
-						console.log('QRCodeModel=' + JSON.stringify(QRCodeModel));
+						//console.log('QRCodeModel=' + JSON.stringify(QRCodeModel));
 						//如果匹配格式，计算是否超时7天
 						var tempArr0 = temp5.split(','); //
 						var tempDate0 = Date.UTC(tempArr0[0], tempArr0[1], tempArr0[2], tempArr0[3], tempArr0[4]);

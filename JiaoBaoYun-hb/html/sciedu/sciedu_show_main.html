@@ -29,17 +29,17 @@
 				events.blurBack();
 				var main = plus.webview.currentWebview(); //获取当前窗体对象
 				var data = main.data; //接收A页面传入参数值
-				console.log('main-data:' + JSON.stringify(data));
+				//console.log('main-data:' + JSON.stringify(data));
 				var sub = events.createSubAppendMain(main, data.turl, {}, function() {
-					console.log('sub loaded');
+					//console.log('sub loaded');
 					document.getElementById("spinner").style.display = 'none';
 				});
 				sub.addEventListener("loading", function() { //Webview窗口页面开始加载事件
-					console.log('sub loading');
-					sub.evalJS('window.onerror = function(){console.log("news error");window.close();}');
+					//console.log('sub loading');
+					sub.evalJS('window.onerror = function(){//console.log("news error");window.close();}');
 				});
 				sub.addEventListener("error", function() { //Webview窗口错误事件
-					console.log('sub error');
+					//console.log('sub error');
 					document.getElementById("spinner").style.display = 'none';
 					mui.toast('加载失败');
 				});

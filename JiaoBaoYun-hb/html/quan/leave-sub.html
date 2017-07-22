@@ -250,7 +250,7 @@
 				up: {
 					callback: function() {
 						var self = this;
-						console.log("上拉加载更多");
+						//console.log("上拉加载更多");
 	
 						self.endPullUpToRefresh();
 					}
@@ -277,7 +277,7 @@
 			//49.（用户空间）获取用户空间所有留言，model_userSpaceInfo
 			postDataPro_getUserSpaceMsgsById(comData, wd, function(data) {
 				wd.close();
-				console.log('postDataPro_getUserSpaceMsgsById:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt + data.RspData.TotalCnt);
+				//console.log('postDataPro_getUserSpaceMsgsById:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt + data.RspData.TotalCnt);
 				if(data.RspCode == 0) {
 					if(personalUTID == userId) {
 						var comData = {
@@ -285,7 +285,7 @@
 							spaceTypes: '[7,8]'
 						}
 						postDataPro_setCommentMsgReadByUser(comData, wd, function(data) {
-							console.log('与我相关设置成已读success:RspCode:' + JSON.stringify(data));
+							//console.log('与我相关设置成已读success:RspCode:' + JSON.stringify(data));
 						})
 					}
 					var tempRspData = data.RspData.Data;
@@ -313,11 +313,11 @@
 						vvl: tempArray.join(), //用户id，查询的值,p传个人ID,g传ID串
 						vtp: 'g' //查询类型,p(个人)g(id串)
 					}
-					console.log('tempData:' + JSON.stringify(tempData));
+					//console.log('tempData:' + JSON.stringify(tempData));
 					//21.通过用户ID获取用户资料
 					postDataPro_PostUinf(tempData, wd, function(data1) {
 						wd.close();
-						console.log('获取个人资料success:RspCode:' + data1.RspCode + ',RspData:' + JSON.stringify(data1.RspData) + ',RspTxt:' + data1.RspTxt);
+						//console.log('获取个人资料success:RspCode:' + data1.RspCode + ',RspData:' + JSON.stringify(data1.RspData) + ',RspTxt:' + data1.RspTxt);
 						if(data1.RspCode == 0) {
 
 							//循环当前的个人信息返回值数组
@@ -352,7 +352,7 @@
 								}
 							}
 						}
-						console.log('循环遍历后的值：' + JSON.stringify(tempRspData));
+						//console.log('循环遍历后的值：' + JSON.stringify(tempRspData));
 						//判断是加载更多2，还是刷新1
 						if(flag == 1) {
 							tempPage = 1;
@@ -384,7 +384,7 @@
 			} else {
 				len = tempArrayLength
 			}
-			console.log('len=' + len + '，' + 'leaveArray.length==' + leaveArray.length);
+			//console.log('len=' + len + '，' + 'leaveArray.length==' + leaveArray.length);
 			for(var i = len; i < leaveArray.length; i++) {
 				var li = document.createElement('li');
 				li.className = 'mui-table-view-cell ableSelectedCell';
@@ -446,7 +446,7 @@
 					userOwnerId: userId,
 				}
 				events.openNewWindowWithData('leave-reply.html', data)
-				console.log(cellIndex);
+				//console.log(cellIndex);
 
 			});
 		}

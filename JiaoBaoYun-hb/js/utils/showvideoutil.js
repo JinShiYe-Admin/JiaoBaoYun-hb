@@ -23,11 +23,11 @@ var ShowVideoUtil = (function(mod) {
 	 */
 	mod.videoThumbLoad = function(thumbImage, playButtn, type, time) {
 		if(!thumbImage) {
-			console.log('未传入视频缩略图元素');
+			//console.log('未传入视频缩略图元素');
 			return false;
 		}
 		if(!playButtn) {
-			console.log('未传入播放按钮元素');
+			//console.log('未传入播放按钮元素');
 			return false;
 		}
 		var height = thumbImage.offsetHeight; //缩略图高度
@@ -64,15 +64,15 @@ var ShowVideoUtil = (function(mod) {
 	 */
 	mod.videoThumbError = function(thumbImage, playButtn, videoPath) {
 		if(!thumbImage) {
-			console.log('未传入视频缩略图元素');
+			//console.log('未传入视频缩略图元素');
 			return false;
 		}
 		if(!playButtn) {
-			console.log('未传入播放按钮元素');
+			//console.log('未传入播放按钮元素');
 			return false;
 		}
 		if(!videoPath) {
-			console.log('未传入视频路径');
+			//console.log('未传入视频路径');
 			return false;
 		}
 		var playButtn_width = playButtn.style.width.replace('px', '');

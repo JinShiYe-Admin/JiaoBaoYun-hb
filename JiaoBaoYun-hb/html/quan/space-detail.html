@@ -272,7 +272,7 @@
 			//初始化视频播放器
 			ShowVideoUtil.initVideo(document.getElementById("video"));
 			publisherId = preModel.PublisherId
-			console.log('personalUTID=' + personalUTID + '-----' + 'publisherId=' + JSON.stringify(preModel))
+			//console.log('personalUTID=' + personalUTID + '-----' + 'publisherId=' + JSON.stringify(preModel))
 			//			if(personalUTID == 0 || personalUTID != publisherId) {
 			//				document.getElementById("delete").className = 'mui-hidden';
 			//
@@ -286,7 +286,7 @@
 			}
 			//点击评论区域
 			mui('.section-comment').on('tap', '.mui-table-view-cell', function(e) {
-				console.log('mui-table-view-cell id ' + this.id + " e " + e.target.getAttribute("data-type"));
+				//console.log('mui-table-view-cell id ' + this.id + " e " + e.target.getAttribute("data-type"));
 				var self = this;
 				if(events.judgeLoginMode(self)) { //判断是否是游客身份登录
 					document.getElementById("audio").pause();
@@ -298,7 +298,7 @@
 				switch(type) {
 					case "view_cell":
 					{
-						console.log(333333)
+						//console.log(333333)
 					}
 					break;
 					case "zan":
@@ -372,7 +372,7 @@
 										};
 										postDataPro_delUserSpaceById(comData, wd, function(data) {
 											wd.close();
-											console.log(JSON.stringify(data))
+											//console.log(JSON.stringify(data))
 											if(data.RspCode == 0) {
 												mui.toast('已删除');
 												mui.back()
@@ -414,7 +414,7 @@
 										};
 										postDataPro_delUserSpaceById(comData, wd, function(data) {
 											wd.close();
-											console.log(JSON.stringify(data))
+											//console.log(JSON.stringify(data))
 											if(data.RspCode == 0) {
 												mui.toast('已删除');
 												mui.back()
@@ -432,7 +432,7 @@
 				return;
 
 			})
-			console.log('上个界面传过来的值' + JSON.stringify(preModel));
+			//console.log('上个界面传过来的值' + JSON.stringify(preModel));
 			mui.previewImage();
 
 			var comData = {
@@ -457,7 +457,7 @@
 			//82.（用户空间）获取用户针对某条空间详情
 			postDataPro_getUserSpaceByUser(comData, wd, function(data) {
 				wd.close();
-				console.log('获取用户针对某条空间详情_getUserSpaceByUser:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				//console.log('获取用户针对某条空间详情_getUserSpaceByUser:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 				if(data.RspCode == 0) {
 					var tempRspData = data.RspData.Data;
 					var tempArray = [];
@@ -500,7 +500,7 @@
 					//21.通过用户ID获取用户资料
 					postDataPro_PostUinf(tempData, wd, function(data1) {
 						wd.close();
-						console.log('获取个人资料success:RspCode:' + data1.RspCode + ',RspData:' + JSON.stringify(data1.RspData) + ',RspTxt:' + data1.RspTxt);
+						//console.log('获取个人资料success:RspCode:' + data1.RspCode + ',RspData:' + JSON.stringify(data1.RspData) + ',RspTxt:' + data1.RspTxt);
 						if(data1.RspCode == 0) {
 							//循环当前的个人信息返回值数组
 							for(var i in data1.RspData) {
@@ -511,7 +511,7 @@
 								var tempModel0 = tempRspData;
 								//遍历点赞的人
 								for(var item2 in tempModel0.LikeUsers) {
-									//										console.log('item2;;;;;==' + tempModel.utid + ',' + tempModel0.LikeUsers[item2]);
+									//										//console.log('item2;;;;;==' + tempModel.utid + ',' + tempModel0.LikeUsers[item2]);
 									if(tempModel.utid == tempModel0.LikeUsers[item2].userId) {
 										//												tempModel0.LikeUsers.splice(item2, 1, tempModel);
 										tempModel0.LikeUsers[item2] = $.extend(tempModel0.LikeUsers[item2], tempModel);
@@ -554,7 +554,7 @@
 								}
 
 							}
-							console.log('循环遍历后的值：' + JSON.stringify(tempRspData));
+							//console.log('循环遍历后的值：' + JSON.stringify(tempRspData));
 
 							PostUmk(tempArray.join(), tempRspData);
 							//							setSpaceDetail(datasource);
@@ -579,15 +579,15 @@
 			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 			postDataPro_PostUmk(postData, wd, function(data) {
 				wd.close();
-				console.log('获取多用户备注_PostUmk:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				//console.log('获取多用户备注_PostUmk:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 				if(data.RspCode == 0) {
-					console.log('tempRspData=' + JSON.stringify(tempRspData))
+					//console.log('tempRspData=' + JSON.stringify(tempRspData))
 					for(var j = 0; j < tempRspData.length; j++) {
 						for(var k = 0; k < data.RspData.length; k++) {
-							console.log(tempRspData[j].utid + '-------' + data.RspData[k].butid)
+							//console.log(tempRspData[j].utid + '-------' + data.RspData[k].butid)
 							if(tempRspData[j].utid == data.RspData[k].butid) {
 								tempRspData[j].ugname = data.RspData[k].bunick;
-								console.log(JSON.stringify(tempRspData))
+								//console.log(JSON.stringify(tempRspData))
 							}
 						}
 
@@ -623,7 +623,7 @@
 				sliderId = 'top_'
 
 			} else {
-				console.log(6666666666)
+				//console.log(6666666666)
 				idFlag = 'zx';
 				data.pageFlag = 1
 				data.focusFlag = 1;
@@ -632,10 +632,10 @@
 				sliderId = 'top_0'
 				if(personalUTID == 0) {
 					var userIDs = window.myStorage.getItem(window.storageKeyName.SHOWFOCUSEPERSEN);
-					console.log(JSON.stringify(userIDs))
+					//console.log(JSON.stringify(userIDs))
 					data.IsFocused = 0;
 					for(var item in userIDs) {
-						console.log('item=' + item + '-----' + 'publisherId=' + publisherId)
+						//console.log('item=' + item + '-----' + 'publisherId=' + publisherId)
 						if(userIDs[item] == publisherId) {
 							data.IsFocused = 1;
 							break;
@@ -662,7 +662,7 @@
 				}
 				var wd;
 				postDataPro_setCommentMsgReadByUser(comData, wd, function(data) {
-					console.log('与我相关设置成已读success:RspCode:' + JSON.stringify(data));
+					//console.log('与我相关设置成已读success:RspCode:' + JSON.stringify(data));
 				})
 			}
 
@@ -676,7 +676,7 @@
 			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 			postDataPro_setUserSpaceReadByUser(comData, wd, function(data) {
 				wd.close();
-				console.log('设置空间状态为已读_setUserSpaceReadByUser' + JSON.stringify(data));
+				//console.log('设置空间状态为已读_setUserSpaceReadByUser' + JSON.stringify(data));
 				if(data.RspCode == 0) {
 					//获得主页面的webview
 					var main = plus.webview.getWebviewById('../quan/tab-zone.html');

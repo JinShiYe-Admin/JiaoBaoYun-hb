@@ -2707,7 +2707,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 				//					a.href = 'http://ask.dcloud.net.cn/article/113';
 				//					err.appendChild(a);
 				//					document.body.appendChild(err);
-				//					console.log('在该浏览器下，不支持创建子页面');
+				//					//console.log('在该浏览器下，不支持创建子页面');
 				//				}
 
 			}

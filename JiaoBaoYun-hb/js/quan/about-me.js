@@ -98,7 +98,7 @@ mui.plusReady(function() {
  * @param {int} 0 不隐藏上拉加载更多     1隐藏上拉加载更多
  */
 function endFresh(type) {
-	console.log("************************************type:" + type);
+	//console.log("************************************type:" + type);
 	if(type) {
 		mui(".mui-pull-loading")[0].style.display = "none";
 	} else {
@@ -193,7 +193,7 @@ var ifHaveReferContent = function(cellData, cell) {
 	}
 }
 var addEncImg = function(cell) {
-	console.log("获取的数据：" + JSON.stringify(cell));
+	//console.log("获取的数据：" + JSON.stringify(cell));
 	if(cell.EncImgAddr && cell.EncImgAddr.length > 0) {
 		if(cell.EncType == 1) {
 			return '<img class="refer-img display-inlineBlock" src="' + cell.EncImgAddr.split("|")[0] + '"/>';
@@ -214,7 +214,7 @@ var addReplyView = function() {
 		//		showSoftInput('#msg-content');
 		repliedCell = this.cell;
 		repliedItem = this.parentElement.parentElement.querySelector(".extras");
-		console.log('点击的回复包含数据：' + JSON.stringify(repliedCell));
+		//console.log('点击的回复包含数据：' + JSON.stringify(repliedCell));
 		msgType = this.cell.MsgType;
 		//		document.getElementById('msg-content').value = '';
 		events.openNewWindowWithData('reply-aboutMe.html', repliedCell);
@@ -225,7 +225,7 @@ var addReplyView = function() {
 	 */
 	mui('.mui-table-view').on('tap', '.title-img', function() {
 		var id = this.getAttribute('headId');
-		console.log(id);
+		//console.log(id);
 		mui.openWindow({
 			url: 'zone_main.html',
 			id: 'zone_main.html',
@@ -255,14 +255,14 @@ var setListener = function() {
 	mui(".mui-table-view").on("tap", ".refer-content", function() {
 		var item = this;
 		item.disabled = true;
-		console.log(JSON.stringify(this.info))
+		//console.log(JSON.stringify(this.info))
 		var info = {
 			PublisherId: this.info.UserId,
 			PublisherName: this.info.UserName,
 			TabId: this.info.SpaceId,
 			SpaceType:this.info.SpaceType
 		}
-		console.log("传递的数值：" + JSON.stringify(this.info));
+		//console.log("传递的数值：" + JSON.stringify(this.info));
 		getUserSpaceById(info.TabId, function(data) {
 			if(data.RspCode == 0) {
 				var focusFlag = 0;
@@ -272,7 +272,7 @@ var setListener = function() {
 						focusFlag: focusFlag
 					}));
 				} else {
-					console.log("与我相关要传递的数据：" + JSON.stringify(info));
+					//console.log("与我相关要传递的数据：" + JSON.stringify(info));
 					events.readyToPage(isDetailReady, "../show/show-detail.html", "showDetail", info);
 					focusFlag = 1;
 				}
@@ -328,7 +328,7 @@ var getHomeworkResult = function(workInfo, callback) {
 		homeworkId: workInfo.HomeworkId //作业id；
 	}, wd, function(data) {
 		wd.close();
-		console.log("获取当前作业结果：" + JSON.stringify(data))
+		//console.log("获取当前作业结果：" + JSON.stringify(data))
 		if(data.RspCode == 0) {
 			callback(data.RspData);
 			//		}else{
@@ -470,7 +470,7 @@ var getRoleInfos = function(tempRspData) {
 			}
 		}
 	}
-	console.log('身份数组：' + idsArray);
+	//console.log('身份数组：' + idsArray);
 	if(idsArray.length > 0) {
 		idsArray = events.arraySingleItem(idsArray);
 		//发送获取用户资料申请
@@ -478,14 +478,14 @@ var getRoleInfos = function(tempRspData) {
 			vvl: idsArray.toString(), //用户id，查询的值,p传个人ID,g传ID串
 			vtp: 'g' //查询类型,p(个人)g(id串)
 		}
-		console.log('tempData:' + JSON.stringify(tempData));
+		//console.log('tempData:' + JSON.stringify(tempData));
 		//21.通过用户ID获取用户资料
 		postDataPro_PostUinf(tempData, wd, function(infos) {
 			wd.close();
-			console.log('获取个人资料success:RspCode:' + JSON.stringify(infos));
+			//console.log('获取个人资料success:RspCode:' + JSON.stringify(infos));
 			if(infos.RspCode == 0) {
 				var rechargedData = replenishData(tempRspData, infos.RspData);
-				console.log('最终数据：' + JSON.stringify(rechargedData));
+				//console.log('最终数据：' + JSON.stringify(rechargedData));
 				setData(rechargedData);
 			} else {
 				endFresh();
@@ -500,7 +500,7 @@ var setCommentMsgReadByUser = function() {
 		spaceTypes: '[4,5,6,7,8]'
 	}
 	postDataPro_setCommentMsgReadByUser(comData, wd, function(data) {
-		console.log('与我相关设置成已读success:RspCode:' + JSON.stringify(data));
+		//console.log('与我相关设置成已读success:RspCode:' + JSON.stringify(data));
 	})
 
 }
@@ -546,7 +546,7 @@ var requireAboutMe = function() {
 	//56.（用户空间）获取与我相关
 	postDataPro_getAboutMe(comData, wd, function(data) {
 
-		console.log('获取的与我相关的数据：' + JSON.stringify(data));
+		//console.log('获取的与我相关的数据：' + JSON.stringify(data));
 		if(data.RspCode == '0000') {
 			setCommentMsgReadByUser();
 			totalPage = data.RspData.TotalPage;
@@ -580,7 +580,7 @@ var requireHomeworkAlert = function(aboutMeData) {
 		pageIndex: pageIndex,
 		pageSize: 5
 	}, wd, function(data) {
-		console.log('与我相关界面获取的作业提醒：' + JSON.stringify(data));
+		//console.log('与我相关界面获取的作业提醒：' + JSON.stringify(data));
 		if(data.RspCode == 0) {
 			alertTotalPage = data.RspData.TotalPage;
 			if(totalPage == 0 && alertTotalPage == 0) {
@@ -603,7 +603,7 @@ var requireHomeworkAlert = function(aboutMeData) {
 				return Date.parse(b.MaxDate.replace(/-/g, '/')) - Date.parse(a.MaxDate.replace(/-/g, '/'));
 			})
 
-			console.log('与我相关界面获取的所有数据:' + JSON.stringify(allData))
+			//console.log('与我相关界面获取的所有数据:' + JSON.stringify(allData))
 			//获取人员信息
 			getRoleInfos(allData);
 		} else {

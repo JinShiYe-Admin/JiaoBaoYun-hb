@@ -51,8 +51,8 @@ var CloudFileUtil = (function($, mod) {
 	 * }
 	 */
 	mod.getQNDownToken = function(url, data, successCB, errorCB) {
-		console.log('getQNDownToken:url ' + JSON.stringify(data));
-		console.log('getQNDownToken:data ' + JSON.stringify(data));
+		//console.log('getQNDownToken:url ' + JSON.stringify(data));
+		//console.log('getQNDownToken:data ' + JSON.stringify(data));
 		var desKey = ''; //项目名称
 		var appId = 0; //项目id
 		var urls = []; //需要获取下载token文件的路径
@@ -72,7 +72,7 @@ var CloudFileUtil = (function($, mod) {
 				AppID: appId,
 				Param: encryptByDES(desKey, JSON.stringify(urls))
 			}
-			console.log("参数数据：" + JSON.stringify(configure.options));
+			//console.log("参数数据：" + JSON.stringify(configure.options));
 			mui.ajax(url, {
 				async: false,
 				data: configure.options,
@@ -80,7 +80,7 @@ var CloudFileUtil = (function($, mod) {
 				type: 'post', //HTTP请求类型
 				timeout: 60000, //超时时间设置为60秒
 				success: function(data) {
-					//console.log(JSON.stringify(data));
+					////console.log(JSON.stringify(data));
 					successCB(data);
 				},
 				error: function(xhr, type, errorThrown) {
@@ -104,8 +104,8 @@ var CloudFileUtil = (function($, mod) {
 	 * @param {Object} successCallBack 下载任务创建成功的回调
 	 */
 	mod.download = function(url, filename, DownloadCompletedCallback, onStateChangedCallBack, successCallBack) {
-		console.log('download ' + url);
-		console.log('filename ' + filename);
+		//console.log('download ' + url);
+		//console.log('filename ' + filename);
 		var dtask = plus.downloader.createDownload(url, {
 				filename: filename //下载文件保存的路径
 			},
@@ -140,7 +140,7 @@ var CloudFileUtil = (function($, mod) {
 	 * @param {Object} callBack
 	 */
 	mod.getUpLoadTokens = function(data, callBack) {
-		console.log("getUpLoadTokens " + JSON.stringify(data));
+		//console.log("getUpLoadTokens " + JSON.stringify(data));
 		var appId = data.appId; //项目id
 		var desKey = getAppKey(appId); //项目名称
 		var configure = {}; //配置的数据
@@ -181,7 +181,7 @@ var CloudFileUtil = (function($, mod) {
 					break;
 			}
 
-			console.log("参数数据 param " + JSON.stringify(param));
+			//console.log("参数数据 param " + JSON.stringify(param));
 			params.push(param);
 		}
 		configure.options = {
@@ -189,7 +189,7 @@ var CloudFileUtil = (function($, mod) {
 			Param: encryptByDES(desKey, JSON.stringify(params))
 		}
 
-		console.log("参数数据：" + JSON.stringify(configure.options))
+		//console.log("参数数据：" + JSON.stringify(configure.options))
 		//获取token
 		mod.getQNUpTokenWithManage(window.storageKeyName.QNGETUPLOADTOKEN, configure.options, function(data) {
 			callBack({
@@ -229,7 +229,7 @@ var CloudFileUtil = (function($, mod) {
 	 * }
 	 */
 	mod.getQNUpToken = function(url, data, successCB, errorCB) {
-		console.log('getQNUpToken ' + url + ' ' + JSON.stringify(data));
+		//console.log('getQNUpToken ' + url + ' ' + JSON.stringify(data));
 		var type = ''; //获取上传token的类型。0上传需要生成缩略图的文件；1上传文件
 		var QNFileName = ''; //存放到七牛的文件名
 		var fileList = []; //上传文件的路径
@@ -288,7 +288,7 @@ var CloudFileUtil = (function($, mod) {
 			if(type == '0') {
 				thumbSpace = saveSpace + 'Thumb/'; //缩略图的七牛空间
 				var temp = QNFileName.split('.');
-				console.log(JSON.stringify(temp));
+				//console.log(JSON.stringify(temp));
 				var thumbName = temp[0];
 				var thumbType = temp[1];
 				if(thumbType == 'avi' || thumbType == 'mp4' || thumbType == 'flv' || thumbType == 'swf' || thumbType == '3gp' || thumbType == 'rm') {
@@ -312,7 +312,7 @@ var CloudFileUtil = (function($, mod) {
 				Pops: ops,
 				NotifyUrl: ''
 			}
-			console.log("参数数据：" + JSON.stringify(param));
+			//console.log("参数数据：" + JSON.stringify(param));
 
 			configure.options = {
 				AppID: appId,
@@ -336,7 +336,7 @@ var CloudFileUtil = (function($, mod) {
 				var filePaths = fileList[i].split("/");
 				QNFileName = filePaths[filePaths.length - 1];
 				param.Key = saveSpace + QNFileName;
-				console.log('key:' + param.Key);
+				//console.log('key:' + param.Key);
 				//获取处理参数
 				var opsData = getOptions(uploadOptions, saveSpace, mainSpace, QNFileName);
 				param.Pops = opsData.ops;
@@ -369,7 +369,7 @@ var CloudFileUtil = (function($, mod) {
 				var filePaths = fileList[i].path.split("/");
 				QNFileName = filePaths[filePaths.length - 1];
 				param.Key = saveSpace + QNFileName;
-				console.log('key:' + param.Key);
+				//console.log('key:' + param.Key);
 				//获取处理参数
 				var opsData = getOptions(uploadOptions, saveSpace, mainSpace, QNFileName);
 				param.Pops = opsData.ops;
@@ -397,7 +397,7 @@ var CloudFileUtil = (function($, mod) {
 				var filePaths = fileList[i].path.split("/");
 				QNFileName = filePaths[filePaths.length - 1];
 				param.Key = saveSpace + QNFileName;
-				console.log('key:' + param.Key);
+				//console.log('key:' + param.Key);
 				//获取处理参数
 				var opsData = getOptions(uploadOptions, saveSpace, mainSpace, QNFileName);
 				param.Pops = opsData.ops;
@@ -412,7 +412,7 @@ var CloudFileUtil = (function($, mod) {
 			}
 		}
 
-		console.log("参数数据：" + JSON.stringify(configure.options))
+		//console.log("参数数据：" + JSON.stringify(configure.options))
 		//获取token
 		mod.getQNUpTokenWithManage(url, configure.options, function(data) {
 			successCB({
@@ -456,12 +456,12 @@ var CloudFileUtil = (function($, mod) {
 			Pops: ops,
 			NotifyUrl: ''
 		}
-		console.log("参数数据：" + JSON.stringify(param))
+		//console.log("参数数据：" + JSON.stringify(param))
 		data.options = {
 			AppID: appId,
 			Param: encryptByDES(desKey, JSON.stringify(param))
 		}
-		console.log("加密后的信息：" + encryptByDES(desKey, JSON.stringify(param)));
+		//console.log("加密后的信息：" + encryptByDES(desKey, JSON.stringify(param)));
 		return data;
 	}
 	/**
@@ -493,7 +493,7 @@ var CloudFileUtil = (function($, mod) {
 		}
 		var QNFileName = events.getFileNameByPath(picPath);
 		var opsData = getOptions(manageOptions, saveSpace, mainSpace, QNFileName);
-		console.log("设定的参数：" + JSON.stringify(opsData));
+		//console.log("设定的参数：" + JSON.stringify(opsData));
 		var ops = opsData.ops;
 		if(opsData.thumbKey) {
 			data.thumbKey = opsData.thumbKey;
@@ -507,12 +507,12 @@ var CloudFileUtil = (function($, mod) {
 			Pops: ops,
 			NotifyUrl: ''
 		}
-		console.log("参数数据：" + JSON.stringify(param))
+		//console.log("参数数据：" + JSON.stringify(param))
 		data.options = {
 			AppID: appId,
 			Param: encryptByDES(desKey, JSON.stringify(param))
 		}
-		console.log("加密后的信息：" + encryptByDES(desKey, JSON.stringify(param)));
+		//console.log("加密后的信息：" + encryptByDES(desKey, JSON.stringify(param)));
 		return data;
 	}
 	/**
@@ -548,7 +548,7 @@ var CloudFileUtil = (function($, mod) {
 				var thumbName = tempFileName[0];
 				returnData.thumbKey = Qiniu.URLSafeBase64Encode(mainSpace + ":" + thumbSpace + thumbName + '.mp3');
 				returnData.ops = "avthumb/mp3/acodec/libmp3lame" + "|saveas/" + returnData.thumbKey;
-				console.log('3 ' + returnData.ops);
+				//console.log('3 ' + returnData.ops);
 				break;
 			case 10: //缩略图+裁剪
 				var thumbSpace = saveSpace + 'thumb/';
@@ -599,7 +599,7 @@ var CloudFileUtil = (function($, mod) {
 			//获取文件路径
 			QNFileName = events.getFileNameByPath(picPaths[i]);
 			param.Key = saveSpace + QNFileName;
-			console.log('key:' + param.Key);
+			//console.log('key:' + param.Key);
 			//获取处理参数
 			var opsData = getOptions(uploadOptions[i], saveSpace, mainSpace, QNFileName);
 			param.Pops = opsData.ops;
@@ -607,13 +607,13 @@ var CloudFileUtil = (function($, mod) {
 			//保存空间值
 			params.push(param);
 		}
-		console.log("参数数据：" + JSON.stringify(params))
+		//console.log("参数数据：" + JSON.stringify(params))
 		data.options = {
 			AppID: appId,
 			Param: encryptByDES(desKey, JSON.stringify(params))
 		}
-		console.log("加密后的信息：" + encryptByDES(desKey, JSON.stringify(param)));
-		console.log('加密后的data:' + JSON.stringify(data));
+		//console.log("加密后的信息：" + encryptByDES(desKey, JSON.stringify(param)));
+		//console.log('加密后的data:' + JSON.stringify(data));
 		return data;
 	}
 	var getIfExist = function(option) {
@@ -689,18 +689,18 @@ var CloudFileUtil = (function($, mod) {
 			thumbKey = Qiniu.URLSafeBase64Encode(mainSpace + ":" + thumbSpace + QNFileName);
 			data.thumbKeys.push(thumbKey);
 			param.Key = saveSpace + QNFileName;
-			console.log('key:' + param.Key);
+			//console.log('key:' + param.Key);
 			param.Pops = "imageView2/1/w/" + maxSize + "/h/" + maxSize + "/format/png|saveas/" + thumbKey;
 			param.NotifyUrl = '';
 			params.push(param);
 		}
-		console.log("参数数据：" + JSON.stringify(params))
+		//console.log("参数数据：" + JSON.stringify(params))
 		data.options = {
 			AppID: appId,
 			Param: encryptByDES(desKey, JSON.stringify(params))
 		}
-		console.log("加密后的信息：" + encryptByDES(desKey, JSON.stringify(param)));
-		console.log('加密后的data:' + JSON.stringify(data));
+		//console.log("加密后的信息：" + encryptByDES(desKey, JSON.stringify(param)));
+		//console.log('加密后的data:' + JSON.stringify(data));
 		return data;
 	}
 
@@ -741,9 +741,9 @@ var CloudFileUtil = (function($, mod) {
 	 * @param {Object} successCallBack 上传任务创建成功监听的回调
 	 */
 	mod.upload = function(fPath, token, key, uploadCompletedCallBack, onStateChangedCallBack, successCallBack) {
-		console.log('upload fPath ' + fPath);
-		console.log('upload token ' + token);
-		console.log('upload key ' + key);
+		//console.log('upload fPath ' + fPath);
+		//console.log('upload token ' + token);
+		//console.log('upload key ' + key);
 		var task = plus.uploader.createUpload("http://upload.qiniu.com/", {
 				method: "POST"
 			},
@@ -772,7 +772,7 @@ var CloudFileUtil = (function($, mod) {
 			function(upload, status) {
 				onStateChangedCallBack(upload, status);
 			}, false);
-		//console.log('upload2:' + fPath + '|' + type + "|" + QNUptoken);
+		////console.log('upload2:' + fPath + '|' + type + "|" + QNUptoken);
 		successCallBack(task);
 		//task.start();
 	}
@@ -785,7 +785,7 @@ var CloudFileUtil = (function($, mod) {
 	 * @param {Function} callback
 	 */
 	mod.uploadFile = function(tokenInfo, fileName, callback) {
-		//console.log('upload:' + fPath);
+		////console.log('upload:' + fPath);
 		var task = plus.uploader.createUpload("http://upload.qiniu.com/", {
 				method: "POST"
 			},
@@ -822,7 +822,7 @@ var CloudFileUtil = (function($, mod) {
 		plus.uploader.clear();
 
 		for(var i in tokenInfos) {
-			//console.log('upload:' + fPath);
+			////console.log('upload:' + fPath);
 			createTask(tokenInfos[i], fileNames[i], i, callback);
 		}
 		plus.uploader.startAll();
@@ -854,10 +854,10 @@ var CloudFileUtil = (function($, mod) {
 	}
 	// 监听上传任务状态
 	function onStateChanged(upload, status) {
-		//		console.log('mui上传状态：' + upload.state)
+		//		//console.log('mui上传状态：' + upload.state)
 		if(upload.state == 4 && status == 200) {
 			// 上传完成
-			//			console.log("Upload success: " + upload.getFileName());
+			//			//console.log("Upload success: " + upload.getFileName());
 		}
 	}
 
@@ -874,8 +874,8 @@ var CloudFileUtil = (function($, mod) {
 	 * }
 	 */
 	mod.BatchDelete = function(url, data, successCB, errorCB) {
-		console.log('BatchDelete:url ' + url);
-		console.log('BatchDelete:data ' + JSON.stringify(data));
+		//console.log('BatchDelete:url ' + url);
+		//console.log('BatchDelete:data ' + JSON.stringify(data));
 		var desKey = ''; //项目名称
 		var appId = 0; //项目id
 		var urls = []; //需要获取下载token文件的路径
@@ -893,7 +893,7 @@ var CloudFileUtil = (function($, mod) {
 					AppID: appId,
 					Param: encryptByDES(desKey, JSON.stringify(urls))
 				}
-				console.log("参数数据：" + JSON.stringify(configure.options));
+				//console.log("参数数据：" + JSON.stringify(configure.options));
 				mui.ajax(url, {
 					async: false,
 					data: configure.options,
@@ -902,7 +902,7 @@ var CloudFileUtil = (function($, mod) {
 					timeout: 60000, //超时时间设置为60秒
 					success: function(data) {
 						//服务器返回响应
-						//console.log(JSON.stringify(data));
+						////console.log(JSON.stringify(data));
 						successCB(data);
 					},
 					error: function(xhr, type, errorThrown) {
@@ -989,24 +989,24 @@ var CloudFileUtil = (function($, mod) {
 				//				div.innerHTML = '<img style="width:90%;height:90%;margin:5%;" src="../../image/utils/playvideo.png" style="backgroud-image:url(' + img.thumb + ');"/>' +
 				//					'<a class="mui-icon iconfont icon-guanbi"></a>';
 			} else { //上传模式
-				console.log("缩略图信息：" + thumb);
+				//console.log("缩略图信息：" + thumb);
 				div.innerHTML = '<div class="clip-container video-container"  style="width:' + div_width * 0.9 + 'px;height:' + div_width * 0.9 + 'px;margin:5%;overflow:hidden;display:inline-block;background-image:url(' +
 					'../../image/utils/videothumb.png' +
 					');background-size:cover;"><img src="../../image/utils/playvideo.png" style="width:30px;height:30px;margin:' + (div_width * 0.9 - 30) / 2 + 'px;" /></div>' +
 					'<a class="mui-icon iconfont icon-guanbi"></a>';
 			}
 		}
-		console.log("放置的图片信息:" + JSON.stringify(img));
+		//console.log("放置的图片信息:" + JSON.stringify(img));
 		pictures.appendChild(div);
 		switch(img.type) {
 			case 1: //图片
 				if(div.querySelector(".clip-container")) {
 					div.querySelector("img").onload = function(event) {
-						console.log(JSON.stringify(event))
+						//console.log(JSON.stringify(event))
 
 						var marginSize = Math.abs(this.naturalWidth - this.naturalHeight) / 2;
 
-						console.log("margin值：" + marginSize + "px");
+						//console.log("margin值：" + marginSize + "px");
 						if(this.naturalWidth > this.naturalHeight) {
 							var realMarginSize = marginSize / this.naturalHeight * this.width;
 							this.style.height = this.width + "px";

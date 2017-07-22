@@ -14,11 +14,11 @@ var asFiles=(function(mod){
                         // 获得文件路径
                         var fileData = data.getData();  
                         var path = plus.android.invoke(fileData, "getPath");
-                        console.log("path:"+path);
+                        //console.log("path:"+path);
                         // 判断文件类型
                         var resolver = context.getContentResolver();
                         var fileType = plus.android.invoke(resolver, "getType",fileData);
-                        console.log("fileType:"+fileType);
+                        //console.log("fileType:"+fileType);
                     }
                };
           }

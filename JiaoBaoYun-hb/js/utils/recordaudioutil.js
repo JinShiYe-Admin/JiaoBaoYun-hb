@@ -23,7 +23,7 @@ var RecordAudio = (function(mod) {
 		if(options.filename == '') {
 			options.filename = filename;
 		}
-		console.log('recordAudio initOption ' + JSON.stringify(options));
+		//console.log('recordAudio initOption ' + JSON.stringify(options));
 		return options;
 	}
 	/**

@@ -375,7 +375,7 @@
 		});
 
 		mui.plusReady(function() {
-			//console.log(parseInt(((plus.screen.resolutionWidth - 30) * 10 / 12 - 16) * 32 / 100 * 5 / 6));
+			////console.log(parseInt(((plus.screen.resolutionWidth - 30) * 10 / 12 - 16) * 32 / 100 * 5 / 6));
 			var wd = events.showWaiting();
 			initData();
 			initControl();
@@ -474,7 +474,7 @@
 			pullRefresh = mui('.mui-scroll-wrapper .mui-scroll').pullToRefresh({
 				down: {
 					callback: function() {
-						console.log('down ' + JSON.stringify(page));
+						//console.log('down ' + JSON.stringify(page));
 						requestData(1);
 						setTimeout(function() {
 							pullRefresh.endPullDownToRefresh(); //结束下拉刷新
@@ -485,7 +485,7 @@
 					contentinit: '', //默认没有更多显示空白
 					contentnomore: '', //隐藏没有更多提示
 					callback: function() {
-						console.log('up ' + JSON.stringify(page));
+						//console.log('up ' + JSON.stringify(page));
 						if(page) {
 							requestData(page.pageIndex + 1);
 						} else {
@@ -523,14 +523,14 @@
 			};
 			//28.（用户空间）获取用户针对某用户的空间列表
 			postDataPro_getUserSpacesByUserForPublisher(comData, wd, function(data) {
-				console.log('28 获取用户针对某用户的空间列表 getUserSpacesByUserForPublisher ' + JSON.stringify(data));
+				//console.log('28 获取用户针对某用户的空间列表 getUserSpacesByUserForPublisher ' + JSON.stringify(data));
 				if(data.RspCode == 0) { //成功获取
 					//记录页数
 					page = {
 						pageIndex: pageIndex, //当前页数
 						totalPage: data.RspData.TotalPage //总页数
 					};
-					console.log('page ' + JSON.stringify(page));
+					//console.log('page ' + JSON.stringify(page));
 					if(pageIndex == 1) { //下拉刷新或者获取的第一页的内容
 						document.getElementById('list').innerHTML = '';
 						year = ''; //清空年份
@@ -541,7 +541,7 @@
 						}
 						pullRefresh.refresh(true); //更新当前控件
 					}
-					//console.log(document.getElementById("list").innerHTML);
+					////console.log(document.getElementById("list").innerHTML);
 					if(data.RspData.Data.length == 0 && pageIndex == 1) {
 						//第一页的数据为空
 						notesNone(); //显示无笔记界面
@@ -563,7 +563,7 @@
 		 * @param {Object} item
 		 */
 		function createNotes(data) {
-			//console.log('createNotes ' + JSON.stringify(data));
+			////console.log('createNotes ' + JSON.stringify(data));
 			notes.noteKey.push(data.TabId);
 			notes.noteValue[data.TabId] = data;
 			var date = data.PublishDate.split(' '); //发布的日期和时间
@@ -579,8 +579,8 @@
 			if(year == today.split('-')[0]) { //今年
 				yearItem = '';
 			}
-			//console.log('dateItem ' + dateItem);
-			//console.log('timeItem ' + timeItem);
+			////console.log('dateItem ' + dateItem);
+			////console.log('timeItem ' + timeItem);
 			if(markDate != dateItem) {
 				var element = document.createElement('div');
 				element.className = 'dynamic-date-parent'
@@ -678,8 +678,8 @@
 					contentEl.setAttribute('data-offsetHeight', contentEl.offsetHeight);
 				}
 			}
-			//console.log("dateItem" + dateItem);
-			//console.log(document.getElementById("list").innerHTML);
+			////console.log("dateItem" + dateItem);
+			////console.log(document.getElementById("list").innerHTML);
 			markDate = dateItem;
 		}
 
@@ -699,7 +699,7 @@
 		 */
 		function endPullUp() {
 			if(page && page.pageIndex >= page.totalPage) {
-				console.log('没有下一页');
+				//console.log('没有下一页');
 				pullRefresh.endPullUpToRefresh(true);
 			} else {
 				pullRefresh.endPullUpToRefresh();

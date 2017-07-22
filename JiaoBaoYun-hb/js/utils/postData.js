@@ -4,7 +4,7 @@
 //waitingDialog,失败弹出框
 function postData(url, data, callback, waitingDialog) {
 	if(plus.networkinfo.getCurrentType() == plus.networkinfo.CONNECTION_NONE) {
-		console.log('没有网络');
+		//console.log('没有网络');
 		waitingDialog.close();
 		mui.toast("网络异常，请检查网络设置！");
 		return;
@@ -17,7 +17,7 @@ function postData(url, data, callback, waitingDialog) {
 		contentType: "application/json",
 		timeout: tepTime,
 		success: function(data) {
-			console.log('data.RspCode:' + data.RspCode + 'data.RspTxt:' + data.RspTxt + 'data.RspData:' + JSON.stringify(data.RspData));
+			//console.log('data.RspCode:' + data.RspCode + 'data.RspTxt:' + data.RspTxt + 'data.RspData:' + JSON.stringify(data.RspData));
 			if(data.RspCode == 6) {
 				waitingDialog.close();
 				renewToken(0, 'encryData', 'commonData', 'flag', 'waitingDialog', 'callback');
@@ -28,7 +28,7 @@ function postData(url, data, callback, waitingDialog) {
 		error: function(xhr, type, errorThrown) {
 			//			waitingDialog.close();
 			//			mui.alert("网络连接失败，请重新尝试一下", "错误", "OK", null);
-			console.log('网络连接失：' + url + ':' + type + ',' + JSON.stringify(xhr) + ',' + errorThrown);
+			//console.log('网络连接失：' + url + ':' + type + ',' + JSON.stringify(xhr) + ',' + errorThrown);
 			var data = {
 				RspCode: '404',
 				RspData: '',
@@ -63,7 +63,7 @@ function tempTime() {
 //callback,返回值
 function postDataEncry(url, encryData, commonData, flag, waitingDialog, callback) {
 	if(plus.networkinfo.getCurrentType() == plus.networkinfo.CONNECTION_NONE) {
-		console.log('没有网络');
+		//console.log('没有网络');
 		waitingDialog.close();
 		mui.toast("网络异常，请检查网络设置！");
 		return;
@@ -80,7 +80,7 @@ function postDataEncry(url, encryData, commonData, flag, waitingDialog, callback
 		tempData.sign = sign;
 		// 等待的对话框
 		var urlArr = url.split('/');
-		console.log('postData.tempData:' + urlArr[urlArr.length - 1] + JSON.stringify(tempData));
+		//console.log('postData.tempData:' + urlArr[urlArr.length - 1] + JSON.stringify(tempData));
 		var tepTime = tempTime();
 		//发送协议
 
@@ -92,7 +92,7 @@ function postDataEncry(url, encryData, commonData, flag, waitingDialog, callback
 			timeout: tepTime,
 			//			success: callback,
 			success: function(data) {
-				console.log('data.RspCode:' + data.RspCode + ',data.RspTxt:' + data.RspTxt + ',data.RspData:' + JSON.stringify(data.RspData) + ',' + url);
+				//console.log('data.RspCode:' + data.RspCode + ',data.RspTxt:' + data.RspTxt + ',data.RspData:' + JSON.stringify(data.RspData) + ',' + url);
 				if(data.RspCode == 6) {
 					waitingDialog.close();
 					renewToken(1, url, {}, commonData, flag, waitingDialog, callback);
@@ -121,7 +121,7 @@ function postDataEncry(url, encryData, commonData, flag, waitingDialog, callback
 				}
 			},
 			error: function(xhr, type, errorThrown) {
-				console.log('网络连接失败:' + url + ':' + type + ',' + JSON.stringify(xhr) + ',' + errorThrown);
+				//console.log('网络连接失败:' + url + ':' + type + ',' + JSON.stringify(xhr) + ',' + errorThrown);
 				var data = {
 					RspCode: '404',
 					RspData: '',
@@ -211,7 +211,7 @@ function QRCodeUrl(url, encryData, commonData, flag) {
 		var tempStr = arr0.sort().join('&');
 		//拼接url
 		var url0 = url + '?' + tempStr;
-		console.log('需要申请的url为:' + url0);
+		//console.log('需要申请的url为:' + url0);
 		return url0;
 	});
 }

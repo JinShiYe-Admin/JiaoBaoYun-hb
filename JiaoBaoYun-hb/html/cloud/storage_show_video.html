@@ -65,7 +65,7 @@
 				var waiting = events.showWaiting();
 				video.style.height = parseInt(video.offsetWidth * 3 / 4) + "px";
 				var main = plus.webview.currentWebview();
-				console.log(main.id + " " + JSON.stringify(main.data));
+				//console.log(main.id + " " + JSON.stringify(main.data));
 				//设置缩略图
 				if(main.data.thumbPath) {
 					video.style.backgroundImage = "url(" + main.data.thumbPath + ")";
@@ -74,7 +74,7 @@
 					video.style.backgroundImage = "";
 				}
 				video.onerror = function() {
-					console.log("video.onerror");
+					//console.log("video.onerror");
 					mui.toast("视频播放失败");
 				}
 				if(main.data.type == 0) {
@@ -95,9 +95,9 @@
 				}
 				var getDownTokenUrl = window.storageKeyName.QNGETDOWNTOKENFILE;
 				CloudFileUtil.getQNDownToken(getDownTokenUrl, getDownToken, function(data) {
-					console.log('七牛下载token ' + JSON.stringify(data));
+					//console.log('七牛下载token ' + JSON.stringify(data));
 					token = data.Data[0].Value;
-					console.log('token ' + token);
+					//console.log('token ' + token);
 					video.src = token;
 					wd.close();
 				}, function(xhr, type, errorThrown) {

@@ -12,7 +12,7 @@ mui.plusReady(function() {
 	var curPage = plus.webview.currentWebview();
 	ExpertsInfoModel = curPage.data;
 //	window.addEventListener('focus-question', function(event) {
-		console.log('传值的model为=' + JSON.stringify(ExpertsInfoModel));
+		//console.log('传值的model为=' + JSON.stringify(ExpertsInfoModel));
 		//清除节点
 		document.getElementById('list-container').innerHTML = "";
 		pageIndex = 1;
@@ -29,7 +29,7 @@ mui.plusReady(function() {
 	mui('.mui-table-view').on('tap', '.ask-title', function() {
 		var parent = this.parentNode.parentNode.parentNode;
 		var info = JSON.parse(parent.getAttribute('data-info'));
-		console.log('dianji 关注的问题标题' + JSON.stringify(info));
+		//console.log('dianji 关注的问题标题' + JSON.stringify(info));
 		//判断回答或则问题是否还存在,flag=1为提问，=2为回答，id为对应id
 		events.askDetailOrAnswerDetail(1, info.AskId, function(data) {
 			if(data) {
@@ -58,7 +58,7 @@ mui.plusReady(function() {
 				//清除节点
 				document.getElementById('list-container').innerHTML = "";
 				var self = this;
-				console.log("下拉刷新");
+				//console.log("下拉刷新");
 				pageIndex = 1;
 				flagRef = 0;
 				if(ExpertsInfoModel.uid>0) {
@@ -78,7 +78,7 @@ mui.plusReady(function() {
 		up: {
 			callback: function() {
 				var self = this;
-				console.log("上拉加载更多");
+				//console.log("上拉加载更多");
 				if(ExpertsInfoModel.uid>0) {
 					if(pageIndex <= totalPageCount) {
 						flagRef = 1;
@@ -109,7 +109,7 @@ mui.plusReady(function() {
 
 //游客身份、获取关注的问题
 function getFocusAsksByUserNotLogin() {
-	console.log('111111=='+window.myStorage.getItem(window.storageKeyName.FOCUSEQUESTION));
+	//console.log('111111=='+window.myStorage.getItem(window.storageKeyName.FOCUSEQUESTION));
 	if (window.myStorage.getItem(window.storageKeyName.FOCUSEQUESTION) == null||window.myStorage.getItem(window.storageKeyName.FOCUSEQUESTION)=='') {
 		mui.toast('没有数据');
 		return;
@@ -123,7 +123,7 @@ function getFocusAsksByUserNotLogin() {
 	//39.获取问题列表
 	postDataQZPro_getAskByIds(comData, wd, function(data) {
 		wd.close();
-		console.log('39.获取问题列表:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+		//console.log('39.获取问题列表:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 		if(data.RspCode == 0) {
 			//如果是旧数据，去掉里面的html标签
 			for(var i = 0; i < data.RspData.Data.length; i++) {
@@ -159,7 +159,7 @@ function getFocusAsksByUser(userId) {
 	//26.获取某个用户的关注问题列表
 	postDataQZPro_getFocusAsksByUser(comData, wd, function(data) {
 		wd.close();
-		console.log('26.获取某个用户的关注问题列表:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+		//console.log('26.获取某个用户的关注问题列表:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 		if(data.RspCode == 0) {
 			//总页数
 			totalPageCount = data.RspData.TotalPage;

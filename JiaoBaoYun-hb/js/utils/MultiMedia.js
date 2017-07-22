@@ -47,7 +47,7 @@ var MultiMedia = (function($, mod) {
 
 	//初始化界面
 	proto.init = function() {
-		//console.log('MultiMedia-init');
+		////console.log('MultiMedia-init');
 		var options = this.options;
 		var str_div_0 = '<div id="MultiMedia_Body" class="multimedia-body"><div id="MultiMedia_Header" class="multimedia-header">'
 		var str_pic_0 = ''; //相机按钮
@@ -89,7 +89,7 @@ var MultiMedia = (function($, mod) {
 
 	//初始化数据
 	proto.initData = function() {
-		//console.log('MultiMedia-initData');
+		////console.log('MultiMedia-initData');
 		this.data = {};
 		var options = this.options;
 		if(this.options.Picture) {
@@ -114,7 +114,7 @@ var MultiMedia = (function($, mod) {
 
 	//初始化监听
 	proto.initEvent = function() {
-		//console.log('MultiMedia-initEvent');
+		////console.log('MultiMedia-initEvent');
 		var self = this;
 		//图片
 		if(this.options.Picture) {
@@ -250,9 +250,9 @@ var MultiMedia = (function($, mod) {
 							if(self.data.VideoNum > 0) {
 								var wd = events.showWaiting('处理中...');
 								self.data.VideoNum--;
-								console.log('录制视频成功 ' + fpath);
+								//console.log('录制视频成功 ' + fpath);
 								self.addVideos(fpath, function() {
-									console.log("录像 callback");
+									//console.log("录像 callback");
 									wd.close();
 								});
 							}
@@ -262,11 +262,11 @@ var MultiMedia = (function($, mod) {
 						break;
 					case 2: //从相册选择
 						Gallery.pickVideo(function(data) {
-							console.log("pickVideo " + JSON.stringify(data));
+							//console.log("pickVideo " + JSON.stringify(data));
 							if(data.flag == 1) {
 								self.data.VideoNum--;
 								self.addVideos(data.path, function() {
-									console.log("从相册选择 callback");
+									//console.log("从相册选择 callback");
 									data.wd.close();
 								});
 							}
@@ -379,7 +379,7 @@ var MultiMedia = (function($, mod) {
 	 * 显示图片的选择方式
 	 */
 	proto.pictureActionSheet = function(type) {
-		//console.log('pictureActionSheet');
+		////console.log('pictureActionSheet');
 		type = type || 0;
 		if(type == 0) {
 			//拍取照片
@@ -396,7 +396,7 @@ var MultiMedia = (function($, mod) {
 	proto.pictureTake = function() {
 		var self = this;
 		mod.cameraTake(function(path) {
-			//console.log('pictureTake :' + path);
+			////console.log('pictureTake :' + path);
 			var wd = events.showWaiting('处理中...');
 			var myDate = new Date();
 			var fileName = self.options.Key + myDate.getTime() + (Math.floor(Math.random() * 10)) + '.png';
@@ -425,7 +425,7 @@ var MultiMedia = (function($, mod) {
 	 * @param {Object} num
 	 */
 	proto.picturesPick = function(NumPick) {
-		//console.log('picturesPick');
+		////console.log('picturesPick');
 		var self = this;
 		mod.galleryPickFalse('image', true, NumPick, function(event) {
 			var wd = events.showWaiting('处理中...');
@@ -483,7 +483,7 @@ var MultiMedia = (function($, mod) {
 		var marginLeft = self.data.PictureMarginLeft;
 		var group = 'MultiMedia_Picture';
 		for(var i = 0; i < paths.length; i++) {
-			//console.log('addImages ' + paths[i]);
+			////console.log('addImages ' + paths[i]);
 			var pathArrary = paths[i].split('/');
 			var name = pathArrary[pathArrary.length - 1];
 			var id = name.split('_')[0];
@@ -508,7 +508,7 @@ var MultiMedia = (function($, mod) {
 			document.getElementById("MultiMedia_Picture_Footer").appendChild(element);
 			self.imageChangeCallBack();
 		}
-		//console.log(document.getElementById("MultiMedia").innerHTML);
+		////console.log(document.getElementById("MultiMedia").innerHTML);
 		self.changeFooterHeight(0, self.data.PictureArray.length);
 	}
 
@@ -542,7 +542,7 @@ var MultiMedia = (function($, mod) {
 		} else if(num > 8 && num < 13) { //9-12张，三行
 			footer.style.height = width * 3 + marginLeft * 4 + 'px';
 		} else {
-			console.log('### ERROR ### 数量超过 12，放置的区域未设置相应的高度');
+			//console.log('### ERROR ### 数量超过 12，放置的区域未设置相应的高度');
 		}
 	}
 
@@ -564,7 +564,7 @@ var MultiMedia = (function($, mod) {
 	proto.addVideos = function(path, callback) {
 		var self = this;
 		//生成缩略图
-		console.log("addVideos " + path);
+		//console.log("addVideos " + path);
 		self.addVideosThumb(path, callback);
 	}
 	/**
@@ -583,8 +583,8 @@ var MultiMedia = (function($, mod) {
 			canvas.height = video.videoHeight;
 			canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
 			var thumb = canvas.toDataURL("image/png");
-			console.log("video " + video.videoWidth + " " + video.videoWidth);
-			console.log("canvas " + canvas.width + " " + canvas.height);
+			//console.log("video " + video.videoWidth + " " + video.videoWidth);
+			//console.log("canvas " + canvas.width + " " + canvas.height);
 			//增加视频
 			var videos = {
 				id: pathArray[pathArray.length - 1], //视频Id
@@ -639,7 +639,7 @@ var MultiMedia = (function($, mod) {
 	 * @param {Object} data 音频路径和时间
 	 */
 	proto.addAudios = function(data) {
-		console.log('addAudios ' + JSON.stringify(data));
+		//console.log('addAudios ' + JSON.stringify(data));
 		var self = this;
 		var width = self.data.AudioWith;
 		var marginLeft = self.data.AudioMarginLeft;
@@ -686,7 +686,7 @@ var MultiMedia = (function($, mod) {
 
 	//创建并返回一个多媒体对象
 	mod.multiMedia = function(options) {
-		//console.log('multiMedia ' + JSON.stringify(options));
+		////console.log('multiMedia ' + JSON.stringify(options));
 		if(!MultiMediaApi) {
 			MultiMediaApi = new MultiMedia(options); //new一个多媒体对象
 		}
@@ -707,7 +707,7 @@ var MultiMedia = (function($, mod) {
 	 * @param {Object} errorCB 选择照片失败的回调
 	 */
 	mod.galleryPickFalse = function(filter, multiple, maximum, successCB, errorCB) {
-		//console.log('galleryPickFalse | filter ' + filter + ' | multiple ' + multiple + ' | maximum ' + maximum);
+		////console.log('galleryPickFalse | filter ' + filter + ' | multiple ' + multiple + ' | maximum ' + maximum);
 		plus.gallery.pick(function(event) {
 			successCB(event);
 		}, function(error) {
@@ -728,7 +728,7 @@ var MultiMedia = (function($, mod) {
 	 */
 	mod.galleryPickTrue = function(successCB, errorCB) {
 		plus.gallery.pick(function(file) {
-			//console.log('从相册选取图片成功,图片的路径为：' + file);
+			////console.log('从相册选取图片成功,图片的路径为：' + file);
 			successCB(file) //压缩图片
 		}, function(error) {
 			mod.galleryPickError(error, errorCB);
@@ -746,7 +746,7 @@ var MultiMedia = (function($, mod) {
 		cmr.captureImage(function(capturedFile) {
 				//将本地URL路径转换成平台绝对路径
 				var path = 'file://' + plus.io.convertLocalFileSystemURL(capturedFile);
-				//console.log('转换成平台绝对路径,图片的路径为 ' + path);
+				////console.log('转换成平台绝对路径,图片的路径为 ' + path);
 				successCB(path);
 			},
 			function(error) {
@@ -760,9 +760,9 @@ var MultiMedia = (function($, mod) {
 							message: 'iOS ' + message // 错误描述信息
 						});
 						mui.toast('拍照失败！' + '错误编码：' + code + ' 描述信息：' + message, '拍照失败');
-						console.log('### ERROR ### 拍照失败 ' + JSON.stringify(error));
+						//console.log('### ERROR ### 拍照失败 ' + JSON.stringify(error));
 					} else {
-						console.log('未拍取图片 ' + JSON.stringify(error));
+						//console.log('未拍取图片 ' + JSON.stringify(error));
 					}
 				} else if(plus.os.name == 'Android') {
 					if(code !== 11) {
@@ -770,9 +770,9 @@ var MultiMedia = (function($, mod) {
 							code: code, // 错误编码
 							message: 'Android ' + message // 错误描述信息
 						});
-						console.log('### ERROR ### 拍照失败 ' + JSON.stringify(error));
+						//console.log('### ERROR ### 拍照失败 ' + JSON.stringify(error));
 					} else {
-						console.log('未拍取图片 ' + JSON.stringify(error));
+						//console.log('未拍取图片 ' + JSON.stringify(error));
 					}
 				} else {
 					errorCB({
@@ -792,23 +792,23 @@ var MultiMedia = (function($, mod) {
 	mod.galleryPickError = function(error, errorCB) {
 		if(plus.os.name == 'iOS') { //苹果
 			if(error.code != -2) {
-				console.log('### ERROR ### 从相册选取图片失败 ' + JSON.stringify(error));
+				//console.log('### ERROR ### 从相册选取图片失败 ' + JSON.stringify(error));
 				errorCB({
 					code: error.code, // 错误编码
 					message: error.message // 错误描述信息
 				});
 			} else {
-				console.log('未选取文件 ' + JSON.stringify(error));
+				//console.log('未选取文件 ' + JSON.stringify(error));
 			}
 		} else if(plus.os.name == 'Android') { //安卓
 			if(error.code != 12) {
-				console.log('### ERROR ### 从相册选取图片失败 ' + JSON.stringify(error));
+				//console.log('### ERROR ### 从相册选取图片失败 ' + JSON.stringify(error));
 				errorCB({
 					code: error.code, // 错误编码
 					message: error.message // 错误描述信息
 				});
 			} else {
-				console.log('未选取文件 ' + JSON.stringify(error));
+				//console.log('未选取文件 ' + JSON.stringify(error));
 			}
 		} else { //其他
 			errorCB({

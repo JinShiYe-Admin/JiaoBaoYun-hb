@@ -103,7 +103,7 @@ mui.plusReady(function() {
 	studentClasses = data.studentClasses;
 	//老师角色所在班级数组
 	teacherClasses = data.teacherClasses;
-	console.log("传过来的值：" + JSON.stringify(data));
+	//console.log("传过来的值：" + JSON.stringify(data));
 	//设置界面
 	setChoices(title, roles, btn_more);
 	//相机点击事件
@@ -131,7 +131,7 @@ mui.plusReady(function() {
 	//重写返回按钮
 	var _back = mui.back;
 	mui.back = function() {
-		console.log("作业界面的打开界面id:" + plus.webview.currentWebview().opener().id)
+		//console.log("作业界面的打开界面id:" + plus.webview.currentWebview().opener().id)
 		if(plus.webview.currentWebview().opener().id == "homework-commented.html") {
 			if(teacherClasses.length > 0 && studentClasses.length > 0) {
 				if(roles.classList.contains("mui-active")) {
@@ -186,7 +186,7 @@ function showNoData(type) {
  * @param {int} 0 不隐藏上拉加载更多     1隐藏上拉加载更多
  */
 function endFresh() {
-	console.log("************************************type:" + freshFlag);
+	//console.log("************************************type:" + freshFlag);
 	if(freshContainer) {
 		if(freshFlag == 1) {
 			freshContainer.endPullDownToRefresh();
@@ -204,7 +204,7 @@ function endFresh() {
  */
 var roleChanged = function() {
 	mui('.mui-scroll-wrapper.mui-slider-indicator').scroll().scrollTo(0, 0, 100);
-	console.log('作业子页面获取的角色变换值roleChanged：' + role);
+	//console.log('作业子页面获取的角色变换值roleChanged：' + role);
 	setClasses(role);
 	list.innerHTML = "";
 	if(role == 2) { //老师角色
@@ -239,7 +239,7 @@ var getWorkDetail = function() {
 	personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
 	//获取个人身份角色
 	//		role = e.detail.data.role;
-	console.log("角色：" + role);
+	//console.log("角色：" + role);
 	//老师
 	if(role == 2) {
 		mui("#popover").popover('hide');
@@ -253,8 +253,8 @@ var getWorkDetail = function() {
 	//		teacherClasses = e.detail.data.teacherClasses;
 	//		//学生家长的班级数据
 	//		studentClasses = e.detail.data.studentClasses;
-	console.log('作业主界面获取的teacherClasses:' + JSON.stringify(teacherClasses))
-	console.log('作业主界面获取的studentClasses:' + JSON.stringify(studentClasses))
+	//console.log('作业主界面获取的teacherClasses:' + JSON.stringify(teacherClasses))
+	//console.log('作业主界面获取的studentClasses:' + JSON.stringify(studentClasses))
 	//老师角色的作业数据
 	teacherHash = newHashMap();
 	//学生、家长的作业数据
@@ -283,7 +283,7 @@ var setListener = function() {
 		selectGContainer = this;
 		selectGId = this.classInfo.gid;
 		events.clearChild(list);
-		console.log('被点击的班级数据：' + JSON.stringify(this.classInfo));
+		//console.log('被点击的班级数据：' + JSON.stringify(this.classInfo));
 		totalPageCount = this.classInfo.totalPageCount;
 		//老师角色
 		if(role == 2) {
@@ -297,7 +297,7 @@ var setListener = function() {
 			}
 			//学生家长角色
 		} else {
-			console.log("获取的作业：" + JSON.stringify(studentHash.get(selectGId)));
+			//console.log("获取的作业：" + JSON.stringify(studentHash.get(selectGId)));
 			if(studentHash.get(selectGId) && studentHash.get(selectGId).length > 0) {
 
 				setHomeworkData(studentHash.get(selectGId));
@@ -322,7 +322,7 @@ var setListener = function() {
 	mui('.mui-table-view').on('tap', '.submitOnline', function() {
 		var item = this;
 		clickItem = item;
-		console.log("我点的是这个")
+		//console.log("我点的是这个")
 		events.showWaiting();
 		openStuWork(item);
 	});
@@ -398,7 +398,7 @@ var setClasses = function(role) {
 	tabs.firstElementChild.className = "mui-control-item mui-active";
 	selectGContainer = tabs.firstElementChild;
 	document.getElementById("tabs-class").style.display = "block";
-	console.log("获取班级控件：" + tabs.innerHTML);
+	//console.log("获取班级控件：" + tabs.innerHTML);
 }
 /**
  * 初始化每个班级请求页码为1
@@ -418,7 +418,7 @@ var initializeClassesIndex = function(i) {
  */
 var requireHomeWork = function(classModel, callback) {
 	events.closeWaiting();
-	console.log("请求作业数据：" + 123);
+	//console.log("请求作业数据：" + 123);
 	var comData = {};
 	if(role == 2) {
 		comData.teacherId = personalUTID;
@@ -431,7 +431,7 @@ var requireHomeWork = function(classModel, callback) {
 	if(role == 2) {
 		postDataPro_GetHomeworkList(comData, wd, function(data) {
 			//			wd.close();
-			console.log('老师、作业主界面获取的作业列表：' + JSON.stringify(data));
+			//console.log('老师、作业主界面获取的作业列表：' + JSON.stringify(data));
 			if(data.RspCode == 0) {
 				totalPageCount = data.RspData.PageCount;
 				selectGContainer.classInfo.totalPageCount = totalPageCount;
@@ -447,7 +447,7 @@ var requireHomeWork = function(classModel, callback) {
 	} else { //家长学生
 		postDataPro_GetHomeworkListStu(comData, wd, function(data) {
 			//			wd.close();
-			console.log('学生、作业主界面获取的作业列表：' + JSON.stringify(data));
+			//console.log('学生、作业主界面获取的作业列表：' + JSON.stringify(data));
 			if(data.RspCode == 0) {
 				totalPageCount = data.RspData.PageCount;
 				//向作业数组中合并人员信息
@@ -460,7 +460,7 @@ var requireHomeWork = function(classModel, callback) {
 					tempArray = tempArray.concat(data.RspData.Dates[i].Homeworks);
 					//						}
 				}
-				console.log('重组后的学生作业：' + JSON.stringify(tempArray));
+				//console.log('重组后的学生作业：' + JSON.stringify(tempArray));
 				for(var m in tempArray) {
 					var tempModel = tempArray[m];
 					tempIDs.push(tempModel.TeacherId);
@@ -478,7 +478,7 @@ var requireHomeWork = function(classModel, callback) {
 					//21.通过用户ID或ID串获取用户资料
 					postDataPro_PostUinf(comData1, wd, function(data1) {
 						//						wd.close();
-						console.log('通过用户ID或ID串获取用户资料：' + JSON.stringify(data1));
+						//console.log('通过用户ID或ID串获取用户资料：' + JSON.stringify(data1));
 						if(data1.RspCode == 0) {
 							//循环遍历
 							for(var m in data.RspData.Dates) {
@@ -503,7 +503,7 @@ var requireHomeWork = function(classModel, callback) {
 									}
 								}
 							}
-							console.log('合并后的数据为：' + JSON.stringify(data));
+							//console.log('合并后的数据为：' + JSON.stringify(data));
 							selectGContainer.classInfo.totalPageCount = totalPageCount;
 							setHashData(comData, data);
 							callback(data.RspData.Dates, 30)
@@ -553,10 +553,10 @@ var setData = function(data, type) {
 var setPublishedData = function(publishedData) {
 	var fragment = document.createDocumentFragment();
 	var showType;
-	console.log("要放置的发布作业数据：" + JSON.stringify(publishedData));
+	//console.log("要放置的发布作业数据：" + JSON.stringify(publishedData));
 	if(publishedData && publishedData.length > 0) {
 		showType = 0;
-		console.log('发布作业的Id：' + selectGId + ';老师作业的数据：' + JSON.stringify(publishedData));
+		//console.log('发布作业的Id：' + selectGId + ';老师作业的数据：' + JSON.stringify(publishedData));
 		//遍历老师发布的作业
 		publishedData.forEach(function(DateHM, i) {
 			var divider = document.createElement('li');
@@ -761,7 +761,7 @@ var setHomeworkData = function(homeworkData) {
 					li.className = 'mui-table-view-cell stuHomework ' + getBackGround(homework);
 					li.innerHTML = createStuHomeworkInner(homework);
 					fragment.appendChild(li);
-					console.log("获取的元素："+li.innerHTML);
+					//console.log("获取的元素："+li.innerHTML);
 				})
 			}
 			if(DateHM.AnswerResults && DateHM.AnswerResults.length > 0) {
@@ -815,7 +815,7 @@ function requestData(comData) {
 	//1.根据教师Id和班级Id获取作业列表；逻辑：获取有效的、未毕业的、教师Id在群中的角色是老师的群列表；
 	postDataPro_GetHomeworkList(comData, wd, function(data) {
 		wd.close();
-		console.log('作业主界面作业列表：' + JSON.stringify(data));
+		//console.log('作业主界面作业列表：' + JSON.stringify(data));
 		if(data.RspCode == 0) {
 			changeSavedData(comData, data.RspData.Dates);
 		} else {

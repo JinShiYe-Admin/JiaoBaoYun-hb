@@ -1,12 +1,14 @@
 //公共方法js
 window.onerror = function(errorMessage, scriptURI, lineNumber, columnNumber, errorObj) {
-	console.log("---ERROR---页面出现错误---start---");
-	console.log("错误信息-0:" + JSON.stringify(errorMessage.detail));
-	console.log("错误信息-1:" + errorMessage);
-	console.log("出错文件:" + scriptURI);
-	console.log("出错行号:" + lineNumber);
-	console.log("出错列号:" + columnNumber);
-	console.log("错误详情:" + errorObj);
+	if(storageKeyName.showLog === 0) {
+		console.log("---ERROR---页面出现错误---start---");
+		console.log("错误信息-0:" + JSON.stringify(errorMessage.detail));
+		console.log("错误信息-1:" + errorMessage);
+		console.log("出错文件:" + scriptURI);
+		console.log("出错行号:" + lineNumber);
+		console.log("出错列号:" + columnNumber);
+		console.log("错误详情:" + errorObj);
+	}
 	var isMuiLazyError = false; //是否是mui懒加载的BUG
 	if(errorMessage.detail != undefined) {
 		//mui懒加载的BUG的判断逻辑
@@ -18,9 +20,9 @@ window.onerror = function(errorMessage, scriptURI, lineNumber, columnNumber, err
 	}
 	events.closeWaiting();
 	var webview = plus.webview.currentWebview();
-	console.log("---ERROR---页面id--- " + webview.id + " ---");
+	//console.log("---ERROR---页面id--- " + webview.id + " ---");
 	if(isMuiLazyError) { //mui懒加载的BUG
-		console.log("---ERROR---出错信息---mui懒加载的BUG---");
+		//console.log("---ERROR---出错信息---mui懒加载的BUG---");
 	} else {
 		if(webview.id == "firstPage.html" || webview.id == "index.html" || webview.id == "cloud_home.html" || webview.id == "sciedu_home.html" || webview.id == "show-home1.html" || webview.id == "course-home1.html" || webview.id == "storage_transport.html") {
 			mui.toast('当前界面加载出现错误');
@@ -30,7 +32,7 @@ window.onerror = function(errorMessage, scriptURI, lineNumber, columnNumber, err
 			});
 		}
 	}
-	console.log("---ERROR---页面出现错误---end---");
+	//console.log("---ERROR---页面出现错误---end---");
 }
 
 var events = (function(mod) {
@@ -58,12 +60,12 @@ var events = (function(mod) {
 	 * @param {Object} event 绑定的监听事件
 	 */
 	mod.addTap = function(id, event) {
-		//		console.log("获取当前页面的id：" + plus.webview.currentWebview().id);
+		//		//console.log("获取当前页面的id：" + plus.webview.currentWebview().id);
 		var item = document.getElementById(id);
 		if(item) {
 			item.addEventListener('tap', event);
 		} else {
-			console.log('### ERROR ### 页面: ' + plus.webview.currentWebview().id + ' 未找到id为 ' + id + ' 的元素');
+			//console.log('### ERROR ### 页面: ' + plus.webview.currentWebview().id + ' 未找到id为 ' + id + ' 的元素');
 		}
 	}
 	/**
@@ -83,7 +85,7 @@ var events = (function(mod) {
 	mod.openNewWindow = function(tarPagePath) {
 		var tarPageIds = tarPagePath.split('/');
 		var targetPage = plus.webview.getWebviewById(tarPageIds[tarPageIds.length - 1]);
-		console.log('targetPage是否存在:' + Boolean(targetPage))
+		//console.log('targetPage是否存在:' + Boolean(targetPage))
 		if(targetPage) {
 			targetPage.show('slide-in-right', 250);
 		} else {
@@ -229,7 +231,7 @@ var events = (function(mod) {
 			styles = mod.getWebStyle(tarPage);
 		}
 
-		console.log("预加载的页面：" + tarPage)
+		//console.log("预加载的页面：" + tarPage)
 		if(!plus.webview.getWebviewById(tarPage)) {
 			//初始化预加载详情页面
 			setTimeout(function() {
@@ -287,19 +289,19 @@ var events = (function(mod) {
 	 * @param {Object} getDatas 获取数据的方法  return somthing
 	 */
 	mod.fireToPage = function(tarPage, listener, getDatas) {
-		//			console.log('tarPage:' + tarPage);
+		//			//console.log('tarPage:' + tarPage);
 		tarPage = tarPage.split('/')[tarPage.split('/').length - 1];
 		var targetPage = null;
 		//获得目标页面
 		if(!targetPage) {
 			targetPage = plus.webview.getWebviewById(tarPage);
-			//				console.log(typeof(targetPage))
+			//				//console.log(typeof(targetPage))
 		}
 		//触发目标页面的listener事件
 		mui.fire(targetPage, listener, {
 			data: getDatas()
 		});
-		console.log('要传的值是：' + JSON.stringify(getDatas()))
+		//console.log('要传的值是：' + JSON.stringify(getDatas()))
 		targetPage.show('slide-in-right', 250)
 	}
 	/**
@@ -312,7 +314,7 @@ var events = (function(mod) {
 	mod.fireToPageWithData = function(tarPage, listener, datas) {
 
 		tarPage = tarPage.split('/')[tarPage.split('/').length - 1];
-		console.log('tarPage:' + tarPage + ",listener:" + listener);
+		//console.log('tarPage:' + tarPage + ",listener:" + listener);
 		var targetPage = null;
 		//获得目标页面
 		if(!targetPage) {
@@ -334,7 +336,7 @@ var events = (function(mod) {
 		if(!datas) {
 			datas = null;
 		}
-		console.log('tarPage:' + tarPage);
+		//console.log('tarPage:' + tarPage);
 		var targetPage = null;
 		//获得目标页面
 		if(!targetPage) {
@@ -346,7 +348,7 @@ var events = (function(mod) {
 				data: datas
 			});
 		} else {
-			console.log('目标页面不存在' + tarPage);
+			//console.log('目标页面不存在' + tarPage);
 		}
 
 	}
@@ -387,7 +389,7 @@ var events = (function(mod) {
 		return r;
 	}
 	mod.infoChanged = function() {
-		console.log("@@@@@@@@@@@@@@@@@@@@@调用的时候的界面：" + plus.webview.currentWebview().id);
+		//console.log("@@@@@@@@@@@@@@@@@@@@@调用的时候的界面：" + plus.webview.currentWebview().id);
 		events.fireToPageNone('../../index/mine.html', 'infoChanged');
 		events.fireToPageNone('../cloud/cloud_home.html', 'infoChanged');
 		mui.fire(plus.webview.getWebviewById("index.html"), 'infoChanged');
@@ -403,7 +405,7 @@ var events = (function(mod) {
 	mod.shortForString = function(str, len) {
 		if(!str) {
 			str = "";
-			console.log("数据错误，请查找！");
+			//console.log("数据错误，请查找！");
 		}
 		if(str.length > len + 2) {
 			return str.substring(0, len) + "...";
@@ -528,7 +530,7 @@ var events = (function(mod) {
 	 * @author 莫尚霖
 	 */
 	mod.logOff = function() {
-		console.log('退出登录后执行的方法');
+		//console.log('退出登录后执行的方法');
 		//清理上传下载的任务和界面
 		events.fireToPageNone('storage_transport.html', 'removeAllTask');
 		//清理云盘主页
@@ -586,9 +588,9 @@ var events = (function(mod) {
 		//			document.getElementById(id).onfocus = function() {
 		//				screen.height = plus.screen.resolutionHeight * plus.screen.scale
 		//				var webHeight = plus.android.invoke(plus.android.currentWebview(), "getHeight")
-		//				console.log('状态栏高度:' + plus.navigator.getStatusbarHeight() + "屏幕高度：" + screen.height + "浏览器高度：" + webHeight);
+		//				//console.log('状态栏高度:' + plus.navigator.getStatusbarHeight() + "屏幕高度：" + screen.height + "浏览器高度：" + webHeight);
 		//				var scrollHeight = parseInt(webHeight) - parseInt(screen.height) - parseInt(plus.navigator.getStatusbarHeight());
-		//				console.log("实际高度：" + scrollHeight)
+		//				//console.log("实际高度：" + scrollHeight)
 		//				//		document.querySelector(".mui-input-group").style.marginBottom=scrollHeight+"px";
 		//				document.body.clientHeight = scrollHeight;
 		//				mui(".mui-scroll-wrapper").scroll().scrollTo(0, -document.getElementById(id).offsetTop);
@@ -602,7 +604,7 @@ var events = (function(mod) {
 		//			window.addEventListener('resize', function() {
 		//				screen.height = plus.screen.resolutionHeight * plus.screen.scale
 		//				var webHeight = plus.android.invoke(plus.android.currentWebview(), "getHeight")
-		//				console.log('状态栏高度:' + plus.navigator.getStatusbarHeight() + "屏幕高度：" + screen.height + "浏览器高度：" + webHeight);
+		//				//console.log('状态栏高度:' + plus.navigator.getStatusbarHeight() + "屏幕高度：" + screen.height + "浏览器高度：" + webHeight);
 		//			})
 		//		}
 	}
@@ -612,7 +614,7 @@ var events = (function(mod) {
 	mod.areaInScroll = function() {
 		window.addEventListener("touchmove", function(e) {
 			var target = e.target;
-			console.log("***tagName" + target.tagName);
+			//console.log("***tagName" + target.tagName);
 			if(target && target.tagName == 'TEXTAREA') {
 				if(target.scrollHeight > target.clientHeight) {
 					e.stopPropagation();
@@ -650,8 +652,8 @@ var events = (function(mod) {
 			var main = plus.android.runtimeMainActivity();
 			var inputManger = main.getSystemService(Context.INPUT_METHOD_SERVICE);
 			var Focus = plus.android.invoke(main, 'getCurrentFocus');
-			//console.log('invoke ' + plus.android.invoke(main, 'getCurrentFocus'));
-			//console.log('invoke ' + plus.android.invoke(Focus, 'getWindowToken'));
+			////console.log('invoke ' + plus.android.invoke(main, 'getCurrentFocus'));
+			////console.log('invoke ' + plus.android.invoke(Focus, 'getWindowToken'));
 			var WindowToken = plus.android.invoke(Focus, 'getWindowToken');
 			var hideOption = {
 				manger: inputManger,
@@ -730,7 +732,7 @@ var events = (function(mod) {
 	 */
 	mod.fobidEnter = function(elem) {
 		elem.onkeydown = function(event) {
-			console.log("键盘输入事件：" + JSON.stringify(event.keyCode))
+			//console.log("键盘输入事件：" + JSON.stringify(event.keyCode))
 			if(event.keyCode == 13) {
 				return false;
 			}
@@ -748,7 +750,7 @@ var events = (function(mod) {
 			cancel: "取消"
 		}, function(e) {
 			var index = e.index;
-			console.log("点击的index:" + index);
+			//console.log("点击的index:" + index);
 			if(index > 0) {
 				if(btnArray[index - 1].dia) {
 					mod.setDialog(btnArray[index - 1].title, "确定？", cbArray[index - 1], "已取消删除")
@@ -858,7 +860,7 @@ var events = (function(mod) {
 		} else {
 			secondTime = "123";
 		}
-		console.log("第一次是否存在：" + firstTime + "第二次是否存在：" + secondTime);
+		//console.log("第一次是否存在：" + firstTime + "第二次是否存在：" + secondTime);
 		if(!secondTime) {
 			callback();
 		}
@@ -874,7 +876,7 @@ var events = (function(mod) {
 		if(!data) {
 			data = "";
 		}
-		//		console.log("当前点击控件是否可点击：" + clickedItem.disabled);
+		//		//console.log("当前点击控件是否可点击：" + clickedItem.disabled);
 		var webviewSites = webviewUrl.split("/");
 		var webviewId = webviewSites[webviewSites.length - 1];
 		var targetWebview = plus.webview.create(webviewUrl, webviewId, mod.getWebStyle(webviewUrl), {
@@ -886,8 +888,8 @@ var events = (function(mod) {
 		}
 	}
 	var setItemAble = function(item, targetWeb, waiting) {
-		//		console.log("当前点击控件是否可点击：" + item.disabled);
-		console.log("targetWeb是否已显示：" + targetWeb.isVisible());
+		//		//console.log("当前点击控件是否可点击：" + item.disabled);
+		//console.log("targetWeb是否已显示：" + targetWeb.isVisible());
 		setTimeout(function() {
 			if(targetWeb.isVisible()) {
 				setTimeout(function() {
@@ -978,7 +980,7 @@ var events = (function(mod) {
 			item.disabled = true;
 			jQuery(item).css("pointerEvents", "none");
 		}
-		console.log('判断是否是游客身份登录');
+		//console.log('判断是否是游客身份登录');
 		var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
 		if(personal.utid > 0) { //有账号，正常登录
 			return false;
@@ -991,7 +993,7 @@ var events = (function(mod) {
 	}
 	//刚启动时，如果有账号，token续订登录，如果没有，游客登录
 	mod.defaultLogin = function(callback) {
-		console.log('判断上次有么有账号登录');
+		//console.log('判断上次有么有账号登录');
 		if(plus.networkinfo.getCurrentType() == plus.networkinfo.CONNECTION_NONE) {
 			var tempValue = {
 				flag: 1, //正常用户登录
@@ -1015,7 +1017,7 @@ var events = (function(mod) {
 			//token续订
 			postDataPro_PostTokenRenew(comData, wd, function(data0) {
 				wd.close();
-				console.log('token续订success:RspCode:' + data0.RspCode + ',RspData:' + JSON.stringify(data0.RspData) + ',RspTxt:' + data0.RspTxt);
+				//console.log('token续订success:RspCode:' + data0.RspCode + ',RspData:' + JSON.stringify(data0.RspData) + ',RspTxt:' + data0.RspTxt);
 				var tempInfo00 = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
 				tempInfo00.token = data0.RspData;
 				window.myStorage.setItem(window.storageKeyName.PERSONALINFO, tempInfo00);
@@ -1028,7 +1030,7 @@ var events = (function(mod) {
 					//21.通过用户ID获取用户资料
 					postDataPro_PostUinf(comData1, wd, function(data) {
 						wd.close();
-						console.log('获取个人信息000:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+						//console.log('获取个人信息000:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 						if(data.RspCode == 0) {
 							var tepI0000 = data.RspData[0];
 							//存储个人信息
@@ -1039,7 +1041,7 @@ var events = (function(mod) {
 							tempInfo.usex = tepI0000.usex;
 							tempInfo.utxt = tepI0000.utxt;
 							//解析省市代码
-							console.log('9999=' + tepI0000.uarea);
+							//console.log('9999=' + tepI0000.uarea);
 							if(tepI0000.uarea != null) {
 								var tempArray = tepI0000.uarea.split('|');
 								if(tempArray.length > 0) {
@@ -1057,7 +1059,7 @@ var events = (function(mod) {
 							}
 							window.myStorage.setItem(window.storageKeyName.PERSONALINFO, tempInfo);
 							//
-							console.log('登录保存的个人信息：' + JSON.stringify(tempInfo))
+							//console.log('登录保存的个人信息：' + JSON.stringify(tempInfo))
 							//跳到主界面
 							var tempValue = {
 								flag: 1, //正常用户登录
@@ -1096,7 +1098,7 @@ var events = (function(mod) {
 	}
 
 	mod.loginBtn = function(loginInfo, callback) {
-		console.log('1221111');
+		//console.log('1221111');
 		//先发送握手协议
 		//需要加密的数据
 		var enData0 = {};
@@ -1110,7 +1112,7 @@ var events = (function(mod) {
 		var wd = events.showWaiting();
 		//发送网络请求，data为网络返回值
 		//		postDataEncry(storageKeyName.MAINURL + 'PostShakeHand', enData0, comData0, 0, wd, function(data) {
-		//			console.log('PostShakeHand:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+		//			//console.log('PostShakeHand:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 		//			if(data.RspCode == 0) {
 		//存储到手机本地
 		//		window.myStorage.setItem(window.storageKeyName.SHAKEHAND, data.RspData);
@@ -1128,12 +1130,12 @@ var events = (function(mod) {
 			appid: plus.runtime.appid,
 			vtp: 'mb' //mb(手机号),nm(账号或邮箱)
 		};
-		console.log('endata:' + JSON.stringify(enData) + 'comdata:' + JSON.stringify(comData));
+		//console.log('endata:' + JSON.stringify(enData) + 'comdata:' + JSON.stringify(comData));
 		//发送网络请求，data为网络返回值
 		postDataEncry(storageKeyName.MAINURL + 'PostLogin', enData, comData, 0, wd, function(data) {
 			wd.close();
 			wd.close();
-			console.log('账号密码登录s1111111e:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+			//console.log('账号密码登录s1111111e:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 			if(data.RspCode != 0000) {
 				var tempValue = {
 					flag: 0, //游客登录
@@ -1169,7 +1171,7 @@ var events = (function(mod) {
 					//					}
 				}
 				window.myStorage.setItem(window.storageKeyName.PERSONALINFO, data.RspData);
-				console.log('登录保存的个人信息：' + JSON.stringify(data.RspData));
+				//console.log('登录保存的个人信息：' + JSON.stringify(data.RspData));
 				//
 				//退出登录
 				events.logOff();
@@ -1188,7 +1190,7 @@ var events = (function(mod) {
 	mod.hidePagesExIndex = function() {
 		var wvs = plus.webview.all();
 		for(var i in wvs) {
-			console.log("webview的id:" + wvs[i].id)
+			//console.log("webview的id:" + wvs[i].id)
 			switch(wvs[i].id) {
 				case "index.html":
 				case "cloud_home.html": //云盘首页
@@ -1251,9 +1253,9 @@ var events = (function(mod) {
 			//5.获取某个问题的详情
 			postDataQZPro_getAskById(comData, wd, function(data) {
 				wd.close();
-				console.log('5.获取某个问题的详情:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				//console.log('5.获取某个问题的详情:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 				if(data.RspCode == 1016) {
-					console.log('wenti 不存在');
+					//console.log('wenti 不存在');
 					mui.toast('该提问已不存在');
 					callback(false);
 				}
@@ -1277,7 +1279,7 @@ var events = (function(mod) {
 			//8.获取某个回答的详情
 			postDataQZPro_getAnswerById(comData, wd, function(data) {
 				wd.close();
-				console.log('8.获取某个回答的详情:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				//console.log('8.获取某个回答的详情:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 				if(data.RspCode == 1017) {
 					mui.toast('该回答已不存在');
 					callback(false);
@@ -1339,7 +1341,7 @@ var events = (function(mod) {
 	 */
 	mod.isExistInStorageMap = function(key, mapKey) {
 		var map = myStorage.getItem(key);
-		console.log("获取的map" + JSON.stringify(map))
+		//console.log("获取的map" + JSON.stringify(map))
 		if(map) {
 			if(typeof(map[mapKey]) == "number") {
 				return map[mapKey];
@@ -1406,9 +1408,9 @@ var events = (function(mod) {
 	 * @param {Object} data 传递的数据
 	 */
 	mod.readyToPage = function(isReady, url, lisetener, data) {
-		console.log("是否已准备变形：" + isReady);
+		//console.log("是否已准备变形：" + isReady);
 		if(isReady) {
-			console.log("要传递的数据：" + JSON.stringify(data));
+			//console.log("要传递的数据：" + JSON.stringify(data));
 			mod.fireToPageWithData(url, lisetener, data);
 		} else {
 			setTimeout(function() {

@@ -66,7 +66,7 @@
 				//---从父页面获取数据---start---
 				var main = plus.webview.currentWebview(); //获取当前窗体对象
 				var subData = main.data; //接收页面传入的参数值
-				console.log('从父页面获取的数据:' + JSON.stringify(subData));
+				//console.log('从父页面获取的数据:' + JSON.stringify(subData));
 				//---从父页面获取数据---end---
 				var maxLength = 0; //字数限制
 				switch(subData.type) {
@@ -83,7 +83,7 @@
 						document.getElementById("title").innerText = '群备注';
 						break;
 					default:
-						console.log('修改群资料的类型选择出错');
+						//console.log('修改群资料的类型选择出错');
 						break;
 				}
 
@@ -121,7 +121,7 @@
 							var wd = events.showWaiting();
 							postDataPro_PostReGinfo(comData, wd, function(data) {
 								wd.close();
-								console.log('8.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+								//console.log('8.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 								if(data.RspCode == 0) {
 									mui.toast('修改成功');
 									var web = plus.webview.getWebviewById(tempListener[1].webid);

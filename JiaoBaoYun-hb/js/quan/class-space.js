@@ -74,7 +74,7 @@ Vue.component("class-item", {
 		},
 		getBubWidth: function() {
 			var width = this.$refs.chatLeft.clientWidth;
-			console.log("width" + width);
+			//console.log("width" + width);
 			return width;
 		}
 	}
@@ -104,7 +104,7 @@ var classList = new Vue({
 				pageSize: 10
 			}, wd, function(data) {
 				wd.close();
-				console.log("获取的班级空间信息" + JSON.stringify(data));
+				//console.log("获取的班级空间信息" + JSON.stringify(data));
 				if(data.RspCode == 0) {
 					var listData = data.RspData.Data;
 					if(listData.length > 0) {
@@ -129,7 +129,7 @@ var classList = new Vue({
 			} else {
 				this.list = this.list.concat(listData);
 			}
-			console.log("获取的班级空间数据：" + JSON.stringify(this.list));
+			//console.log("获取的班级空间数据：" + JSON.stringify(this.list));
 		},
 		//获取成员id
 		getPersonIds: function(data) {
@@ -171,7 +171,7 @@ var classList = new Vue({
 				wd.close();
 				var singlePersen = {};
 				if(data.RspCode == 0) {
-					console.log("获取的班级成员信息" + JSON.stringify(data));
+					//console.log("获取的班级成员信息" + JSON.stringify(data));
 					var classPersen = data.RspData;
 					for(var i in classPersen) {
 						if(classPersen[i].mstype == 1 || classPersen[i].mstype == 2) {
@@ -196,7 +196,7 @@ var classList = new Vue({
 				vtp: 'g'
 			}, wd, function(data) {
 				wd.close();
-				console.log("获取的个人信息数据：" + JSON.stringify(data));
+				//console.log("获取的个人信息数据：" + JSON.stringify(data));
 				if(data.RspCode == 0) {
 					var personalInfos = data.RspData;
 					for(var i in personalInfos) {

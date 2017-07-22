@@ -40,11 +40,11 @@ var QiNiuUtil = (function(mod) {
 					success: function(data) {
 						//服务器返回响应，根据响应结果，分析是否登录成功；
 						uptoken = data.uptoken;
-						console.log('获取七牛上传token成功');
+						//console.log('获取七牛上传token成功');
 					},
 					error: function(xhr, type, errorThrown) {
 						//异常处理；
-						console.log('获取七牛上传token失败：' + type);
+						//console.log('获取七牛上传token失败：' + type);
 					}
 				});
 				return uptoken;
@@ -118,7 +118,7 @@ var QiNiuUtil = (function(mod) {
 
 		// domain为七牛空间对应的域名，选择某个空间后，可通过 空间设置->基本设置->域名设置 查看获取
 		// uploader为一个plupload对象，继承了所有plupload的方法
-		console.log("UpOption.options" + JSON.stringify(options));
+		//console.log("UpOption.options" + JSON.stringify(options));
 		return options;
 	}
 

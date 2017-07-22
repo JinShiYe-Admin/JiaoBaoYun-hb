@@ -120,7 +120,7 @@ var renewToken = function(tempFlag, url, encryData, commonData, flag, waitingDia
 //var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 //var postDataPro_jiaobaoYunPro_PostReUinf(comData, wd, function(data) {
 //	wd.close();
-//	console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+//	//console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 //	if(data.RspCode == 0) {
 //
 //	} else {

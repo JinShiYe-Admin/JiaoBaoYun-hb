@@ -24,7 +24,7 @@ mui.plusReady(function() {
 	window.addEventListener('postGroupInfo', function(e) {
 		masterInfo = null;
 		isMaster = false;
-		console.log('班级群组界面获取的数据：'+JSON.stringify(e.detail.data));
+		//console.log('班级群组界面获取的数据：'+JSON.stringify(e.detail.data));
 		if(e.detail.data) {
 			groupId = e.detail.data.classId;
 			groupName = e.detail.data.className;
@@ -33,7 +33,7 @@ mui.plusReady(function() {
 			allcount = 0;
 			getUserInGroup(-1,function(data){
 				groupRoles=data;
-				console.log('班级群组界面获取的用户在群中的信息:'+JSON.stringify(groupRoles));
+				//console.log('班级群组界面获取的用户在群中的信息:'+JSON.stringify(groupRoles));
 				for(var i in groupRoles){
 					if(groupRoles[i].mstype==1){
 						isMaster=true;
@@ -102,7 +102,7 @@ var getUserInGroup = function(mstype, callback) {
 		vtp: mstype
 	}, wd, function(data) {
 		wd.close()
-		console.log('用户在群的身份 ' + JSON.stringify(data));
+		//console.log('用户在群的身份 ' + JSON.stringify(data));
 		if(data.RspCode == '0000') {
 			if(callback) {
 				callback(data.RspData);
@@ -110,7 +110,7 @@ var getUserInGroup = function(mstype, callback) {
 			if(mstype==-1){
 				setGride();
 			}else{
-				console.log("mstype:"+mstype+",isMaster:"+isMaster);
+				//console.log("mstype:"+mstype+",isMaster:"+isMaster);
 				if(isMaster&&mstype==2){
 					isShowQuit(mstype,false);
 				}else{
@@ -158,7 +158,7 @@ var isShowQuit = function(mstype, b) {
 	 * @param {Object} data
 	 */
 var showChoices = function(data) {
-		console.log('showChoices' + JSON.stringify(data))
+		//console.log('showChoices' + JSON.stringify(data))
 		if(groupRoles.length > 1) {
 			plus.nativeUI.actionSheet({
 				title: "请选择退群方式",
@@ -169,7 +169,7 @@ var showChoices = function(data) {
 					title: "退出所有身份(群主除外)"
 				}]
 			}, function(e) {
-				console.log("User pressed: " + e.index);
+				//console.log("User pressed: " + e.index);
 				if(e.index > 0) {
 					if(e.index == 1) {
 						quitGroup(data[0], quitSquad);
@@ -223,7 +223,7 @@ var allCallback = function(roleInfo) {
 	 * @param {Object} roleInfo
 	 */
 var quitSquad = function(roleInfo) {
-		console.log('退群的groupInfo:' + Array.isArray(groupRoles) + JSON.stringify(roleInfo) + groupRoles.indexOf(roleInfo));
+		//console.log('退群的groupInfo:' + Array.isArray(groupRoles) + JSON.stringify(roleInfo) + groupRoles.indexOf(roleInfo));
 		groupRoles.forEach(function(groupRole, i) {
 				if(groupRole.gutid == roleInfo.gutid) {
 					groupRoles.splice(i, 1);
@@ -231,7 +231,7 @@ var quitSquad = function(roleInfo) {
 				}
 			})
 			//				groupRoles.splice(groupRoles.indexOf(roleInfo), 1);
-		console.log('退组后的身份信息：' + JSON.stringify(groupRoles));
+		//console.log('退组后的身份信息：' + JSON.stringify(groupRoles));
 		getGroupInfo(roleInfo.mstype);
 		events.fireToPageNone('../quan/tab-zone.html', 'quitGroup');
 	}
@@ -245,7 +245,7 @@ var quitGroup = function(roleInfo, callback) {
 		postDataPro_PostGuD({
 			vvl: roleInfo.gutid
 		}, wd, function(data) {
-			console.log('退群返回值：' + JSON.stringify(data));
+			//console.log('退群返回值：' + JSON.stringify(data));
 			wd.close();
 			if(data.RspCode == '0000') {
 				mui.toast('退群成功');
@@ -259,7 +259,7 @@ var quitGroup = function(roleInfo, callback) {
 	 * 界面加載數據初始化
 	 */
 var setGride = function() {
-		console.log('传送的groupId:' + groupId)
+		//console.log('传送的groupId:' + groupId)
 		getGroupInfo(3);
 		getGroupInfo(2);
 		getGroupInfo(0);
@@ -296,7 +296,7 @@ var getGroupInfo = function(vvl) {
 		vvl1: vvl
 	}, wd, function(groupData) {
 		wd.close();
-		console.log('获取群组成员：' + vvl + JSON.stringify(groupData))
+		//console.log('获取群组成员：' + vvl + JSON.stringify(groupData))
 			//成功囘調
 			//		if(groupData.RspCode == '0000' && groupData.RspData != null) {
 			//				createGride(item, data.RspData);
@@ -313,7 +313,7 @@ var getGroupInfo = function(vvl) {
 				wd0.close();
 				if(data.RspCode == 0) {
 //					groupRoles = data.RspData;
-					console.log('获取群主的所有信息：' + JSON.stringify(data));
+					//console.log('获取群主的所有信息：' + JSON.stringify(data));
 					data.RspData.forEach(function(groupRole) {
 						if(groupRole.mstype == 1) {
 							masterInfo = groupRole;
@@ -351,7 +351,7 @@ var getRemarkInfos = function(data, item) {
 			list = addRemarkData(data)
 		}
 		events.clearChild(item);
-		console.log('最终呈现的数据：' + JSON.stringify(list));
+		//console.log('最终呈现的数据：' + JSON.stringify(list));
 		createGride(item, list);
 	})
 }
@@ -386,12 +386,12 @@ var getRemarkData = function(list, callback) {
 		list.forEach(function(cell) {
 			utids.push(cell.utid);
 		})
-		console.log('传的字符串：' + utids.toString())
+		//console.log('传的字符串：' + utids.toString())
 		postDataPro_PostUmk({
 			vvl: utids.toString()
 		}, wd, function(data) {
 			wd.close();
-			console.log('获取的备注信息：' + JSON.stringify(data));
+			//console.log('获取的备注信息：' + JSON.stringify(data));
 			var remark = document.getElementById('person-remark');
 			callback(data);
 		})

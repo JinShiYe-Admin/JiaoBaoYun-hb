@@ -236,7 +236,7 @@
 			 */
 			function initData() {
 				main = plus.webview.currentWebview();
-				console.log(JSON.stringify(main.data));
+				//console.log(JSON.stringify(main.data));
 				var oldBack = mui.back;
 				mui.back = function() {
 					audioBack();
@@ -260,7 +260,7 @@
 				//红色开始录制按钮
 				document.getElementById('redCircle').addEventListener('tap', function() {
 					var checkRecord = plus.navigator.checkPermission('RECORD');
-					console.log('checkRecord ' + checkRecord);
+					//console.log('checkRecord ' + checkRecord);
 					if(checkRecord == 'authorized' || plus.os.name == 'Android') {
 						this.style.display = 'none';
 						document.getElementById("whiteBlockBackground").style.display = 'inline-block';
@@ -271,9 +271,9 @@
 							if(checkRecord != 'denied') { //没有被拒绝
 								var tempAudio = plus.audio.getRecorder();
 								tempAudio.record({}, function(recordFile) {
-									console.log('success ' + recordFile);
+									//console.log('success ' + recordFile);
 								}, function(error) {
-									console.log('error ' + JSON.stringify(error));
+									//console.log('error ' + JSON.stringify(error));
 								});
 								tempAudio.stop();
 							}
@@ -321,7 +321,7 @@
 				//取消和确定
 				mui('#audioControl').on('tap', '.bottom-text', function() {
 					if(this.id == 'cancle') {
-						console.log('取消');
+						//console.log('取消');
 						audioStop();
 						stopCount();
 						initProgressBar();
@@ -329,7 +329,7 @@
 						document.getElementById("audioControl").style.display = 'none';
 						document.getElementById("redCircle").style.display = 'inline';
 					} else if(this.id == 'confirm') {
-						console.log('确定');
+						//console.log('确定');
 						events.fireToPageNone(main.data.webid, main.data.winid, audioOption);
 						mui.back();
 					}
@@ -351,7 +351,7 @@
 				recordAudio = RecordAudio.recordAudio({
 					//					time: 12000
 				}, function(fpath) {
-					console.log('录制音频成功 ' + fpath);
+					//console.log('录制音频成功 ' + fpath);
 					audioOption.fpath = fpath;
 					var audioTime = Math.ceil(recordTime / 10);
 					if(timeCount > audioTime) {
@@ -475,7 +475,7 @@
 			 * @param {Object} count 总共的秒数
 			 */
 			function progressBar(sec, count) {
-				//console.log('progressBar ' + sec + ' ' + count);
+				////console.log('progressBar ' + sec + ' ' + count);
 				var begin = Math.PI * (-0.5);
 				var now = Math.PI * (-0.5 + 2 * (sec / count));
 				ctx.beginPath();
@@ -489,7 +489,7 @@
 			 * 显示录制的音频
 			 */
 			function showAudio() {
-				console.log('showAudio ' + JSON.stringify(audioOption));
+				//console.log('showAudio ' + JSON.stringify(audioOption));
 				initProgressBar();
 				initTime();
 				document.getElementById("whiteBlockBackground").style.display = 'none';
@@ -514,11 +514,11 @@
 				}
 				audioPlayer = plus.audio.createPlayer(audioOption.fpath);
 				audioPlayer.play(function() {
-					console.log('播放完成');
+					//console.log('播放完成');
 					successCB();
 				}, function(e) {
 					audioPlayer = null;
-					console.log('播放失败 ' + JSON.stringify(e));
+					//console.log('播放失败 ' + JSON.stringify(e));
 					mui.toast('播放失败 ' + e.message);
 					errorCB(e);
 				});
@@ -539,7 +539,7 @@
 						if(!isNaN(audioTime) && audioTime != -1) {
 							audioOption.time = Math.ceil(audioTime);
 						}
-						//console.log('audioTime ' + audioTime);
+						////console.log('audioTime ' + audioTime);
 						showTime(audioOption.time);
 					}
 				}, 1000);
@@ -549,7 +549,7 @@
 			 * 暂停播放
 			 */
 			function audioPause() {
-				console.log('audioPause');
+				//console.log('audioPause');
 				if(audioPlayer) {
 					audioPlayer.pause();
 					pause = true;
@@ -560,7 +560,7 @@
 			 * 恢复播放
 			 */
 			function audioResume() {
-				console.log('audioPause');
+				//console.log('audioPause');
 				if(audioPlayer) {
 					audioPlayer.resume();
 					pause = false;
@@ -571,7 +571,7 @@
 			 * 停止播放
 			 */
 			function audioStop() {
-				console.log('audioStop');
+				//console.log('audioStop');
 				if(audioPlayer) {
 					audioPlayer.stop();
 					pause = false;

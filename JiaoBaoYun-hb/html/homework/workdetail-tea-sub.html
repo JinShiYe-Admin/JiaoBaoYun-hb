@@ -140,10 +140,10 @@
 				})
 				mui('.mui-segmented-control').on('tap', 'a', function() {
 					if(this.id == 'item1') {
-						console.log('已完成');
+						//console.log('已完成');
 						homeworkDetailNodes.alertBar.style.visibility = 'hidden';
 					} else if(this.id == 'item2') {
-						console.log('未完成');
+						//console.log('未完成');
 						if(remainArray.length == 0) {
 							homeworkDetailNodes.alertBar.style.visibility = 'hidden';
 						} else {
@@ -155,7 +155,7 @@
 				mui.previewImage();
 				resetData();
 				var data = plus.webview.currentWebview().data;
-				console.log('作业主界面传送的值：' + JSON.stringify(data));
+				//console.log('作业主界面传送的值：' + JSON.stringify(data));
 				homeworkModel = data;
 				//获取作业详情
 				requestHomeworkDetail();
@@ -167,19 +167,19 @@
 				})
 				events.preload('homework-comment.html', 200);
 				events.addTap('checkDetail', function() {
-					console.log('点击查看详情')
+					//console.log('点击查看详情')
 					homeworkDetailNodes.content.removeAttribute('max-height');
 					var arrowdown = homeworkDetailNodes.checkDetailBtn.getElementsByTagName('span')[0];
 					arrowdown.className = 'mui-icon mui-icon-arrowup'
 				})
 				events.addTap('alertAll', function() {
-					console.log('一键提醒');
+					//console.log('一键提醒');
 					alertStu(homeworkDetailNodes.alertAllBtn);
 
 				})
 				window.addEventListener('workDetail', function(e) {
 					resetData();
-					console.log('作业主界面传送的值：' + JSON.stringify(e.detail.data));
+					//console.log('作业主界面传送的值：' + JSON.stringify(e.detail.data));
 					homeworkModel = e.detail.data;
 					//获取作业详情
 					requestHomeworkDetail();
@@ -193,7 +193,7 @@
 				var showAll = document.getElementById("showAll");
 				showAll.addEventListener('tap', function() {
 					var str = this.innerText;
-					console.log('showAll' + str);
+					//console.log('showAll' + str);
 					if(str == '显示全部') {
 						showAll.innerText = '收起';
 						document.getElementById("homeWorkContent").style.webkitLineClamp = 'inherit';
@@ -245,7 +245,7 @@
 				//2.获取教师发布作业详情；
 				postDataPro_GetHomework(comData, wd, function(data) {
 					wd.close();
-					console.log('2.postDataPro_GetHomework:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					//console.log('2.postDataPro_GetHomework:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
 						homeworkDetailModel = data.RspData;
 						//						if(homeworkDetailModel.SubmitOnline == true) {
@@ -263,7 +263,7 @@
 						height_0 = contentElement.offsetHeight;
 						contentElement.style.webkitLineClamp = '8';
 						height_1 = contentElement.offsetHeight;
-						console.log(height_0 + '|' + height_1);
+						//console.log(height_0 + '|' + height_1);
 						if(height_0 > height_1) {
 							//内容高度大于八行
 							showAll.style.display = 'inline';
@@ -290,7 +290,7 @@
 				//3.	获取作业对应学生列表
 				postDataPro_GetStudentList(comData, wd, function(data) {
 					wd.close();
-					console.log('3.postDataPro_GetStudentList:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					//console.log('3.postDataPro_GetStudentList:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
 						//赋值
 						remainArray = data.RspData.Remain.List;
@@ -313,11 +313,11 @@
 							vvl: homeworkModel.classId, //群ID，查询的值
 							vvl1: '-1' //群员类型，0家长,1管理员,2老师,3学生,-1取全部
 						};
-						console.log('tempData:' + JSON.stringify(tempData));
+						//console.log('tempData:' + JSON.stringify(tempData));
 						//13.通过群ID获取群的正常用户
 						postDataPro_PostGusers(tempData, wd, function(data1) {
 							wd.close();
-							console.log('13.postDataPro_PostGusers:RspCode:' + data1.RspCode + ',RspData:' + JSON.stringify(data1.RspData) + ',RspTxt:' + data1.RspTxt);
+							//console.log('13.postDataPro_PostGusers:RspCode:' + data1.RspCode + ',RspData:' + JSON.stringify(data1.RspData) + ',RspTxt:' + data1.RspTxt);
 							if(data1.RspCode == 0) {
 								//循环当前的个人信息返回值数组
 								for(var i in data1.RspData) {
@@ -333,7 +333,7 @@
 											tempModel9 = $.extend(tempModel9, tempModel);
 										}
 									}
-									console.log('remainArray=' + JSON.stringify(remainArray))
+									//console.log('remainArray=' + JSON.stringify(remainArray))
 
 									//已完成
 									for(var m in uploadArray) {
@@ -346,8 +346,8 @@
 									}
 								}
 							}
-							console.log('未完成列表：' + JSON.stringify(remainArray));
-							console.log('已完成列表：' + JSON.stringify(uploadArray));
+							//console.log('未完成列表：' + JSON.stringify(remainArray));
+							//console.log('已完成列表：' + JSON.stringify(uploadArray));
 							//刷新界面
 							refreshStuList();
 						});
@@ -403,7 +403,7 @@
 					} else {
 						IsCommented = '未评';
 					}
-					console.log(IsCommented);
+					//console.log(IsCommented);
 					var headImg = updateHeadImg(uploadArray[i].uimg, 2)
 					var li = document.createElement('li');
 					li.workInfo = uploadArray[i];
@@ -483,7 +483,7 @@
 			}
 
 			function alertStu(alertBtn) {
-				console.log(alertBtn.id);
+				//console.log(alertBtn.id);
 				var userIds;
 				var userIdArr = [];
 				if(alertBtn.id == 'alertAll') {
@@ -502,7 +502,7 @@
 					var index = alertBtn.id.replace('alert', '');
 					userIds = remainArray[index].utid + '|' + remainArray[index].utid;
 				}
-				console.log('userIds===' + userIds);
+				//console.log('userIds===' + userIds);
 				//所需参数
 				var comData = {
 					teacherId: personalUTID, //教师Id
@@ -514,7 +514,7 @@
 				//2.获取教师发布作业详情；
 				postDataPro_HomeworkAlert(comData, wd, function(data) {
 					wd.close();
-					console.log('10.postDataPro_HomeworkAlert:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					//console.log('10.postDataPro_HomeworkAlert:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
 						if(alertBtn.id == 'alertAll') {
 							homeworkDetailNodes.alertAllBtn.innerHTML = '一键提醒'

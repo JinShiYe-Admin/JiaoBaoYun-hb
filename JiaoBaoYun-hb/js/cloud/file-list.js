@@ -26,16 +26,16 @@ var fileList = new Vue({
 	methods: {
 		pushFilesArr: function(files) {
 			this.filesArr = files.concat(this.filesArr);
-			console.log("获取数组的长度：" + this.filesArr.length + "具体内容：" + JSON.stringify(this.filesArr));
+			//console.log("获取数组的长度：" + this.filesArr.length + "具体内容：" + JSON.stringify(this.filesArr));
 		},
 		delFile: function(index) {
-			console.log("删除的时第几个：" + index)
+			//console.log("删除的时第几个：" + index)
 			this.filesArr.splice(index, 1);
 		},
 		showPic: function(path) {
-			console.log("获取的文件路径:" + path);
+			//console.log("获取的文件路径:" + path);
 			filter.showPath = path;
-			console.log("拎一个Vue里的路径：" + filter.showPath)
+			//console.log("拎一个Vue里的路径：" + filter.showPath)
 		}
 	}
 })

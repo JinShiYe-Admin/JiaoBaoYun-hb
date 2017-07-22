@@ -19,7 +19,7 @@ mui.plusReady(function() {
 		noDataContainer = null;
 		selectedDataContainer = null;
 		choseId = 0;
-		console.log(JSON.stringify(e.detail.data));
+		//console.log(JSON.stringify(e.detail.data));
 		//获取申请记录id
 		gutid = e.detail.data.gutid;
 		//获取申请角色
@@ -81,7 +81,7 @@ var getData = function(role, callback) {
 		vtp: role == 0 ? 0 : 1
 	}, wd, function(data) {
 		wd.close();
-		console.log('角色' + role + '获取的班级资料' + JSON.stringify(data))
+		//console.log('角色' + role + '获取的班级资料' + JSON.stringify(data))
 		if(data.RspCode != 0) {
 			mui.toast(data.RspTxt);
 		}
@@ -95,7 +95,7 @@ var getData = function(role, callback) {
  * @param {Object} data 数据
  */
 var setData = function(type, data) {
-	console.log('放置数据' + JSON.stringify(data));
+	//console.log('放置数据' + JSON.stringify(data));
 	if(data) {
 		data.forEach(function(item) {
 			if(item.stuname) {
@@ -168,8 +168,8 @@ var createFirstChild = function(type) {
  */
 var addListener = function() {
 	document.querySelector('.mui-table-view.mui-table-view-radio').addEventListener('selected', function(e) {
-		console.log("当前选中的为：" + e.detail.el.innerText);
-		//		console.log("当前选中的资料id为：" + e.detail.el.stuid);
+		//console.log("当前选中的为：" + e.detail.el.innerText);
+		//		//console.log("当前选中的资料id为：" + e.detail.el.stuid);
 		noDataContainer = e.detail.el;
 		if(selectedDataContainer) {
 			selectedDataContainer.className = "data-container";
@@ -178,7 +178,7 @@ var addListener = function() {
 		getMstype(e.detail.el.mstype);
 	});
 	mui("#list-container2").on("tap", ".data-container", function() {
-		console.log("点击事件：" + this.className);
+		//console.log("点击事件：" + this.className);
 		if(!noDataContainer) {
 			noDataContainer = list.querySelector(".mui-table-view-cell");
 		}
@@ -190,7 +190,7 @@ var addListener = function() {
 		selectedDataContainer = this;
 		choseId = parseInt(this.getAttribute("stuid"));
 		mstype=parseInt(this.getAttribute("mstype"));
-		console.log("当前选择的id:"+choseId+"；当前类型 :"+this.getAttribute("mstype"));
+		//console.log("当前选择的id:"+choseId+"；当前类型 :"+this.getAttribute("mstype"));
 	})
 }
 /**
@@ -234,7 +234,7 @@ var postJoinDo = function(type) {
 		wd,
 		function(data) {
 			wd.close();
-			console.log(JSON.stringify(data));
+			//console.log(JSON.stringify(data));
 			if(data.RspCode == '0000') {
 				mui.toast('申请通过!');
 				events.fireToPageNone('/html/mine/approval-apply.html', 'appPassed');

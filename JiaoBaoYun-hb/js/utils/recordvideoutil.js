@@ -20,7 +20,7 @@ var RecordVideo = (function(mod) {
 			outPutPath: outPutPath,
 			time: time
 		}, data);
-		console.log('recordVideo initOption ' + JSON.stringify(options));
+		//console.log('recordVideo initOption ' + JSON.stringify(options));
 		return options;
 	}
 
@@ -65,17 +65,17 @@ var RecordVideo = (function(mod) {
 		if(cmr) {
 			try {
 				cmr.startVideoCapture(function(capturedFile) {
-					console.log('录制成功 ' + fpath);
+					//console.log('录制成功 ' + fpath);
 					successCB(capturedFile);
 				}, function(error) {
 					if(error != 'null') {
-						console.log('录制失败 ' + JSON.stringify(error));
+						//console.log('录制失败 ' + JSON.stringify(error));
 						errorCB({
 							code: error.code, // 错误编码
 							message: error.message // 错误描述信息
 						});
 					} else {
-						console.log('未录制视频 ' + JSON.stringify(error));
+						//console.log('未录制视频 ' + JSON.stringify(error));
 					}
 				}, {});
 			} catch(e) {
@@ -108,7 +108,7 @@ var RecordVideo = (function(mod) {
 				var mVideo = document.createElement("video");
 				plus.io.resolveLocalFileSystemURL(p, function(entry) {
 					entry.file(function(file) {
-						console.log('filesize=' + file.size)
+						//console.log('filesize=' + file.size)
 						if(file.size > 1048576 * 30) {
 							//						mui.toast('视频大小不得超过30M');
 							errorCB({
@@ -116,11 +116,11 @@ var RecordVideo = (function(mod) {
 								message: '视频大小不得超过30M' // 错误描述信息
 							});
 						} else {
-							console.log(123)
+							//console.log(123)
 							mVideo.ondurationchange = function() {
-								console.log("ondurationchange  duration " + mVideo.duration);
+								//console.log("ondurationchange  duration " + mVideo.duration);
 								if(mVideo.duration < 11) {
-									console.log('成功：' + tempPath);
+									//console.log('成功：' + tempPath);
 									successCB("file://" + tempPath)
 
 								} else {
@@ -143,7 +143,7 @@ var RecordVideo = (function(mod) {
 
 			},
 			function(e) {
-				console.log('### ERROR ### 录制视频异常 name:' + e.code + " message:" + e.message);
+				//console.log('### ERROR ### 录制视频异常 name:' + e.code + " message:" + e.message);
 				if(e.code != 2) {
 					errorCB({
 						code: 'ERROR', // 错误编码
@@ -188,16 +188,16 @@ var RecordVideo = (function(mod) {
 			//第二个参数： 这整数resultCode是由子Activity通过其setResult() 方法返回。 适用于多个activity都返回数据时， 来标识到底是哪一个activity返回的值。
 			//第三个参数： 一个Intent对象， 带有返回的数据。 可以通过data.getXxxExtra()方法来获取指定数据类型的数据，
 			//停止录像
-			console.log('停止录像  ' + JSON.stringify(data));
+			//console.log('停止录像  ' + JSON.stringify(data));
 			if(requestCode == window.storageKeyName.CODERECORDVIDEO) { //拍照的Activity的code
 				if(resultCode == -1) { //成功
-					console.log('录像成功 ' + options.outPutPath);
+					//console.log('录像成功 ' + options.outPutPath);
 					var path = 'file://' + options.outPutPath;
 					successCB(path); //返回录像文件的位置
 				} else if(resultCode == 0) { //未录像
-					console.log('未录像');
+					//console.log('未录像');
 				} else {
-					console.log('录像失败 requestCode ' + requestCode + ' resultCode' + resultCode);
+					//console.log('录像失败 requestCode ' + requestCode + ' resultCode' + resultCode);
 					errorCB({
 						code: resultCode, // 错误编码
 						message: '录像失败' // 错误描述信息

@@ -104,7 +104,7 @@
 			function initData() {
 				var main = plus.webview.currentWebview(); //获取当前窗体对象
 				mainData = main.data; //接收页面传入的参数值
-				console.log(main.id + ' ' + JSON.stringify(mainData));
+				//console.log(main.id + ' ' + JSON.stringify(mainData));
 				var title = mainData.data.DocName || mainData.data.StudentName;
 				document.getElementById("title").innerText = title;
 			}
@@ -204,7 +204,7 @@
 					encLen: encLen //音视频时长
 				};
 				postDataPro_addStudentFile(comData, wd, function(data) {
-					console.log('70_addStudentFile_新增某学生档案.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					//console.log('70_addStudentFile_新增某学生档案.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
 						var time = 2000;
 						if(comData.encType == 3) {
@@ -256,17 +256,17 @@
 				uploadNum = fileArray.length; //记录上传的次数
 
 				CloudFileUtil.getQNUpToken(window.storageKeyName.QNGETUPTOKENFILE, getToken, function(data) {
-					console.log('获取上传凭证 ' + JSON.stringify(data));
+					//console.log('获取上传凭证 ' + JSON.stringify(data));
 					if(data.data.Status == 1) {
 						QNUptoken = data.data; //token数据
 						var configure = data.configure; //获取token的配置信息
-						console.log('七牛上传凭证:' + JSON.stringify(QNUptoken));
-						console.log('七牛配置信息:' + JSON.stringify(configure));
+						//console.log('七牛上传凭证:' + JSON.stringify(QNUptoken));
+						//console.log('七牛配置信息:' + JSON.stringify(configure));
 						if(multiMedia.data.PictureArray.length !== 0) { //图片
 							//记录图片和缩略图地址
 							for(var j = 0; j < multiMedia.data.PictureArray.length; j++) {
 								for(var i = 0; i < QNUptoken.Data.length; i++) {
-									//console.log(JSON.stringify(QNUptoken.Data[i]));
+									////console.log(JSON.stringify(QNUptoken.Data[i]));
 									var filePath = QNUptoken.Data[i].P_Key.split("/");
 									var fileName = filePath[filePath.length - 1];
 									var fileId = fileName.split("_")[0];
@@ -282,7 +282,7 @@
 								var videoPath = multiMedia.data.VideoArray[j].path.split("/");
 								var videoName = videoPath[videoPath.length - 1];
 								for(var i = 0; i < QNUptoken.Data.length; i++) {
-									//console.log(JSON.stringify(QNUptoken.Data[i]));
+									////console.log(JSON.stringify(QNUptoken.Data[i]));
 									var filePath = QNUptoken.Data[i].P_Key.split("/");
 									var fileName = filePath[filePath.length - 1];
 									if(videoName == fileName) {
@@ -295,13 +295,13 @@
 						wd.setTitle('上传中...');
 						taskCreate(wd);
 					} else {
-						console.log('### ERROR ### 获取上传凭证失败 ### ' + data.data.Message);
+						//console.log('### ERROR ### 获取上传凭证失败 ### ' + data.data.Message);
 						document.getElementById("commit").disabled = false;
 						wd.close();
 						mui.toast("上传失败 " + data.data.Message);
 					}
 				}, function(xhr, type, errorThrown) {
-					console.log('### ERROR ### 请求上传凭证失败 ###  ' + type);
+					//console.log('### ERROR ### 请求上传凭证失败 ###  ' + type);
 					document.getElementById("commit").disabled = false;
 					wd.close();
 					mui.toast('上传失败 ' + type);
@@ -320,16 +320,16 @@
 				 * 七牛批量删除
 				 */
 				CloudFileUtil.BatchDelete(window.storageKeyName.QNGETTOKENDELETE, batchDelete, function(data) {
-						console.log('七牛删除 ' + JSON.stringify(data));
+						//console.log('七牛删除 ' + JSON.stringify(data));
 						if(data.Status == 1) {
 							pathList = [];
 						} else {
-							console.log('### ERROR ### 七牛删除失败 ### ' + JSON.stringify(data));
+							//console.log('### ERROR ### 七牛删除失败 ### ' + JSON.stringify(data));
 						}
 						wd.close();
 					},
 					function(xhr, type, errorThrown) {
-						console.log('### ERROR ### 请求七牛删除失败 ### ' + JSON.stringify(type));
+						//console.log('### ERROR ### 请求七牛删除失败 ### ' + JSON.stringify(type));
 						wd.close();
 					}
 				);
@@ -369,9 +369,9 @@
 						}
 						CloudFileUtil.upload(fPath, QNUptoken.Data[i].Token, QNUptoken.Data[i].Key, function(upload, status) {
 							//上传任务完成的监听
-							console.log('上传任务完成' + status + '|' + JSON.stringify(upload));
+							//console.log('上传任务完成' + status + '|' + JSON.stringify(upload));
 							if(status == 200) {
-								console.log('上传成功');
+								//console.log('上传成功');
 								QNUptoken.Data[i].task = true;
 								uploadNum--;
 								var title = '上传 ' + (QNUptoken.Data.length - uploadNum) + "/" + (QNUptoken.Data.length);
@@ -385,7 +385,7 @@
 									pathList.push(multiMedia.data.VideoArray[num].thumb);
 								}
 								if(uploadNum == 0) {
-									console.log('所有上传都成功');
+									//console.log('所有上传都成功');
 									var encAddr = []; //附件地址
 									var encImg = []; //附件缩略图地址
 									var encLen = 0; //音视频时长
@@ -411,7 +411,7 @@
 									taskCreate(wd);
 								}
 							} else {
-								console.log('### ERROR ### 上传失败 ### ' + status + ' ' + JSON.stringify(upload));
+								//console.log('### ERROR ### 上传失败 ### ' + status + ' ' + JSON.stringify(upload));
 								document.getElementById("commit").disabled = false;
 								mui.toast('上传失败 ' + status + ' ' + upload.responseText);
 								if(pathList.length != 0) {
@@ -425,25 +425,25 @@
 							//var totalSize = AndroidFileSystem.readSize(upload.totalSize);
 							switch(upload.state) {
 								case 0: //上传任务开始调度
-									console.log('上传任务开始调度:|id:' + upload.__UUID__ + '|uploadState:' + upload.state);
+									//console.log('上传任务开始调度:|id:' + upload.__UUID__ + '|uploadState:' + upload.state);
 									break;
 								case 1: //上传任务开始请求
-									console.log('上传任务开始请求:|id:' + upload.__UUID__ + '|uploadState:' + upload.state);
+									//console.log('上传任务开始请求:|id:' + upload.__UUID__ + '|uploadState:' + upload.state);
 									break;
 								case 2: //上传任务请求已经建立
-									console.log('上传任务请求已经建立:|id:' + upload.__UUID__ + '|uploadState:' + upload.state);
+									//console.log('上传任务请求已经建立:|id:' + upload.__UUID__ + '|uploadState:' + upload.state);
 									break;
 								case 3: //上传任务提交数据
-									//console.log('上传任务状态监听:|id:' + id + '|uploadedSize:' + uploadedSize + '|totalSize:' + totalSize + '|uploadState:' + upload.state);
+									////console.log('上传任务状态监听:|id:' + id + '|uploadedSize:' + uploadedSize + '|totalSize:' + totalSize + '|uploadState:' + upload.state);
 									break;
 								case 4: //上传任务已完成
-									console.log('上传任务已完成:|id:' + upload.__UUID__ + '|uploadState:' + upload.state);
+									//console.log('上传任务已完成:|id:' + upload.__UUID__ + '|uploadState:' + upload.state);
 									break;
 								case 5: //上传任务已暂停
-									console.log('上传任务已暂停:|id:' + upload.__UUID__ + '|uploadState:' + upload.state);
+									//console.log('上传任务已暂停:|id:' + upload.__UUID__ + '|uploadState:' + upload.state);
 									break;
 								default:
-									console.log('上传任务状态监听:其他状态' + upload.state);
+									//console.log('上传任务状态监听:其他状态' + upload.state);
 									break;
 							}
 						}, function(task) {

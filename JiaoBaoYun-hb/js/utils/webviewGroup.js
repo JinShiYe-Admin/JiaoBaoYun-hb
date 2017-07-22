@@ -200,8 +200,8 @@ proto.switchTab = function(id) {
 		this._checkDrags(toWebview); //新建的时候均需校验
 	}
 	var self = this;
-//	console.log("current:" + fromWebview.id + ",to:" + fromToLeft);
-//	console.log("next:" + toWebview.id + ",from:" + toFromLeft);
+//	//console.log("current:" + fromWebview.id + ",to:" + fromToLeft);
+//	//console.log("next:" + toWebview.id + ",from:" + toFromLeft);
 
 	plus.webview.startAnimation({
 			'view': fromWebview,
@@ -219,7 +219,7 @@ proto.switchTab = function(id) {
 			'action': 'show'
 		},
 		function(e) {
-			//console.log("startAnimation callback...");
+			////console.log("startAnimation callback...");
 			if(e.id === toWebview.id) {
 				isNew && plus.nativeUI.showWaiting("加载中...");
 				this.currentWebview = toWebview;

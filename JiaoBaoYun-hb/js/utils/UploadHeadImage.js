@@ -45,7 +45,7 @@ var UploadHeadImage = (function($, mod) {
 				titleStr = '选择修改群头像的方式';
 				break;
 			default:
-				console.log('上传头像设置的类型异常');
+				//console.log('上传头像设置的类型异常');
 				break;
 		}
 		successCallBack = successCB;
@@ -88,10 +88,10 @@ var UploadHeadImage = (function($, mod) {
 						//capturedFile ：图片的路径
 						//显示等待窗口
 						var wd = events.showWaiting();
-						//console.log('拍照成功,图片的路径为：' + capturedFile);
+						////console.log('拍照成功,图片的路径为：' + capturedFile);
 						//将本地URL路径转换成平台绝对路径
 						//capturedFile = 'file://' + plus.io.convertLocalFileSystemURL(capturedFile);
-						//console.log('转换成平台绝对路径,图片的路径为：' + capturedFile);
+						////console.log('转换成平台绝对路径,图片的路径为：' + capturedFile);
 						compressImage(wd, capturedFile) //压缩图片
 					},
 					function(error) {
@@ -101,16 +101,16 @@ var UploadHeadImage = (function($, mod) {
 						if(mui.os.ios) {
 							if(code !== 2) {
 								mui.toast('拍照失败！' + '错误编码：' + code + ' 描述信息：' + message, '拍照失败');
-								console.log('拍照失败！' + JSON.stringify(error));
+								//console.log('拍照失败！' + JSON.stringify(error));
 							} else {
-								console.log('未拍取图片');
+								//console.log('未拍取图片');
 							}
 						} else if(mui.os.android) {
 							if(code !== 11) {
 								mui.toast('拍照失败！' + '错误编码：' + code + ' 描述信息：' + message, '拍照失败');
-								console.log('拍照失败！' + JSON.stringify(error));
+								//console.log('拍照失败！' + JSON.stringify(error));
 							} else {
-								console.log('未拍取图片:' + JSON.stringify(error));
+								//console.log('未拍取图片:' + JSON.stringify(error));
 							}
 						}
 					}, {}
@@ -135,7 +135,7 @@ var UploadHeadImage = (function($, mod) {
 		try {
 			plus.gallery.pick(function(file) {
 				var wd = events.showWaiting();
-				console.log('从相册选取图片成功,图片的路径为：' + file);
+				//console.log('从相册选取图片成功,图片的路径为：' + file);
 				compressImage(wd, file) //压缩图片
 			}, function(error) {
 				//从相册选取图片失败的回调
@@ -144,16 +144,16 @@ var UploadHeadImage = (function($, mod) {
 				if(mui.os.ios) {
 					if(code != -2) {
 						mui.toast('从相册选取图片失败！' + '错误编码：' + code + '描述信息：' + message);
-						console.log('从相册选取图片失败！' + JSON.stringify(error));
+						//console.log('从相册选取图片失败！' + JSON.stringify(error));
 					} else {
-						console.log('未选取图片');
+						//console.log('未选取图片');
 					}
 				} else if(mui.os.android) {
 					if(code != 12) {
 						mui.toast('从相册选取图片失败！' + '错误编码：' + code + '描述信息：' + message);
-						console.log('从相册选取图片失败！' + JSON.stringify(error));
+						//console.log('从相册选取图片失败！' + JSON.stringify(error));
 					} else {
-						console.log('未选取图片:' + JSON.stringify(error));
+						//console.log('未选取图片:' + JSON.stringify(error));
 					}
 				}
 			});
@@ -168,7 +168,7 @@ var UploadHeadImage = (function($, mod) {
 
 	//压缩图片并且在新页面显示压缩后的图片
 	function compressImage(wd, filepath) {
-		//console.log('压缩图片,图片的路径为：' + filepath);
+		////console.log('压缩图片,图片的路径为：' + filepath);
 		compress.compressImageTo_512KB({
 			path: filepath,
 			dst: '_documents/' + fileName
@@ -204,22 +204,22 @@ var UploadHeadImage = (function($, mod) {
 		CloudFileUtil.getQNUpToken(getUploadTokenUrl, getToken, function(data) {
 			var QNUptoken = data.data; //token数据
 			var configure = data.configure; //获取token的配置信息
-			console.log('七牛上传token:' + JSON.stringify(QNUptoken));
+			//console.log('七牛上传token:' + JSON.stringify(QNUptoken));
 			if(QNUptoken.Status == 0) { //失败
 				mui.toast('获取上传凭证失败 ' + QNUptoken.Message);
-				console.log('### ERROR ### 请求上传凭证失败' + QNUptoken.Message);
+				//console.log('### ERROR ### 请求上传凭证失败' + QNUptoken.Message);
 				wd.close();
 			} else {
 				CloudFileUtil.upload(fPath, QNUptoken.Data.Token, QNUptoken.Data.Key, function(upload, status) {
 					//上传任务完成的监听
-					console.log('上传任务完成:' + status);
-					console.log('上传任务完成:' + JSON.stringify(upload));
+					//console.log('上传任务完成:' + status);
+					//console.log('上传任务完成:' + JSON.stringify(upload));
 					if(status == 200) { //上传任务成功
 						//头像类型,个人头像0，资料头像1，群头像2
 						var thumb = QNUptoken.Data.OtherKey[configure.thumbKey]; //缩略图地址
 						var domain = QNUptoken.Data.Domain + QNUptoken.Data.Key; //文件地址
-						//console.log(thumb);
-						console.log(domain);
+						////console.log(thumb);
+						//console.log(domain);
 						setTimeout(function() {
 							switch(imageType) {
 								case 0: //个人头像
@@ -250,28 +250,28 @@ var UploadHeadImage = (function($, mod) {
 					var uploadState = upload.state;
 					switch(uploadState) {
 						case 0: //上传任务开始调度
-							console.log('上传任务开始调度:|id:' + id + '|uploadState:' + uploadState);
+							//console.log('上传任务开始调度:|id:' + id + '|uploadState:' + uploadState);
 							break;
 						case 1: //上传任务开始请求
-							console.log('上传任务开始请求:|id:' + id + '|uploadState:' + uploadState);
+							//console.log('上传任务开始请求:|id:' + id + '|uploadState:' + uploadState);
 							break;
 						case 2: //上传任务请求已经建立
-							console.log('上传任务请求已经建立:|id:' + id + '|uploadState:' + uploadState);
+							//console.log('上传任务请求已经建立:|id:' + id + '|uploadState:' + uploadState);
 							break;
 						case 3: //上传任务提交数据
-							//console.log('上传任务状态监听:|id:' + id + '|uploadedSize:' + uploadedSize + '|totalSize:' + totalSize + '|uploadState:' + uploadState);
+							////console.log('上传任务状态监听:|id:' + id + '|uploadedSize:' + uploadedSize + '|totalSize:' + totalSize + '|uploadState:' + uploadState);
 							//var num = parseInt(upload.uploadedSize / upload.totalSize * 100) + '%';
-							//console.log(num);
+							////console.log(num);
 							//size.setTitle('正在上传 ' + num);
 							break;
 						case 4: //上传任务已完成
-							//console.log('上传任务已完成:|id:' + id + '|uploadState:' + uploadState);
+							////console.log('上传任务已完成:|id:' + id + '|uploadState:' + uploadState);
 							break;
 						case 5: //上传任务已暂停
-							console.log('上传任务已暂停:|id:' + id + '|uploadState:' + uploadState);
+							//console.log('上传任务已暂停:|id:' + id + '|uploadState:' + uploadState);
 							break;
 						default:
-							console.log('上传任务状态监听:其他状态:' + uploadState);
+							//console.log('上传任务状态监听:其他状态:' + uploadState);
 							break;
 					}
 				}, function(task) {
@@ -282,7 +282,7 @@ var UploadHeadImage = (function($, mod) {
 		}, function(xhr, type, errorThrown) {
 			wd.close();
 			mui.toast('请求上传凭证失败 ' + type);
-			console.log('### ERROR ### 请求上传凭证失败' + type);
+			//console.log('### ERROR ### 请求上传凭证失败' + type);
 		});
 	}
 
@@ -308,7 +308,7 @@ var UploadHeadImage = (function($, mod) {
 		//			back: 'none'
 		//		});
 		postDataPro_PostReGinfo(comData2, wd, function(data) {
-			console.log('8_PostReGinfo:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+			//console.log('8_PostReGinfo:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 			if(data.RspCode == 0) {
 				//成功的回调
 				successCallBack(imgeURL);
@@ -334,7 +334,7 @@ var UploadHeadImage = (function($, mod) {
 			vvl: imgeURL //对应的值
 		};
 		postDataPro_PostReUinf(comData, wd, function(data) {
-			console.log('6_PostReUinf:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+			//console.log('6_PostReUinf:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 			if(data.RspCode == 0) {
 				//成功的回调
 				successCallBack(imgeURL);
@@ -368,7 +368,7 @@ var UploadHeadImage = (function($, mod) {
 			urel: '' //关系,更新与家长关系必填,其他留空
 		};
 		postDataPro_PostReStu(comData, wd, function(data) {
-			console.log('23_PostReStu:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+			//console.log('23_PostReStu:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 			if(data.RspCode == 0) {
 				//成功的回调
 				successCallBack(stuImgePath);

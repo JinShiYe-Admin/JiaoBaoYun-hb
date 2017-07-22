@@ -22,7 +22,7 @@ var filter = new Vue({
 					return;
 				}
 				gallery.getMultiplePic(30 - filter.fileNo, function(paths) {
-					console.log("要传递的数据：" + JSON.stringify(paths));
+					//console.log("要传递的数据：" + JSON.stringify(paths));
 					filter.fireData(paths);
 				});
 			},
@@ -85,7 +85,7 @@ var filter = new Vue({
 			this.options = optionArr;
 		},
 		setData: function() {
-			console.log("放置数据")
+			//console.log("放置数据")
 			var div = document.getElementById("filter");
 			var ul = document.createElement("ul");
 			ul.innerHTML = '<filter-item v-for="item of options" v-bind:option="item" v-if="cellIsShow(item)" ></filter-item>';

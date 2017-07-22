@@ -81,7 +81,7 @@
 			mui.plusReady(function() {
 				var main = plus.webview.currentWebview(); //获取当前窗体对象
 				var data = main.data; //接收A页面传入参数值
-				console.log('qun_manage_sub.html:' + JSON.stringify(data));
+				//console.log('qun_manage_sub.html:' + JSON.stringify(data));
 				//获取创建的群
 				getCGQun();
 
@@ -94,7 +94,7 @@
 				mui('#allQun').on('tap', '.mui-table-view-cell', function() {
 					var gid = this.id.replace('qun_', ''); //群id
 					var gname = this.lastElementChild.innerText; //群名称
-					console.log(gid + ' ' + gname);
+					//console.log(gid + ' ' + gname);
 					if(data.type == '0') { //群管理
 						events.openNewWindowWithData('qun_manage_member_main.html', {
 							gid: gid, //群id
@@ -111,7 +111,7 @@
 				//长按修改群信息
 				mui('#allQun').on('longtap', '.mui-table-view-cell', function() {
 					var gid = this.id.replace('qun_', '');
-					console.log(this.id + '|' + gid);
+					//console.log(this.id + '|' + gid);
 					events.openNewWindowWithData('qun_manage_info_change.html', {
 						gid: gid, //群ID
 					});
@@ -120,7 +120,7 @@
 				//修改群信息（群名称或者群头像）
 				window.addEventListener('changeQunInfo', function(e) {
 					var data = e.detail;
-					console.log('changeQunInfo ' + JSON.stringify(data));
+					//console.log('changeQunInfo ' + JSON.stringify(data));
 					if(data.type == 'gname') { //群名称
 						document.getElementById("gname_" + data.gid).innerText = data.value;
 					} else if(data.type == 'gimg') {
@@ -131,7 +131,7 @@
 				//创建一个群
 				window.addEventListener('createQun', function(e) {
 					var data = e.detail.data;
-					console.log('createQun ' + JSON.stringify(data));
+					//console.log('createQun ' + JSON.stringify(data));
 					addQunItem(data);
 				});
 			});
@@ -151,7 +151,7 @@
 			 * @param {Object} data
 			 */
 			function addQunItem(data) {
-				//console.log('addQunItem ' + JSON.stringify(data));
+				////console.log('addQunItem ' + JSON.stringify(data));
 				var element = document.createElement('li');
 				element.id = 'qun_' + data.gid;
 				element.className = 'mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3';
@@ -176,7 +176,7 @@
 				};
 				postDataPro_PostGList(getQunData, wd, function(data) {
 					mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
-					console.log('9.获取用户创建的群success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					//console.log('9.获取用户创建的群success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
 						document.getElementById("allQun").innerHTML = '';
 						mui.each(data.RspData, function(index, element) {

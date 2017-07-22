@@ -25,29 +25,29 @@
 			mui.plusReady(function() {
 				//获取APP的_documents文件夹对象,并清理文件
 				plus.io.resolveLocalFileSystemURL("_documents/", function(docEntry) {
-					console.log("获取_documents文件操作对象成功 " + docEntry.fullPath);
+					//console.log("获取_documents文件操作对象成功 " + docEntry.fullPath);
 					var directoryReader = docEntry.createReader();
 					directoryReader.readEntries(function(allEntry) {
 						for(var i in allEntry) {
-							console.log("Reader " + i + " " + allEntry[i].isFile + " " + allEntry[i].fullPath);
+							//console.log("Reader " + i + " " + allEntry[i].isFile + " " + allEntry[i].fullPath);
 							if(allEntry[i].isFile) { //清除文件
 								allEntry[i].remove(function(remSucCB) {
-									console.log("删除文件成功 " + remSucCB);
+									//console.log("删除文件成功 " + remSucCB);
 								}, function(remErrorCB) {
-									console.log("删除文件失败" + JSON.stringify(remErrorCB));
+									//console.log("删除文件失败" + JSON.stringify(remErrorCB));
 								});
 							}
 						}
 					}, function(allEntryErrorCB) {
-						console.log("读取_documents文件夹失败" + JSON.stringify(docEntryErrorCB));
+						//console.log("读取_documents文件夹失败" + JSON.stringify(docEntryErrorCB));
 					});
 				}, function(docEntryErrorCB) {
-					console.log("获取_documents文件夹失败" + JSON.stringify(docEntryErrorCB));
+					//console.log("获取_documents文件夹失败" + JSON.stringify(docEntryErrorCB));
 				});
 
 				//如果之前登录成功，则重新获取token，获取个人信息，则为登录成功
 				var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
-				console.log('person===' + JSON.stringify(personal));
+				//console.log('person===' + JSON.stringify(personal));
 				if(!personal) { //没有账号 设置游客账号信息，并保存到本地
 					defalutPerson();
 				}
@@ -59,13 +59,13 @@
 				function wainshow() {
 					var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
 					if(plus.networkinfo.getCurrentType() == plus.networkinfo.CONNECTION_NONE) {
-						console.log('没有网络！！！！');
+						//console.log('没有网络！！！！');
 						mui.toast("网络异常，请检查网络设置！");
 					} else {
 //						if(!plus.webview.currentWebview().canJump) {
 //							appUpdate.updateApp();
 //						}
-						console.log('网络连接拉！！！！');
+						//console.log('网络连接拉！！！！');
 						//判断上次有没有登录，如果登录，就不执行登录协议
 						if(loginFlag == 0) {
 							loginFlag = 1;
@@ -115,11 +115,11 @@
 			function login() {
 				events.defaultLogin(function(data) {
 					if(plus.networkinfo.getCurrentType() == plus.networkinfo.CONNECTION_NONE) {
-						console.log('没有网络！！！！');
+						//console.log('没有网络！！！！');
 						mui.toast("网络异常，请检查网络设置！");
 						return;
 					}
-					console.log("自动登录获取的值1111：" + JSON.stringify(data));
+					//console.log("自动登录获取的值1111：" + JSON.stringify(data));
 					if(data.value == 1) {
 						loginFlag = 1;
 						events.preload('index.html');

@@ -17,13 +17,13 @@ mui.plusReady(function() {
 	//最大长度500
 	jQuery('#publish-content').prop("maxLength", 500);
 	//	var webHeight = plus.android.invoke(plus.android.currentWebview(), "getHeight");
-	//	console.log("屏幕宽度：" + webHeight);
+	//	//console.log("屏幕宽度：" + webHeight);
 	events.preload('classes-select.html', 200);
 	window.addEventListener('postClasses', function(e) {
 		CloudFileUtil.files = [];
 		events.clearChild(document.getElementById('pictures'));
 		personalUTID = parseInt(window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid);
-		console.log('发布作业界面获取的班级数据：' + JSON.stringify(e.detail.data));
+		//console.log('发布作业界面获取的班级数据：' + JSON.stringify(e.detail.data));
 		var switchItem = document.getElementById("onlineSwitch");
 		var isActive = switchItem.classList.contains("mui-active");
 		if(!isActive) {
@@ -66,19 +66,19 @@ mui.plusReady(function() {
 				plus.nativeUI.showWaiting(storageKeyName.UPLOADING, {
 					back: 'none'
 				}); //等待框
-				console.log("保存的路径：" + JSON.stringify(paths));
+				//console.log("保存的路径：" + JSON.stringify(paths));
 				var saveSpace = storageKeyName.CLASSSPACE; //保存路径
 				compress.compressPics(paths, function(compressedPaths) {
-					console.log('获取的图片路径：' + JSON.stringify(compressedPaths));
+					//console.log('获取的图片路径：' + JSON.stringify(compressedPaths));
 					var data = CloudFileUtil.getMultipleUploadDataOptions(compressedPaths, 6, 200, 0, saveSpace); //获取获取token的各参数
 					CloudFileUtil.getQNUpTokenWithManage(storageKeyName.QNGETUPLOADTOKEN, data.options, function(datas) {
-							console.log("传回来的值：" + JSON.stringify(datas)) //回调数据
+							//console.log("传回来的值：" + JSON.stringify(datas)) //回调数据
 							if(datas.Status == 1) { //成功
 								var tokenInfos = datas.Data; //参数信息
 								var imgs=[];
 								//上传图片
 								CloudFileUtil.uploadFiles(compressedPaths, tokenInfos, function(uploadData, status,index) {
-									console.log(JSON.stringify(uploadData));
+									//console.log(JSON.stringify(uploadData));
 									 imgs[index] = {
 										url: tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key,
 										thumb: (tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key).replace(saveSpace, saveSpace + "thumb/"),
@@ -99,7 +99,7 @@ mui.plusReady(function() {
 						},
 						//错误的回调
 						function(xhr, type, errorThrown) {
-							console.log("错误类型：" + type + errorThrown);
+							//console.log("错误类型：" + type + errorThrown);
 							plus.nativeUI.closeWaiting();
 						});
 				});
@@ -124,13 +124,13 @@ mui.plusReady(function() {
 					var localPath = event.target;
 					var data = CloudFileUtil.getSingleUploadDataOptions(localPath, 6, 200, 0, saveSpace);
 					CloudFileUtil.getQNUpTokenWithManage(storageKeyName.QNGETUPLOADTOKEN, data.options, function(datas) {
-						console.log("获取的数据：" + JSON.stringify(datas));
+						//console.log("获取的数据：" + JSON.stringify(datas));
 						if(datas.Status == 1) {
 							var tokenInfo = datas.Data;
 
 							//上传文件
 							CloudFileUtil.uploadFile(tokenInfo, localPath, function(uploadData, status) {
-								console.log(JSON.stringify(uploadData));
+								//console.log(JSON.stringify(uploadData));
 								var img = { //图片信息
 									url: tokenInfo.Domain + tokenInfo.Key,
 									thumb: tokenInfo.OtherKey[data.thumbKey],
@@ -144,7 +144,7 @@ mui.plusReady(function() {
 						}
 
 					}, function(xhr, type, errorThrown) {
-						console.log("错误类型：" + type + errorThrown);
+						//console.log("错误类型：" + type + errorThrown);
 						plus.nativeUI.closeWaiting(); //关闭等待框
 					});
 				})
@@ -159,7 +159,7 @@ mui.plusReady(function() {
 	//录像按钮
 	events.addTap('getVideo', function() {
 		//			camera.getVideo(camera.getCamera(), function(videoPath) {
-		//				console.log("videoPath:" + videoPath);
+		//				//console.log("videoPath:" + videoPath);
 		//			})
 		mui.toast('功能暂未开放！');
 	});
@@ -183,7 +183,7 @@ function requestSubjectList(callback) {
 	//17.获取所有科目列表
 	postDataPro_GetSubjectList(comData, wd, function(data) {
 		wd.close();
-		console.log('发布作业界面获取的科目列表数据：' + JSON.stringify(data));
+		//console.log('发布作业界面获取的科目列表数据：' + JSON.stringify(data));
 		if(data.RspCode == 0) {
 			//给科目数组赋值
 			callback(data.RspData.List);
@@ -240,9 +240,9 @@ var setRemoveClassListener = function() {
 	mui('.receive-classes').on('tap', '.class-del', function() {
 		var classes = document.getElementById('classes');
 		classes.removeChild(classes.querySelector('.gid' + this.bindClass.gid));
-		console.log('删除的班级数据：' + JSON.stringify(this.bindClass));
+		//console.log('删除的班级数据：' + JSON.stringify(this.bindClass));
 		selectClassArray[selectClassArray.indexOf(this.bindClass)].isSelected = false;
-		console.log('删除班级后所有班级数据：' + JSON.stringify(selectClassArray));
+		//console.log('删除班级后所有班级数据：' + JSON.stringify(selectClassArray));
 	})
 }
 /**
@@ -252,10 +252,10 @@ var setIsOnline = function() {
 	document.getElementById("onlineSwitch").addEventListener("toggle", function(event) {
 		if(event.detail.isActive) {
 			submitOnLine = true;
-			console.log("你启动了开关");
+			//console.log("你启动了开关");
 		} else {
 			submitOnLine = false;
-			console.log("你关闭了开关");
+			//console.log("你关闭了开关");
 		}
 	})
 }
@@ -319,7 +319,7 @@ var requirePostGUInfo = function(wd, callback) {
 		postDataPro_PostGusers(comData, wd, function(data) {
 			tempFlag++;
 			if(data.RspCode == 0) {
-				console.log('13.postDataPro_PostGusers:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				//console.log('13.postDataPro_PostGusers:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 				//遍历班级列表，
 				for(var n in selectClassArray) {
 					var tempModel2 = selectClassArray[n];
@@ -340,7 +340,7 @@ var requirePostGUInfo = function(wd, callback) {
 			}
 			//请求完成后，请求下一个班级
 			if(tempFlag == selectClassArray.length) {
-				console.log('学生资料群信息数据：' + JSON.stringify(selectClassArray))
+				//console.log('学生资料群信息数据：' + JSON.stringify(selectClassArray))
 				setClasses();
 				wd.close();
 			}
@@ -366,7 +366,7 @@ function requestPublishHomework(workContent) {
 	//组装学生数组串，
 	var tempStuArray = [];
 	//循环选择的群
-	console.log('发布作业前数据：' + JSON.stringify(selectClassArray));
+	//console.log('发布作业前数据：' + JSON.stringify(selectClassArray));
 	for(var i in selectClassArray) {
 		var tempClassModel = selectClassArray[i];
 		if(tempClassModel.isSelected) {
@@ -403,11 +403,11 @@ function requestPublishHomework(workContent) {
 	//12.发布作业,逻辑：作业标题生成标准，时间+星期几+科目+“作业”，比如“11月11日星期一语文作业”
 	postDataPro_PublishHomework(comData, wd, function(data) {
 		wd.close();
-		console.log('发布作业界面发布作业回调：' + JSON.stringify(data));
+		//console.log('发布作业界面发布作业回调：' + JSON.stringify(data));
 		if(data.RspCode == 0) {
 
 			events.fireToPageNone('homework-tea.html', 'homeworkPublished');
-			console.log("空值的班级：" + JSON.stringify(emptyClasses))
+			//console.log("空值的班级：" + JSON.stringify(emptyClasses))
 			var toastInfo = [];
 			for(var j in emptyClasses) {
 				toastInfo.push(emptyClasses[j].gname);

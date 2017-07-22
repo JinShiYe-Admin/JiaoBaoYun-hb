@@ -15,7 +15,7 @@ var files = (function(mod) {
 		plus.io.requestFileSystem(type, function(fs) {
 			// 可通过fs进行文件操作 
 			mod.readDirectory(fs.root)
-			console.log("files" + fs.name);
+			//console.log("files" + fs.name);
 		}, function(e) {
 			alert("Request file system failed: " + e.message);
 		});
@@ -23,11 +23,11 @@ var files = (function(mod) {
 	mod.readDirectory = function(directory) {
 		var directoryReader = directory.createReader();
 		var entries = [];
-		console.log("whatever")
+		//console.log("whatever")
 		directoryReader.readEntries(function(entries) {
 			var i;
 			for(i = 0; i < entries.length; i++) {
-				console.log(JSON.stringify(entries[i].name));
+				//console.log(JSON.stringify(entries[i].name));
 			}
 		}, function(e) {
 			alert("Read entries failed: " + e.message);
@@ -36,13 +36,13 @@ var files = (function(mod) {
 	}
 	mod.getFileByPath = function(path, callback) {
 			plus.io.resolveLocalFileSystemURL(path, function(entry) {
-				//			console.log(JSON.stringify(entry.File.fileName))
+				//			//console.log(JSON.stringify(entry.File.fileName))
 				// Read data from file
 				var abPath = entry.toLocalURL();
 				var img = new Image();
 				img.onload=function(){
 					var imgData = getBase64Image(img);
-					console.log(imgData);
+					//console.log(imgData);
 					callback('data:image/png;base64,'+imgData);
 				}
 				img.src = abPath;
@@ -50,13 +50,13 @@ var files = (function(mod) {
 				//			var reader = null;
 				//			entry.file(function(file) {
 				//				reader = new plus.io.FileReader();
-				//				console.log("getFile:" + JSON.stringify(file));
+				//				//console.log("getFile:" + JSON.stringify(file));
 				//				reader.onloadend = function(evt) {
-				//					console.log("Read success:"+evt.target.result);
+				//					//console.log("Read success:"+evt.target.result);
 				//					// Get data
 				//					var fileStream=evt.target.result
 				//					
-				//					console.log(fileStream);
+				//					//console.log(fileStream);
 				//					
 				//					callback(fileStream);
 				//				};
@@ -68,14 +68,14 @@ var files = (function(mod) {
 		}
 		//			},
 		//			function(e) {
-		//				console.log(e.message);
+		//				//console.log(e.message);
 		//			}
 		//将图片压缩转成base64 
 	function getBase64Image(img) {
 		var canvas = document.createElement("canvas");
 		var width = img.width;
 		var height = img.height;
-		console.log('img.width:'+img.width+",img.height:"+img.height);
+		//console.log('img.width:'+img.width+",img.height:"+img.height);
 		// calculate the width and height, constraining the proportions 
 		if(width > height) {
 			if(width > 500) {

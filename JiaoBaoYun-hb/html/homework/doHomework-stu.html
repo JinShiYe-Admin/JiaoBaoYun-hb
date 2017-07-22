@@ -82,7 +82,7 @@
 					homeworkModel = e.detail.data;
 					var textView = document.getElementById('input-content');
 					textView.value = '';
-					console.log('学生做作业界面从上级界面获取的做作业数据：' + JSON.stringify(homeworkModel));
+					//console.log('学生做作业界面从上级界面获取的做作业数据：' + JSON.stringify(homeworkModel));
 					flag = 0;
 				})
 				//作业详情监听
@@ -92,7 +92,7 @@
 					personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 					homeworkModel = e.detail.data;
 					var files = CloudFileUtil.rechargePicsData(homeworkModel.HomeworkResult.Files);
-					console.log('修改作业数据：' + JSON.stringify(homeworkModel))
+					//console.log('修改作业数据：' + JSON.stringify(homeworkModel))
 					var textView = document.getElementById('input-content');
 					textView.value = homeworkModel.HomeworkResult.Result;
 					flag = 1;
@@ -131,13 +131,13 @@
 								var localPath = event.target;
 								var data = CloudFileUtil.getSingleUploadDataOptions(localPath, 6, 200, 0, saveSpace);
 								CloudFileUtil.getQNUpTokenWithManage(storageKeyName.QNGETUPLOADTOKEN, data.options, function(datas) {
-									console.log("获取的数据：" + JSON.stringify(datas));
+									//console.log("获取的数据：" + JSON.stringify(datas));
 									if(datas.Status == 1) {
 										var tokenInfo = datas.Data;
 
 										//上传文件
 										CloudFileUtil.uploadFile(tokenInfo, localPath, function(uploadData, status) {
-											console.log(JSON.stringify(uploadData));
+											//console.log(JSON.stringify(uploadData));
 											var img = { //图片信息
 												url: tokenInfo.Domain + tokenInfo.Key,
 												thumb: tokenInfo.OtherKey[data.thumbKey],
@@ -151,7 +151,7 @@
 									}
 
 								}, function(xhr, type, errorThrown) {
-									console.log("错误类型：" + type + errorThrown);
+									//console.log("错误类型：" + type + errorThrown);
 									plus.nativeUI.closeWaiting(); //关闭等待框
 								});
 							})
@@ -179,19 +179,19 @@
 							plus.nativeUI.showWaiting(storageKeyName.UPLOADING, {
 								back: 'none'
 							}); //等待框
-							console.log("保存的路径：" + JSON.stringify(paths));
+							//console.log("保存的路径：" + JSON.stringify(paths));
 							var saveSpace = storageKeyName.CLASSSPACE; //保存路径
 							compress.compressPics(paths, function(compressedPaths) {
-								console.log('获取的图片路径：' + JSON.stringify(compressedPaths));
+								//console.log('获取的图片路径：' + JSON.stringify(compressedPaths));
 								var data = CloudFileUtil.getMultipleUploadDataOptions(compressedPaths, 6, 200, 0, saveSpace); //获取获取token的各参数
 								CloudFileUtil.getQNUpTokenWithManage(storageKeyName.QNGETUPLOADTOKEN, data.options, function(datas) {
-										console.log("传回来的值：" + JSON.stringify(datas)) //回调数据
+										//console.log("传回来的值：" + JSON.stringify(datas)) //回调数据
 										if(datas.Status == 1) { //成功
 											var tokenInfos = datas.Data; //参数信息
 											var imgs = [];
 											//上传图片
 											CloudFileUtil.uploadFiles(compressedPaths, tokenInfos, function(uploadData, status, index) {
-												console.log(JSON.stringify(uploadData));
+												//console.log(JSON.stringify(uploadData));
 												imgs[index] = {
 													url: tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key,
 													thumb: (tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key).replace(saveSpace, saveSpace + "thumb/"),
@@ -212,7 +212,7 @@
 									},
 									//错误的回调
 									function(xhr, type, errorThrown) {
-										console.log("错误类型：" + type + errorThrown);
+										//console.log("错误类型：" + type + errorThrown);
 										plus.nativeUI.closeWaiting();
 									});
 							});
@@ -228,7 +228,7 @@
 				var textView = document.getElementById('input-content');
 				var tempText = textView.value;
 
-				console.log('textView.value===' + tempText)
+				//console.log('textView.value===' + tempText)
 				if(tempText) {
 					tempText = events.trim(tempText);
 				}
@@ -258,7 +258,7 @@
 				//7.	提交作业结果；逻辑：如果是图片类型，同时生成缩略图
 				postDataPro_SubmitHomeworkResult(comData, wd, function(data) {
 					wd.close();
-					console.log('做作业界面，提交作业获取的值' + JSON.stringify(data));
+					//console.log('做作业界面，提交作业获取的值' + JSON.stringify(data));
 					if(data.RspCode == 0) {
 						mui.toast('提交作业答案成功！')
 						//清空输入框
@@ -283,7 +283,7 @@
 				var textView = document.getElementById('input-content');
 				var tempText = textView.value;
 				tempText = events.trim(tempText);
-				console.log('textView.value===' + tempText)
+				//console.log('textView.value===' + tempText)
 				if(!tempText || tempText == '') {
 					mui.toast('请输入作业内容');
 					return;
@@ -308,7 +308,7 @@
 				//9.修改作业结果；逻辑：如果是图片类型，同时生成缩略图
 				postDataPro_ModifyHomeworkResult(comData, wd, function(data) {
 					wd.close();
-					console.log('9.postDataPro_ModifyHomeworkResult:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					//console.log('9.postDataPro_ModifyHomeworkResult:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
 						mui.toast('修改作业答案成功！')
 						events.fireToPageNone('homework-commented.html', 'refreshAnswer', {

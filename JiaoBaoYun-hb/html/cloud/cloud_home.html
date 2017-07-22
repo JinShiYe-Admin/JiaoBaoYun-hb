@@ -403,7 +403,7 @@
 					down: {
 						callback: function() {
 							var self = this;
-							//console.log("下拉刷新");
+							////console.log("下拉刷新");
 							mui.fire(plus.webview.getWebviewById("index.html"), 'aboutmNoRead');
 							//文件存储数组
 							changeData();
@@ -463,7 +463,7 @@
 				//修改云存储信息
 				window.addEventListener('cloudDataChange', function(e) {
 					var data = e.detail.data;
-					console.log("cloudDataChange " + JSON.stringify(data));
+					//console.log("cloudDataChange " + JSON.stringify(data));
 					switch(data.type) {
 						case "addFolder": //新增文件夹
 							addStorageFolder(data.data, 1);
@@ -481,7 +481,7 @@
 							}
 							break;
 						default:
-							console.log("default " + data.type);
+							//console.log("default " + data.type);
 							break;
 					}
 				});
@@ -512,20 +512,20 @@
 
 				var self = plus.webview.currentWebview();
 				var androidHeight;
-				//console.log('getStyle ' + JSON.stringify(self.getStyle()));
-				//console.log('clientHeight ' + document.body.clientHeight);
+				////console.log('getStyle ' + JSON.stringify(self.getStyle()));
+				////console.log('clientHeight ' + document.body.clientHeight);
 				//防止 父页面选项卡被输入法撑起
 				if(mui.os.android) {
 					androidHeight = plus.android.invoke(plus.android.currentWebview(), "getHeight");
 					window.addEventListener('resize', function() {
-						console.log('clientHeight ' + document.body.clientHeight);
-						//console.log('resize getStyle ' + JSON.stringify(self.getStyle()));
-						//console.log('androidHeight ' + androidHeight);
+						//console.log('clientHeight ' + document.body.clientHeight);
+						////console.log('resize getStyle ' + JSON.stringify(self.getStyle()));
+						////console.log('androidHeight ' + androidHeight);
 						var a = plus.android.invoke(plus.android.currentWebview(), "getHeight"); //webview高度
 						//var b = plus.navigator.getStatusbarHeight(); //状态栏高度
 						//var c = plus.screen.resolutionHeight; //屏幕高度
 						//var d = (c - a - b);
-						//console.log('webview高度：' + a + " 状态栏高度：" + b + " 屏幕高度：" + c + " 输入法高度:" + d)
+						////console.log('webview高度：' + a + " 状态栏高度：" + b + " 屏幕高度：" + c + " 输入法高度:" + d)
 						if(a < androidHeight) {
 							//键盘弹出
 							self.setStyle({
@@ -554,7 +554,7 @@
 					} else { //档案
 						self.disabled = true;
 						var data = studentDoc[id.replace('data_', '')];
-						console.log(JSON.stringify(data));
+						//console.log(JSON.stringify(data));
 						events.openNewWindowWithData('record_student_main.html', data);
 						setTimeout(function() {
 							self.disabled = false;
@@ -620,7 +620,7 @@
 							//var wd = events.showWaiting();
 							postDataPro_PostDiFiA(comData, wd, function(data) {
 								//wd.close();
-								console.log('27.postDataPro_PostDiFiA:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+								//console.log('27.postDataPro_PostDiFiA:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 								if(data.RspCode == 0) {
 									//26.用户云盘顶层文件及文件夹获取
 									postFirstFile();
@@ -691,18 +691,18 @@
 					} else { //班级
 						var type = this.getAttribute('type');
 						if(type == 0) {
-							//console.log('班级');
+							////console.log('班级');
 							var index = this.id.replace('tarClass', '');
-							//console.log('index：' + index);
+							////console.log('index：' + index);
 							document.getElementById("tarClass_" + gid).style.display = 'none';
 							events.singleWebviewInPeriod(self, '../quan/class_space.html', {
 								classId: datasource[index].gid,
 								className: datasource[index].gname
 							});
 						} else {
-							console.log('家校圈');
+							//console.log('家校圈');
 							var index = this.id.replace('tarClass1', '');
-							console.log('index：' + index);
+							//console.log('index：' + index);
 							document.getElementById("tarClass1_" + gid).style.display = 'none';
 							mui.openWindow({
 								url: '../quan/zone_main.html',
@@ -763,7 +763,7 @@
 					}
 					
 					if(plus.networkinfo.getCurrentType() == plus.networkinfo.CONNECTION_NONE) {
-						console.log('没有网络');
+						//console.log('没有网络');
 						mui.toast("网络异常，请检查网络设置！");
 						return;
 					}
@@ -808,7 +808,7 @@
 					//9.获取用户群
 					postDataPro_PostGList(comData, wd, function(data) {
 						//wd.close();
-						console.log('作业主界面获取的群信息：' + JSON.stringify(data));
+						//console.log('作业主界面获取的群信息：' + JSON.stringify(data));
 						if(data.RspCode == 0) {
 							var tempArray = data.RspData;
 							//			gid:'14',//群ID
@@ -847,7 +847,7 @@
 								}
 							}
 							if(teacherClasses.length > 0 || studentClasses.length > 0) {
-								console.log('teacherClasses:' + teacherClasses.length + ',' + studentClasses.length);
+								//console.log('teacherClasses:' + teacherClasses.length + ',' + studentClasses.length);
 								//								sendMessageToHomework(teacherClasses, studentClasses);
 								events.openNewWindowWithData("../homework/homework-tea.html", {
 									teacherClasses: teacherClasses,
@@ -872,7 +872,7 @@
 					};
 					postDataPro_PostDiFi(comData, wd, function(data) {
 						document.getElementById("cloudstorage_1").innerHTML = '';
-						console.log('26.postDataPro_PostDiFi_用户云盘顶层文件及文件夹获取_RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+						//console.log('26.postDataPro_PostDiFi_用户云盘顶层文件及文件夹获取_RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 						if(data.RspCode == 0) {
 							for(var i in data.RspData) {
 								if(i > 9) {
@@ -898,14 +898,14 @@
 						parentId: personalUTID //家长ID
 					};
 					postDataPro_getStudentDocByParent(comData, wd, function(data) {
-						console.log('91 按家长获取档案文件夹 getStudentDocByParent ' + JSON.stringify(data));
+						//console.log('91 按家长获取档案文件夹 getStudentDocByParent ' + JSON.stringify(data));
 						document.getElementById("cloudstorage_0").innerHTML = '';
 						addcloudstorage_0_0(); //手机通讯录，手机图库
 						studentDoc = {};
 						if(data.RspCode == 0) {
 							//设置页面显示
 							for(var i = 0; i < data.RspData.Data.length; i++) {
-								//console.log('学生档案 ' + i + '|' + JSON.stringify(data.RspData.Data[i]));
+								////console.log('学生档案 ' + i + '|' + JSON.stringify(data.RspData.Data[i]));
 								addcloudstorage_0_1(data.RspData.Data[i]);
 							}
 						} else {
@@ -920,7 +920,7 @@
 				 * @param {Object} data
 				 */
 				function addStorageFolder(data, type) {
-					//console.log("addStorageFolder " + type + " " + JSON.stringify(data));
+					////console.log("addStorageFolder " + type + " " + JSON.stringify(data));
 					var li = document.createElement("li");
 					li.setAttribute('id', "fid_" + data.fid);
 					li.setAttribute('data-fid', data.fid);
@@ -1084,7 +1084,7 @@
 				 * @param {Object} type 班级0,家校圈1
 				 */
 				function addcloudrecord_1_0(id_index, data, type) {
-					//console.log('addcloudrecord_1_0 ' + JSON.stringify(data));
+					////console.log('addcloudrecord_1_0 ' + JSON.stringify(data));
 					var li = document.createElement('li');
 					li.className = 'mui-table-view-cell';
 					li.setAttribute('type', type);
@@ -1181,14 +1181,14 @@
 						//清除学生区域
 						document.getElementById("cloudrecord_0").innerHTML = '';
 						addcloudrecord_0_0();
-						console.log('获取学生列表_PostUstu:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+						//console.log('获取学生列表_PostUstu:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 						if(data.RspCode == 0 || data.RspCode == 9 || data.RspCode == 7) { //9为查询记录为空
 							topStudentArr = data.RspData;
 							var stuIds = [];
 							var classIds = [];
 							//生成学生界面
 							mui.each(topStudentArr, function(index, element) {
-								//console.log('学生:' + index + '|' + JSON.stringify(element));
+								////console.log('学生:' + index + '|' + JSON.stringify(element));
 								addcloudrecord_0_1(index, element);
 								stuIds.push(element.stuid);
 								classIds.push(element.gid);
@@ -1217,7 +1217,7 @@
 					postDataPro_PostGList(comData, wd, function(data) {
 						//清除班级区域
 						document.getElementById("cloudrecord_1").innerHTML = '';
-						console.log('获取用户群_PostGList:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+						//console.log('获取用户群_PostGList:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 						if(data.RspCode == 0) {
 							//			showBlankPage(false);
 							datasource = data.RspData; //底部列表数据
@@ -1226,9 +1226,9 @@
 							//			群去重
 							for(var i = 0; i < datasource.length; i++) {
 								if(tempArr.indexOf(datasource[i].gid) > -1) {
-									//					console.log(i+'已存在'+datasource[i].gid);
+									//					//console.log(i+'已存在'+datasource[i].gid);
 								} else {
-									//					console.log(i+'不存在'+datasource[i].gid);
+									//					//console.log(i+'不存在'+datasource[i].gid);
 									tempArr.push(datasource[i].gid);
 									tempDatasource.push(datasource[i]);
 								}
@@ -1238,18 +1238,18 @@
 							datasource = tempDatasource;
 							//生成班级界面
 							mui.each(datasource, function(index, element) {
-								//console.log('班级:' + index + '|' + JSON.stringify(element));
+								////console.log('班级:' + index + '|' + JSON.stringify(element));
 								addcloudrecord_1_0(index, element, 0);
 							});
 							//生成家校圈界面
 							mui.each(datasource, function(index, element) {
-								//console.log('家校圈:' + index + '|' + JSON.stringify(element));
+								////console.log('家校圈:' + index + '|' + JSON.stringify(element));
 								addcloudrecord_1_0(index, element, 1);
 							});
 							getAllClassMember(gids, tempArr); // 通过群IDs获取群的正常用户
 							getClassSpacesByUserForMutiClass(gids, tempArr); //（班级空间）获取用户针对多班级的空间列表
 						} else if(data.RspCode == 9) { //没有群
-							console.log('显示空白页');
+							//console.log('显示空白页');
 							addcloudrecord_1_noclass();
 							//			showBlankPage(true); //显示空白页
 						} else {
@@ -1275,7 +1275,7 @@
 				postDataPro_PostGusers(comData, wd, function(data) {
 					//wd.close();
 					var userArrays = [];
-					console.log('通过群ID获取群的正常用户_PostGusers:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					//console.log('通过群ID获取群的正常用户_PostGusers:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
 						var gids = gidStr.split(',');
 						//把是同一个群的用户放到一起
@@ -1293,7 +1293,7 @@
 							userArrays.push(tempUsersStr);
 						}
 						var usersStr = arrayToStr(userArrays);
-						console.log('所用的群用户：' + usersStr);
+						//console.log('所用的群用户：' + usersStr);
 						getNoReadCntForClassByUser(usersStr, gidArr); //79.（用户空间）获取多班级多用户空间所有用户未读数
 
 					} else {
@@ -1321,12 +1321,12 @@
 						for(var i = 0; i < tempArr.length; i++) {
 							noReadModel.stu_noReads.push(tempArr[i].NoReadCnt); //学生未读数数组
 						}
-						console.log(JSON.stringify(noReadModel));
+						//console.log(JSON.stringify(noReadModel));
 
 						//显示未读的红点
 						for(var i = 0; i < noReadModel.stu_noReads.length; i++) {
 							var tempValue = noReadModel.stu_noReads[i];
-							console.log('tempValue==' + tempValue);
+							//console.log('tempValue==' + tempValue);
 							if(noReadModel.stu_noReads[i] != 0) {
 								var redpoint = document.getElementById("studyn_redpoint_" + stuIds[i]);
 								if(redpoint) {
@@ -1335,7 +1335,7 @@
 							}
 						}
 					} else {}
-					console.log('获取所有学生的未读数_getNotesByUserForMutiStudentr:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					//console.log('获取所有学生的未读数_getNotesByUserForMutiStudentr:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 
 				})
 			}
@@ -1361,7 +1361,7 @@
 							}
 							noReadModel.class_noReads.push(tempArr[i].NoReadCnt); //班级未读数数组
 						}
-						console.log(JSON.stringify(noReadModel));
+						//console.log(JSON.stringify(noReadModel));
 						//显示未读的红点
 						for(var i = 0; i < tempArr.length; i++) {
 							if(tempArr[i].NoReadCnt != 0) {
@@ -1371,7 +1371,7 @@
 					} else {
 
 					}
-					console.log('获取用户针对多班级的空间列表_getClassSpacesByUserForMutiClass:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					//console.log('获取用户针对多班级的空间列表_getClassSpacesByUserForMutiClass:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 
 				})
 			}
@@ -1390,14 +1390,14 @@
 					//wd.close();
 					if(data.RspCode == 0) {
 						noReadModel.parents_noReads = data.RspData.NoReadCnts; //家长圈未读数数组
-						console.log(JSON.stringify(noReadModel));
+						//console.log(JSON.stringify(noReadModel));
 						for(var i = 0; i < noReadModel.parents_noReads.length; i++) {
 							if(noReadModel.parents_noReads[i] != 0) {
 								document.getElementById("tarClass1_" + gidArr[i]).style.display = 'inline';
 							}
 						}
 					} else {}
-					console.log('获取所有群的未读数_getNoReadCntForClassByUser:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					//console.log('获取所有群的未读数_getNoReadCntForClassByUser:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 				});
 			}
 			//获取与我相关
@@ -1419,7 +1419,7 @@
 				//24.获取与我相关
 				postDataPro_getAboutMe(comData, wd, function(data) {
 					//wd.close();
-					console.log('postDataPro_getAboutMe:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					//console.log('postDataPro_getAboutMe:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
 						getHomeworkAlert(data.RspData.NoReadCnt);
 					} else {
@@ -1441,7 +1441,7 @@
 				//24.获取与我相关
 				postDataPro_GetHomeworkAlertCount(comData, wd, function(data) {
 					//wd.close();
-					console.log('postDataPro_GetHomeworkAlertCount:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					//console.log('postDataPro_GetHomeworkAlertCount:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
 						NoReadCnt = data.RspData.NoReadCnt + NoReadCnt;
 						noReadCount = NoReadCnt;
@@ -1482,7 +1482,7 @@
 			 */
 			function longTapData(id, event) {
 				var cellData = studentDoc[id.replace('data_', '')];
-				console.log('cellData ' + JSON.stringify(cellData));
+				//console.log('cellData ' + JSON.stringify(cellData));
 				var data1 = {
 					flag: 7, //flag:求知：提问1，回答2，评论3；班级空间：班级动态4；个人空间：个人动态5，个人动态评论6，档案7
 					comData: {
@@ -1500,7 +1500,7 @@
 					delFlag: 1 //删除确认弹出框格式，1从下弹出，2中间confirm
 				};
 				delContent_pop(data1, function(data) {
-					console.log('delContent_pop 返回值为 ' + JSON.stringify(data));
+					//console.log('delContent_pop 返回值为 ' + JSON.stringify(data));
 					if(data.flag == 5) { //重命名
 						changeDataName(cellData, event);
 					} else if(data.flag == 1) { //删除
@@ -1515,7 +1515,7 @@
 			 * 修改档案的名称
 			 */
 			function changeDataName(dataInfo, event) {
-				console.log('修改档案名称');
+				//console.log('修改档案名称');
 				event.detail.gesture.preventDefault(); //修复iOS 8.x平台存在的bug，使用plus.nativeUI.prompt会造成输入法闪一下又没了
 				var btnArray = ['取消', '确定'];
 				if(plus.os.name == 'iOS') {
@@ -1536,7 +1536,7 @@
 			//重命名文件夹，弹出框的单机加载
 			function rename(e, dataInfo) {
 				if(e.index == 1) { //点击确定
-					//console.log(e.value);
+					////console.log(e.value);
 					if(e.value.replace(/(^\s*)|(\s*$)/g, "") == "") {
 						mui.toast('档案名称不能为空');
 					} else if(dataInfo.DocName == e.value) {
@@ -1554,7 +1554,7 @@
 						}
 						//86.（云档案）修改档案名称
 						postDataPro_setStudentFileInfoName(comData, wd, function(data) {
-							console.log('86 修改档案名称 setStudentFileInfoName ' + JSON.stringify(data));
+							//console.log('86 修改档案名称 setStudentFileInfoName ' + JSON.stringify(data));
 							if(data.RspCode == 0 && data.RspData.Result == 1) {
 								//成功的回调
 								mui.toast('档案重命名成功');
@@ -1594,7 +1594,7 @@
 			var setIcons = function() {
 				var navigationbar = plus.webview.currentWebview().getNavigationbar();
 				//				var width=navigationbar.;
-				console.log("****************获取的宽度：");
+				//console.log("****************获取的宽度：");
 				var leftDrawStyle = {
 					id: "personalImg",
 					tag: "img",

@@ -90,14 +90,14 @@
 					if(events.judgeLoginMode(this)) {
 						return;
 					}
-					console.log(JSON.stringify(userId))
+					//console.log(JSON.stringify(userId))
 					events.singleWebviewInPeriod(this,'../quan/pub-leave.html', userId);
 //					events.openNewWindowWithData();
 				})
 				personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
 				//赋值
 				userID = plus.webview.currentWebview().data;
-				console.log('传值过来的个人信息：' + userID);
+				//console.log('传值过来的个人信息：' + userID);
 				//清除节点
 				document.getElementById('list-container').innerHTML = "";
 				//24.获取某个用户的回答列表
@@ -123,7 +123,7 @@
 					//					up: {
 					//						callback: function() {
 					//							var self = this;
-					//							console.log("上拉加载更多");
+					//							//console.log("上拉加载更多");
 					//
 					//							self.endPullUpToRefresh();
 					//						}
@@ -144,7 +144,7 @@
 				//49.（用户空间）获取用户空间所有留言，model_userSpaceInfo
 				postDataPro_getUserSpaceMsgsById(comData, wd, function(data) {
 					wd.close();
-					console.log('49、空间所有留言:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt + data.RspData.TotalCnt);
+					//console.log('49、空间所有留言:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt + data.RspData.TotalCnt);
 					if(data.RspCode == 0) {
 						//总页数
 						totalPageCount = data.RspData.TotalPage;
@@ -155,7 +155,7 @@
 								spaceTypes: '[7,8]'
 							}
 							postDataPro_setCommentMsgReadByUser(comData, wd, function(data) {
-								console.log('59与我相关设置成已读:' + JSON.stringify(data));
+								//console.log('59与我相关设置成已读:' + JSON.stringify(data));
 							})
 						}
 						var tempRspData = data.RspData.Data;
@@ -176,11 +176,11 @@
 							vvl: tempArray.join(), //用户id，查询的值,p传个人ID,g传ID串
 							vtp: 'g' //查询类型,p(个人)g(id串)
 						}
-						console.log('tempData:' + JSON.stringify(tempData));
+						//console.log('tempData:' + JSON.stringify(tempData));
 						//21.通过用户ID获取用户资料
 						postDataPro_PostUinf(tempData, wd, function(data1) {
 							wd.close();
-							console.log('21、获取个人资料:' + data1.RspCode + ',RspData:' + JSON.stringify(data1.RspData) + ',RspTxt:' + data1.RspTxt);
+							//console.log('21、获取个人资料:' + data1.RspCode + ',RspData:' + JSON.stringify(data1.RspData) + ',RspTxt:' + data1.RspTxt);
 							if(data1.RspCode == 0) {
 								//循环当前的个人信息返回值数组
 								for(var i in data1.RspData) {
@@ -203,14 +203,14 @@
 									}
 								}
 							}
-							console.log('循环遍历后的值：' + JSON.stringify(tempRspData));
+							//console.log('循环遍历后的值：' + JSON.stringify(tempRspData));
 							if(flagRef == 0) { //刷新
 								leaveArray = tempRspData;
 							} else { //加载更多
 								//合并数组
 								leaveArray = leaveArray.concat(tempRspData);
 							}
-							console.log('合并后的值为：' + JSON.stringify(leaveArray));
+							//console.log('合并后的值为：' + JSON.stringify(leaveArray));
 							var listContainer = document.getElementById('list-container');
 							listContainer.innerHTML = '';
 							setLeaveList(leaveArray);
@@ -228,7 +228,7 @@
 			 */
 			var setLeaveList = function(list) {
 				var listContainer = document.getElementById('list-container');
-				console.log('数量为' + list.length)
+				//console.log('数量为' + list.length)
 				for(var i in list) {
 					createList(listContainer, list[i], i)
 				}
@@ -320,7 +320,7 @@
 			mui('.mui-table-view').on('tap', '.dynamic-personal-image', function() {
 				var li = this.parentElement.parentElement.parentElement;
 				var index = li.id.replace('reply', '');
-				console.log(JSON.stringify(leaveArray))
+				//console.log(JSON.stringify(leaveArray))
 				mui.openWindow({
 					url: '../quan/zone_main.html',
 					id: '../quan/zone_main.html',
@@ -353,7 +353,7 @@
 					mui.toast('不可以回复自己')
 					return;
 				}
-				console.log(cellIndex);
+				//console.log(cellIndex);
 				var data = {
 					userId: personalUTID,
 					upperId: leaveArray[cellIndex].TabId,

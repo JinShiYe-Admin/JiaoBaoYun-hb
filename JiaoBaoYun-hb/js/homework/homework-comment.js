@@ -24,7 +24,7 @@ mui.plusReady(function() {
 	window.addEventListener('workInfo', function(e) {
 //		mui('.mui-content').scrollTo(0, 0, 100); //100毫秒滚动到顶
 		workInfo = e.detail.data;
-		console.log('老师评价页面获取的作业信息：' + JSON.stringify(workInfo))
+		//console.log('老师评价页面获取的作业信息：' + JSON.stringify(workInfo))
 		personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
 		setStuInfo();
 		setCondition();
@@ -126,7 +126,7 @@ var requireHomeworkResult = function() {
 		homeworkId: workInfo.HomeworkId
 	}, wd, function(data) {
 		wd.close();
-		console.log('老师评价作业界面获取的作业信息：' + JSON.stringify(data));
+		//console.log('老师评价作业界面获取的作业信息：' + JSON.stringify(data));
 		if(data.RspCode == '0000') {
 			HomeworkResultId = data.RspData.HomeworkResultId;
 			workInfo.stuFiles = data.RspData.Files;
@@ -148,7 +148,7 @@ var requireHomeworkInfo = function() {
 		homeworkId: workInfo.HomeworkId
 	}, wd, function(data) {
 		wd.close();
-		console.log("获取的作业信息详情：" + JSON.stringify(data))
+		//console.log("获取的作业信息详情：" + JSON.stringify(data))
 		if(data.RspCode == 0) {
 			var homeworkInfo = data.RspData;
 			workInfo.teaFiles = data.RspData.File;
@@ -166,7 +166,7 @@ var requireHomeworkInfo = function() {
  * "Result":"哦哦哦哦哦哦","StudentId":1,"StudentName":null,"UploadTime":"2016-12-17 11:08:43"
  */
 var setHomeWorkInfo = function() {
-	console.log("要放置的作业数据：" + JSON.stringify(workInfo))
+	//console.log("要放置的作业数据：" + JSON.stringify(workInfo))
 	document.getElementById('submit-time').innerText = events.shortForDate(workInfo.UploadTime);
 	var homeworkInfo = document.getElementById('homework-info');
 	document.querySelector(".answer-info").innerHTML = workInfo.Result.replace(/ /g, "&nbsp;").replace(/\n/g, "<br/>");
@@ -189,7 +189,7 @@ var requireAnswerResult = function() {
 		answerResultId: workInfo.AnswerResultId
 	}, wd, function(data) {
 		wd.close();
-		console.log('老师评价页面获取的老师临时作业评价：' + JSON.stringify(data))
+		//console.log('老师评价页面获取的老师临时作业评价：' + JSON.stringify(data))
 		if(data.RspCode == '0000') {
 			data.RspData.stuFiles = data.RspData.Files;
 			data.RspData.stuUploadTime = data.RspData.UploadTime;
@@ -197,7 +197,7 @@ var requireAnswerResult = function() {
 			data.RspData.UploadTime = null;
 			jQuery.extend(workInfo, data.RspData);
 		} else {
-			console.log('未获取临时作业评价')
+			//console.log('未获取临时作业评价')
 		}
 		requireTeachersAnswer();
 	})
@@ -214,7 +214,7 @@ var requireAnswerResult = function() {
  *	
  */
 var setAnswerInfo = function() {
-	console.log('要放置的临时作业数据：' + JSON.stringify(workInfo));
+	//console.log('要放置的临时作业数据：' + JSON.stringify(workInfo));
 	document.getElementById('submit-time').innerText = workInfo.stuUploadTime;
 	var homeworkInfo = document.getElementById('homework-info');
 	//	events.clearChild(homeworkInfo);
@@ -258,7 +258,7 @@ var createAnswerImgs = function(homeworkInfo, imgs, type) {
 			'data-preview-src="' + imgs[i].Url + '" data-preview-group="' + homeworkInfo.HomeworkResultId + '"/>';
 	}
 	//	div.innerHTML = imgsInner;
-	console.log("图片的innerHTML：" + imgsInner);
+	//console.log("图片的innerHTML：" + imgsInner);
 	document.getElementById("answer-imgs").innerHTML = imgsInner;
 }
 /**
@@ -276,7 +276,7 @@ var requireTeachersAnswer = function() {
 		answerResultId: workInfo.AnswerResultId
 	}, wd, function(data) {
 		wd.close();
-		console.log('老师评价页面获取的老师临时作业答案：' + JSON.stringify(data));
+		//console.log('老师评价页面获取的老师临时作业答案：' + JSON.stringify(data));
 		if(data.RspCode == '0000') {
 			data.RspData.teaUploadTime = data.RspData.UploadTime;
 			data.RspData.teaFiles = getMatchedImgs(data.RspData.Files);
@@ -315,7 +315,7 @@ var commentHomework = function(commentValue) {
 		comment: commentValue
 	}, wd, function(data) {
 		wd.close();
-		console.log('老师评价页面获取老师评价普通作业的结果:' + JSON.stringify(data));
+		//console.log('老师评价页面获取老师评价普通作业的结果:' + JSON.stringify(data));
 		if(data.RspCode == '0000') {
 			workInfo.IsCommented = true;
 			workInfo.Comment = commentValue;
@@ -341,7 +341,7 @@ var commentAnswer = function(commentValue) {
 		answerResultId: workInfo.AnswerResultId
 	}, wd, function(data) {
 		wd.close();
-		console.log('老师评价页面获取的老师评论临时作业的结果：' + JSON.stringify(data));
+		//console.log('老师评价页面获取的老师评论临时作业的结果：' + JSON.stringify(data));
 		if(data.RspCode == '0000') {
 			events.fireToPageNone('workdetailTea-temSub.html', 'workCommented')
 			workInfo.IsCommented = true;
@@ -367,7 +367,7 @@ var modifyHomeworkComment = function(commentValue) {
 		comment: commentValue
 	}, wd, function(data) {
 		wd.close();
-		console.log('老师评价页面获取老师更改普通作业评论的结果：' + JSON.stringify(data));
+		//console.log('老师评价页面获取老师更改普通作业评论的结果：' + JSON.stringify(data));
 		if(data.RspCode == 0) {
 			mui.toast('修改评论成功！')
 			workInfo.Comment = commentValue;
@@ -390,7 +390,7 @@ var modifyAnswerComment = function(commentValue) {
 		comment: commentValue
 	}, wd, function(data) {
 		wd.close();
-		console.log('老师评价页面获取老师更改的评论结果：' + JSON.stringify(data));
+		//console.log('老师评价页面获取老师更改的评论结果：' + JSON.stringify(data));
 		if(data.RspCode == '0000') {
 			mui.toast('修改评论成功！');
 			mui.back();

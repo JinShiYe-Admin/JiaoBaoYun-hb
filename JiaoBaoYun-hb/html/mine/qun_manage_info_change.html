@@ -114,7 +114,7 @@
 				//---从父页面获取数据---start---
 				var main = plus.webview.currentWebview(); //获取当前窗体对象
 				var subData = main.data; //接收页面传入的参数值
-				console.log('从父页面获取的数据:' + JSON.stringify(subData));
+				//console.log('从父页面获取的数据:' + JSON.stringify(subData));
 				//---从父页面获取数据---end---
 				//var qunImgPath = 'qunHeadImge' + subData.gid + '.png';
 				//9.获取用户群
@@ -129,7 +129,7 @@
 				// 等待的对话框
 				var wd = events.showWaiting();
 				postDataPro_PostGList(comData, wd, function(data) {
-					console.log('9.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					//console.log('9.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
 						qname.value = data.RspData[0].gname;
 						qnote.value = data.RspData[0].gnote;
@@ -163,7 +163,7 @@
 							value = qremark.value;
 							break;
 						default:
-							console.log('修改群资料的类型选择出错');
+							//console.log('修改群资料的类型选择出错');
 							break;
 					}
 
@@ -195,11 +195,11 @@
 				UploadHeadImage.addListener(qunimage, 2, {
 					id: subData.gid, //资料id
 				}, function(successCB) {
-					console.log('上传并修改群头像，成功的回调' + JSON.stringify(successCB));
+					//console.log('上传并修改群头像，成功的回调' + JSON.stringify(successCB));
 					document.getElementById("choose").innerHTML = '<img src="' + updateHeadImg(successCB, 2) + '" style="margin-top:0px;border: 1px solid #F2F2F2;border-radius: 50%;height: 100px;width: 100px;"/>';
 					mui.toast('更新群头像成功');
 				}, function(errorCB) {
-					console.log('上传并修改群头像，失败的回调' + JSON.stringify(errorCB));
+					//console.log('上传并修改群头像，失败的回调' + JSON.stringify(errorCB));
 					mui.toast('更新群头像失败 ' + JSON.stringify(errorCB));
 				});
 

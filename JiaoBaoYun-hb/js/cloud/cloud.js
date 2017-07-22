@@ -10,7 +10,7 @@ var cloud = (function($, mod) {
 	 * @param {Object} filename 文件名
 	 */
 	mod.classify = function(filename) {
-		//console.log('classify:' + filename);
+		////console.log('classify:' + filename);
 		//把一个字符串分割成字符串数组
 		var nameList = filename.split(".");
 		//获取文件后缀
@@ -100,7 +100,7 @@ var cloud = (function($, mod) {
 	 * @param {Object} filename 文件名
 	 */
 	mod.classify2 = function(filename) {
-		//console.log("确定文件分类时传过来的数据："+JSON.stringify(filename))
+		////console.log("确定文件分类时传过来的数据："+JSON.stringify(filename))
 		//把一个字符串分割成字符串数组
 		var nameList = filename.split(".");
 		//获取文件后缀
@@ -348,7 +348,7 @@ var cloud = (function($, mod) {
 	 * @param {Object} filename 文件名
 	 */
 	mod.classifyQNImg = function(filename) {
-		//console.log('classify:' + filename);
+		////console.log('classify:' + filename);
 		//把一个字符串分割成字符串数组
 		var nameList = filename.split(".");
 		//获取文件后缀
@@ -438,7 +438,7 @@ var cloud = (function($, mod) {
 	 * @param {Object} filename 文件名
 	 */
 	mod.getFileName = function(fileurl) {
-		//console.log('getFileName:' + fileurl);
+		////console.log('getFileName:' + fileurl);
 		//把一个字符串分割成字符串数组
 		var fileNameList = fileurl.split("/");
 		//获得带后缀的文件名

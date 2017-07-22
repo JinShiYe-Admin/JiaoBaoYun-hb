@@ -25,7 +25,7 @@ var setFresh = function() {
 		up: {
 			callback: function() {
 				freshContainer = this;
-				console.log('我在底部pageIndex:' + pageIndex + ':总页数:' + totalPage);
+				//console.log('我在底部pageIndex:' + pageIndex + ':总页数:' + totalPage);
 				if(pageIndex < totalPage) {
 					freshFlag = 2;
 					wd = events.showWaiting();
@@ -57,7 +57,7 @@ mui.plusReady(function() {
 		answerIsReady = true;
 	});
 	window.addEventListener('channelInfo', function(e) {
-		console.log('求知子页面获取的 :' + JSON.stringify(e.detail.data))
+		//console.log('求知子页面获取的 :' + JSON.stringify(e.detail.data))
 		pageIndex = 1; //当前页数
 		totalPage = 0; //总页数
 		channelInfo = e.detail.data.curChannel; //选择的话题
@@ -67,7 +67,7 @@ mui.plusReady(function() {
 		if(mui(".mui-pull-loading").length > 0) {
 			mui(".mui-pull-loading")[0].innerText = "上拉加载更多";
 		}
-		console.log("高度：" + document.querySelector(".mui-scroll-wrapper").offsetHeight);
+		//console.log("高度：" + document.querySelector(".mui-scroll-wrapper").offsetHeight);
 		getChannelTime = null;
 		getExperTime = null;
 		if(plus.networkinfo.getCurrentType() != plus.networkinfo.CONNECTION_NONE) {
@@ -145,7 +145,7 @@ function getExpertsArray(channelId) {
 	//	var wd = events.showWaiting();
 	//2.获取符合条件的专家信息
 	postDataQZPro_getExpertsByCondition(comData, wd, function(data) {
-		console.log('2.获取符合条件的专家信息:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+		//console.log('2.获取符合条件的专家信息:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 		if(data.RspCode == 0) {
 			resetExpertsList();
 			//添加人员信息
@@ -174,13 +174,13 @@ function getExpertsArray(channelId) {
 				vvl: tempArray.toString(), //用户id，查询的值,p传个人ID,g传ID串
 				vtp: 'g' //查询类型,p(个人)g(id串)
 			}
-			console.log('tempData:' + JSON.stringify(tempData));
+			//console.log('tempData:' + JSON.stringify(tempData));
 			// 等待的对话框
 			//			var wd2 = events.showWaiting();
 			//21.通过用户ID获取用户资料
 			postDataPro_PostUinf(tempData, wd, function(data1) {
 				getExperTime = Date.now();
-				console.log('21.获取个人资料success:RspCode:' + data1.RspCode + ',RspData:' + JSON.stringify(data1.RspData) + ',RspTxt:' + data1.RspTxt);
+				//console.log('21.获取个人资料success:RspCode:' + data1.RspCode + ',RspData:' + JSON.stringify(data1.RspData) + ',RspTxt:' + data1.RspTxt);
 				if(data1.RspCode == 0) {
 					//循环当前的个人信息返回值数组
 					for(var i in data1.RspData) {
@@ -202,7 +202,7 @@ function getExpertsArray(channelId) {
 				} else {
 					mui.toast(data.RspTxt);
 				}
-				console.log('专家循环遍历后的值：' + JSON.stringify(tempRspData));
+				//console.log('专家循环遍历后的值：' + JSON.stringify(tempRspData));
 				//刷新界面
 				for(var i = 0; i < tempRspData.length; i++) {
 					expertsItem(channelId, tempRspData[i]);
@@ -227,7 +227,7 @@ function getExpertsArray(channelId) {
  * @param {Object} data 专家数据
  */
 function expertsItem(channelId, data) {
-	//console.log('expertsItem ' + channelId + '|' + JSON.stringify(data));
+	////console.log('expertsItem ' + channelId + '|' + JSON.stringify(data));
 	var element = document.createElement('a');
 	element.id = 'experts_' + channelId + '_' + data.TabId;
 	element.className = 'mui-control-item';
@@ -272,14 +272,14 @@ function requestChannelList(channelInfo) {
 	//4.获取所有符合条件问题
 	postDataQZPro_getAsksByCondition(comData, wd, function(data) {
 		//		wd.close();
-		console.log('获取所有符合条件问题:' + JSON.stringify(data));
+		//console.log('获取所有符合条件问题:' + JSON.stringify(data));
 		if(data.RspCode == 0) {
 			totalPage = data.RspData.totalPage;
 			//			var datas = data.RspData.Data;
 			getIds(data.RspData.Data);
 			//			setChannelList();
 		} else {
-			console.log("当前pageIndex:" + pageIndex);
+			//console.log("当前pageIndex:" + pageIndex);
 			if(pageIndex > 1) {
 				pageIndex -= 1;
 			} else {
@@ -315,7 +315,7 @@ var requireInfos = function(datas, pInfos) {
 		//21.通过用户ID获取用户资料
 		//		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 		postDataPro_PostUinf(tempData, wd, function(data) {
-			console.log('获取的个人信息:' + JSON.stringify(data));
+			//console.log('获取的个人信息:' + JSON.stringify(data));
 			if(data.RspCode == 0) {
 				rechargeInfos(datas, data.RspData);
 			} else {
@@ -342,7 +342,7 @@ var rechargeInfos = function(datas, infos) {
  * 放置求知数据
  */
 var setChannelList = function(data) {
-	console.log('求知主界面加载的数据信息：' + JSON.stringify(data));
+	//console.log('求知主界面加载的数据信息：' + JSON.stringify(data));
 	var list = document.getElementById('list-container');
 	if(pageIndex == 1) {
 		list.innerHTML = "";
@@ -376,7 +376,7 @@ var setChannelList = function(data) {
 	endFresh();
 }
 var getInnerHTML = function(cell) {
-	//	console.log("回答内容：" + cell.AnswerContent);
+	//	//console.log("回答内容：" + cell.AnswerContent);
 	var inner = '<div>' +
 		'<div class="channel-info">' +
 		'<p class="channel-title"><img src="' + getChannelIcon(cell) + '" class="channel-icon"/>来自话题:' + cell.AskChannel + '</p>' +
@@ -482,7 +482,7 @@ var setListener = function() {
 		if(events.judgeLoginMode(self)) {
 			return;
 		}
-		console.log(JSON.stringify(allChannels))
+		//console.log(JSON.stringify(allChannels))
 		events.singleWebviewInPeriod(self, 'qiuzhi-newQ.html', {
 			curChannel: channelInfo,
 			allChannels: allChannels
@@ -514,8 +514,8 @@ var setListener = function() {
 	//点击专家列表
 	mui('#experts_sc').on('tap', '.mui-control-item', function() {
 		this.disabled = true;
-		//console.log('点击专家列表 ' + this.id);
-		//console.log('当前话题的信息 ' + JSON.stringify(channelInfo));
+		////console.log('点击专家列表 ' + this.id);
+		////console.log('当前话题的信息 ' + JSON.stringify(channelInfo));
 		if(this.id == 'allExpert') { //查看某个话题的全部专家
 			events.singleWebviewInPeriod(this, 'experts_main.html', {
 				askID: '0',
@@ -524,7 +524,7 @@ var setListener = function() {
 			})
 			//			events.openNewWindowWithData();
 		} else { //查看某个话题的某个专家
-			//console.log('当前专家的信息 ' + JSON.stringify(JSON.parse(this.getAttribute('data-info'))));
+			////console.log('当前专家的信息 ' + JSON.stringify(JSON.parse(this.getAttribute('data-info'))));
 			events.singleWebviewInPeriod(this, 'expert-detail.html', JSON.parse(this.getAttribute('data-info')))
 			//			events.openNewWindowWithData();
 		}
@@ -535,13 +535,13 @@ var setListener = function() {
 		var item = this;
 		item.disabled = true;
 		requireQuestionInfo(item.questionInfo.TabId, function(data) {
-			console.log("获取的个人id" + events.getUtid());
+			//console.log("获取的个人id" + events.getUtid());
 			if(events.getUtid()) {
 				setQuestionFocus(item);
 			} else {
 				var isDel = item.innerText == "关注问题" ? 0 : 1;
 				events.toggleStorageArray(storageKeyName.FOCUSEQUESTION, parseInt(item.questionInfo.TabId), isDel);
-				console.log("获取存储在本地的数组：" + myStorage.getItem(storageKeyName.FOCUSEQUESTION));
+				//console.log("获取存储在本地的数组：" + myStorage.getItem(storageKeyName.FOCUSEQUESTION));
 				if(isDel) {
 					item.innerText = "关注问题";
 				} else {
@@ -564,7 +564,7 @@ var requireQuestionInfo = function(askId, callback, noneCallback) {
 		pageSize: 1 //每页记录数,传入0，获取总记录数
 	}, wd1, function(data) {
 		wd1.close();
-		console.log("获取的问题数据：" + JSON.stringify(data));
+		//console.log("获取的问题数据：" + JSON.stringify(data));
 		if(data.RspCode == 0) {
 			callback(data.RspData);
 		} else {
@@ -579,7 +579,7 @@ var requireQuestionInfo = function(askId, callback, noneCallback) {
 var setQuestionFocus = function(item) {
 	var wd = events.showWaiting();
 	var questionInfo = item.questionInfo;
-	console.log('当前问题信息：' + JSON.stringify(questionInfo));
+	//console.log('当前问题信息：' + JSON.stringify(questionInfo));
 	var selfId = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
 	postDataQZPro_setAskFocus({
 		userId: selfId, //用户ID
@@ -606,7 +606,7 @@ var setQuestionFocus = function(item) {
  * @param {Object} type 0问题 1答案
  */
 var fireToPageReady = function(type, options) {
-	console.log("answerIsReady:" + answerIsReady)
+	//console.log("answerIsReady:" + answerIsReady)
 	if(type) {
 		if(answerIsReady) { //求知回答界面已加载完毕
 			events.closeWaiting();
@@ -634,7 +634,7 @@ function requestAnswerDetail(answerId, callback) {
 	//8.获取某个回答的详情
 	postDataQZPro_getAnswerById(comData, wd1, function(data) {
 		wd1.close();
-		console.log('8.获取某个回答的详情:' + JSON.stringify(data));
+		//console.log('8.获取某个回答的详情:' + JSON.stringify(data));
 		if(data.RspCode == 0 && data.RspData.AnswerId) {
 			callback();
 		} else {

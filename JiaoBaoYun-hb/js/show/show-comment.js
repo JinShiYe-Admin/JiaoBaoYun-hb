@@ -24,9 +24,9 @@ var commentList = new Vue({
 	watch: {
 		showDetail: function(val) {
 			this.imgDivRe = commentList.getImgRe(commentList.getImgs(val));
-			console.log("获取的图片宽高：" + JSON.stringify(this.imgDivRe));
+			//console.log("获取的图片宽高：" + JSON.stringify(this.imgDivRe));
 			this.isSelfDynamic = (parseInt(val.PublisherId) === events.getUtid());
-			console.log("是不是本人发布的动态：" + this.isSelfDynamic);
+			//console.log("是不是本人发布的动态：" + this.isSelfDynamic);
 		}
 	},
 	methods: {
@@ -73,7 +73,7 @@ var commentList = new Vue({
 				default:
 					break;
 			}
-			console.log("获取的图片地址：" + JSON.stringify(imgs));
+			//console.log("获取的图片地址：" + JSON.stringify(imgs));
 			return imgs;
 		},
 		splitImgs: function(showDetail, type) {
@@ -91,7 +91,7 @@ var commentList = new Vue({
 					encLen: showDetail.EncLen
 				});
 			}
-			console.log("获取图片地址：" + JSON.stringify(imgs));
+			//console.log("获取图片地址：" + JSON.stringify(imgs));
 			return imgs;
 		},
 		getFileType: function(addr) {
@@ -118,7 +118,7 @@ var commentList = new Vue({
 		//是否已关注
 		toggleFocus: function() {
 			if(events.getUtid()) {
-				console.log("获取当前状态：" + this.showDetail.IsFocused);
+				//console.log("获取当前状态：" + this.showDetail.IsFocused);
 				var wd = events.showWaiting();
 				var showDetail = this.showDetail;
 				postDataPro_setUserFocus({
@@ -127,11 +127,11 @@ var commentList = new Vue({
 					status: showDetail.IsFocused ? 0 : 1
 				}, wd, function(data) {
 					wd.close();
-					console.log("设置关注返回值：" + JSON.stringify(data));
+					//console.log("设置关注返回值：" + JSON.stringify(data));
 					if(data.RspCode == 0) {
 						if(data.RspData.Result) {
 							events.fireToPageWithData('show-home1.html', "focus");
-							console.log("改变的值：" + JSON.stringify(showDetail));
+							//console.log("改变的值：" + JSON.stringify(showDetail));
 							if(showDetail.IsFocused) {
 								showDetail.IsFocused = 0;
 							} else {
@@ -162,7 +162,7 @@ var commentList = new Vue({
 			}
 			if(showDetail.IsLike) {
 				postDataPro_delUserSpaceLikeByUser(comData, wd, function(data) {
-					console.log("用户取消点赞结果：" + JSON.stringify(data));
+					//console.log("用户取消点赞结果：" + JSON.stringify(data));
 					wd.close();
 					if(data.RspCode == 0) {
 						if(data.RspData.Result) {
@@ -176,13 +176,13 @@ var commentList = new Vue({
 				})
 			} else {
 				postDataPro_setUserSpaceLikeByUser(comData, wd, function(data) {
-					console.log("用户空间点赞结果：" + JSON.stringify(data));
+					//console.log("用户空间点赞结果：" + JSON.stringify(data));
 					wd.close();
 					if(data.RspCode == 0) {
 						if(data.RspData.Result) {
 							showDetail.IsLike = 1;
 							//							mui.toast("点赞成功！")
-							console.log("获取的个人信息：" + JSON.stringify(myStorage.getItem(storageKeyName.PERSONALINFO)));
+							//console.log("获取的个人信息：" + JSON.stringify(myStorage.getItem(storageKeyName.PERSONALINFO)));
 							showDetail.LikeUsers.push({
 								userId: events.getUtid(),
 								userName: myStorage.getItem(storageKeyName.PERSONALINFO).unick
@@ -289,7 +289,7 @@ var commentList = new Vue({
 				userSpaceCommentId: tabId
 			}, wd, function(data) {
 				wd.close();
-				console.log("删除留言后的数据：" + JSON.stringify(data))
+				//console.log("删除留言后的数据：" + JSON.stringify(data))
 				if(data.RspCode == 0) {
 					if(data.RspData.Result) {
 						if(typeof(index1) === 'number') {
@@ -309,7 +309,7 @@ var commentList = new Vue({
 				return {};
 			}
 			var winWidth = this.winWidth - 30;
-			console.log('获取元素的宽度：' + winWidth);
+			//console.log('获取元素的宽度：' + winWidth);
 			var imgRe = {
 				width: 0,
 				height: 0
@@ -331,7 +331,7 @@ var commentList = new Vue({
 				request.open('GET', imgs[0].encImg + '?imageInfo', false);
 				request.send();
 				var imgInfo = JSON.parse(request.responseText);
-				console.log("获取的图片信息：" + JSON.stringify(imgInfo));
+				//console.log("获取的图片信息：" + JSON.stringify(imgInfo));
 				if(imgInfo.width > imgInfo.height) { //宽>高
 					imgRe.height = imgInfo.height / (imgInfo.width / winWidth) + 'px';
 					imgRe.width = winWidth + 'px';
@@ -340,7 +340,7 @@ var commentList = new Vue({
 					imgRe.width = imgInfo.width / (imgInfo.height / winWidth) + 'px';
 					imgRe.height = winWidth + 'px';
 				}
-				console.log("最终图片尺寸" + JSON.stringify(imgRe));
+				//console.log("最终图片尺寸" + JSON.stringify(imgRe));
 				return imgRe;
 			}
 		},
@@ -351,7 +351,7 @@ var commentList = new Vue({
 
 			} else if(imgs[0].type === 2) { //视频播放
 				video.playVideo(img.encAddr, img.encImg, function() {
-					console.log("视频播放回调！");
+					//console.log("视频播放回调！");
 				});
 			}
 		}

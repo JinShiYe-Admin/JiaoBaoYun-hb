@@ -40,7 +40,7 @@ var searchGroup = function() {
 	setTimeout(function() {
 		firstSearch = null;
 	}, 2000);
-	console.log('search监听开始')
+	//console.log('search监听开始')
 	if(secondSearch) {
 		mui.toast('请求太频繁，请稍后！')
 	} else {
@@ -58,7 +58,7 @@ var searchGroup = function() {
 			vtp: searchType //通过
 		}, wd, function(data) {
 			wd.close();
-			console.log('通过手机号获取个人信息：' + JSON.stringify(data));
+			//console.log('通过手机号获取个人信息：' + JSON.stringify(data));
 			if(data.RspCode == '0000') {
 				getAllGroups(data.RspData[0].utid, setData);
 			} else if(data.RspCode == 9999) {
@@ -77,13 +77,13 @@ var searchGroup = function() {
  */
 var setData = function(data) {
 	var fragment = document.createDocumentFragment();
-	console.log('界面显示Data:' + JSON.stringify(data));
+	//console.log('界面显示Data:' + JSON.stringify(data));
 	data.forEach(function(cell, i, data) {
 		var li = document.createElement('li');
 		li.className = 'mui-table-view-cell';
 		li.gid = cell.gid;
 		li.innerHTML = createInner(cell);
-		console.log(i + createInner(cell))
+		//console.log(i + createInner(cell))
 		fragment.appendChild(li);
 		if(i == data.length - 1) {
 			list.appendChild(fragment);
@@ -98,7 +98,7 @@ var setListListener = function() {
 		choseGroupId = parseInt(this.getAttribute('gid'));
 		document.querySelector('#search-group').blur();
 		mui('.mui-popover').popover('toggle')
-		console.log('选中的申请的群id：' + choseGroupId);
+		//console.log('选中的申请的群id：' + choseGroupId);
 		resetRoles();
 	})
 }
@@ -117,7 +117,7 @@ var setButtonsListener = function() {
 			var role = groupRoles[0];
 			var isMaster = false;
 			events.getUserInGroup(choseGroupId, function(data) {
-				console.log("本人在群里的身份：" + JSON.stringify(data));
+				//console.log("本人在群里的身份：" + JSON.stringify(data));
 				if(data.RspCode == 0) {
 					for(var i in data.RspData) {
 						if(data.RspData[i].mstype == 1) {
@@ -155,7 +155,7 @@ var applyGroup = function() {
 	}, wd, function(data) {
 		groupRoles = [];
 		wd.close();
-		console.log('申请入群获取的数据：' + JSON.stringify(data));
+		//console.log('申请入群获取的数据：' + JSON.stringify(data));
 		if(data.RspCode == '0000') {
 			mui.toast('申请成功！');
 			events.fireToPageNone('/html/mine/approval-apply.html', 'applied')
@@ -240,7 +240,7 @@ var getAllGroups = function(utid, callback, first) {
 		vvl: utid
 	}, wd, function(data) {
 		wd.close();
-		console.log('申请入群获取的群数据：' + JSON.stringify(data));
+		//console.log('申请入群获取的群数据：' + JSON.stringify(data));
 		if(data.RspCode == 0) {
 			callback(data.RspData);
 		} else {
@@ -286,7 +286,7 @@ var getChecked = function() {
 			//			}
 		}
 		groupRoles = [choseRole];
-		console.log('groupRoles:' + groupRoles);
+		//console.log('groupRoles:' + groupRoles);
 	});
 }
 /**

@@ -27,7 +27,7 @@
 			mui.init();
 			mui.plusReady(function() {
 				var data = plus.webview.currentWebview().data;
-				console.log("获取的上级页面传过来的值：" + JSON.stringify(data));
+				//console.log("获取的上级页面传过来的值：" + JSON.stringify(data));
 				commentFlag = data.type;
 				commentInfo = data.data;
 				setListener();

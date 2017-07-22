@@ -29,7 +29,7 @@
 			var data = plus.webview.currentWebview().data;//留言板拥有者id
 			events.initSubPage('leave-sub.html', data);
 			events.addTap('pubLeave', function() {
-				console.log(JSON.stringify(data))
+				//console.log(JSON.stringify(data))
 				events.openNewWindowWithData('../quan/pub-leave.html', data);
 			})
 		})

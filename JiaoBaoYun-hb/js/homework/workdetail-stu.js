@@ -23,7 +23,7 @@ mui.plusReady(function() {
 	mui.previewImage(); //加载预览功能
 	//监听与我相关中作业提醒传过来的事件
 	window.addEventListener("workNotice", function(e) {
-		console.log("作业提醒传过来的数值：" + JSON.stringify(e.detail.data));
+		//console.log("作业提醒传过来的数值：" + JSON.stringify(e.detail.data));
 		homeworkInfo = e.detail.data;
 		homeworkInfo.gid = homeworkInfo.ClassId;
 		homeworkInfo.TeacherId = homeworkInfo.UserId;
@@ -44,7 +44,7 @@ mui.plusReady(function() {
 			document.querySelector('.homework-brief').className = 'homework-brief';
 			document.querySelector('.startWork-container').style.display = 'none';
 		}
-		console.log('学生作业详情获取的数据：' + JSON.stringify(homeworkInfo));
+		//console.log('学生作业详情获取的数据：' + JSON.stringify(homeworkInfo));
 		requestHomeWorkInfo(homeworkInfo);
 
 	})
@@ -69,11 +69,11 @@ var requestHomeWorkInfo = function(homeWorkInfo) {
 		homeworkId: homeWorkInfo.HomeworkId //作业id；
 	}, wd, function(data) {
 		wd.close();
-		console.log("获取的作业信息：" + JSON.stringify(data));
+		//console.log("获取的作业信息：" + JSON.stringify(data));
 		if(data.RspCode == 0) {
 			jQuery.extend(homeWorkInfo, data.RspData);
 		} else {
-			console.log("获取作业信息失败!");
+			//console.log("获取作业信息失败!");
 		}
 		requestTeaInfo(homeworkInfo.TeacherId);
 	})
@@ -89,7 +89,7 @@ var requestTeaInfo = function(teaId) {
 		vtp: 'p'
 	}, wd, function(data) {
 		wd.close();
-		console.log('学生作业详情界面获取老师信息：' + JSON.stringify(data));
+		//console.log('学生作业详情界面获取老师信息：' + JSON.stringify(data));
 		if(data.RspCode == 0) {
 			jQuery.extend(homeworkInfo, data.RspData[0]);
 			setContentView();
@@ -102,7 +102,7 @@ var requestTeaInfo = function(teaId) {
  * 放置作业内容
  */
 var setContentView = function() {
-	console.log('学生作业详情界面获取老师后的信息：' + JSON.stringify(homeworkInfo));
+	//console.log('学生作业详情界面获取老师后的信息：' + JSON.stringify(homeworkInfo));
 	document.querySelector('.subject-icon').className = "subject-icon iconfont " + getHomeworkIcon(homeworkInfo.Subject);
 	document.querySelector('.brief-title').innerText = homeworkInfo.HomeworkTitle;
 	document.querySelector('.brief-content').innerHTML = homeworkInfo.Contents.replace(/ /g, "&nbsp;").replace(/\n/g, "<br/>");

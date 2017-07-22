@@ -71,7 +71,7 @@
 						//21.修改某个用户的个人简介
 						postDataQZPro_setUserNoteById(comData, wd, function(data) {
 							wd.close();
-							console.log('21.修改某个用户的个人简介:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+							//console.log('21.修改某个用户的个人简介:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 							if(data.RspCode == 0) {
 								events.fireToPageNone('expert-detail.html', 'refresh_expertdetail');
 								mui.back();

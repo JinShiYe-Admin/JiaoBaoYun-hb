@@ -78,7 +78,7 @@
 			mui.plusReady(function() {
 				var main = plus.webview.currentWebview(); //获取当前窗体对象
 				var data = main.data.userData; //接收A页面传入参数值
-				console.log('main-data:' + JSON.stringify(data));
+				//console.log('main-data:' + JSON.stringify(data));
 				document.getElementById("uimg").src = updateHeadImg(data.uimg, 2);
 				//昵称
 				if(data.unick != '' && data.unick != null) {

@@ -74,7 +74,7 @@
 				course_listnew.setListener();
 				addSlider();
 				window.addEventListener("infoChanged", function() {
-					console.log("*******微课界面出现两遍******")
+					//console.log("*******微课界面出现两遍******")
 					changeAll = 1;
 					getAttendedClasses(toggleAttendedPart);
 
@@ -106,7 +106,7 @@
 			 */
 			function addSlider() {
 				document.getElementById('slider').addEventListener('slide', function(e) {
-					console.log("slider状态：" + JSON.stringify(e.detail))
+					//console.log("slider状态：" + JSON.stringify(e.detail))
 					if(e.detail.slideNumber === 0) {
 						if(document.getElementById("course-attended")) {
 							setTitle(11);
@@ -166,7 +166,7 @@
 							var ul = self.element.querySelector('.mui-table-view');
 							freshConatiner.info.freshFlag = 0;
 							freshConatiner.info.pageIndex = 1;
-							console.log("获取的fresh:" + JSON.stringify(freshConatiner.info));
+							//console.log("获取的fresh:" + JSON.stringify(freshConatiner.info));
 							course_listnew.getData(freshConatiner.info.type, freshConatiner.info, ul, course_listnew.setData);
 							setTimeout(function() {
 								self.endPullDownToRefresh();
@@ -177,7 +177,7 @@
 					up: {
 						callback: function() {
 							var self = this;
-							console.log('我在底部pageIndex:' + freshConatiner.info.pageIndex + ':总页数:' + freshConatiner.info.totalPage);
+							//console.log('我在底部pageIndex:' + freshConatiner.info.pageIndex + ':总页数:' + freshConatiner.info.totalPage);
 							if(freshConatiner.info.pageIndex <= freshConatiner.info.totalPage) {
 								freshConatiner.info.freshFlag = 1;
 								var ul = self.element.querySelector('.mui-table-view');
@@ -225,7 +225,7 @@
 			 * @param {Object} type 0 删除关注 1 加载关注
 			 */
 			function toggleAttendedPart(type) {
-				console.log("加载关注部分：" + type);
+				//console.log("加载关注部分：" + type);
 				var sliderGroup = document.querySelector(".mui-slider-group");
 				if(type) {
 					//加载关注模块

@@ -70,7 +70,7 @@ var createArray = function(chars, imgUrls, urls) {
 		}
 		array.push(value)
 	}
-	console.log(JSON.stringify(array))
+	//console.log(JSON.stringify(array))
 	return array;
 }
 
@@ -90,5 +90,5 @@ var openTarWindow = function(tarUrl, map, index, array) {
 			index: index
 		}
 	});
-	console.log('打开新界面：' + index);
+	//console.log('打开新界面：' + index);
 }

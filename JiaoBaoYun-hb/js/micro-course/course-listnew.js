@@ -26,7 +26,7 @@ var course_listnew = (function(mod) {
 			//1.获取所有课程
 			postDataMCPro_getAllCourses(comData, wd, function(data) {
 				wd.close();
-				console.log('1.获取所有课程:' + JSON.stringify(data));
+				//console.log('1.获取所有课程:' + JSON.stringify(data));
 				if(data.RspCode == 0) {
 					if(comData.pageIndex == 1) {
 						listContainer.innerHTML = "";
@@ -73,7 +73,7 @@ var course_listnew = (function(mod) {
 				//13.根据课程列表获取所有关注的课程
 				postDataMCPro_getAllFocusCoursesByIds(comData, wd, function(data) {
 					wd.close();
-					console.log('13.根据课程列表获取所有关注的课程:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					//console.log('13.根据课程列表获取所有关注的课程:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
 						if(comData.pageIndex == 1) {
 							listContainer.innerHTML = "";
@@ -111,7 +111,7 @@ var course_listnew = (function(mod) {
 			//2.获取所有关注的课程
 			postDataMCPro_getAllFocusCourses(comData1, wd, function(data) {
 				wd.close();
-				console.log('2.获取所有关注的课程:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				//console.log('2.获取所有关注的课程:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 				if(data.RspCode == 0) {
 					if(comData1.pageIndex == 1) {
 						listContainer.innerHTML = "";
@@ -165,7 +165,7 @@ var course_listnew = (function(mod) {
 	}
 	mod.setCustomUpdate = function(cell) {
 		var courseTime = events.isExistInStorageMap(storageKeyName.COURSELASTTIME, cell.TabId);
-		console.log("获取的更新时间：" + JSON.stringify(courseTime));
+		//console.log("获取的更新时间：" + JSON.stringify(courseTime));
 		if(courseTime) {
 			if(courseTime < Date.parse(cell.UpdateTime)) {
 				cell.IsUpdate = 1;
@@ -188,7 +188,7 @@ var course_listnew = (function(mod) {
 		li.innerHTML = mod.getCellInner(cell);
 		fragment.appendChild(li);
 		li.info = cell;
-		console.log("获取的界面cell的info"+JSON.stringify(li.info));
+		//console.log("获取的界面cell的info"+JSON.stringify(li.info));
 		li.querySelector(".input-btn").info = cell;
 		if(!cell.IsUpdate) {
 			li.querySelector(".red-circle").classList.add("display-none");
@@ -250,7 +250,7 @@ var course_listnew = (function(mod) {
 		//6.设置对某个课程关注
 		postDataMCPro_setCourseFocus(comData, wd, function(data) {
 			wd.close();
-			console.log('6.设置对某个课程关注:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+			//console.log('6.设置对某个课程关注:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 			if(data.RspCode == 0) { //成功
 				mod.changeBtnStatus(item);
 				if(data.RspData.FocusCnt > 0) {
@@ -293,7 +293,7 @@ var course_listnew = (function(mod) {
 			item.innerText = "已关注";
 			if(type) {
 				events.toggleStorageArray(storageKeyName.FOCUSECOURSES, item.info.TabId, 0);
-				console.log("关注的课程：" + myStorage.getItem(storageKeyName.FOCUSECOURSES));
+				//console.log("关注的课程：" + myStorage.getItem(storageKeyName.FOCUSECOURSES));
 				toggleAttendedPart(1);
 			}
 		}
@@ -314,21 +314,21 @@ var course_listnew = (function(mod) {
 	mod.setListener = function() {
 		//点击节次名
 		mui(".mui-slider").on("tap", ".mui-table-view-cell", function(e) {
-			console.log("点击课程的className"+this.className);
+			//console.log("点击课程的className"+this.className);
 		
-			console.log("获取的课程信息:"+JSON.stringify(this.info));
+			//console.log("获取的课程信息:"+JSON.stringify(this.info));
 			mod.gotoCourseDetail(this);
 		});
 		//点击关注按钮
 		mui(".mui-slider").on("tap", ".input-btn", function(e) {
 			var item = e.target;
 			e.stopPropagation();
-			console.log("item.info:" + JSON.stringify(item.info));
+			//console.log("item.info:" + JSON.stringify(item.info));
 			mod.clickFocuseBtn(item);
 		});
 	}
 	mod.gotoCourseDetail = function(item) {
-		console.log("获取的课程信息:"+JSON.stringify(item.info));
+		//console.log("获取的课程信息:"+JSON.stringify(item.info));
 		item.disabled = true;
 		jQuery(item).css("pointerEvents", "none");
 		mod.getRedCircle(item);
@@ -338,11 +338,11 @@ var course_listnew = (function(mod) {
 		}
 	}
 	mod.getRedCircle = function(item) {
-		console.log("当前item的className:" + item.className);
+		//console.log("当前item的className:" + item.className);
 		if(!item.querySelector(".red-circle")) {
 			mod.getRedCircle(item.parentElement);
 		} else {
-			console.log("获取时的className:" + item.className);
+			//console.log("获取时的className:" + item.className);
 			item.querySelector(".red-circle").classList.add("display-none");
 		}
 	}

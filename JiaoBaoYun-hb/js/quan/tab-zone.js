@@ -12,7 +12,7 @@ function addSomeEvent() {
 	//跳转到学生动态界面
 	mui('.mui-table-view').on('tap', '.studentsdynamic', function() {
 		var index = this.id.replace('studentsdynamic', '');
-		console.log('studentsdynamic====' + index)
+		//console.log('studentsdynamic====' + index)
 		mui.openWindow({
 			url: 'studentdynamic_main.html',
 			id: 'studentdynamic_main.html',
@@ -39,7 +39,7 @@ function addSomeEvent() {
 	//跳转到班级动态界面
 	mui('.mui-table-view').on('tap', '.tarClass', function() {
 		var index = this.id.replace('tarClass', '');
-		console.log('index：' + index)
+		//console.log('index：' + index)
 		mui.openWindow({
 			url: 'class_space.html',
 			id: 'class_space.html',
@@ -93,7 +93,7 @@ function addSomeEvent() {
 		postDataPro_addUserSpace(data.detail.postData, wd, function(data) {
 			wd.close();
 			mui.toast('发布成功！');
-			console.log('推送个人空间成功' + JSON.stringify(data));
+			//console.log('推送个人空间成功' + JSON.stringify(data));
 			events.fireToPageNone('zone_main.html', 'refreshZonep');
 			var comData = {
 				userId: personalUTID, //用户ID
@@ -102,9 +102,9 @@ function addSomeEvent() {
 
 			postDataPro_setUserSpaceReadByUser(comData, wd, function(data) {
 				wd.close();
-				console.log('设置空间状态为已读_setUserSpaceReadByUser' + JSON.stringify(data));
+				//console.log('设置空间状态为已读_setUserSpaceReadByUser' + JSON.stringify(data));
 				if(data.RspCode == 0) {
-					console.log('自己发布的设置成已读')
+					//console.log('自己发布的设置成已读')
 				}
 
 			})
@@ -121,10 +121,10 @@ function addSomeEvent() {
 	})
 
 	window.addEventListener('setRead', function(e) {
-		console.log('e.detail=' + JSON.stringify(e.detail));
+		//console.log('e.detail=' + JSON.stringify(e.detail));
 		if(e.detail.flag == 3) {
 
-			console.log('tableIndex=' + selectCell.tableIndex)
+			//console.log('tableIndex=' + selectCell.tableIndex)
 			var tableIndex = selectCell.tableIndex;
 			var cellIndex = selectCell.cellIndex;
 			var cellNoReadCnt = selectCell.NoReadCnt
@@ -192,7 +192,7 @@ function getStuList() {
 	//24.通过用户表ID获取用户关联的学生
 	postDataPro_PostUstu(comData, wd, function(data) {
 		wd.close();
-				console.log('获取学生列表_PostUstu:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				//console.log('获取学生列表_PostUstu:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 
 		if(data.RspCode == 0 || data.RspCode == 9 || data.RspCode == 7) { //9为查询记录为空
 			topStudentArr = data.RspData;
@@ -229,7 +229,7 @@ function getNotesByUserForMutiStudent(studentIds,classIds){
 		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 	postDataPro_getNotesByUserForMutiStudent(comData, wd, function(data) {
 		wd.close();
-		console.log('获取多个学生的点到记事_getNotesByUserForMutiStudent:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+		//console.log('获取多个学生的点到记事_getNotesByUserForMutiStudent:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 
 		if(data.RspCode == 0) {
 				var StuDyArr = data.RspData.Data;
@@ -283,7 +283,7 @@ function getGroupList() {
 	//	获取用户群
 	postDataPro_PostGList(comData, wd, function(data) {
 		wd.close();
-		console.log('获取用户群_PostGList:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+		//console.log('获取用户群_PostGList:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 		if(data.RspCode == 0) {
 			showBlankPage(false);
 			datasource = data.RspData; //底部列表数据
@@ -292,9 +292,9 @@ function getGroupList() {
 			//			群去重
 			for(var i = 0; i < datasource.length; i++) {
 				if(tempArr.indexOf(datasource[i].gid) > -1) {
-					//					console.log(i+'已存在'+datasource[i].gid);
+					//					//console.log(i+'已存在'+datasource[i].gid);
 				} else {
-					//					console.log(i+'不存在'+datasource[i].gid);
+					//					//console.log(i+'不存在'+datasource[i].gid);
 					tempArr.push(datasource[i].gid);
 					tempDatasource.push(datasource[i]);
 				}
@@ -319,7 +319,7 @@ function getGroupList() {
 			getClassSpacesByUserForMutiClass(gids);
 //			getAllClassMember(gids)
 		} else if(data.RspCode == 9) { //没有群
-			console.log('显示空白页')
+			//console.log('显示空白页')
 			showBlankPage(true); //显示空白页
 
 		} else {
@@ -344,7 +344,7 @@ function getAllClassMember(gids){
 	// 通过群ID获取群的正常用户
 	postDataPro_PostGusers(comData, wd, function(data) {
 		wd.close();
-		console.log('通过群ID获取群的正常用户_PostGusers:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+		//console.log('通过群ID获取群的正常用户_PostGusers:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 		if(data.RspCode == 0) {
 			var tepDic = {
 				index: index, //排序索引
@@ -397,7 +397,7 @@ function getClassSpacesByUserForMutiClass(classIds) {
 	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 	postDataPro_getClassSpacesByUserForMutiClass(comData, wd, function(data) {
 		wd.close();
-		console.log('获取多个班级空间列表_getClassSpacesByUserForMutiClass:{:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt + '}');
+		//console.log('获取多个班级空间列表_getClassSpacesByUserForMutiClass:{:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt + '}');
 		if(data.RspCode == 0) {
 			topArray =[] ;
 			var tempArr = data.RspData.Data;
@@ -454,7 +454,7 @@ function getBottomList(index, userLists) {
 	// 通过群ID获取群的正常用户
 	postDataPro_PostGusers(comData, wd, function(data) {
 		wd.close();
-		console.log('通过群ID获取群的正常用户_PostGusers:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+		//console.log('通过群ID获取群的正常用户_PostGusers:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 		if(data.RspCode == 0) {
 			var tepDic = {
 				index: index, //排序索引
@@ -513,7 +513,7 @@ function getUserSpaces(upString, index) {
 	//36.（用户空间）获取多用户空间列表
 	postDataPro_getUserSpacesByUser(comData, wd, function(data) {
 		wd.close();
-		//		console.log('获取多用户空间列表_getUserSpacesByUser:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+		//		//console.log('获取多用户空间列表_getUserSpacesByUser:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 		if(data.RspCode == 0) {
 			var userList = data.RspData.Data; //某群用户列表
 			requestTimes2--; //全部请求完毕
@@ -571,7 +571,7 @@ function getUserSpaces(upString, index) {
 			for(var i = 0; i < tempUserArr.length; i++) {
 				datasource[index].NoReadCnt = datasource[index].NoReadCnt + tempUserArr[i].NoReadCnt;
 			}
-			//			console.log('datasource[index].userList==='+datasource[index].userList);
+			//			//console.log('datasource[index].userList==='+datasource[index].userList);
 			if(requestTimes2 == 0) { //请求完毕刷新界面
 				//所需参数
 
@@ -580,9 +580,9 @@ function getUserSpaces(upString, index) {
 				};
 				postDataPro_PostUmk(postData, wd, function(data) {
 					wd.close();
-					console.log('获取多用户备注_PostUmk:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					//console.log('获取多用户备注_PostUmk:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
-						console.log('底部列表全部数据' + JSON.stringify(datasource));
+						//console.log('底部列表全部数据' + JSON.stringify(datasource));
 						for(var i = 0; i < datasource.length; i++) {
 							var userList1 = datasource[i].userList;
 							for(var j = 0; j < userList1.length; j++) {
@@ -597,7 +597,7 @@ function getUserSpaces(upString, index) {
 						}
 						refreshUI();
 					} else {
-						console.log('底部列表全部数据' + JSON.stringify(datasource));
+						//console.log('底部列表全部数据' + JSON.stringify(datasource));
 						refreshUI();
 					}
 				})
@@ -611,7 +611,7 @@ function getUserSpaces(upString, index) {
 }
 //刷新界面
 function refreshUI() {
-	console.log(datasource.length);
+	//console.log(datasource.length);
 	if(datasource.length == 0) {
 		return;
 	}
@@ -722,7 +722,7 @@ function addBottomTap(tableIndex, cellIndex) {
 			NoReadCnt: datasource[tableIndex].userList[cellIndex].NoReadCnt
 		}
 		var publisherId = datasource[tableIndex].userList[cellIndex].utid //空间用户id
-		console.log('tableIndex==' + tableIndex + 'cellIndex==' + cellIndex + 'publisherId==' + publisherId);
+		//console.log('tableIndex==' + tableIndex + 'cellIndex==' + cellIndex + 'publisherId==' + publisherId);
 		mui.openWindow({
 			url: 'zone_main.html',
 			id: 'zone_main.html',

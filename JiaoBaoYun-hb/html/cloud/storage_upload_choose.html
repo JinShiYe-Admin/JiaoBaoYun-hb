@@ -171,7 +171,7 @@
 			 */
 			function initData() {
 				main = plus.webview.currentWebview(); //获取当前窗体对象
-				console.log(main.id + " " + JSON.stringify(main.data));
+				//console.log(main.id + " " + JSON.stringify(main.data));
 				document.getElementById("yunpath").innerHTML = chooseData.pname;
 			}
 
@@ -181,27 +181,27 @@
 			function initListener() {
 				//文件数组变化的事件
 				fileList.$watch('filesArr', function(newVal, oldVal) {
-					console.log("newVal " + newVal.length);
-					console.log("oldVal " + oldVal.length);
+					//console.log("newVal " + newVal.length);
+					//console.log("oldVal " + oldVal.length);
 					if(newVal.length == 0) {
-						console.log("没有文件");
+						//console.log("没有文件");
 						changeUpBtnColorToDefault()
 					}
 					if(oldVal.length == 0 && newVal.length > 0) {
-						console.log("有文件");
+						//console.log("有文件");
 						changeUpBtnColor()
 					}
 				});
 
 				//增加文件的事件
 				window.addEventListener("chose-files", function(e) {
-					console.log("chose-files事件：" + JSON.stringify(e.detail.data));
+					//console.log("chose-files事件：" + JSON.stringify(e.detail.data));
 					fileList.pushFilesArr(rechargeFileArr(e.detail.data));
 					mui(".mui-scroll-wrapper").scroll().scrollTo(0, 0, 100);
 				});
 				//添加文件
 				document.getElementById('addfiles').addEventListener('tap', function() {
-					console.log("添加文件");
+					//console.log("添加文件");
 					filter.isShow = true;
 					filter.fileNo = fileList.filesArr.length;
 					filter.showType = 0;
@@ -212,7 +212,7 @@
 				 */
 				window.addEventListener('getCloudData', function(e) {
 					var data = e.detail.data;
-					console.log("getCloudData " + JSON.stringify(data));
+					//console.log("getCloudData " + JSON.stringify(data));
 					chooseData.pid = data.pid;
 					chooseData.pname = data.pname;
 					document.getElementById("yunpath").innerHTML = chooseData.pname;
@@ -222,7 +222,7 @@
 				//选择上传的路径
 				window.addEventListener('chooseFolder', function(e) {
 					var data = e.detail.data; //接收页面传入的参数值
-					console.log('chooseFolder ' + JSON.stringify(data));
+					//console.log('chooseFolder ' + JSON.stringify(data));
 					chooseData.pid = data.pid;
 					chooseData.pname = data.pname;
 					document.getElementById("yunpath").innerHTML = chooseData.pname;
@@ -280,7 +280,7 @@
 					
 					reArr.push(fileInfo);
 				}
-				console.log("获取的数组：" + JSON.stringify(reArr));
+				//console.log("获取的数组：" + JSON.stringify(reArr));
 				return reArr;
 			}
 

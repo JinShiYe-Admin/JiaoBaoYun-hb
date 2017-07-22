@@ -118,7 +118,7 @@
 				//28.（用户空间）获取用户针对某用户的空间列表
 				postDataPro_getUserSpacesByUserForPublisher(comData, wd, function(data) {
 					wd.close();
-					console.log('获取个人空间列表_getUserSpacesByUserForPublisher:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					//console.log('获取个人空间列表_getUserSpacesByUserForPublisher:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
 						if(data.RspData.Data.length == 0) {
 							if(tempPage==1){
@@ -174,7 +174,7 @@
 						//21.通过用户ID获取用户资料
 						postDataPro_PostUinf(tempData, wd, function(data1) {
 							wd.close();
-							console.log('获取个人资料success:RspCode:' + data1.RspCode + ',RspData:' + JSON.stringify(data1.RspData) + ',RspTxt:' + data1.RspTxt);
+							//console.log('获取个人资料success:RspCode:' + data1.RspCode + ',RspData:' + JSON.stringify(data1.RspData) + ',RspTxt:' + data1.RspTxt);
 							if(data1.RspCode == 0) {
 								//循环当前的个人信息返回值数组
 								for(var i in data1.RspData) {
@@ -186,7 +186,7 @@
 										var tempModel0 = tempRspData[item];
 										//遍历点赞的人
 										for(var item2 in tempModel0.LikeUsers) {
-											//										console.log('item2;;;;;==' + tempModel.utid + ',' + tempModel0.LikeUsers[item2]);
+											//										//console.log('item2;;;;;==' + tempModel.utid + ',' + tempModel0.LikeUsers[item2]);
 											if(tempModel.utid == tempModel0.LikeUsers[item2].userId) {
 												//												tempModel0.LikeUsers.splice(item2, 1, tempModel);
 												tempModel0.LikeUsers[item2] = $.extend(tempModel0.LikeUsers[item2], tempModel);
@@ -228,7 +228,7 @@
 									}
 								}
 							}
-							console.log('循环遍历后的值：' + JSON.stringify(tempRspData));
+							//console.log('循环遍历后的值：' + JSON.stringify(tempRspData));
 							PostUmk(tempArray.join(), tempRspData);
 
 						});
@@ -270,9 +270,9 @@
 			})
 			window.addEventListener('refreshZonep', function(data) {
 				var tempData = data.detail;
-				console.log(JSON.stringify(tempData));
+				//console.log(JSON.stringify(tempData));
 				var index = 'line' + tempIndex;
-				console.log(index)
+				//console.log(index)
 				if(tempData.flag == '评论') {
 					document.getElementById("bottomDiv" + tempIndex).style.paddingBottom = '12px';
 					document.getElementById(index).className = 'mui-media-body dynamic-line';
@@ -364,7 +364,7 @@
 				}
 				var wd;
 				postDataPro_setCommentMsgReadByUser(comData, wd, function(data) {
-					console.log('与我相关设置成已读success:RspCode:' + JSON.stringify(data));
+					//console.log('与我相关设置成已读success:RspCode:' + JSON.stringify(data));
 				})
 			}
 
@@ -378,7 +378,7 @@
 			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 			postDataPro_setUserSpaceReadByUser(comData, wd, function(data) {
 				wd.close();
-				console.log('设置空间状态为已读_setUserSpaceReadByUser' + JSON.stringify(data));
+				//console.log('设置空间状态为已读_setUserSpaceReadByUser' + JSON.stringify(data));
 				if(data.RspCode == 0) {
 					//获得主页面的webview
 					var main = plus.webview.getWebviewById('../quan/tab-zone.html');
@@ -450,7 +450,7 @@
 			// 通过群ID获取群的正常用户
 			postDataPro_PostGusers(comData, wd, function(data) {
 				wd.close();
-				console.log('通过群ID获取群的正常用户_PostGusers:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				//console.log('通过群ID获取群的正常用户_PostGusers:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 				if(data.RspCode == 0) {
 					datasource = data.RspData;
 					var userIds = [];
@@ -461,7 +461,7 @@
 						userIds.join(',');
 
 					}
-					//					console.log('群用户：'+JSON.stringify(datasource));
+					//					//console.log('群用户：'+JSON.stringify(datasource));
 					userIds = arrayDupRemoval(userIds)
 					upString = arrayToStr(userIds)
 					setUserSpaceReadByUser(upString);
@@ -486,7 +486,7 @@
 			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 			postDataPro_getAllUserSpacesByUser(comData, wd, function(data) {
 				wd.close();
-				console.log('74.(用户空间）获取多用户空间所有用户动态列表:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				//console.log('74.(用户空间）获取多用户空间所有用户动态列表:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 				if(data.RspCode == 0) {
 					if(data.RspData.Data.length == 0) {
 						mui.toast('暂无动态')
@@ -544,7 +544,7 @@
 					//21.通过用户ID获取用户资料
 					postDataPro_PostUinf(tempData, wd, function(data1) {
 						wd.close();
-						console.log('获取个人资料success:RspCode:' + data1.RspCode + ',RspData:' + JSON.stringify(data1.RspData) + ',RspTxt:' + data1.RspTxt);
+						//console.log('获取个人资料success:RspCode:' + data1.RspCode + ',RspData:' + JSON.stringify(data1.RspData) + ',RspTxt:' + data1.RspTxt);
 						if(data1.RspCode == 0) {
 							//循环当前的个人信息返回值数组
 							for(var i in data1.RspData) {
@@ -558,7 +558,7 @@
 									var tempModel0 = tempRspData[item];
 									//遍历点赞的人
 									for(var item2 in tempModel0.LikeUsers) {
-										//										console.log('item2;;;;;==' + tempModel.utid + ',' + tempModel0.LikeUsers[item2]);
+										//										//console.log('item2;;;;;==' + tempModel.utid + ',' + tempModel0.LikeUsers[item2]);
 										if(tempModel.utid == tempModel0.LikeUsers[item2].userId) {
 											//												tempModel0.LikeUsers.splice(item2, 1, tempModel);
 											tempModel0.LikeUsers[item2] = $.extend(tempModel0.LikeUsers[item2], tempModel);
@@ -618,11 +618,11 @@
 			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 			postDataPro_PostUmk(postData, wd, function(data) {
 				wd.close();
-				console.log('获取多用户备注_PostUmk:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				//console.log('获取多用户备注_PostUmk:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 				if(data.RspCode == 0) {
 					for(var j = 0; j < tempRspData.length; j++) {
 						for(var k = 0; k < data.RspData.length; k++) {
-							//							console.log(tempRspData[j].utid + '-------' + data.RspData[k].butid)
+							//							//console.log(tempRspData[j].utid + '-------' + data.RspData[k].butid)
 							if(tempRspData[j].utid == data.RspData[k].butid) {
 								tempRspData[j].ugname = data.RspData[k].bunick;
 							}
@@ -637,7 +637,7 @@
 				var table = document.body.querySelector('.mui-table-view');
 				//判断是加载更多1，还是刷新2
 				if(flag == 1) {
-					console.log('上拉加载更多')
+					//console.log('上拉加载更多')
 					var tempLength = zonepArray.length;
 					//合并数组
 					zonepArray = zonepArray.concat(tempRspData);

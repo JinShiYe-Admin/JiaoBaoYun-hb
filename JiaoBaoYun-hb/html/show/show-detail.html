@@ -128,7 +128,7 @@
 				events.fireToPageNone("show-home1.html", "detailReady");
 				window.addEventListener('showDetail', function(e) {
 					pageIndex = 1;
-					console.log("获取的数据:" + JSON.stringify(e.detail.data));
+					//console.log("获取的数据:" + JSON.stringify(e.detail.data));
 					var showInfo = e.detail.data;
 					tableId = showInfo.TabId;
 					requestShowDetail();
@@ -167,7 +167,7 @@
 				postDataPro_delUserSpaceById({
 					userSpaceId: commentList.showDetail.TabId
 				}, wd, function(data) {
-					console.log("删除用户动态后返回的值：" + JSON.stringify(data));
+					//console.log("删除用户动态后返回的值：" + JSON.stringify(data));
 					wd.close();
 					if(data.RspCode == 0) {
 						if(data.RspData.Result === 1) {
@@ -210,7 +210,7 @@
 					pageSize: 10 //评论每页记录数
 				}, wd, function(data) {
 					
-					console.log("获取的展现详情:" + JSON.stringify(data));
+					//console.log("获取的展现详情:" + JSON.stringify(data));
 					if(data.RspCode == 0) {
 						pageIndex++;
 						getUserInfos(data.RspData.Data, rechargeData);
@@ -269,8 +269,8 @@
 						}
 					}
 				}
-				console.log("获取人员信息后的展现详情：" + JSON.stringify(showDetail));
-				console.log("pageIndex:" + pageIndex);
+				//console.log("获取人员信息后的展现详情：" + JSON.stringify(showDetail));
+				//console.log("pageIndex:" + pageIndex);
 				if((pageIndex - 1) === 1) {
 					commentList.showDetail = showDetail;
 				} else {
@@ -286,7 +286,7 @@
 			}
 
 			function getIds(data) {
-				console.log("要处理的数据：" + JSON.stringify(data))
+				//console.log("要处理的数据：" + JSON.stringify(data))
 				var ids = [];
 				ids.push(data.PublisherId);
 				if(data.LikeUsers.length > 0) {
@@ -317,7 +317,7 @@
 					}
 				}
 				ids = events.arraySingleItem(ids);
-				console.log("获取的id数据：" + ids);
+				//console.log("获取的id数据：" + ids);
 				return ids;
 			}
 			/**
@@ -331,7 +331,7 @@
 					vtp: 'g'
 				}, wd, function(data) {
 					
-					console.log("获取的数据：" + JSON.stringify(data));
+					//console.log("获取的数据：" + JSON.stringify(data));
 					if(data.RspCode == 0) {
 						getRemark(showDetail, ids, data.RspData, callback);
 					}else{
@@ -350,7 +350,7 @@
 				postDataPro_PostUmk({
 					vvl: ids.toString()
 				}, wd, function(data) {
-					console.log("获取的用户备注：" + JSON.stringify(data));
+					//console.log("获取的用户备注：" + JSON.stringify(data));
 					if(data.RspCode == 0) {
 						if(data.RspData.length > 0) {
 							var remarkInfos = data.RspData;

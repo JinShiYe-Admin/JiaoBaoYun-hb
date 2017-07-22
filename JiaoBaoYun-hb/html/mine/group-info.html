@@ -122,12 +122,12 @@
 						vvl: 6
 					}, wd, function(data) {
 						wd.close();
-						console.log(JSON.stringify(data))
+						//console.log(JSON.stringify(data))
 						//判断是否有值
 						if(data.RspCode=='0000'){
 							//获取群信息
 							groupInfo = data.RspData[0];
-							console.log('获取的群信息:' + JSON.stringify(groupInfo))
+							//console.log('获取的群信息:' + JSON.stringify(groupInfo))
 							//填充群信息
 							setContent(groupInfo)
 							//加载监听
@@ -147,7 +147,7 @@
 			var cellEventlistner=function(groupId,groupInfo){
 					mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
 						var data = {};
-						console.log('要传递的群名称：'+JSON.stringify(groupInfo))
+						//console.log('要传递的群名称：'+JSON.stringify(groupInfo))
 						data.groupId = groupId;
 						switch(parseInt(this.getAttribute('pos'))) {
 							case 0:
@@ -171,7 +171,7 @@
 							default:
 								break;
 						}
-						console.log('传递的群信息：'+JSON.stringify(data))
+						//console.log('传递的群信息：'+JSON.stringify(data))
 						events.openNewWindowWithData('edit-groupInfo.html', data);
 						data = null;
 					});

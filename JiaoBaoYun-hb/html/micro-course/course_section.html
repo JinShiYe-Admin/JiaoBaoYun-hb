@@ -511,7 +511,7 @@
 			 */
 			function initData(wd) {
 				main = plus.webview.currentWebview();
-				console.log("main data " + JSON.stringify(main.data));
+				//console.log("main data " + JSON.stringify(main.data));
 				document.getElementById("title").innerText = main.data.SecName;
 				getSectionDetails(wd);
 			}
@@ -532,14 +532,14 @@
 				var video = document.getElementById("video");
 				video.style.height = plus.screen.resolutionWidth * 190 / 360 + "px";
 				video.onplaying = function() {
-					console.log("video-onplaying");
+					//console.log("video-onplaying");
 					video.style.backgroundImage = "";
 				}
 
 				//初始化音频播放区域
 				svgWidth = plus.screen.resolutionWidth - 60;
 				var d = courseDetails.getAudioBorderPath(svgWidth);
-				console.log("top audio " + d);
+				//console.log("top audio " + d);
 				//外框和背景
 				document.getElementById("audio_svg_border_fill").setAttribute("d", d);
 				document.getElementById("audio_svg_border").setAttribute("d", d);
@@ -548,7 +548,7 @@
 				var audio = document.getElementById("audio");
 
 				audio.oncanplaythrough = function() { //可以播放
-					console.log("audio-oncanplaythrough " + audioState);
+					//console.log("audio-oncanplaythrough " + audioState);
 					if(audioState == 4) {
 						audioState = 0;
 						audio.play();
@@ -556,7 +556,7 @@
 				}
 
 				audio.onplaying = function() { //播放
-					console.log("audio-playing" + audio.duration);
+					//console.log("audio-playing" + audio.duration);
 					if(audioState == 0 || audioState == 3) { //从头开始播放
 						var audio_svg_rect_ani = document.getElementById("audio_svg_rect_ani");
 						var audio_svg_icon_first_ani = document.getElementById("audio_svg_icon_first_ani");
@@ -579,15 +579,15 @@
 				}
 
 				audio.onpause = function() { //暂停或结束
-					console.log("audio-onpause");
-					console.log("paused " + audio.paused);
-					console.log("ended " + audio.ended);
+					//console.log("audio-onpause");
+					//console.log("paused " + audio.paused);
+					//console.log("ended " + audio.ended);
 					if(audio.paused && !audio.ended) { //暂停
-						console.log("暂停");
+						//console.log("暂停");
 						audioState = 2;
 						document.getElementById("audio_svg").pauseAnimations();
 					} else if(audio.ended) {
-						console.log("结束");
+						//console.log("结束");
 						audioState = 3;
 					}
 				}
@@ -618,7 +618,7 @@
 
 				//点击评论区域
 				mui('.section-comment').on('tap', '.mui-table-view-cell', function(e) {
-					console.log('mui-table-view-cell id ' + this.id + " e " + e.target.getAttribute("data-type"));
+					//console.log('mui-table-view-cell id ' + this.id + " e " + e.target.getAttribute("data-type"));
 					var self = this;
 					if(events.judgeLoginMode(self)) { //判断是否是游客身份登录
 						document.getElementById("audio").pause();
@@ -670,7 +670,7 @@
 								winId: "addCommont"
 							}
 							document.getElementById("audio").pause();
-							//console.log("data " + JSON.stringify(data));
+							////console.log("data " + JSON.stringify(data));
 							events.openNewWindowWithData('course_addReply.html', data);
 							break;
 						case "reply_all": //显示所有的评论
@@ -686,7 +686,7 @@
 
 				//评论节次
 				document.getElementById('comment_section').addEventListener('tap', function() {
-					console.log("comment_section " + sectionId);
+					//console.log("comment_section " + sectionId);
 					var self = this;
 					if(events.judgeLoginMode(self)) { //判断是否是游客身份登录
 						document.getElementById("audio").pause();
@@ -738,7 +738,7 @@
 
 				//新增评论
 				window.addEventListener('addCommont', function(e) {
-					console.log("addCommont " + JSON.stringify(e.detail.data));
+					//console.log("addCommont " + JSON.stringify(e.detail.data));
 					if(e.detail.data.replyId == 0) { //对节次评论
 						sectionData.value[e.detail.data.secId].Data.unshift({
 							CommentDate: new Date(new Date().getTime()).toJSON().replace("T", " "),
@@ -769,7 +769,7 @@
 
 				//音频SVG
 				document.getElementById('audio_svg').addEventListener('tap', function() {
-					console.log("audio_svg " + audioState);
+					//console.log("audio_svg " + audioState);
 					var eleAudio = document.getElementById("audio");
 					if(audioState == 0) { //未播放
 						eleAudio.play();
@@ -792,7 +792,7 @@
 			 * 显示顶部节次的数据
 			 */
 			function showTopData(data, wd) {
-				console.log("showTopData " + JSON.stringify(data));
+				//console.log("showTopData " + JSON.stringify(data));
 				sectionId = data.SecId;
 				if(data.SecStatus == 0) { //被屏蔽
 					document.getElementById("section_top").style.display = "none";
@@ -836,7 +836,7 @@
 					pageSize: 0 //每页记录数，传入0，获取总记录数
 				};
 				postDataMCPro_getSectionById(comData, wd, function(data) {
-					console.log('16 获取课程详情 ' + JSON.stringify(data));
+					//console.log('16 获取课程详情 ' + JSON.stringify(data));
 					if(data.RspCode == 0) {
 						//更换课程列表中选中的课程
 						sectionData.key[sectionData.key.length] = main.data.SecId;
@@ -855,7 +855,7 @@
 			 */
 			function showCommentsFirst(comments, wd) {
 				wd = wd || events.showWaiting();
-				//console.log("showCommentsFirst " + JSON.stringify(comments));
+				////console.log("showCommentsFirst " + JSON.stringify(comments));
 				document.getElementById("section_comment_list").innerHTML = "";
 				document.getElementById("section_comment_title").innerText = "评论(" + comments.length + ")";
 				var utids = [];
@@ -879,7 +879,7 @@
 					};
 					//21.通过用户ID获取用户资料
 					postDataPro_PostUinf(comData, wd, function(data) {
-						console.log('21 通过用户ID获取用户资料' + JSON.stringify(data));
+						//console.log('21 通过用户ID获取用户资料' + JSON.stringify(data));
 						if(data.RspCode == 0) {
 							for(var k in data.RspData) {
 								if(!allUserInfo.value[data.RspData[k].utid]) {
@@ -904,9 +904,9 @@
 			 * @param {Object} wd
 			 */
 			function showCommontsSecond(data, wd) {
-				//console.log("allUserInfo " + JSON.stringify(allUserInfo));
+				////console.log("allUserInfo " + JSON.stringify(allUserInfo));
 				for(var i in data) {
-					//console.log("showCommontsSecond " + JSON.stringify(data[i]));
+					////console.log("showCommontsSecond " + JSON.stringify(data[i]));
 					var ele = document.createElement("li");
 					ele.className = "mui-table-view-cell";
 					ele.setAttribute("data-UserId", data[i].UserId);
@@ -975,7 +975,7 @@
 			function commontLikeOrNot(commonData, element, index) {
 				var wd = events.showWaiting();
 				postDataMCPro_setCommentLike(commonData, wd, function(data) {
-					console.log('9 设置某条评论的点赞' + JSON.stringify(data));
+					//console.log('9 设置某条评论的点赞' + JSON.stringify(data));
 					if(data.RspCode == 0 && data.RspData.Result == 1) {
 						if(commonData.status == 0) { //取消赞
 							element.className = "mui-icon iconfont icon-zanzan1 section-comment-notzan";
@@ -1001,7 +1001,7 @@
 			 * 显示全部的评论
 			 */
 			function showAllCommonts(data) {
-				console.log("showAllCommonts " + JSON.stringify(data));
+				//console.log("showAllCommonts " + JSON.stringify(data));
 				for(var i in data.Replys) {
 					if(i > 4) {
 						var ele = document.createElement('div');
@@ -1023,7 +1023,7 @@
 			 * @param {int} type 1,显示视频区域;2,显示音频区域;
 			 */
 			function showOrHiddenVideoAudio(type, fpath, time, thumb) {
-				console.log("showOrHiddenVideoAudio " + type + " " + fpath + " " + time + " " + thumb);
+				//console.log("showOrHiddenVideoAudio " + type + " " + fpath + " " + time + " " + thumb);
 				var video = document.getElementById("video");
 				//重置音频区域
 				var audio = document.getElementById("audio");
@@ -1081,15 +1081,15 @@
 			 */
 			function sectionLikeOrNot() {
 				var wd = events.showWaiting();
-				console.log("sectionLikeOrNot sectionId " + sectionId);
+				//console.log("sectionLikeOrNot sectionId " + sectionId);
 				var commonData = {
 					secId: sectionId,
 					userId: myStorage.getItem(storageKeyName.PERSONALINFO).utid,
 					status: !sectionData.value[sectionId].IsLiked * 1
 				}
-				console.log("commonData " + JSON.stringify(commonData));
+				//console.log("commonData " + JSON.stringify(commonData));
 				postDataMCPro_setSecLike(commonData, wd, function(data) {
-					console.log('14 设置某小节的点赞 ' + JSON.stringify(data));
+					//console.log('14 设置某小节的点赞 ' + JSON.stringify(data));
 					if(data.RspCode == 0 && data.RspData.Result == 1) {
 						var section_top_zan = document.getElementById("section_top_zan");
 						if(commonData.status == 0) { //取消赞

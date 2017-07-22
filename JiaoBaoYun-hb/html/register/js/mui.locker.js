@@ -94,7 +94,7 @@
 			var Y = (self.CH - 2 * self.OffsetY - self.R * 2 * 3) / 2;
 			self.pointLocationArr = self.caculateNinePointLotion(X, Y);
 			self.initEvent(canvas, cxt, self.holder);
-			//console.log(X);
+			////console.log(X);
 			self.draw(cxt, self.pointLocationArr, [], null);
 			setTimeout(function() {
 				self.draw(cxt, self.pointLocationArr, [], null);

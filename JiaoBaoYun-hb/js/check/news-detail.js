@@ -4,12 +4,12 @@ mui.plusReady(function() {
 	mui.fire(plus.webview.currentWebview().opener(), "subReady", 0);
 	window.addEventListener("newsDetail", function(e) {
 		newsDetail = e.detail.data;
-		console.log("获取的新闻详情：" + JSON.stringify(newsDetail));
+		//console.log("获取的新闻详情：" + JSON.stringify(newsDetail));
 		//放置数据
 		setData();
 	})
 	plus.webview.currentWebview().addEventListener("hide", function() {
-		console.log("隐藏页面");
+		//console.log("隐藏页面");
 		plus.webview.getWebviewById(newsDetail.turl).close();
 	})
 	setListener();
@@ -31,7 +31,7 @@ var setCheckInfo = function() {
 	var checkInfo;
 	var refuseButton = document.getElementById("refuse-button");
 	var passButton = document.getElementById("pass-button");
-	console.log(JSON.stringify(newsDetail));
+	//console.log(JSON.stringify(newsDetail));
 	switch(newsDetail.Ischeck) {
 		case 0:
 			checkInfo = "未审"
@@ -87,7 +87,7 @@ var checkNews = function(checkType) {
 		vvl1: checkType
 	}, wd, function(data) {
 		wd.close();
-		console.log("当前返回状态：" + JSON.stringify(data));
+		//console.log("当前返回状态：" + JSON.stringify(data));
 		if(data.RspCode == 0) {
 			newsDetail.Ischeck = checkType;
 			setCheckInfo();

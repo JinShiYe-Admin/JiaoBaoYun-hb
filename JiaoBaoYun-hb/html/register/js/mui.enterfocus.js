@@ -9,7 +9,7 @@
 					if (boxIndex == boxArray.length - 1) {
 						if (callback) callback();
 					} else {
-						//console.log(boxIndex);
+						////console.log(boxIndex);
 						var nextBox = boxArray[++boxIndex];
 						nextBox.focus();
 					}

@@ -16,7 +16,7 @@ mui.plusReady(function() {
     document.addEventListener("swipeleft", function(event) {
         var angle = event.detail.angle;
         angle = Math.abs(angle);
-        console.log('左滑事件：'+angle);
+        //console.log('左滑事件：'+angle);
         /**
          * 控制滑动的角度，为避免误操作，可自定义限制滑动角度；
          */
@@ -29,7 +29,7 @@ mui.plusReady(function() {
     
         var angle = event.detail.angle;
         angle = Math.abs(angle);
-        	console.log('右滑事件：'+angle);
+        	//console.log('右滑事件：'+angle);
         /**
          * 控制滑动的角度，为避免误操作，可自定义限制滑动角度；
          */

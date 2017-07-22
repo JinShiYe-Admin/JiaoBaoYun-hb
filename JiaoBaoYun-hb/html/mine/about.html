@@ -73,7 +73,7 @@
 		<script type="text/javascript">
 			mui.plusReady(function() {
 				plus.runtime.getProperty(plus.runtime.appid, function(inf) {
-					console.log('应用版本号:' + plus.runtime.version + ',资源升级版本号:' + inf.version)
+					//console.log('应用版本号:' + plus.runtime.version + ',资源升级版本号:' + inf.version)
 					document.getElementById("version").innerHTML = '教宝云' + getBigVersion(plus.runtime.version,inf.version);
 				})
 

@@ -33,8 +33,8 @@ var courseInfo = new Vue({
 			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 			postDataMCPro_setCourseFocus(comData, wd, function(data) {
 				wd.close();
-				console.log('6.设置对某个课程关注:' + JSON.stringify(data));
-				console.log("是否已关注："+this.isFocused);
+				//console.log('6.设置对某个课程关注:' + JSON.stringify(data));
+				//console.log("是否已关注："+this.isFocused);
 				if(data.RspCode == 0) {
 					events.fireToPageNone('course-home1.html', 'focus');
 					callback();

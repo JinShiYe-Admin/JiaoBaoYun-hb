@@ -156,7 +156,7 @@
 				}
 				var main = plus.webview.currentWebview(); //获取当前窗体对象
 				var data = main.data; //接收A页面传入参数值
-				console.log('qun_manage_member_sub.html:' + JSON.stringify(data));
+				//console.log('qun_manage_member_sub.html:' + JSON.stringify(data));
 
 				var typeId = 'stu'; //记录选择的成员分类
 				getMember(data.gid, '-1'); //获取所有成员
@@ -172,7 +172,7 @@
 				mui('.mui-content').on('tap', '.member-add', function() {
 					var par = this.parentNode;
 					var mstype = '';
-					console.log(par.id);
+					//console.log(par.id);
 					switch(par.id) {
 						case 'stulist':
 							mstype = 'student';
@@ -184,7 +184,7 @@
 							mstype = 'parents';
 							break;
 						default:
-							console.log('邀请群成员设置成员类型出错');
+							//console.log('邀请群成员设置成员类型出错');
 							break;
 					}
 					events.openNewWindowWithData('qun_manage_invite.html', {
@@ -197,25 +197,25 @@
 
 				//点击成员
 				mui('.mui-content').on('tap', '.member-item', function() {
-					//console.log('member-item ' + this.getAttribute('data-info'));
-					//console.log('member-item ' + this.getAttribute('data-beizhu'));
+					////console.log('member-item ' + this.getAttribute('data-info'));
+					////console.log('member-item ' + this.getAttribute('data-beizhu'));
 					var info = JSON.parse(this.getAttribute('data-info'));
 					var beizhu = JSON.parse(this.getAttribute('data-beizhu'));
 					mui.extend(true, info, beizhu);
 					mui.extend(info, data);
-					//console.log('info ' + JSON.stringify(info));
+					////console.log('info ' + JSON.stringify(info));
 					events.fireToPageWithData('group-pInfo.html', 'postPInfo', info);
 				});
 
 				//长按成员
 				mui('.mui-content').on('longtap', '.member-item', function() {
-					//console.log('member-item ' + this.getAttribute('data-info'));
-					//console.log('member-item ' + this.getAttribute('data-beizhu'));
+					////console.log('member-item ' + this.getAttribute('data-info'));
+					////console.log('member-item ' + this.getAttribute('data-beizhu'));
 					var info = JSON.parse(this.getAttribute('data-info'));
 					var beizhu = JSON.parse(this.getAttribute('data-beizhu'));
 					mui.extend(true, info, beizhu);
 					mui.extend(info, data);
-					console.log('info ' + JSON.stringify(info));
+					//console.log('info ' + JSON.stringify(info));
 
 					if(info.mstype == '1') {
 						mui.toast('不能删除群主');
@@ -231,7 +231,7 @@
 								};
 								postDataPro_PostGuD(comData, wd, function(data) {
 									wd.close();
-									console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+									//console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 									if(data.RspCode == 0) {
 										delMember(info.utid);
 										mui.toast('删除成功');
@@ -241,7 +241,7 @@
 								});
 
 							} else {
-								console.log('不删除');
+								//console.log('不删除');
 							}
 						});
 
@@ -255,7 +255,7 @@
 			 * @param {Object} data2 成员的数据
 			 */
 			function addMemItem(data, data2) {
-				//console.log('addMemItem ' + JSON.stringify(data2));
+				////console.log('addMemItem ' + JSON.stringify(data2));
 				var element = document.createElement('li');
 				element.id = data + data2.utid;
 				element.setAttribute('data-info', JSON.stringify(data2));
@@ -345,10 +345,10 @@
 					vvl1: vvl1, //群员类型，0家长,1管理员,2老师,3学生,-1取全部
 				};
 				postDataPro_PostGusers(getMemData, wd, function(data) {
-					console.log('13_postDataPro_PostGusers_通过群ID获取群的正常用户.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					//console.log('13_postDataPro_PostGusers_通过群ID获取群的正常用户.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
 						mui.each(data.RspData, function(index, element) {
-							console.log(JSON.stringify(element));
+							//console.log(JSON.stringify(element));
 							tempList.push(element.utid);
 							switch(element.mstype) {
 								case 0:
@@ -364,7 +364,7 @@
 									stuList.push(element);
 									break;
 								default:
-									console.log('用户在群类型异常');
+									//console.log('用户在群类型异常');
 									break;
 							}
 						});
@@ -404,7 +404,7 @@
 					vvl: strUtid //被备注用户ID,utid或utid串
 				};
 				postDataPro_PostUmk(comData, wd, function(data) {
-					console.log('35_postDataPro_PostUmk_个人获取对某人或一群人的备注.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					//console.log('35_postDataPro_PostUmk_个人获取对某人或一群人的备注.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
 						mui.each(data.RspData, function(index, element) {
 							changeBZName(element);

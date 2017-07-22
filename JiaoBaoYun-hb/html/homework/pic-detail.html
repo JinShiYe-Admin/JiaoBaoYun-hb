@@ -55,7 +55,7 @@
 			var slider = mui("#slider");
 			mui.plusReady(function(){
 				var title = plus.webview.currentWebview().data.title;
-				console.log(title);
+				//console.log(title);
 				document.getElementsByTagName('h1')[0].innerHTML = title
 			var imgArr = plus.webview.currentWebview().data.data;
 						var div = mui('.mui-slider-item-duplicate');
@@ -68,7 +68,7 @@
 					indicator.className = 'mui-indicator';
 					mui('.mui-slider-indicator')[0].appendChild(indicator)
 				}
-				console.log(imgArr[i].Url);
+				//console.log(imgArr[i].Url);
 				var imgDiv = document.createElement('div');
 				imgDiv.className = 'mui-slider-item';
 				var a = document.createElement('a');
