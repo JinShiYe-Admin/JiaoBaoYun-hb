@@ -271,7 +271,8 @@
 			//宽度和高度
 			var initStyle;
 			var noReadCount = 0;
-
+			var wd; //全局d等待框
+			var httpFlag = 0; //请求次数
 			init(); //初始化界面
 
 			/**
@@ -362,6 +363,18 @@
 			var studentDoc = {};
 
 			off_canvas.init();
+			//设置全局beforeSend
+			mui.ajaxSettings.beforeSend = function(xhr, setting) {
+			};
+
+			//设置全局complete
+			mui.ajaxSettings.complete = function(xhr, status) {
+				httpFlag++;
+				if(httpFlag == 10) { //所有请求完毕
+					wd.close();
+				}
+			}
+
 			mui.plusReady(function() {
 				var webHeight = localStorage.getItem('resolutionHeight') * 1 - (localStorage.getItem('getStatusbarHeight') * 1 + 50);
 				plus.webview.currentWebview().setStyle({
@@ -604,9 +617,9 @@
 								fsize: '0' //	文件大小，文件用
 							};
 							// 等待的对话框
-							var wd = events.showWaiting();
+							//var wd = events.showWaiting();
 							postDataPro_PostDiFiA(comData, wd, function(data) {
-								wd.close();
+								//wd.close();
 								console.log('27.postDataPro_PostDiFiA:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 								if(data.RspCode == 0) {
 									//26.用户云盘顶层文件及文件夹获取
@@ -748,6 +761,12 @@
 					if(!parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid)) {
 						return;
 					}
+					
+					if(plus.networkinfo.getCurrentType() == plus.networkinfo.CONNECTION_NONE) {
+						console.log('没有网络');
+						mui.toast("网络异常，请检查网络设置！");
+						return;
+					}
 					getAboutMe();
 
 					//26.用户云盘顶层文件及文件夹获取
@@ -785,10 +804,10 @@
 						vvl: personalUTID //查询的各项，对应人的utid，可以是查询的任何人
 					};
 					// 等待的对话框
-					var wd = events.showWaiting();
+					//var wd = events.showWaiting();
 					//9.获取用户群
 					postDataPro_PostGList(comData, wd, function(data) {
-						wd.close();
+						//wd.close();
 						console.log('作业主界面获取的群信息：' + JSON.stringify(data));
 						if(data.RspCode == 0) {
 							var tempArray = data.RspData;
@@ -845,7 +864,7 @@
 
 				//26.用户云盘顶层文件及文件夹获取
 				function postFirstFile() {
-					var wd = events.showWaiting();
+					//var wd = events.showWaiting();
 					//所需参数
 					var comData = {
 						vtp: '1', //类型，0文件及文件夹混合,1文件夹,2文件
@@ -867,13 +886,13 @@
 							}
 						}
 						addStorageIcon();
-						wd.close();
+						//wd.close();
 					});
 				}
 
 				//91.（云档案）按家长获取档案文件夹
 				function postUserStudent() {
-					var wd = events.showWaiting();
+					//var wd = events.showWaiting();
 					var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 					var comData = {
 						parentId: personalUTID //家长ID
@@ -892,7 +911,7 @@
 						} else {
 							mui.toast(data.RspTxt);
 						}
-						wd.close();
+						//wd.close();
 					});
 				}
 
@@ -1155,7 +1174,7 @@
 					};
 					//返回值model：model_userDataInfo
 					// 等待的对话框
-					var wd = events.showWaiting();
+					//var wd = events.showWaiting();
 					//addcloudrecord_0_0();
 					//24.通过用户表ID获取用户关联的学生
 					postDataPro_PostUstu(comData, wd, function(data) {
@@ -1180,7 +1199,7 @@
 						} else {
 							mui.toast(data.RspTxt);
 						}
-						wd.close();
+						//wd.close();
 					});
 				}
 
@@ -1193,7 +1212,7 @@
 						vvl: personalUTID, //查询的各项，对应人的utid，可以是查询的任何人
 					};
 					// 等待的对话框
-					var wd = events.showWaiting();
+					//var wd = events.showWaiting();
 					//	获取用户群
 					postDataPro_PostGList(comData, wd, function(data) {
 						//清除班级区域
@@ -1236,7 +1255,7 @@
 						} else {
 							mui.toast(data.RspTxt);
 						}
-						wd.close();
+						//wd.close();
 					});
 				}
 			});
@@ -1252,9 +1271,9 @@
 					vvl1: '-1', //群员类型，0家长,1管理员,2老师,3学生,-1取全部
 
 				};
-				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+				//var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 				postDataPro_PostGusers(comData, wd, function(data) {
-					wd.close();
+					//wd.close();
 					var userArrays = [];
 					console.log('通过群ID获取群的正常用户_PostGusers:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
@@ -1293,9 +1312,9 @@
 					studentIds: StudentIds, //学生ID,Array
 					classIds: gids //班级ID,Array
 				};
-				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+				//var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 				postDataPro_getNotesByUserForMutiStudent(comData, wd, function(data) {
-					wd.close();
+					//wd.close();
 					if(data.RspCode == 0) {
 						noReadModel.stu_noReads = [];
 						var tempArr = data.RspData.Data;
@@ -1329,10 +1348,10 @@
 					userId: personalUTID, //用户ID
 					classIds: gids //班级ID，例如[1,2,3]
 				};
-				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+				//var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 				//返回：model_userNoteInfo
 				postDataPro_getClassSpacesByUserForMutiClass(comData, wd, function(data) {
-					wd.close();
+					//wd.close();
 					if(data.RspCode == 0) {
 						noReadModel.class_noReads = [];
 						var tempArr = data.RspData.Data;
@@ -1365,10 +1384,10 @@
 					userId: personalUTID, //用户ID，登录用户
 					publisherIds: publisherIds //发布者ID，Array，例如[[1,2,3],[4,5,6]]
 				};
-				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+				//var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 				//返回：NoReadCnts：未读总数列表，Array，例如[1,2,3]
 				postDataPro_getNoReadCntForClassByUser(comData, wd, function(data) {
-					wd.close();
+					//wd.close();
 					if(data.RspCode == 0) {
 						noReadModel.parents_noReads = data.RspData.NoReadCnts; //家长圈未读数数组
 						console.log(JSON.stringify(noReadModel));
@@ -1394,11 +1413,12 @@
 					pageIndex: '1', //当前页数
 					pageSize: '1' //每页记录数
 				};
+				wd = events.showWaiting();
 				//返回model：model_homeSchoolList，model_userSpaceAboutMe
-				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+				//var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 				//24.获取与我相关
 				postDataPro_getAboutMe(comData, wd, function(data) {
-					wd.close();
+					//wd.close();
 					console.log('postDataPro_getAboutMe:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
 						getHomeworkAlert(data.RspData.NoReadCnt);
@@ -1417,10 +1437,10 @@
 					pageSize: '1' //每页记录数
 				};
 				//返回model：model_homeSchoolList，model_userSpaceAboutMe
-				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+				//var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 				//24.获取与我相关
 				postDataPro_GetHomeworkAlertCount(comData, wd, function(data) {
-					wd.close();
+					//wd.close();
 					console.log('postDataPro_GetHomeworkAlertCount:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
 						NoReadCnt = data.RspData.NoReadCnt + NoReadCnt;
@@ -1526,7 +1546,7 @@
 					} else if(e.value.length > 10) {
 						mui.toast('档案名称最多10个字');
 					} else {
-						var wd = events.showWaiting();
+						//var wd = events.showWaiting();
 						var comData = {
 							fileInfoId: dataInfo.DocId, //档案ID
 							fileInfoName: e.value, //档案新名称
@@ -1546,7 +1566,7 @@
 							} else {
 								mui.toast(data.RspTxt);
 							}
-							wd.close();
+							//wd.close();
 						})
 					}
 					return false;
