@@ -2,9 +2,11 @@
 
 var storageKeyName = (function(mod) {
 
-	var Key = 0; //0,开发;1,测试;2,移动版 3外网
-	switch(Key) {
-		case 0://开发
+
+	mod.key = 0; //0,开发;1,测试;2,移动版 3外网
+	mod.showLog = mod.key; //0打印log信息
+	switch(mod.key) {
+		case 0: //开发
 			//---开发---start---
 			mod.MAINEDU = 'http://192.168.1.44:8511/'; //科教图片url
 			mod.MAINURL = 'http://192.168.1.44:8511/api/CloudApi/'; //主url
@@ -13,7 +15,6 @@ var storageKeyName = (function(mod) {
 			mod.MAINQIUZHI = 'http://192.168.1.200:8081/JiaoBaoCloudService/'; //求知主url
 			mod.MAINMICROCLASS = 'http://192.168.1.200:8081/JiaoBaoCloudService/'; //微课主url
 			//---开发---end---
-			
 			//---七牛空间和接口---开发---start---
 			mod.QNPB = 'http://qn-kfpb.jiaobaowang.net/'; //公开空间域名
 			mod.QNGETUPLOADTOKEN = 'http://114.215.222.186:8004/Api/QiNiu/GetUpLoadToKen';
@@ -23,7 +24,7 @@ var storageKeyName = (function(mod) {
 			mod.QNGETTOKENDELETE = 'http://114.215.222.186:8004/Api/QiNiu/Delete'; //获取批量（或者一个）删除七牛文件的token的url
 			//	---七牛空间和接口---开发---end---
 			break;
-		case 1://测试
+		case 1: //测试
 			//---测试---start---
 			mod.MAINEDU = 'http://192.168.1.178:8511/'; //科教图片url
 			mod.MAINURL = 'http://192.168.1.178:8511/api/CloudApi/'; //主url
@@ -42,7 +43,8 @@ var storageKeyName = (function(mod) {
 			mod.QNGETTOKENDELETE = 'http://114.215.222.186:8005/Api/QiNiu/Delete'; //获取批量（或者一个）删除七牛文件的token的url
 			//---七牛空间和接口---测试---end---
 			break;
-		case 2://移动版
+
+		case 2: //移动版
 			//---移动版---start---
 			mod.MAINEDU = 'http://114.215.222.186:8009/'; //科教图片url
 			mod.MAINURL = 'http://114.215.222.186:8009/api/CloudApi/'; //主url
@@ -51,7 +53,7 @@ var storageKeyName = (function(mod) {
 			mod.MAINQIUZHI = 'http://114.215.222.194:8080/YDJiaoBaoCloudService/'; //求知主url
 			mod.MAINMICROCLASS = 'http://114.215.222.194:8080/YDJiaoBaoCloudService/'; //微课主url
 			//---外网---end---
-			
+
 			//---七牛空间和接口---测试---start---
 			mod.QNPB = 'http://qn-cspb.jiaobaowang.net/'; //公开空间域名
 			mod.QNGETUPLOADTOKEN = 'http://114.215.222.186:8005/Api/QiNiu/GetUpLoadToKen';
@@ -60,7 +62,7 @@ var storageKeyName = (function(mod) {
 			mod.QNGETDOWNTOKENFILE = 'http://114.215.222.186:8005/Api/QiNiu/GetAccess'; //获取下载文件（云存储）的token的url，url+七牛文件url
 			mod.QNGETTOKENDELETE = 'http://114.215.222.186:8005/Api/QiNiu/Delete'; //获取批量（或者一个）删除七牛文件的token的url
 			break;
-		case 3://外网
+		case 3: //外网
 			//---外网---start---
 			mod.MAINEDU = 'http://114.215.222.186:8002/'; //科教图片url
 			mod.MAINURL = 'http://114.215.222.186:8002/api/CloudApi/'; //主url
@@ -97,10 +99,6 @@ var storageKeyName = (function(mod) {
 	mod.COURSELASTTIME = "courseLastTime";
 	mod.SHOWTYPE = "showType";
 	mod.COURSETYPE = "courseType";
-
-	mod.SHOWTYPE="showType";
-	mod.COURSETYPE="courseType";
-
 
 	mod.MAINHOMEWORKURLTEACHER = mod.MAINHOMEWORKURL + 'TeacherService.svc/'; //老师作业url
 	mod.MAINHOMEWORKURLSTUDENT = mod.MAINHOMEWORKURL + 'StudentService.svc/'; //学生作业url

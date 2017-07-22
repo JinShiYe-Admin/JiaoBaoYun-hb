@@ -402,7 +402,10 @@
 			"html/show/show_home_1.html",
 			"html/micro-course/course-home1.html",
 <<<<<<< HEAD
+<<<<<<< HEAD
 			"html/show/show-home1.html",
+=======
+>>>>>>> master
 =======
 >>>>>>> master
 			"image/utils/default_personalimage.png",
@@ -420,7 +423,10 @@
 			"html/show/show-home2.html",
 			"html/index/mine.html",
 <<<<<<< HEAD
+<<<<<<< HEAD
 			"html/quan/pub-dynamic.html",
+=======
+>>>>>>> master
 =======
 >>>>>>> master
 			"html/register/login.html"
@@ -3183,7 +3189,8 @@
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
-			"js/micro-course/course-info.js"
+			"js/micro-course/course-info.js",
+			"js/utils/vue.min.js"
 		],
 		"refer": [
 			"html/micro-course/history-records.html"
