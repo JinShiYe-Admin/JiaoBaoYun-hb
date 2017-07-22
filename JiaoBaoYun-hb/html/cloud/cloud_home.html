@@ -371,6 +371,7 @@
 			mui.ajaxSettings.complete = function(xhr, status) {
 				httpFlag++;
 				if(httpFlag == 10) { //所有请求完毕
+					httpFlag=0;
 					wd.close();
 				}
 			}
