@@ -3,7 +3,12 @@
 var storageKeyName = (function(mod) {
 
 	mod.key = 0; //0,开发;1,测试;2,移动版 3外网
-	mod.showLog = mod.key; //0打印log信息
+	var exLog = console.log;
+	console.log = function() {
+		if(mod.key === 0) {
+			exLog.apply(this, arguments);
+		}
+	}
 	switch(mod.key) {
 		case 0: //开发
 			//---开发---start---

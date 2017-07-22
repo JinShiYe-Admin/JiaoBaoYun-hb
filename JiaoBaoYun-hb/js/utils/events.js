@@ -1418,35 +1418,6 @@ var events = (function(mod) {
 			}, 500)
 		}
 	}
-
-	/**
-	 * 打印数据
-	 * @param {Object} data
-	 */
-	mod.showLog = function(data, titlt) {
-		if(storageKeyName.showLog === 0) {
-			if(titlt == undefined) {
-				console.log(data);
-			} else {
-				console.log(titlt + ":" + data);
-			}
-		}
-	}
-
-	/**
-	 * 将data转换成Json再打印
-	 * @param {Object} data
-	 * @param {Object} titlt
-	 */
-	mod.showLogJson = function(data, titlt) {
-		if(storageKeyName.showLog === 0) {
-			if(titlt == undefined) {
-				console.log(JSON.stringify(data));
-			} else {
-				console.log(titlt + ":" + JSON.stringify(data));
-			}
-		}
-	}
 	return mod;
 
 })(events || {});
