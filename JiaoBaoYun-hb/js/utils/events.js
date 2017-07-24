@@ -1,14 +1,12 @@
 //公共方法js
 window.onerror = function(errorMessage, scriptURI, lineNumber, columnNumber, errorObj) {
-	if(storageKeyName.showLog === 0) {
-		console.log("---ERROR---页面出现错误---start---");
-		console.log("错误信息-0:" + JSON.stringify(errorMessage.detail));
-		console.log("错误信息-1:" + errorMessage);
-		console.log("出错文件:" + scriptURI);
-		console.log("出错行号:" + lineNumber);
-		console.log("出错列号:" + columnNumber);
-		console.log("错误详情:" + errorObj);
-	}
+//	console.log("---ERROR---页面出现错误---start---");
+//	console.log("错误信息-0:" + JSON.stringify(errorMessage.detail));
+//	console.log("错误信息-1:" + errorMessage);
+//	console.log("出错文件:" + scriptURI);
+//	console.log("出错行号:" + lineNumber);
+//	console.log("出错列号:" + columnNumber);
+//	console.log("错误详情:" + errorObj);
 	var isMuiLazyError = false; //是否是mui懒加载的BUG
 	if(errorMessage.detail != undefined) {
 		//mui懒加载的BUG的判断逻辑
@@ -1016,7 +1014,7 @@ var events = (function(mod) {
 			var wd = events.showWaiting();
 			//token续订
 			postDataPro_PostTokenRenew(comData, wd, function(data0) {
-				wd.close();
+				
 				//console.log('token续订success:RspCode:' + data0.RspCode + ',RspData:' + JSON.stringify(data0.RspData) + ',RspTxt:' + data0.RspTxt);
 				var tempInfo00 = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
 				tempInfo00.token = data0.RspData;
@@ -1080,6 +1078,7 @@ var events = (function(mod) {
 						}
 					});
 				} else {
+					wd.close();
 					var tempValue = {
 						flag: 1, //正常用户登录
 						value: 0 //登录失败
