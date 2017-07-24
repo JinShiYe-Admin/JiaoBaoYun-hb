@@ -1014,7 +1014,7 @@ var events = (function(mod) {
 			var wd = events.showWaiting();
 			//token续订
 			postDataPro_PostTokenRenew(comData, wd, function(data0) {
-				wd.close();
+				
 				//console.log('token续订success:RspCode:' + data0.RspCode + ',RspData:' + JSON.stringify(data0.RspData) + ',RspTxt:' + data0.RspTxt);
 				var tempInfo00 = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
 				tempInfo00.token = data0.RspData;
@@ -1078,6 +1078,7 @@ var events = (function(mod) {
 						}
 					});
 				} else {
+					wd.close();
 					var tempValue = {
 						flag: 1, //正常用户登录
 						value: 0 //登录失败
