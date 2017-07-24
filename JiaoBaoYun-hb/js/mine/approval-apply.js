@@ -33,13 +33,13 @@ mui.plusReady(function() {
 	 * 申请通过后传递的事件
 	 */
 	window.addEventListener('appPassed', function(e) {
-		console.log('接受邀请');
+		//console.log('接受邀请');
 		list.innerHTML = "";
 		wd = events.showWaiting();
 		getData('inv', []);
 	})
 	window.addEventListener('applied', function(e) {
-		console.log('申请入群');
+		//console.log('申请入群');
 		list.innerHTML = "";
 		wd = events.showWaiting();
 		getData('inv', []);
@@ -51,14 +51,14 @@ mui.plusReady(function() {
  * @param {Object} callback
  */
 var getData = function(type, records) {
-	console.log("申请记录：" + JSON.stringify(records));
+	//console.log("申请记录：" + JSON.stringify(records));
 	//获取申请人
 	//	var wd = events.showWaiting();
 	postDataPro_PostGrInv({
 		vtp: type
 	}, wd, function(data) {
 		//		wd.close();
-		console.log('申请人数据：' + JSON.stringify(data));
+		//console.log('申请人数据：' + JSON.stringify(data));
 		if(data.RspCode == 0) {
 			if(type == 'inv') {
 				for(var i in data.RspData) {
@@ -85,10 +85,10 @@ var getData = function(type, records) {
  */
 var getApplyRecord = function(records) {
 	//	var wd = events.showWaiting();
-	console.log("申请记录：" + JSON.stringify(records));
+	//console.log("申请记录：" + JSON.stringify(records));
 	postDataPro_PostMJoin({}, wd, function(data) {
 		//		wd.close();
-		console.log('获取的我的群申请记录：' + JSON.stringify(data));
+		//console.log('获取的我的群申请记录：' + JSON.stringify(data));
 		if(data.RspCode == 0) {
 			records = records.concat(data.RspData);
 		} else {
@@ -102,7 +102,7 @@ var getApplyRecord = function(records) {
  * @param {Object} records
  */
 var sortData = function(records) {
-	console.log("待排序的记录:" + JSON.stringify(records));
+	//console.log("待排序的记录:" + JSON.stringify(records));
 	records.sort(function(a, b) {
 		return Date.parse(b.aptime) - Date.parse(a.aptime);
 	})
@@ -113,7 +113,7 @@ var sortData = function(records) {
  * @param {Object} data
  */
 var setData = function(records) {
-	console.log("记录：" + JSON.stringify(records));
+	//console.log("记录：" + JSON.stringify(records));
 	var apply_container = document.createElement('li');
 	apply_container.className = "mui-table-view-cell";
 	//	apply_container.setAttribute("id","btn-apply")
@@ -159,14 +159,14 @@ var addListener = function() {
 			wd.close();
 			if(data.RspCode == 0) {
 				mui.toast('您已同意入群');
-				console.log(appButton.parentElement.className);
+				//console.log(appButton.parentElement.className);
 				list.removeChild(appButton.parentElement);
 				events.fireToPageNone('mine.html', 'newsChanged');
 				events.fireToPageNone('../cloud/cloud_home.html', 'infoChanged');
 			} else {
 				mui.toast(data.RspTxt);
 			}
-			console.log('用户同意邀请入群:' + JSON.stringify(data));
+			//console.log('用户同意邀请入群:' + JSON.stringify(data));
 		})
 
 	})
@@ -198,7 +198,7 @@ var addListener = function() {
  * @param {Object} type 选中默认身份
  */
 var defaultCheck = function(type) {
-	console.log('默认身份:' + type);
+	//console.log('默认身份:' + type);
 
 	check_parents.checked = false;
 	check_stu.checked = false;
@@ -230,7 +230,7 @@ var getChecked = function() {
 			var choseRole = parseInt(this.value);
 		}
 		groupRoles = [choseRole];
-		console.log("当前角色：" + choseRole + JSON.stringify(groupRoles));
+		//console.log("当前角色：" + choseRole + JSON.stringify(groupRoles));
 	});
 }
 /**
@@ -251,7 +251,7 @@ var removeItemFromArray = function(item, arrays) {
  */
 var getInnerHTML = function(item) {
 	var inner = '';
-	console.log("当前item状态" + item.stat);
+	//console.log("当前item状态" + item.stat);
 	if(isNaN(item.stat)) {
 		if(item.aptype) {
 			inner = ' <a class="">' +

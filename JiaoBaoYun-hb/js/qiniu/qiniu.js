@@ -115,7 +115,7 @@
 				// http://stackoverflow.com/questions/5538972/console-log-apply-not-working-in-ie9
 				//var log = Function.prototype.bind.call(console.log, console);
 				//log.apply(console, args);
-				console.log(msg);
+				//console.log(msg);
 			} else {
 				args.unshift(header);
 				console.log.apply(console, args);

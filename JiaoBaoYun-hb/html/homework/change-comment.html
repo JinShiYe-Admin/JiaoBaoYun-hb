@@ -28,7 +28,7 @@
 			mui.plusReady(function() {
 				events.blurBack();
 				workInfo = plus.webview.currentWebview().data;
-				console.log("作业修改评论界面获取的数据："+JSON.stringify(workInfo))
+				//console.log("作业修改评论界面获取的数据："+JSON.stringify(workInfo))
 				document.querySelector(".input-area").value=workInfo.Comment;
 				jQuery(".input-area").prop("maxLength",1000);
 				events.addTap("submit-change", function() {
@@ -55,7 +55,7 @@
 					comment: commentValue
 				}, wd, function(data) {
 					wd.close();
-					console.log('老师评价页面获取老师更改普通作业评论的结果：' + JSON.stringify(data));
+					//console.log('老师评价页面获取老师更改普通作业评论的结果：' + JSON.stringify(data));
 					if(data.RspCode == '0000') {
 						mui.toast('修改评论成功！')
 						mui.fire(plus.webview.currentWebview().opener(),"commentChanged",commentValue)

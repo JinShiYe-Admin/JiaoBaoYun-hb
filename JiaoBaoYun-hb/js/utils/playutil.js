@@ -58,7 +58,7 @@ var playutil = (function(mod) {
 				alert('### ERROR ### 安卓调用应用 name:' + e.name + " message:" + e.message);
 			}
 		} else {
-			console.log('### ERROR ### ' + plus.os.name);
+			//console.log('### ERROR ### ' + plus.os.name);
 		}
 	}
 
@@ -70,7 +70,7 @@ var playutil = (function(mod) {
 	mod.openFile = function(fpath, errorCallback) {
 		try {
 			plus.runtime.openFile(fpath, '', function(error) {
-				console.log('打开文件失败:' + JSON.stringify(error));
+				//console.log('打开文件失败:' + JSON.stringify(error));
 				if(plus.os.name == 'Android') {
 					mod.openFileAndroid(fpath, function(text) {
 						errorCallback(text);
@@ -104,7 +104,7 @@ var playutil = (function(mod) {
 				errorCallback('### ERROR ### 安卓调用应用 name:' + e.name + " message:" + e.message);
 			}
 		} else {
-			console.log('### ERROR ### ' + plus.os.name);
+			//console.log('### ERROR ### ' + plus.os.name);
 		}
 	}
 
@@ -113,12 +113,12 @@ var playutil = (function(mod) {
 	 * @param {Object} fpath
 	 */
 	mod.MIMETypeAndroid = function(fpath) {
-		//console.log('MIMEType:' + fpath);
+		////console.log('MIMEType:' + fpath);
 		var MIMEType = '*/*';
 		var nameList = fpath.split(".");
 		var type = nameList[nameList.length - 1];
 		type = type.toLowerCase(); //转换为小写
-		//console.log('MIMEType type ' + type);
+		////console.log('MIMEType type ' + type);
 		switch(type) {
 			case 'avi': //视频类型
 			case 'mp4':
@@ -165,10 +165,10 @@ var playutil = (function(mod) {
 				MIMEType = 'audio/*';
 				break;
 			default:
-				console.log('MIME-Type 不匹配');
+				//console.log('MIME-Type 不匹配');
 				break;
 		}
-		//console.log('MIMEType ' + type);
+		////console.log('MIMEType ' + type);
 		return MIMEType;
 	}
 

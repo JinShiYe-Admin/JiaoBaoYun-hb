@@ -154,7 +154,7 @@ var TouchMove = (function(mod) {
 			//onsole.log("touchstart");
 			//break;
 			case "touchend": //结束触碰
-				//console.log("touchend");
+				////console.log("touchend");
 				//结束触碰后重置记录移动的坐标
 				movedx = 0;
 				movedy = 0;
@@ -163,7 +163,7 @@ var TouchMove = (function(mod) {
 				doubleTap_y = parseInt(event.changedTouches[0].clientY);
 				break;
 			case "touchmove": //开始移动
-				//console.log("touchmove");
+				////console.log("touchmove");
 				event.preventDefault(); //阻止页面滚动
 				if(event.touches[1] != undefined) {
 					//有第二个触点
@@ -278,7 +278,7 @@ var TouchMove = (function(mod) {
 		var table_y = table.offsetTop;
 		var table_width = table.offsetWidth;
 		var table_height = table.offsetHeight;
-		//console.log("befor:" + table_x + "|" + table_y + "|" + table_width + "|" + table_height);
+		////console.log("befor:" + table_x + "|" + table_y + "|" + table_width + "|" + table_height);
 		//改变宽度高度
 		if(Math.abs(changex2) <= 15 && Math.abs(changey2) <= 15) {
 			//限制两个触点的变化距离

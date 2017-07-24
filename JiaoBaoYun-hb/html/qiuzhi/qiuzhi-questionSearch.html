@@ -110,7 +110,7 @@
 					//获取存储值
 					var index = this.id.replace('li', '');
 					var modelTemp = answerArray[index];
-					console.log('dianji 标题' + JSON.stringify(modelTemp));
+					//console.log('dianji 标题' + JSON.stringify(modelTemp));
 					//跳转界面
 					events.openNewWindowWithData('qiuzhi-question.html', {
 						askID: modelTemp.TabId, //问题id
@@ -139,7 +139,7 @@
 				//注册搜索历史的点击事件
 				//一个是应用搜索历史
 				mui('#history_container div ul').on('tap', '.mui-table-view-cell', function() {
-					console.log(this.getElementsByTagName("span").length);
+					//console.log(this.getElementsByTagName("span").length);
 					//获取设置关键字
 					if(this.getElementsByTagName("span").length > 1) {
 						var str_text = this.getElementsByTagName("span")[1].innerHTML;
@@ -158,7 +158,7 @@
 				//一个是移除搜索历史
 				mui('#history_container div ul').on('tap', '.mui-table-view-cell .icon-del', function() {
 					//移除搜索历史
-					console.log(this.previousSibling.innerHTML);
+					//console.log(this.previousSibling.innerHTML);
 					//重写显示
 					var str_text = this.previousSibling.innerHTML;
 					HistoryItemRemove(str_text);
@@ -173,7 +173,7 @@
 							//清除节点
 							mui("#list-container div ul")[0].innerHTML = "";
 							var self = this;
-							console.log("下拉刷新");
+							//console.log("下拉刷新");
 							pageIndex = 1;
 							flagRef = 0;
 							//33.获取某个用户的评论列表
@@ -187,9 +187,9 @@
 						contentinit: '',
 						callback: function() {
 							var self = this;
-							console.log("上拉加载更多");
+							//console.log("上拉加载更多");
 							flagRef = 1;
-							console.log(totalPageCount);
+							//console.log(totalPageCount);
 							if(pageIndex < totalPageCount) {
 								getAsksByCondition(keyWord);
 							} else {
@@ -309,10 +309,10 @@
 			 */
 			function searchQuestion() {
 				keyWord = mui("#search-keyWord")[0].value;
-				console.log(keyWord)
+				//console.log(keyWord)
 				setHistory(keyWord);
 				mui("#list-container div ul")[0].innerHTML = "";
-				console.log("搜索");
+				//console.log("搜索");
 				pageIndex = 1;
 				flagRef = 0;
 				//4.获取所有符合条件问题
@@ -337,7 +337,7 @@
 				//4.获取所有符合条件问题
 				postDataQZPro_getAsksByCondition(comData, wd, function(data) {
 					wd.close();
-					console.log('4.获取所有符合条件问题:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					//console.log('4.获取所有符合条件问题:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
 						//如果是旧数据，去掉里面的html标签
 						for (var i = 0; i < data.RspData.Data.length; i++) {
@@ -362,7 +362,7 @@
 							mui(".mui-pull-bottom-tips")[0].classList.add("mui-hidden");
 						}
 					} else {
-						console.log(data.RspTxt);
+						//console.log(data.RspTxt);
 						mui.toast(data.RspTxt);
 					}
 				});

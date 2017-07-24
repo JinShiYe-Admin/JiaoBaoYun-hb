@@ -163,7 +163,7 @@
 			function init() {
 				var titleWidth = document.getElementById("myCityTitle").offsetWidth;
 				var titleNameWidth = document.getElementById("myCityTitle_1").offsetWidth;
-				//console.log(titleWidth + ' ' + titleNameWidth);
+				////console.log(titleWidth + ' ' + titleNameWidth);
 				var cityLine = document.querySelectorAll('.city-my');
 				var cityPoint = document.querySelectorAll('.city-my-point');
 				var width = parseInt(titleWidth / 2 - titleNameWidth);
@@ -189,7 +189,7 @@
 			function initData() {
 				main = plus.webview.currentWebview(); //获取当前窗体对象
 				cities = main.data.cities;
-				console.log('订制城市：' + JSON.stringify(main.data));
+				//console.log('订制城市：' + JSON.stringify(main.data));
 				//main.data = {
 				//	id: '0',//0科教，1展现，uarea账号地区
 				//	webid: '../scienceeducation/scienceeducation_home.html', //id对应webview的id
@@ -328,7 +328,7 @@
 					for(var i in commitCities) {
 						commitCities[i].totalNo = commitCities.length;
 					}
-					console.log('commitCities:' + JSON.stringify(commitCities));
+					//console.log('commitCities:' + JSON.stringify(commitCities));
 
 					if(main.data.id == '0' || main.data.id == '1') { //0科教，1展现
 						//将数组改为字符串
@@ -385,7 +385,7 @@
 							}
 							procode = procode + '0000';
 							var commitSrt = procode + ' ' + acode + '|' + proname + ' ' + aname;
-							console.log(commitSrt);
+							//console.log(commitSrt);
 							uareaPostReUinf(commitSrt);
 						}
 					}
@@ -444,7 +444,7 @@
 			 * 增加已选择的城市
 			 */
 			function addChooseCity(data) {
-				//console.log('addChooseCity '+JSON.stringify(data));
+				////console.log('addChooseCity '+JSON.stringify(data));
 				var div = document.createElement('div');
 				div.id = 'choose_' + data.acode;
 				div.className = 'mui-col-xs-4 mui-col-sm-4'
@@ -466,7 +466,7 @@
 				//41.获取某个区域下的所有子区域或查询城市
 				postDataPro_PostArea(comData, wd, function(data) {
 					cityArray = data.RspData;
-					console.log('所有子区域或查询城市:' + JSON.stringify(data));
+					//console.log('所有子区域或查询城市:' + JSON.stringify(data));
 					if(data.RspCode == 0) {
 						var tempArry = cities;
 						mui.each(cityArray, function(index, element) {
@@ -483,7 +483,7 @@
 									}
 								}
 								element.select = select;
-								//console.log('addAllCity:' + JSON.stringify(element));
+								////console.log('addAllCity:' + JSON.stringify(element));
 								addAllCity(proAcode, element);
 							}
 						});
@@ -504,7 +504,7 @@
 				};
 				//43.用户修改或添加区域阅读设置
 				postDataPro_PostUTcityA(comData, wd, function(data) {
-					console.log('用户修改或添加区域阅读设置:' + JSON.stringify(data));
+					//console.log('用户修改或添加区域阅读设置:' + JSON.stringify(data));
 					if(data.RspCode == 0) {
 						var citiesInfo = {
 							type: main.data.id,
@@ -530,7 +530,7 @@
 				}
 				//6.用户修改各项用户信息
 				postDataPro_PostReUinf(comData, wd, function(data) {
-					console.log('6.用户修改各项用户信息success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					//console.log('6.用户修改各项用户信息success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
 						mui.toast('修改成功');
 						//解析省市代码

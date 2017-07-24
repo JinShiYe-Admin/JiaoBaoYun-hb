@@ -45,8 +45,8 @@
 			mui.plusReady(function() {
 				datasource = plus.webview.currentWebview().data;
 				selectedExpert = plus.webview.currentWebview().selectedExpert
-				console.log('获取的数据：' + JSON.stringify(datasource));
-				console.log('选择的专家：' + JSON.stringify(selectedExpert));
+				//console.log('获取的数据：' + JSON.stringify(datasource));
+				//console.log('选择的专家：' + JSON.stringify(selectedExpert));
 				addExperts();
 				events.addTap('publish', function() {
 					var box = document.getElementsByClassName('checkbox');
@@ -58,7 +58,7 @@
 						}
 					}
 					var boxesStr = arrayToStr(selectedBoxes)
-					console.log(JSON.stringify(selectedBoxes));
+					//console.log(JSON.stringify(selectedBoxes));
 					events.fireToPageWithData('qiuzhi-newQ.html', 'atExpert', selectedBoxes);
 					//				mui.back();
 				})
@@ -83,7 +83,7 @@
 				}
 				var box = document.getElementsByClassName('checkbox');
 				for(var i = 0; i < box.length; i++) {
-					console.log(datasource[i].UserId + "------" + selectedExpert)
+					//console.log(datasource[i].UserId + "------" + selectedExpert)
 					for(var j = 0; j < selectedExpert.length; j++)
 						if(datasource[i].UserId == selectedExpert[j]) {
 							box[i].checked = true;

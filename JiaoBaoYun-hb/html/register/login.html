@@ -276,7 +276,7 @@ none; margin-top: -15px;">登录</button>
 					//						//token续订
 					//						postDataPro_PostTokenRenew(comData, wd, function(data0) {
 					//							wd.close();
-					//							console.log('token续订success:RspCode:' + data0.RspCode + ',RspData:' + JSON.stringify(data0.RspData) + ',RspTxt:' + data0.RspTxt);
+					//							//console.log('token续订success:RspCode:' + data0.RspCode + ',RspData:' + JSON.stringify(data0.RspData) + ',RspTxt:' + data0.RspTxt);
 					//							if(data0.RspCode == 0) {
 					//								//								window.myStorage.getItem(window.storageKeyName.PERSONALINFO).token = data0.RspData;
 					//								//获取个人信息
@@ -287,7 +287,7 @@ none; margin-top: -15px;">登录</button>
 					//								//21.通过用户ID获取用户资料
 					//								postDataPro_PostUinf(comData1, wd, function(data) {
 					//									wd.close();
-					//									console.log('获取个人信息000:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					//									//console.log('获取个人信息000:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					//									if(data.RspCode == 0) {
 					//										var tepI0000 = data.RspData[0];
 					//										//存储个人信息
@@ -298,7 +298,7 @@ none; margin-top: -15px;">登录</button>
 					//										tempInfo.usex = tepI0000.usex;
 					//										tempInfo.utxt = tepI0000.utxt;
 					//										//解析省市代码
-					//										console.log('9999=' + tepI0000.uarea);
+					//										//console.log('9999=' + tepI0000.uarea);
 					//										if(tepI0000.uarea != null) {
 					//											var tempArray = tepI0000.uarea.split('|');
 					//											if(tempArray.length > 0) {
@@ -317,7 +317,7 @@ none; margin-top: -15px;">登录</button>
 					//										window.myStorage.setItem(window.storageKeyName.PERSONALINFO, tempInfo);
 					//										//
 					//										events.infoChanged();
-					//										console.log('登录保存的个人信息：' + JSON.stringify(tempInfo))
+					//										//console.log('登录保存的个人信息：' + JSON.stringify(tempInfo))
 					//										//跳到主界面
 					////										events.openNewWindow('../index/index.html');
 					//										events.openNewWindow('../index/index.html', '');
@@ -431,12 +431,12 @@ none; margin-top: -15px;">登录</button>
 				//取消按钮
 				events.addTap('cancelBtn', function() {
 					document.activeElement.blur();
-					console.log('获取登录界面的opener:' + plus.webview.currentWebview().opener().id);
+					//console.log('获取登录界面的opener:' + plus.webview.currentWebview().opener().id);
 					mui.back();
 				});
 
 				function loginBtn(loginInfo) {
-					console.log('1221111');
+					//console.log('1221111');
 					//先发送握手协议
 					//需要加密的数据
 					var enData0 = {};
@@ -451,7 +451,7 @@ none; margin-top: -15px;">登录</button>
 					//发送网络请求，data为网络返回值
 					postDataEncry(storageKeyName.MAINURL + 'PostShakeHand', enData0, comData0, 0, wd, function(data) {
 						//						wd.close();
-						console.log('PostShakeHand:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+						//console.log('PostShakeHand:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 						if(data.RspCode == 0) {
 							//存储到手机本地
 							window.myStorage.setItem(window.storageKeyName.SHAKEHAND, data.RspData);
@@ -468,12 +468,12 @@ none; margin-top: -15px;">登录</button>
 								appid: plus.runtime.appid,
 								vtp: 'mb' //mb(手机号),nm(账号或邮箱)
 							};
-							console.log('endata:' + JSON.stringify(enData) + 'comdata:' + JSON.stringify(comData));
+							//console.log('endata:' + JSON.stringify(enData) + 'comdata:' + JSON.stringify(comData));
 							//发送网络请求，data为网络返回值
 							postDataEncry(storageKeyName.MAINURL + 'PostLogin', enData, comData, 0, wd, function(data) {
 								wd.close();
 								wd.close();
-								console.log('账号密码登录s1111111e:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+								//console.log('账号密码登录s1111111e:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 								if(data.RspCode != 0000) {
 									mui.toast(data.RspTxt);
 									return;
@@ -504,7 +504,7 @@ none; margin-top: -15px;">登录</button>
 										}
 									}
 									window.myStorage.setItem(window.storageKeyName.PERSONALINFO, data.RspData);
-									console.log('登录保存的个人信息：' + JSON.stringify(data.RspData));
+									//console.log('登录保存的个人信息：' + JSON.stringify(data.RspData));
 									//退出 界面更新
 									events.logOff();
 									events.infoChanged();

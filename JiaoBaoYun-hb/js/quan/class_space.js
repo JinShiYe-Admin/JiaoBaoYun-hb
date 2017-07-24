@@ -15,7 +15,7 @@ var class_space = (function(mod) {
 		postDataPro_getClassSpacesByUserForClass(postData, mod.wd, function(pagedata) {
 			//			wd.close();
 			if(pagedata.RspCode == 0) {
-				console.log('获取的班级动态：' + JSON.stringify(pagedata));
+				//console.log('获取的班级动态：' + JSON.stringify(pagedata));
 				mod.totalPagNo = pagedata.RspData.TotalPage;
 				list = pagedata.RspData.Data;
 				if(pageIndex == 1) {
@@ -76,7 +76,7 @@ var class_space = (function(mod) {
 	 */
 	var createListView = function() {
 		if(list.length > 0) {
-			console.log('总页码：' + mod.totalPagNo);
+			//console.log('总页码：' + mod.totalPagNo);
 			imgsize = 0;
 			var utids = [];
 			for(var i in list) {
@@ -92,7 +92,7 @@ var class_space = (function(mod) {
 	 * @param {Object} item
 	 */
 	var createInnerHtml = function(item, index) {
-		console.log("加载的数据：" + JSON.stringify(item));
+		//console.log("加载的数据：" + JSON.stringify(item));
 		var inner = '<div><div class="mui-pull-left head-img" >' +
 			'<img class="head-portrait" headId="' + item.utid + '" src="' + updateHeadImg(item.uimg, 2) + '"/>' +
 			'<p class="single-line">' + events.shortForString(getName(item), 6) + '</p>' +
@@ -106,7 +106,7 @@ var class_space = (function(mod) {
 			'<a href="#popover" tabId="' + item.TabId + '" class="bottom-zan mui-icon iconfont icon-support ' + setIsLike(item.IsLike) + '">(' + item.LikeCnt +
 			')</a><span tabId="' + item.TabId + '" class="bottom-chakan mui-icon iconfont icon-chakan">(' + item.ReadCnt + ')</span></p>' +
 			'</div></div>';
-		console.log("加载的数据：" + inner);
+		//console.log("加载的数据：" + inner);
 		return inner;
 	}
 	var getName = function(item) {
@@ -130,7 +130,7 @@ var class_space = (function(mod) {
 	 */
 	var changeDate = function(pDate) {
 		var noDate = pDate.split('-');
-		console.log(noDate);
+		//console.log(noDate);
 		if(parseInt(noDate[0]) == new Date().getFullYear()) {
 			noDate.splice(0, 1);
 		}
@@ -154,7 +154,7 @@ var class_space = (function(mod) {
 		};
 		//		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING)
 		postDataPro_PostGusers(comData, mod.wd, function(pInfo) {
-			console.log('获取的个人信息:' + JSON.stringify(pInfo))
+			//console.log('获取的个人信息:' + JSON.stringify(pInfo))
 			//			wd.close();
 			if(pInfo.RspCode == 0) {
 				var personalData = pInfo.RspData;
@@ -169,7 +169,7 @@ var class_space = (function(mod) {
 				postDataPro_PostUmk({
 					vvl: ids.toString()
 				}, mod.wd, function(remarkData) {
-					console.log('获取的备注信息：' + JSON.stringify(remarkData));
+					//console.log('获取的备注信息：' + JSON.stringify(remarkData));
 					//					wd.close();
 					if(remarkData.RspCode == 0) {
 						var buData = remarkData.RspData;
@@ -182,7 +182,7 @@ var class_space = (function(mod) {
 							}
 						}
 					} else {
-						console.log('没啥备注信息。')
+						//console.log('没啥备注信息。')
 					}
 					var personIds = [];
 					for(var i in list) {
@@ -197,7 +197,7 @@ var class_space = (function(mod) {
 			} else {
 				mod.wd.close();
 				endFresh();
-				console.log(pInfo.RspTxt);
+				//console.log(pInfo.RspTxt);
 			}
 
 		})
@@ -218,7 +218,7 @@ var class_space = (function(mod) {
 			//			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 			postDataPro_PostUinf(tempData, mod.wd, function(data) {
 				//				wd.close();
-				console.log('获取的个人信息:' + JSON.stringify(data));
+				//console.log('获取的个人信息:' + JSON.stringify(data));
 				if(data.RspCode == 0) {
 					rechargeInfos(data.RspData);
 				} else {
@@ -274,7 +274,7 @@ var class_space = (function(mod) {
 		var h = parseInt(style.height);
 		var lh = parseInt(style.lineHeight);
 		var ln = parseInt(h / lh);
-		console.log("当前行数：" + ln);
+		//console.log("当前行数：" + ln);
 		return ln;
 	}
 	/**
@@ -286,11 +286,11 @@ var class_space = (function(mod) {
 		//		var percent = 0.00;
 		var win_width = document.querySelector(".mui-table-view").offsetWidth;
 		var img_width = (win_width - 20) * 0.7 / 3;
-		console.log('图片宽度：' + img_width);
+		//console.log('图片宽度：' + img_width);
 		if(cell.EncImgAddr) {
 			var imgs = cell.EncImgAddr.split('|');
 			var trueImgs = cell.EncAddr.split('|');
-			console.log('要显示的图片地址：' + JSON.stringify(imgs));
+			//console.log('要显示的图片地址：' + JSON.stringify(imgs));
 			if(cell.EncType == 1) {
 				for(var i in imgs) {
 					if(imgs.length > 0&&imgs.length<3) {
@@ -308,7 +308,7 @@ var class_space = (function(mod) {
 			}
 
 		}
-		console.log(imgInner);
+		//console.log(imgInner);
 		return imgInner;
 	}
 	mod.getDurationInner=function(cell){
@@ -325,7 +325,7 @@ function videoImgOnload(event) {
 	var img = event.target;
 	var imgWidth = img.naturalWidth;
 	var imgHeight = img.naturalHeight;
-	console.log("图片的宽度和高度：" + imgWidth + "高度：" + imgHeight);
+	//console.log("图片的宽度和高度：" + imgWidth + "高度：" + imgHeight);
 	if(imgWidth >= imgHeight) {
 		img.style.width = img.width + "px";
 		img.style.height = img.height + "px";
@@ -396,11 +396,11 @@ mui.plusReady(function() {
 	events.preload('class-group.html');
 	events.preload('classSpace-persons.html', 200);
 	var write = document.getElementById('write');
-	console.log('班级空间：' + JSON.stringify(postData));
+	//console.log('班级空间：' + JSON.stringify(postData));
 	getUserInGroup(-1, postData.classId, function(data) {
 		groupRoles = data;
 		write.style.display = 'none';
-		console.log('获取本人在群的所有信息：' + JSON.stringify(data));
+		//console.log('获取本人在群的所有信息：' + JSON.stringify(data));
 		for(var i in groupRoles) {
 			if(groupRoles[i].mstype == 2 || groupRoles[i].mstype == 1) {
 				write.style.display = 'inline-block';
@@ -408,7 +408,7 @@ mui.plusReady(function() {
 			}
 		}
 	});
-	console.log('班级空间获取值：' + JSON.stringify(postData));
+	//console.log('班级空间获取值：' + JSON.stringify(postData));
 	class_space.getList(postData, pageIndex, pageSize, class_space.replaceUrl);
 	setListener(postData.userId);
 	//更改个人信息，更新界面
@@ -420,7 +420,7 @@ mui.plusReady(function() {
 	})
 	var firstTime = null;
 	mui('.mui-table-view').on('tap', '.head-portrait', function() {
-		//		console.log(id);
+		//		//console.log(id);
 		var secondTime = null;
 		if(firstTime) {
 			secondTime = "123456";
@@ -430,7 +430,7 @@ mui.plusReady(function() {
 		setTimeout(function() {
 			firstTime = null;
 		}, 1000)
-		console.log("firstTime:" + firstTime + "secondTime:" + secondTime);
+		//console.log("firstTime:" + firstTime + "secondTime:" + secondTime);
 		if(!secondTime) {
 			var id = this.getAttribute('headId');
 			mui.openWindow({
@@ -480,7 +480,7 @@ function showNoData(type) {
  * @param {int} 0 不隐藏上拉加载更多     1隐藏上拉加载更多
  */
 function endFresh(type) {
-	console.log("************************************type:" + type);
+	//console.log("************************************type:" + type);
 	if(type) {
 		mui(".mui-pull-loading")[0].style.display = "none";
 	} else {
@@ -510,7 +510,7 @@ var getUserInGroup = function(mstype, groupId, callback) {
 		vtp: mstype
 	}, wd, function(data) {
 		wd.close()
-		console.log('用户在群的身份 ' + JSON.stringify(data));
+		//console.log('用户在群的身份 ' + JSON.stringify(data));
 		if(data.RspCode == '0000') {
 			callback(data.RspData);
 		} else {
@@ -531,7 +531,7 @@ var setReaded = function(userId, classId, wd) {
 		userId: userId,
 		classId: classId
 	}, wd, function(data) {
-		console.log('是否已读：' + JSON.stringify(data));
+		//console.log('是否已读：' + JSON.stringify(data));
 		wd.close();
 		if(data.RspCode == 0) {
 			var main = plus.webview.getWebviewById('../quan/tab-zone.html');
@@ -576,7 +576,7 @@ var setListener = function(userId) {
 		//未点赞
 		if(jQuery(this).hasClass('isNotLike')) {
 			zan.isLike = false;
-			console.log("赞的innerHTML" + zan.innerHTML);
+			//console.log("赞的innerHTML" + zan.innerHTML);
 			zan.querySelector(".pop-p").innerHTML = '<span id="pop-zan" class="mui-icon iconfont icon-dianzan1 isNotLike"></span>点赞';
 		} else { //已点赞
 			zan.isLike = true;
@@ -591,7 +591,7 @@ var setListener = function(userId) {
 		this.innerText = "收回";
 	})
 	mui('.mui-table-view').on('tap', ".less-span", function() {
-		console.log("当前父页面的className:" + this.parentElement.parentElement.parentElement.parentElement.className)
+		//console.log("当前父页面的className:" + this.parentElement.parentElement.parentElement.parentElement.className)
 		var parent_cell = this.parentElement.parentElement.parentElement.parentElement;
 		var offTopHeight = parent_cell.offsetTop;
 		this.previousSibling.className = "chat-words omit-line-8";
@@ -609,11 +609,11 @@ var setListener = function(userId) {
 				classSpaceId: parseInt(zanSpan.getAttribute('tabId'))
 			}, wd, function(data) {
 				wd.close();
-				console.log('取消点赞获取的数据:' + JSON.stringify(data))
+				//console.log('取消点赞获取的数据:' + JSON.stringify(data))
 				if(data.RspData.Result == 1) {
 					//					mui.toast('您已取消点赞');
 					zanSpan.className = "bottom-zan mui-icon iconfont icon-support isNotLike";
-					console.log('更改是否已点赞状态' + zanSpan.className)
+					//console.log('更改是否已点赞状态' + zanSpan.className)
 					zanSpan.innerText = '(' + (parseInt(zanSpan.innerText.replace('(', '').replace(')', '')) - 1) + ')'
 				} else {
 					mui.toast('取消点赞失败！')
@@ -626,11 +626,11 @@ var setListener = function(userId) {
 				classSpaceId: parseInt(zanSpan.getAttribute('tabId'))
 			}, wd, function(data) {
 				wd.close();
-				console.log("点赞后返回数据：" + JSON.stringify(data));
+				//console.log("点赞后返回数据：" + JSON.stringify(data));
 				if(data.RspData.Result == 1) {
 					//					mui.toast('点赞成功！')
 					zanSpan.className = "bottom-zan mui-icon iconfont icon-support isLike";
-					console.log('更改是否已点赞状态' + zanSpan.className)
+					//console.log('更改是否已点赞状态' + zanSpan.className)
 					zanSpan.innerText = '(' + (parseInt(zanSpan.innerText.replace('(', '').replace(')', '')) + 1) + ')'
 				} else {
 					mui.toast('点赞失败！')
@@ -661,7 +661,7 @@ var setListener = function(userId) {
 		setTimeout(function() {
 			firstTime = null;
 		}, 1000);
-		console.log("第一次：" + firstTime + "第二次：" + secondTime);
+		//console.log("第一次：" + firstTime + "第二次：" + secondTime);
 		if(!secondTime) {
 			events.fireToPageWithData('classSpace-persons.html', 'personsList', {
 				type: 0,

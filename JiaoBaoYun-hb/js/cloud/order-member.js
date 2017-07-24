@@ -12,7 +12,7 @@ function setListeners(){
 		this.disabled=true;
 		var item=this;
 		var type=parseInt(document.querySelector(".mui-slider-indicator.mui-segmented-control").querySelector(".mui-active").getAttribute("value"));
-		console.log("订购的会员类型："+type);
+		//console.log("订购的会员类型："+type);
 		var duration=item.parentElement.querySelector(".duration-info").innerText;
 		var price=item.parentElement.querySelector(".price-info").innerText;
 		events.singleWebviewInPeriod(item,"member-pay.html",{

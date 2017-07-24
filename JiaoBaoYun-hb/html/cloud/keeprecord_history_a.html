@@ -226,7 +226,7 @@
 			function initData() {
 				main = plus.webview.currentWebview(); //获取当前窗体对象
 				mainData = main.data; //接收A页面传入参数值
-				console.log(main.id + ' ' + JSON.stringify(mainData));
+				//console.log(main.id + ' ' + JSON.stringify(mainData));
 				var title = document.getElementById("title")
 				if(mainData.type == 'history') {
 					title.innerText = '历史记录';
@@ -339,7 +339,7 @@
 						publisherId: personal.utid //发布者ID,0代表全部
 					};
 					postDataPro_getNotesForClass(comData, wd, function(data) {
-						console.log('66 获取针对某班的点到记事列表 getNotesForClass ' + JSON.stringify(data));
+						//console.log('66 获取针对某班的点到记事列表 getNotesForClass ' + JSON.stringify(data));
 						requestDataCallBack(pageIndex, wd, data);
 					});
 				} else if(mainData.type == 'statistics') {
@@ -353,7 +353,7 @@
 						pageSize: 10, //每页记录数
 					};
 					postDataPro_getNotesStatisticForStudent(comData, wd, function(data) {
-						console.log('94 获取某学生的点到记事统计 getNotesStatisticForStudent ' + JSON.stringify(data));
+						//console.log('94 获取某学生的点到记事统计 getNotesStatisticForStudent ' + JSON.stringify(data));
 						requestDataCallBack(pageIndex, wd, data);
 					});
 				}
@@ -364,7 +364,7 @@
 			 * @param {Object} data
 			 */
 			function createItem(data) {
-				//console.log('createItem ' + JSON.stringify(data));
+				////console.log('createItem ' + JSON.stringify(data));
 				records.recordKey.push(data.TabId);
 				records.recordValue[data.TabId] = data;
 				var Date = data.PublishDate.split(' '); //发布的日期和时间
@@ -459,8 +459,8 @@
 				}
 				if(data.stuname == undefined) {
 					data.stuname = '';
-					console.log('stuname 异常 无此人资料' + data.StudentId);
-					//console.log('createItem ' + JSON.stringify(data));
+					//console.log('stuname 异常 无此人资料' + data.StudentId);
+					////console.log('createItem ' + JSON.stringify(data));
 				}
 				if(data.NoteType == 1) { //点到
 					element_1.innerHTML = html_first;
@@ -473,7 +473,7 @@
 					title = data.stuname;
 					content = data.MsgContent;
 				} else {
-					console.log('NoteType 异常' + data.NoteType);
+					//console.log('NoteType 异常' + data.NoteType);
 					element_1.innerHTML = html_first;
 					title = data.stuname;
 					content = data.MsgContent;
@@ -520,7 +520,7 @@
 						pageIndex: pageIndex, //当前页数
 						totalPage: data.RspData.TotalPage //总页数
 					};
-					console.log('page ' + JSON.stringify(page));
+					//console.log('page ' + JSON.stringify(page));
 					if(pageIndex == 1) { //下拉刷新或者获取的第一页的内容
 						document.getElementById('data_table').innerHTML = '';
 						markDate = ''; //日期
@@ -558,7 +558,7 @@
 							for(var i = 0; i < tempRspData.length; i++) {
 								createItem(tempRspData[i]);
 							}
-							//console.log(document.getElementById("data_table").innerHTML);
+							////console.log(document.getElementById("data_table").innerHTML);
 							wd.close();
 						});
 					}
@@ -601,7 +601,7 @@
 				};
 				//21.通过用户ID获取用户资料
 				postDataPro_PostUinf(comData, wd, function(data) {
-					console.log('21 通过用户ID获取用户资料 PostUinf ' + JSON.stringify(data));
+					//console.log('21 通过用户ID获取用户资料 PostUinf ' + JSON.stringify(data));
 					if(data.RspCode == 0) {
 						for(var i = 0; i < data.RspData.length; i++) {
 							publisherNick[data.RspData[i].utid] = data.RspData[i].unick;
@@ -618,7 +618,7 @@
 			 */
 			function endPullUp() {
 				if(page && page.pageIndex >= page.totalPage) {
-					console.log('没有下一页');
+					//console.log('没有下一页');
 					pullRefresh.endPullUpToRefresh(true);
 				} else {
 					pullRefresh.endPullUpToRefresh();

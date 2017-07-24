@@ -19,11 +19,11 @@ var load = (function(mod) {
 			function(t, status) {
 				//关闭对话框
 				wt.close();
-				console.log('当前状态：' + status);
+				//console.log('当前状态：' + status);
 				//上传完成
 				//上传成功
 				if(status == 200) {
-					console.log("Upload success" + t.responseText);
+					//console.log("Upload success" + t.responseText);
 					//上传失败
 				} else {
 					mui.toast('上传失败,请重新上传');
@@ -38,19 +38,19 @@ var load = (function(mod) {
 				key: "file",
 				name: "file"
 			});
-			console.log(path);
+			//console.log(path);
 		})
 		task.addEventListener("statechanged", onStateChanged, false);
 		//开始上传
 		task.start();
-		console.log('start');
+		//console.log('start');
 	}
 	// 监听上传任务状态
 	function onStateChanged(upload, status) {
-		console.log('mui上传状态：' + upload.state)
+		//console.log('mui上传状态：' + upload.state)
 		if(upload.state == 4 && status == 200) {
 			// 上传完成
-			console.log("Upload success: " + upload.getFileName());
+			//console.log("Upload success: " + upload.getFileName());
 		}
 	}
 	/**
@@ -113,11 +113,11 @@ var load = (function(mod) {
 				var canvas = document.createElement('canvas');
 				canvas.width = video.videoWidth / 2;
 				canvas.height = video.videoHeight / 2;
-				console.log('canvas ' + canvas.width + ' ' + canvas.height)
+				//console.log('canvas ' + canvas.width + ' ' + canvas.height)
 				canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
 				var thumb = canvas.toDataURL("image/png");
 				video = null;
-				console.log("video的宽度：" + canvas.width + "video的高度：" + canvas.height);
+				//console.log("video的宽度：" + canvas.width + "video的高度：" + canvas.height);
 				callback(thumb, '360px', '360px');
 			}
 		} else {
@@ -127,11 +127,11 @@ var load = (function(mod) {
 				var canvas = document.createElement('canvas');
 				canvas.width = video.videoWidth / 2;
 				canvas.height = video.videoHeight / 2;
-				console.log('canvas ' + canvas.width + ' ' + canvas.height)
+				//console.log('canvas ' + canvas.width + ' ' + canvas.height)
 				canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
 				var thumb = canvas.toDataURL("image/png");
 				video = null;
-				console.log("video的宽度：" + canvas.width + "video的高度：" + canvas.height);
+				//console.log("video的宽度：" + canvas.width + "video的高度：" + canvas.height);
 				callback(thumb, canvas.width * 2, canvas.height * 2);
 			}
 
@@ -160,10 +160,10 @@ var load = (function(mod) {
 		plus.nativeUI.showWaiting(storageKeyName.UPLOADING, {
 			back: 'none'
 		}); //等待框
-		console.log("保存的路径：" + JSON.stringify(paths));
+		//console.log("保存的路径：" + JSON.stringify(paths));
 		var saveSpace = storageKeyName.KNOWLEDGE; //保存路径
 		compress.compressPics(paths, function(compressedPaths, widths) {
-				console.log('获取的图片路径：' + JSON.stringify(compressedPaths));
+				//console.log('获取的图片路径：' + JSON.stringify(compressedPaths));
 				var multiOptions = [];
 				for(var i in compressedPaths) {
 					var options = { //上传七牛后的处理参数
@@ -183,13 +183,13 @@ var load = (function(mod) {
 				var data = CloudFileUtil.getMultipleImgUploadOptions(compressedPaths, 7, 0, saveSpace, multiOptions);
 				//								var data = CloudFileUtil.getMultipleUploadDataOptions(compressedPaths, 7, 200, 0, saveSpace); //获取获取token的各参数
 				CloudFileUtil.getQNUpTokenWithManage(storageKeyName.QNGETUPLOADTOKEN, data.options, function(datas) {
-					console.log("传回来的值：" + JSON.stringify(datas)) //回调数据
+					//console.log("传回来的值：" + JSON.stringify(datas)) //回调数据
 					if(datas.Status == 1) { //成功
 						var tokenInfos = datas.Data; //参数信息
 						var imgs = [];
 						//上传图片
 						CloudFileUtil.uploadFiles(compressedPaths, tokenInfos, function(uploadData, status, index) {
-							console.log(JSON.stringify(uploadData));
+							//console.log(JSON.stringify(uploadData));
 							//												if(index == 0) {
 							imgs[index] = {
 								url: tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key,
@@ -211,7 +211,7 @@ var load = (function(mod) {
 			},
 			//错误的回调
 			function(xhr, type, errorThrown) {
-				console.log("错误类型：" + type + errorThrown);
+				//console.log("错误类型：" + type + errorThrown);
 				plus.nativeUI.closeWaiting();
 			});
 	}

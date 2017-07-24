@@ -24,14 +24,6 @@
 	</head>
 
 	<body>
-		<!--<header class="mui-bar mui-bar-nav">
-			<h1 class="mui-title">关注</h1>
-			<div id="header-indicator" class="mui-slider-indicator">
-				<div class="mui-indicator mui-active"></div>
-				<div class="mui-indicator"></div>
-			</div>
-			<a id="publish-show" class="mui-pull-right">发布</a>
-		</header>-->
 		<!--	<div class="">-->
 		<!--slider控件-->
 		<div id="slider" class="mui-content mui-slider mui-fullscreen">
@@ -90,12 +82,12 @@
 				addSlider();
 				//加载关注的监听
 				window.addEventListener("focus", function() {
-					console.log("关注传过来的值！")
+					//console.log("关注传过来的值！")
 					getFocusedPerson(toggleAttendedPart);
 				});
 				//加载用户登陆的监听
 				window.addEventListener("infoChanged", function() {
-					console.log("********展现监听infoChanged")
+					//console.log("********展现监听infoChanged")
 					toggleAttendedPart(0);
 					//					document.getElementById("show-all").querySelector(".show-list").innerHTML = "";
 					mui(document.getElementById("show-all").querySelector(".mui-scroll-wrapper")).scroll().scrollTo(0, 0);
@@ -107,14 +99,14 @@
 					var freshConatiner = document.getElementById("show-all");
 					var ul = freshConatiner.querySelector('.show-list');
 					freshConatiner.showCity.pageIndex = 1;
-					console.log("获取的fresh:" + JSON.stringify(freshConatiner.info))
+					//console.log("获取的fresh:" + JSON.stringify(freshConatiner.info))
 					show_listnew.getShowList(freshConatiner.showCity, ul, show_listnew.setShowList);
 				})
 			});
 			//滑动监听方法
 			function addSlider() {
 				document.getElementById('slider').addEventListener('slide', function(e) {
-					console.log("slider状态：" + JSON.stringify(e.detail))
+					//console.log("slider状态：" + JSON.stringify(e.detail))
 					if(e.detail.slideNumber == 0) {
 						if(document.getElementById("show-attended")) {
 							setTitle(11);
@@ -159,7 +151,7 @@
 							var self = this;
 							var ul = freshConatiner.querySelector('.show-list');
 							freshConatiner.showCity.pageIndex = 1;
-							console.log("获取的fresh:" + JSON.stringify(freshConatiner.info))
+							//console.log("获取的fresh:" + JSON.stringify(freshConatiner.info))
 							show_listnew.getShowList(freshConatiner.showCity, ul, show_listnew.setShowList);
 							setTimeout(function() {
 								self.endPullDownToRefresh();
@@ -203,7 +195,7 @@
 					userId: events.getUtid()
 				}, wd, function(data) {
 					wd.close();
-					console.log("获取关注的人列表" + JSON.stringify(data));
+					//console.log("获取关注的人列表" + JSON.stringify(data));
 					if(data.RspCode == 0 && data.RspData.Users.length > 0) {
 						callback(true);
 					} else {
@@ -216,7 +208,7 @@
 			 * @param {Object} type 0 删除关注 1 加载关注
 			 */
 			function toggleAttendedPart(type) {
-				console.log("加载关注部分：" + type);
+				//console.log("加载关注部分：" + type);
 				var sliderGroup = document.querySelector(".mui-slider-group");
 				if(type) {
 					if(!document.getElementById("show-attended")) {

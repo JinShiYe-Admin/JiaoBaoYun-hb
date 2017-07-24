@@ -4,13 +4,13 @@ var checkedProButton;
 var selectCityContainer;
 mui(".mui-scroll-wrapper").scroll();
 mui.plusReady(function() {
-	console.log("子页面触发plusready事件：" + plus.webview.currentWebview().opener().id)
+	//console.log("子页面触发plusready事件：" + plus.webview.currentWebview().opener().id)
 	mui.fire(plus.webview.currentWebview().opener(), "subReady", 1);
 	plus.webview.currentWebview().opener().subIsReady = true;
 	window.addEventListener("chooseArea", function(e) {
 		document.getElementById("list-container").innerHTML = "";
 		curAreaInfo = e.detail.data;
-		console.log("当前城市代码：" + curAreaInfo);
+		//console.log("当前城市代码：" + curAreaInfo);
 		getEreas(0);
 	})
 	//	curCityCode=plus.webview.currentWebview().data;
@@ -34,16 +34,16 @@ mui.plusReady(function() {
  */
 var setListener = function() {
 	document.querySelector('.mui-table-view.mui-table-view-radio').addEventListener('selected', function(e) {
-		console.log("当前选中的为：" + e.detail.el.className);
+		//console.log("当前选中的为：" + e.detail.el.className);
 		checkedProButton = e.detail.el;
 		if(selectCityContainer) {
 			selectCityContainer.className = "city-container single-line";
 		}
 		curAreaInfo = checkedProButton.areaInfo;
-		console.log("当前选中地区的信息："+JSON.stringify(curAreaInfo));
+		//console.log("当前选中地区的信息："+JSON.stringify(curAreaInfo));
 	});
 	mui(".mui-table-view.mui-table-view-radio").on("tap", ".city-container", function() {
-		console.log("城市选择监听：" + this.className)
+		//console.log("城市选择监听：" + this.className)
 		if(selectCityContainer) {
 			selectCityContainer.className = "city-container single-line";
 		}
@@ -53,7 +53,7 @@ var setListener = function() {
 			checkedProButton.className = "mui-table-view-cell";
 		}
 		curAreaInfo = selectCityContainer.areaInfo;
-		console.log("当前选中地区的信息："+JSON.stringify(curAreaInfo));
+		//console.log("当前选中地区的信息："+JSON.stringify(curAreaInfo));
 	})
 	document.getElementById("chose-area").addEventListener("tap",function(){
 		mui.fire(plus.webview.currentWebview().opener(), "choseArea", curAreaInfo);
@@ -94,7 +94,7 @@ var getEreas = function(ncode, acode, callback) {
 		vvl: acode //查询的值(acode节点编码,查询所有省份或城市留空,模糊查询城市填写查询值)
 	}, wd, function(data) {
 		wd.close();
-		console.log("获取的城市代码：" + JSON.stringify(data));
+		//console.log("获取的城市代码：" + JSON.stringify(data));
 		if(data.RspCode == 0) {
 			if(ncode == 0) {
 				//获取四省份
@@ -155,7 +155,7 @@ var getCities = function(selectPros) {
 	for(var i in selectPros) {
 		if(parseInt(i)) { //非0 0为全国，其他省市
 			getEreas(1, selectPros[i].acode, function(cities) {
-				console.log("增加的城市数据：" + JSON.stringify(cities))
+				//console.log("增加的城市数据：" + JSON.stringify(cities))
 				getAreaNo++;
 				citiesArray.push(cities);
 				//所有数据已获取完毕
@@ -172,7 +172,7 @@ var getCities = function(selectPros) {
  * @param {Object} citiesArray 所有省的城市数组的数组
  */
 var setCities = function(selectPros, citiesArray) {
-	console.log("要放置的城市数据：" + JSON.stringify(citiesArray))
+	//console.log("要放置的城市数据：" + JSON.stringify(citiesArray))
 	for(var i in citiesArray) {
 		var frag = document.createDocumentFragment();
 		var div = document.createElement("div");
@@ -188,10 +188,10 @@ var setCities = function(selectPros, citiesArray) {
  * @param {Object} fragment
  */
 var setAfterProvince = function(cities, fragment) {
-	console.log("省内城市数组：" + JSON.stringify(cities))
+	//console.log("省内城市数组：" + JSON.stringify(cities))
 	var cityPCode = cities[0].acode.substring(0, 2);
 	var provinceContainer;
-	console.log("获取的城市中的省代码：" + cityPCode);
+	//console.log("获取的城市中的省代码：" + cityPCode);
 	switch(parseInt(cityPCode)) {
 		//山东省
 		case 37:

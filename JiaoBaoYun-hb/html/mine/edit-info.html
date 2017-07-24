@@ -36,7 +36,7 @@
 			mui.plusReady(function() {
 				events.blurBack();
 				var pInfo = myStorage.getItem(storageKeyName.PERSONALINFO);
-				console.log("要输入的个人信息：" + JSON.stringify(pInfo))
+				//console.log("要输入的个人信息：" + JSON.stringify(pInfo))
 				var curPage = plus.webview.currentWebview();
 				var title = document.getElementById('title');
 				var btn_save = document.getElementById('save');
@@ -44,7 +44,7 @@
 				setContents(curPage.data, title, inText, pInfo)
 				var save = document.getElementById('save');
 				save.addEventListener('tap', function() {
-					console.log('save is clicked');
+					//console.log('save is clicked');
 					postInfo(curPage.data, inText, pInfo, curPage);
 				})
 			})
@@ -84,18 +84,18 @@
 					default:
 						break;
 				}
-				console.log(vtpKey)
+				//console.log(vtpKey)
 				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 				postDataPro_PostReUinf({
 					vtp: vtpKey,
 					vvl: jQuery.trim(inText.value)
 				}, wd, function(data) {
 					wd.close()
-					console.log(JSON.stringify(data))
+					//console.log(JSON.stringify(data))
 					if(data.RspCode == '0000') {
 						pInfo[vtpKey] = inText.value;
 						window.myStorage.setItem(storageKeyName.PERSONALINFO, pInfo)
-						console.log('更改后信息:' + JSON.stringify(pInfo));
+						//console.log('更改后信息:' + JSON.stringify(pInfo));
 						mui.fire(curpage.opener(), 'infoChanged');
 						events.fireToPageNone('mine.html', 'infoChanged');
 						events.fireToPageNone('class_space.html', 'infoChanged');
@@ -116,7 +116,7 @@
 				autoTextArea.change(document.querySelector(".input-container"), document.getElementById("input-content"), document.querySelector(".input-left"), length);
 			}
 			var setContents = function(no, title, inText, pInfo) {
-				console.log(no)
+				//console.log(no)
 				switch(no) {
 					case 0:
 						jQuery('#input-content').prop("maxLength", "20");

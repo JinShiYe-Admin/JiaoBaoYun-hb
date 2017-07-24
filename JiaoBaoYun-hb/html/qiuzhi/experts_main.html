@@ -235,7 +235,7 @@
 			var main = plus.webview.currentWebview(); //获取当前窗体对象
 			mainData = main.data; //接收页面传入参数值
 			askId = mainData.askID;
-			console.log('experts_main.html:' + JSON.stringify(mainData));
+			//console.log('experts_main.html:' + JSON.stringify(mainData));
 
 			document.getElementById("content").innerHTML = '\
 				<div id="slider" class="mui-slider mui-fullscreen"  style="top: ' + (localStorage.getItem('StatusHeightNo') * 1 + 45) + 'px' + ';">\
@@ -258,7 +258,7 @@
 
 			//滑动底部列表
 			document.querySelector('.mui-slider').addEventListener('slide', function() {
-				console.log('slide ' + event.detail.slideNumber);
+				//console.log('slide ' + event.detail.slideNumber);
 				mui('.mui-control-item').each(function(index, element) {
 					if(index == event.detail.slideNumber) {
 						document.getElementById(sliderId).className = 'mui-control-item';
@@ -270,8 +270,8 @@
 				var element = document.getElementById(id);
 				var info = JSON.parse(element.getAttribute('data-info'));
 				var page = JSON.parse(element.getAttribute('data-page'));
-				console.log('slide ' + JSON.stringify(info));
-				console.log('slide ' + JSON.stringify(page));
+				//console.log('slide ' + JSON.stringify(info));
+				//console.log('slide ' + JSON.stringify(page));
 				if(!page) {
 					getExpertsArray(info.TabId, 1);
 				}
@@ -293,16 +293,16 @@
 				var channelInfo = JSON.parse(element2.getAttribute('data-info'));
 				//所有话题
 				var allChannels = mainData.allChannels;
-				console.log('expert ' + JSON.stringify(expert));
-				console.log('channelInfo ' + JSON.stringify(channelInfo));
-				console.log('allChannels ' + JSON.stringify(allChannels));
+				//console.log('expert ' + JSON.stringify(expert));
+				//console.log('channelInfo ' + JSON.stringify(channelInfo));
+				//console.log('allChannels ' + JSON.stringify(allChannels));
 				//传递的数据
 				var transportData = {
 					expert: expert,
 					curChannel: channelInfo,
 					allChannels: allChannels
 				}
-				console.log('transportData ' + JSON.stringify(transportData));
+				//console.log('transportData ' + JSON.stringify(transportData));
 				events.singleWebviewInPeriod(item,'qiuzhi-newQ.html', transportData)
 			});
 
@@ -322,9 +322,9 @@
 				var channelInfo = JSON.parse(element2.getAttribute('data-info'));
 				//所有话题
 				var allChannels = mainData.allChannels;
-				console.log('expert ' + JSON.stringify(expert));
-				console.log('channelInfo ' + JSON.stringify(channelInfo));
-				console.log('allChannels ' + JSON.stringify(allChannels));
+				//console.log('expert ' + JSON.stringify(expert));
+				//console.log('channelInfo ' + JSON.stringify(channelInfo));
+				//console.log('allChannels ' + JSON.stringify(allChannels));
 				var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
 
 				//34.邀请某人回答
@@ -340,13 +340,13 @@
 				postDataQZPro_addInvite(comData, wd, function(data) {
 					item.disabled=false;
 					jQuery(item).css("pointerEvents","all");
-					console.log('34.邀请某人回答:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					//console.log('34.邀请某人回答:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
 						if(data.RspData.Result == 1) {
 							//调整界面中该专家的所有邀请按钮
 							var tempExpert = expert.ExpertChannels;
 							tempExpert.unshift(0);
-							console.log(JSON.stringify(tempExpert));
+							//console.log(JSON.stringify(tempExpert));
 							for(var i = 0; i < tempExpert.length; i++) {
 								var btn = document.getElementById("expert_btn_" + tempExpert[i] + '_' + expert.TabId);
 								if(btn) {
@@ -388,8 +388,8 @@
 				var elementTop = document.createElement('a');
 				//底部列表
 				var elementBot = document.createElement('div');
-				//console.log('channelInfo ' + JSON.stringify(channelInfo));
-				//console.log('allChannels[' + i + '] ' + JSON.stringify(allChannels[i]));
+				////console.log('channelInfo ' + JSON.stringify(channelInfo));
+				////console.log('allChannels[' + i + '] ' + JSON.stringify(allChannels[i]));
 				if(channelInfo.TabId == allChannels[i].TabId) {
 					//选择的话题
 					sliderId = 'top_' + allChannels[i].TabId;
@@ -443,8 +443,8 @@
 							var element = document.getElementById(id);
 							var info = JSON.parse(element.getAttribute('data-info'));
 							var page = JSON.parse(element.getAttribute('data-page'));
-							console.log('down ' + JSON.stringify(info));
-							console.log('down ' + JSON.stringify(page));
+							//console.log('down ' + JSON.stringify(info));
+							//console.log('down ' + JSON.stringify(page));
 							//获取数据
 							getExpertsArray(info.TabId, 1);
 							setTimeout(function() {
@@ -461,8 +461,8 @@
 							var element = document.getElementById(id);
 							var info = JSON.parse(element.getAttribute('data-info'));
 							var page = JSON.parse(element.getAttribute('data-page'));
-							console.log('up ' + JSON.stringify(info));
-							console.log('up ' + JSON.stringify(page));
+							//console.log('up ' + JSON.stringify(info));
+							//console.log('up ' + JSON.stringify(page));
 							if(page) {
 								getExpertsArray(info.TabId, page.pageIndex + 1);
 								setTimeout(function() {
@@ -488,7 +488,7 @@
 		 */
 		function addExperts(channelId, data) {
 			for(var i = 0; i < data.length; i++) {
-				//console.log("addExperts " + JSON.stringify(data[i]));
+				////console.log("addExperts " + JSON.stringify(data[i]));
 
 				//提问或邀请按钮
 				var btnClass = '';
@@ -547,7 +547,7 @@
 			var wd = events.showWaiting();
 			//2.获取符合条件的专家信息
 			postDataQZPro_getExpertsByCondition(comData, wd, function(data) {
-				console.log('2.获取符合条件的专家信息:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				//console.log('2.获取符合条件的专家信息:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 
 				//记录页数
 				var page = {
@@ -583,12 +583,12 @@
 						vvl: tempArray.join(), //用户id，查询的值,p传个人ID,g传ID串
 						vtp: 'g' //查询类型,p(个人)g(id串)
 					}
-					console.log('tempData:' + JSON.stringify(tempData));
+					//console.log('tempData:' + JSON.stringify(tempData));
 					// 等待的对话框
 					var wd2 = events.showWaiting();
 					//21.通过用户ID获取用户资料
 					postDataPro_PostUinf(tempData, wd2, function(data1) {
-						console.log('21.获取个人资料success:RspCode:' + data1.RspCode + ',RspData:' + JSON.stringify(data1.RspData) + ',RspTxt:' + data1.RspTxt);
+						//console.log('21.获取个人资料success:RspCode:' + data1.RspCode + ',RspData:' + JSON.stringify(data1.RspData) + ',RspTxt:' + data1.RspTxt);
 						if(data1.RspCode == 0) {
 							//循环当前的个人信息返回值数组
 							for(var i in data1.RspData) {
@@ -608,7 +608,7 @@
 								}
 							}
 						}
-						console.log('专家循环遍历后的值：' + JSON.stringify(tempRspData));
+						//console.log('专家循环遍历后的值：' + JSON.stringify(tempRspData));
 						//刷新界面
 						addExperts(channelId, tempRspData);
 						wd2.close();

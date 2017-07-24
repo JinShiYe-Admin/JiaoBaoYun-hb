@@ -86,19 +86,19 @@
 			var selectedExpert = [];
 			mui.plusReady(function() {
 				window.addEventListener('atExpert', function(data) {
-					console.log(JSON.stringify(data.detail.data));
+					//console.log(JSON.stringify(data.detail.data));
 					var tempArr = data.detail.data;
 					var name = []
 					for(var i = 0; i < tempArr.length; i++) {
 						selectedExpert.push(tempArr[i].UserId)
 						name.push('@' + tempArr[i].unick);
 					}
-					console.log(JSON.stringify(selectedExpert));
+					//console.log(JSON.stringify(selectedExpert));
 					document.getElementById("selectedExpert").innerHTML = name.join('、')
 
 				})
 				var data = plus.webview.currentWebview().data;
-				console.log('获取的数据：' + JSON.stringify(data));
+				//console.log('获取的数据：' + JSON.stringify(data));
 
 				var tempArr = [];
 				var curChannel = {};
@@ -128,8 +128,8 @@
 				}
 
 				channelData.splice(0, 1);
-				console.log('curChannel=' + JSON.stringify(curChannel));
-				console.log('获取的数据111：' + JSON.stringify(channelData));
+				//console.log('curChannel=' + JSON.stringify(curChannel));
+				//console.log('获取的数据111：' + JSON.stringify(channelData));
 				if(curChannel.TabId == 0) {
 					curChannel = channelData[0];
 				}
@@ -222,7 +222,7 @@ document.getElementById("askTitle").addEventListener('input',function(){
 				var askTitle = document.getElementById("askTitle");
 				var askNote = document.getElementById("askNote");
 				var tempText = Trim(askTitle.value);
-				console.log('textView.value===' + tempText)
+				//console.log('textView.value===' + tempText)
 				if(!tempText || tempText == '') {
 					mui.toast('请输入问题');
 					return;
@@ -233,7 +233,7 @@ document.getElementById("askTitle").addEventListener('input',function(){
 //					tempText = replaceAllBL(tempText)
 				}
 				tempText = Trim(askNote.value);
-				console.log('textView.value===' + tempText)
+				//console.log('textView.value===' + tempText)
 				if(!tempText || tempText == '') {
 					//					mui.toast('请输入补充说明');
 					//					return;
@@ -253,13 +253,13 @@ document.getElementById("askTitle").addEventListener('input',function(){
 				//					var box = document.getElementsByClassName('checkbox');
 				//					var selectedBoxes = [];
 				//					for(var i = 0; i < box.length; i++) {
-				//						console.log()
+				//						//console.log()
 				//						if(box[i].checked) {
 				//							selectedBoxes.push(box[i].value);
 				//						}
 				//					}
 				var boxesStr = arrayToStr(selectedExpert)
-				console.log(JSON.stringify(boxesStr));
+				//console.log(JSON.stringify(boxesStr));
 				var TAs = getTypeAddress();
 				if(askChannel == "999") {
 					mui.toast('请选择话题')
@@ -284,7 +284,7 @@ document.getElementById("askTitle").addEventListener('input',function(){
 				//6.新增某个用户提交问题
 				postDataQZPro_addAsk(comData, wd, function(data) {
 					wd.close();
-					console.log('6.新增某个用户提交问题:' + JSON.stringify(data));
+					//console.log('6.新增某个用户提交问题:' + JSON.stringify(data));
 					if(data.RspCode == 0) {
 						mui.toast('发布成功')
 						askTitle.value = '';
@@ -308,7 +308,7 @@ document.getElementById("askTitle").addEventListener('input',function(){
 
 				document.getElementById("channal").innerHTML = this.children[0].innerHTML;
 				askChannel = this.id;
-				console.log('askChannel=' + askChannel);
+				//console.log('askChannel=' + askChannel);
 				if(flag == 0) {
 					//2.获取符合条件的专家信息111
 					getExpertsArray(askChannel, '[0]');
@@ -335,7 +335,7 @@ document.getElementById("askTitle").addEventListener('input',function(){
 				//2.获取符合条件的专家信息
 				postDataQZPro_getExpertsByCondition(comData, wd, function(data) {
 
-					console.log('2.获取符合条件的专家信息:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					//console.log('2.获取符合条件的专家信息:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
 						//添加人员信息
 						//回调中的临时数据
@@ -356,11 +356,11 @@ document.getElementById("askTitle").addEventListener('input',function(){
 							vvl: tempArray.join(), //用户id，查询的值,p传个人ID,g传ID串
 							vtp: 'g' //查询类型,p(个人)g(id串)
 						}
-						console.log('tempData:' + JSON.stringify(tempData));
+						//console.log('tempData:' + JSON.stringify(tempData));
 						//21.通过用户ID获取用户资料
 						postDataPro_PostUinf(tempData, wd, function(data1) {
 							wd.close();
-							console.log('21.获取个人资料success:RspCode:' + data1.RspCode + ',RspData:' + JSON.stringify(data1.RspData) + ',RspTxt:' + data1.RspTxt);
+							//console.log('21.获取个人资料success:RspCode:' + data1.RspCode + ',RspData:' + JSON.stringify(data1.RspData) + ',RspTxt:' + data1.RspTxt);
 							if(data1.RspCode == 0) {
 								//循环当前的个人信息返回值数组
 								for(var i in data1.RspData) {
@@ -380,7 +380,7 @@ document.getElementById("askTitle").addEventListener('input',function(){
 									}
 								}
 							}
-							console.log('循环遍历后的值：' + JSON.stringify(tempRspData));
+							//console.log('循环遍历后的值：' + JSON.stringify(tempRspData));
 							datasource = tempRspData;
 							wd.close();
 							//刷新界面
@@ -427,19 +427,19 @@ document.getElementById("askTitle").addEventListener('input',function(){
 					var picCount = 0; //上传图片计数
 					gallery.getMultiplePic(9 - CloudFileUtil.files.length, function(paths) { //回调函数
 						plus.nativeUI.showWaiting(storageKeyName.UPLOADING); //等待框
-						console.log("保存的路径：" + JSON.stringify(paths));
+						//console.log("保存的路径：" + JSON.stringify(paths));
 						var saveSpace = storageKeyName.KNOWLEDGE; //保存路径
 						compress.compressPics(paths, function(compressedPaths) {
-							console.log('获取的图片路径：' + JSON.stringify(compressedPaths));
+							//console.log('获取的图片路径：' + JSON.stringify(compressedPaths));
 							var data = CloudFileUtil.getMultipleUploadDataOptions(compressedPaths, 7, 200, 0, saveSpace); //获取获取token的各参数
 							CloudFileUtil.getQNUpTokenWithManage(storageKeyName.QNGETUPLOADTOKEN, data.options, function(datas) {
-									console.log("传回来的值：" + JSON.stringify(datas)) //回调数据
+									//console.log("传回来的值：" + JSON.stringify(datas)) //回调数据
 									if(datas.Status == 1) { //成功
 										var tokenInfos = datas.Data; //参数信息
 										var imgs = [];
 										//上传图片
 										CloudFileUtil.uploadFiles(compressedPaths, tokenInfos, function(uploadData, status, index) {
-											console.log(JSON.stringify(uploadData));
+											//console.log(JSON.stringify(uploadData));
 											imgs[index] = {
 												url: tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key,
 												thumb: (tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key).replace(saveSpace, saveSpace + "thumb/"),
@@ -460,7 +460,7 @@ document.getElementById("askTitle").addEventListener('input',function(){
 								},
 								//错误的回调
 								function(xhr, type, errorThrown) {
-									console.log("错误类型：" + type + errorThrown);
+									//console.log("错误类型：" + type + errorThrown);
 									plus.nativeUI.closeWaiting();
 								});
 						});
@@ -484,14 +484,14 @@ document.getElementById("askTitle").addEventListener('input',function(){
 							var localPath = event.target;
 							var data = CloudFileUtil.getSingleUploadDataOptions(localPath, 7, 200, 0, saveSpace);
 							CloudFileUtil.getQNUpTokenWithManage(storageKeyName.QNGETUPLOADTOKEN, data.options, function(datas) {
-								console.log("获取的数据：" + JSON.stringify(datas));
+								//console.log("获取的数据：" + JSON.stringify(datas));
 								if(datas.Status == 1) {
 									var tokenInfo = datas.Data;
 
 									//上传文件
 									CloudFileUtil.uploadFile(tokenInfo, localPath, function(uploadData, status) {
 
-										console.log(JSON.stringify(uploadData));
+										//console.log(JSON.stringify(uploadData));
 										var img = { //图片信息
 											url: tokenInfo.Domain + tokenInfo.Key,
 											thumb: tokenInfo.OtherKey[data.thumbKey],
@@ -505,7 +505,7 @@ document.getElementById("askTitle").addEventListener('input',function(){
 								}
 
 							}, function(xhr, type, errorThrown) {
-								console.log("错误类型：" + type + errorThrown);
+								//console.log("错误类型：" + type + errorThrown);
 								plus.nativeUI.closeWaiting(); //关闭等待框
 							});
 						})
@@ -537,8 +537,8 @@ document.getElementById("askTitle").addEventListener('input',function(){
 						encAddrs.push(theFile.url);
 						encImgs.push(theFile.thumb);
 					}
-					console.log(JSON.stringify(encAddrs));
-					console.log(JSON.stringify(encImgs));
+					//console.log(JSON.stringify(encAddrs));
+					//console.log(JSON.stringify(encImgs));
 					TAs.encAddr = encAddrs.join('|');
 					TAs.encImg = encImgs.join('|');
 				} else { //不存在附件

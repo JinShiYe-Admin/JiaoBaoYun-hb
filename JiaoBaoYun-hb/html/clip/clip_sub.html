@@ -150,7 +150,7 @@
 
 				//test
 				document.getElementById('testBtn').addEventListener('tap', function() {
-					console.log('testBtn');
+					//console.log('testBtn');
 //					var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 					
 					var tempPage = 1;
@@ -163,7 +163,7 @@
 					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 					postDataPro_getUserSpaceMsgsById(comData,wd,function(data){
 						wd.close();
-						console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+						//console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 						if(data.RspCode == 0) {
 
 						} else {

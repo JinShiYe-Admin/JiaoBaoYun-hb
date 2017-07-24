@@ -75,8 +75,8 @@
 					this.disabled = true;
 					jQuery(this).css("pointerEvents", "none");
 					var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
-					console.log('click position:' + this.getAttribute('position'))
-					console.log("系统名称：" + plus.os.name);
+					//console.log('click position:' + this.getAttribute('position'))
+					//console.log("系统名称：" + plus.os.name);
 
 					var targetWebUrl = "";
 					var data = {};
@@ -107,7 +107,7 @@
 			})
 			//个人信息改变
 			window.addEventListener('infoChanged', function() {
-				console.log("我的界面获取信息修改infoChanged");
+				//console.log("我的界面获取信息修改infoChanged");
 				getInfo();
 			})
 			/**
@@ -115,7 +115,7 @@
 			 */
 			function getInfo() {
 				info = myStorage.getItem(storageKeyName.PERSONALINFO);
-				console.log('我的界面获取的个人信息：' + JSON.stringify(info))
+				//console.log('我的界面获取的个人信息：' + JSON.stringify(info))
 				if(info.uimg) {
 					//					var myDate = new Date();
 					document.getElementById('uimg').src = info.uimg;

@@ -50,15 +50,15 @@ var Gallery = (function(mod) {
 					}
 					//2.拷贝视频到_documents文件夹，并修改后缀为MP4
 					entry.copyTo(parentEntry, copyName, function(entrySuccesCB) {
-						console.log("拷贝成功");
+						//console.log("拷贝成功");
 						//3.判断时长是否在N秒之内
 						var mVideo = document.createElement("video");
 						mVideo.ondurationchange = function() {
-							console.log("视频时长 " + mVideo.duration);
+							//console.log("视频时长 " + mVideo.duration);
 							if(mVideo.duration < (mod.pickVideoTime + 1)) {
-								console.log("视频文件大小 " + metadata.size);
+								//console.log("视频文件大小 " + metadata.size);
 								if(metadata.size > (30 * 1024 * 1024)) {
-									console.log("视频大小不得大于30M");
+									//console.log("视频大小不得大于30M");
 									wd.close();
 									mui.toast("视频大小不得大于30M");
 									callBack({
@@ -81,15 +81,15 @@ var Gallery = (function(mod) {
 									duration: mVideo.duration, //视频时长，单位秒
 									rawName: rawName //原名字
 								};
-								console.log("相册选取视频返回的数据 " + JSON.stringify(callBackData));
+								//console.log("相册选取视频返回的数据 " + JSON.stringify(callBackData));
 								callBack(callBackData);
 							} else {
 								entrySuccesCB.remove(function(remSucCB) {
-									console.log("删除文件成功 " + remSucCB);
+									//console.log("删除文件成功 " + remSucCB);
 								}, function(remErrorCB) {
-									console.log("删除文件失败" + JSON.stringify(remErrorCB));
+									//console.log("删除文件失败" + JSON.stringify(remErrorCB));
 								});
-								console.log("视频时长不得超出" + mod.pickVideoTime + "秒");
+								//console.log("视频时长不得超出" + mod.pickVideoTime + "秒");
 								wd.close();
 								mui.toast("视频时长不得超出" + mod.pickVideoTime + "秒");
 								callBack({
@@ -99,11 +99,11 @@ var Gallery = (function(mod) {
 							}
 						}
 						mVideo.onerror = function() {
-							console.log("视频加载失败");
+							//console.log("视频加载失败");
 							entrySuccesCB.remove(function(remSucCB) {
-								console.log("删除文件成功 " + remSucCB);
+								//console.log("删除文件成功 " + remSucCB);
 							}, function(remErrorCB) {
-								console.log("删除文件失败" + JSON.stringify(remErrorCB));
+								//console.log("删除文件失败" + JSON.stringify(remErrorCB));
 							});
 							wd.close();
 							mui.toast("视频加载失败");
@@ -113,9 +113,9 @@ var Gallery = (function(mod) {
 							});
 						}
 						mVideo.src = entrySuccesCB.fullPath;
-						console.log("mVideo.src " + mVideo.src);
+						//console.log("mVideo.src " + mVideo.src);
 					}, function(entryErrorCB) {
-						console.log("拷贝视频失败 " + JSON.stringify(entryErrorCB));
+						//console.log("拷贝视频失败 " + JSON.stringify(entryErrorCB));
 						wd.close();
 						mui.toast("视频处理失败 " + entryErrorCB.message);
 						callBack({
@@ -124,7 +124,7 @@ var Gallery = (function(mod) {
 						});
 					});
 				}, function(parentEntryErrorCB) {
-					console.log("获取_documents目录对象失败 " + JSON.stringify(parentEntryErrorCB));
+					//console.log("获取_documents目录对象失败 " + JSON.stringify(parentEntryErrorCB));
 					wd.close();
 					mui.toast("视频处理失败 " + entryErrorCB.message);
 					callBack({
@@ -133,7 +133,7 @@ var Gallery = (function(mod) {
 					});
 				});
 			}, function(metadataErrorCB) {
-				console.log("获取视频信息失败 " + JSON.stringify(metadataErrorCB));
+				//console.log("获取视频信息失败 " + JSON.stringify(metadataErrorCB));
 				wd.close();
 				mui.toast("获取视频信息失败 " + metadataErrorCB.message);
 				callBack({
@@ -142,7 +142,7 @@ var Gallery = (function(mod) {
 				});
 			});
 		}, function(fileErrorCB) {
-			console.log("获取相册的视频文件对象失败 " + JSON.stringify(fileErrorCB));
+			//console.log("获取相册的视频文件对象失败 " + JSON.stringify(fileErrorCB));
 			wd.close();
 			mui.toast("获取视频失败 " + fileErrorCB.message);
 			callBack({
@@ -160,23 +160,23 @@ var Gallery = (function(mod) {
 	mod.galleryPickError = function(error, errorCB) {
 		if(plus.os.name == 'iOS') { //苹果
 			if(error.code != -2) {
-				console.log('### ERROR ### 从相册选取图片失败 ' + JSON.stringify(error));
+				//console.log('### ERROR ### 从相册选取图片失败 ' + JSON.stringify(error));
 				errorCB({
 					code: error.code, // 错误编码
 					message: error.message // 错误描述信息
 				});
 			} else {
-				console.log('未选取文件');
+				//console.log('未选取文件');
 			}
 		} else if(plus.os.name == 'Android') { //安卓
 			if(error.code != 12) {
-				console.log('### ERROR ### 从相册选取图片失败 ' + JSON.stringify(error));
+				//console.log('### ERROR ### 从相册选取图片失败 ' + JSON.stringify(error));
 				errorCB({
 					code: error.code, // 错误编码
 					message: error.message // 错误描述信息
 				});
 			} else {
-				console.log('未选取文件');
+				//console.log('未选取文件');
 			}
 		} else { //其他
 			errorCB({

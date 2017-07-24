@@ -19,7 +19,7 @@ var delContent_pop = function(data, callback) {
 			var index = e.index;
 			if(index > 0) {
 				var tempbtn = data.buttons[index - 1];
-				console.log('tempbtn.value=' + tempbtn.title);
+				//console.log('tempbtn.value=' + tempbtn.title);
 				var temp = {
 					flag: tempbtn.btnFlag
 				}
@@ -71,7 +71,7 @@ var delContent_req = function(data1, btn, callback) {
 	if(operationFlag == 1) { //删除提问1
 		//37.删除某个用户的某条提问
 		postDataQZPro_delAskById(data1.comData, wd, function(data) {
-			console.log('37.删除某个用户的某条提问:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+			//console.log('37.删除某个用户的某条提问:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 			temp.data = data;
 			callback(temp);
 			//			if(data.RspCode == 0) {
@@ -84,7 +84,7 @@ var delContent_req = function(data1, btn, callback) {
 		//11.删除某个用户的某条回答
 		postDataQZPro_delAnswerById(data1.comData, wd, function(data) {
 			//			wd.close();
-			console.log('11.删除某个用户的某条回答:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+			//console.log('11.删除某个用户的某条回答:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 			temp.data = data;
 			callback(temp);
 			//			if(data.RspCode == 0) {
@@ -97,7 +97,7 @@ var delContent_req = function(data1, btn, callback) {
 		//18.删除某条回答的评论
 		postDataQZPro_delCommentById(data1.comData, wd, function(data) {
 			//			wd.close();
-			console.log('18.删除某条回答的评论:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+			//console.log('18.删除某条回答的评论:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 			//			if(data.RspCode == 0) {
 			temp.data = data;
 			callback(temp);
@@ -109,7 +109,7 @@ var delContent_req = function(data1, btn, callback) {
 		//24.（班级空间）删除某班级空间
 		postDataPro_delClassSpaceById(data1.comData, wd, function(data) {
 			//			wd.close();
-			console.log('24.（班级空间）删除某班级空间:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+			//console.log('24.（班级空间）删除某班级空间:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 			//			if(data.RspCode == 0) {
 			temp.data = data;
 			callback(temp);
@@ -121,7 +121,7 @@ var delContent_req = function(data1, btn, callback) {
 		//46.（用户空间）删除某用户空间
 		postDataPro_delUserSpaceById(data1.comData, wd, function(data) {
 			//			wd.close();
-			console.log('46.（用户空间）删除某用户空间:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+			//console.log('46.（用户空间）删除某用户空间:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 			//			if(data.RspCode == 0) {
 			temp.data = data;
 			callback(temp);
@@ -133,7 +133,7 @@ var delContent_req = function(data1, btn, callback) {
 		//47.（用户空间）删除某条用户空间评论
 		postDataPro_delUserSpaceCommentById(data1.comData, wd, function(data) {
 			//			wd.close();
-			console.log('47.（用户空间）删除某条用户空间评论:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+			//console.log('47.（用户空间）删除某条用户空间评论:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 			//			if(data.RspCode == 0) {
 			temp.data = data;
 			callback(temp);
@@ -145,7 +145,7 @@ var delContent_req = function(data1, btn, callback) {
 		//90.（云档案）删除档案文件夹
 		postDataPro_delStudentDoc(data1.comData, wd, function(data) {
 			//			wd.close();
-			console.log('90.（云档案）删除档案文件夹:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+			//console.log('90.（云档案）删除档案文件夹:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 			//			if(data.RspCode == 0) {
 			temp.data = data;
 			callback(temp);
@@ -157,7 +157,7 @@ var delContent_req = function(data1, btn, callback) {
 		//38.屏蔽某个用户的某条回答
 		postDataQZPro_setAnswerOffById(data1.comData, wd, function(data) {
 			//			wd.close();
-			console.log('38.屏蔽某个用户的某条回答:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+			//console.log('38.屏蔽某个用户的某条回答:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 			//			if(data.RspCode == 0) {
 			temp.data = data;
 			callback(temp);
@@ -169,7 +169,7 @@ var delContent_req = function(data1, btn, callback) {
 		//85.（云档案）按ID删除学生档案内容
 		postDataPro_delStudentFileByIds(data1.comData, wd, function(data) {
 			//			wd.close();
-			console.log('85.（云档案）按ID删除学生档案内容:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+			//console.log('85.（云档案）按ID删除学生档案内容:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 			//			if(data.RspCode == 0) {
 			temp.data = data;
 			callback(temp);

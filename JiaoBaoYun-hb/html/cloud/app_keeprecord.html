@@ -145,7 +145,7 @@
 					var self = this;
 					self.disabled = true;
 					var ids = this.parentNode.id.split('_');
-					console.log(ids[0] + ' ' + ids[1] + ' ' + ids[2]);
+					//console.log(ids[0] + ' ' + ids[1] + ' ' + ids[2]);
 					var gid = ids[1]; //群id
 					var stuid = ids[2]; //资料id
 					var gname = qunInfos[gid].gname; //群名称
@@ -172,7 +172,7 @@
 					vvl: personalUTID, //查询的各项，对应人的utid，可以是查询的任何人
 				};
 				postDataPro_PostGList(cgQunData, wd, function(data) {
-					console.log('9 获取创建的群 PostGList ' + JSON.stringify(data));
+					//console.log('9 获取创建的群 PostGList ' + JSON.stringify(data));
 					if(data.RspCode == 0) {
 						for(var i = 0; i < data.RspData.length; i++) {
 							var qun = data.RspData[i];
@@ -198,7 +198,7 @@
 					vvl: personalUTID, //查询的各项，对应人的utid，可以是查询的任何人
 				};
 				postDataPro_PostGList(mgQunData, wd, function(data) {
-					console.log('9 获取协管的群 PostGList ' + JSON.stringify(data));
+					//console.log('9 获取协管的群 PostGList ' + JSON.stringify(data));
 					if(data.RspCode == 0) {
 						for(var i = 0; i < data.RspData.length; i++) {
 							var qun = data.RspData[i];
@@ -245,7 +245,7 @@
 								</div>';
 				for(var i = 0; i < qunIdArray.length; i++) {
 					var qun = qunInfos[qunIdArray[i]];
-					//console.log('addQun ' + JSON.stringify(qun));
+					////console.log('addQun ' + JSON.stringify(qun));
 					//顶部群名称
 					var elementTop = document.createElement('a');
 					//底部群资料
@@ -309,7 +309,7 @@
 			 * @param {Object} qunId 群
 			 */
 			function addData(qunId) {
-				//console.log(JSON.stringify(qunInfos[qunId]));
+				////console.log(JSON.stringify(qunInfos[qunId]));
 				var dataIdArray = qunInfos[qunId].dataIdArray;
 				for(var i = 0; i < dataIdArray.length; i++) {
 					var data = qunInfos[qunId].qunDataInfos[dataIdArray[i]];
@@ -341,7 +341,7 @@
 						vvl1: '3' //类型,0家长,1管理员,2老师,3学生,-1全部
 					};
 					postDataPro_PostGUInf(getMemData, wd, function(data) {
-						console.log('16 通过群ID获取群对象资料 PostGUInf ' + JSON.stringify(data));
+						//console.log('16 通过群ID获取群对象资料 PostGUInf ' + JSON.stringify(data));
 						qunInfos[qunId].getdata = true;
 						qunInfos[qunId].qunDataInfos = {}; //记录当前群里的资料
 						var dataIdArray = []; //保存资料的Key

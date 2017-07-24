@@ -68,13 +68,13 @@
 			var tempInfo;
 			mui.plusReady(function() {
 				tempInfo = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
-				console.log('tempInfo.uid:' + tempInfo.uid);
+				//console.log('tempInfo.uid:' + tempInfo.uid);
 				document.getElementById('change_phoneNum').innerText = tempInfo.uid;
 
 				//点击绑定手机cell，弹出
 				mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
 					var index = this.id.replace('li', '');
-					console.log('index:' + index);
+					//console.log('index:' + index);
 					if(index == '0') {
 						var tempInfo1 = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
 						mui.confirm(tempInfo1.uid, '您已绑定手机号', ['取消', '更换'], function(e) {
@@ -113,7 +113,7 @@
 				}
 				//退出
 				events.addTap('quit', function() {
-					console.log('2222');
+					//console.log('2222');
 					var btnArray = [{
 						title: "确定"
 					}];
@@ -129,7 +129,7 @@
 							case 1: //退出登录
 								var tempInfo1 = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
 								//判断是否设置了密码
-								console.log('tempinfo1:' + JSON.toString(tempInfo1));
+								//console.log('tempinfo1:' + JSON.toString(tempInfo1));
 								if(Number(tempInfo1.ispw) == 1) { //有密码
 									//发送注销协议
 									//25.用户注销
@@ -141,7 +141,7 @@
 									var wd = events.showWaiting();
 									postDataPro_PostLoginOut(comData, wd, function(data) {
 										wd.close();
-										console.log('注销success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+										//console.log('注销success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 										if(data.RspCode == 0) {
 											window.myStorage.setItem(window.storageKeyName.PERSONALINFO, null);
 											events.defaultLogin(function(data) {

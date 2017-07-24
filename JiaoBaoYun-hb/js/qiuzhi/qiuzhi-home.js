@@ -9,7 +9,7 @@ mui.plusReady(function() {
 	//初始化为空
 	document.getElementById('subjects-container').innerHTML = '';
 	document.getElementById("sliderGroup").innerHTML = '';
-	console.log("个人信息："+JSON.stringify(myStorage.getItem(storageKeyName.PERSONALINFO)))
+	//console.log("个人信息："+JSON.stringify(myStorage.getItem(storageKeyName.PERSONALINFO)))
 	document.querySelector(".img-icon>img").src=updateHeadImg(myStorage.getItem(storageKeyName.PERSONALINFO).uimg,2);
 	//获取当前页面
 	var curPage = plus.webview.currentWebview();
@@ -50,7 +50,7 @@ function requestAllChannels(callback) {
 	//1.获取所有话题
 	postDataQZPro_getAllChannels(comData, wd, function(data) {
 		wd.close();
-		console.log('获取所有话题:' + JSON.stringify(data));
+		//console.log('获取所有话题:' + JSON.stringify(data));
 		if(data.RspCode == 0) {
 			var temArr = data.RspData.Data;
 			var allChannel = {
@@ -73,7 +73,7 @@ function requestAllChannels(callback) {
 var setChannels = function(subjectArr) {
 	var subjects = document.getElementById('subjects-container');
 	document.getElementById("sliderGroup").innerHTML = '';
-	console.log('要加载的类别:' + JSON.stringify(subjectArr));
+	//console.log('要加载的类别:' + JSON.stringify(subjectArr));
 	allChannels = subjectArr;
 	events.clearChild(subjects);
 	for(var i in subjectArr) {
@@ -97,7 +97,7 @@ var setChannels = function(subjectArr) {
 	//	document.body.querySelector('.main-navigation').style.width = document.body.querySelector('.more-navigation').offsetLeft + 'px';
 	mui('#slider').slider();
 	channelInfo = allChannels[0];
-	console.log("获取频道信息：" + JSON.stringify(channelInfo));
+	//console.log("获取频道信息：" + JSON.stringify(channelInfo));
 	judgeWebReady();
 }
 /**

@@ -333,7 +333,7 @@
 				//	gid: gid, //群id
 				//	gname: gname, //群名称
 				//}
-				console.log('从群资料页面获取的数据:' + JSON.stringify(mainData));
+				//console.log('从群资料页面获取的数据:' + JSON.stringify(mainData));
 			}
 
 			/**
@@ -351,16 +351,16 @@
 
 				//监听教龄输入
 				document.getElementById('tea_expsch').addEventListener('input', function() {
-					console.log('this ' + this.value + '|' + this.value.length);
+					//console.log('this ' + this.value + '|' + this.value.length);
 					if(this.value.length > 2) {
 						this.value = this.value.slice(0, 2)
 					}
 					var value = this.value;
 					var temp = '';
-					console.log('value ' + value);
+					//console.log('value ' + value);
 					for(var i = 0; i < value.length; i++) {
 						if(value[i].replace(/^[1-9]\d*|0$/, '') == '') {
-							console.log('this.value ' + i + '|' + value[i]);
+							//console.log('this.value ' + i + '|' + value[i]);
 							temp = temp + value[i];
 						}
 					}
@@ -457,15 +457,15 @@
 					sub: sub, //科目，老师用,其他填0
 					gutid: '0' //关联的群账号ID，用户在群里的账号ID,无则为0
 				};
-				console.log('comData:' + JSON.stringify(comData));
+				//console.log('comData:' + JSON.stringify(comData));
 				// 等待的对话框
 				var wd = events.showWaiting();
 				postDataPro_PostGAddUInf(comData, wd, function(data) {
 
-					console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					//console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
 						mui.toast('资料添加成功！');
-						console.log('资料添加成功！');
+						//console.log('资料添加成功！');
 						events.fireToPageNone('qun_manage_a.html', 'addData', {
 							stuid: data.RspData,
 							gid: mainData.gid,
@@ -476,7 +476,7 @@
 						if(mstype == 3) { //2老师,3学生
 							document.getElementById("stu_name").value = '';
 						} else {
-							console.log('老师');
+							//console.log('老师');
 							document.getElementById("tea_name").value = '';
 							document.getElementById("tea_job").value = '';
 							document.getElementById("tea_title").value = '';

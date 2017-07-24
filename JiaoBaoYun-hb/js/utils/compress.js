@@ -20,7 +20,7 @@ var compress = (function(mod) {
 			//压缩图片
 			plus.zip.compressImage(options,
 				function(event) {
-					console.log('压缩图片成功:' + JSON.stringify(event));
+					//console.log('压缩图片成功:' + JSON.stringify(event));
 					callback(event);
 				},
 				function(error) {
@@ -28,7 +28,7 @@ var compress = (function(mod) {
 					var code = error.code; // 错误编码
 					var message = error.message; // 错误描述信息
 					mui.toast('图片压缩失败！' + '错误编码：' + code + '描述信息：' + message);
-					console.log('图片压缩失败！' + JSON.stringify(error));
+					//console.log('图片压缩失败！' + JSON.stringify(error));
 					plus.nativeUI.closeWaiting();
 				})
 		});
@@ -40,7 +40,7 @@ var compress = (function(mod) {
 			dst: getSavePath(picPath), //压缩转换目标图片的路径
 			overwrite: true
 		}
-		console.log(123)
+		//console.log(123)
 		//获取图片类型
 		getPicType(picPath, function(picType) {
 			if(picType) { //宽>=长
@@ -50,11 +50,11 @@ var compress = (function(mod) {
 				options.width = "auto";
 				options.height = "1024px";
 			}
-			console.log(JSON.stringify(options))
+			//console.log(JSON.stringify(options))
 			//压缩图片
 			plus.zip.compressImage(options,
 				function(event) {
-					console.log('压缩图片成功:' + JSON.stringify(event));
+					//console.log('压缩图片成功:' + JSON.stringify(event));
 					compressCount++;
 					compressedPaths.push(event.target);
 					widths.push(event.width);
@@ -69,7 +69,7 @@ var compress = (function(mod) {
 					var code = error.code; // 错误编码
 					var message = error.message; // 错误描述信息
 					mui.toast('图片压缩失败！' + '错误编码：' + code + '描述信息：' + message);
-					console.log('图片压缩失败！' + JSON.stringify(error));
+					//console.log('图片压缩失败！' + JSON.stringify(error));
 					plus.nativeUI.closeWaiting();
 				})
 		});
@@ -103,7 +103,7 @@ var compress = (function(mod) {
 	}
 	var getSavePath = function(picPath) {
 		var picPaths = picPath.split('/');
-		console.log("路径：" + picPaths[picPaths.length - 1])
+		//console.log("路径：" + picPaths[picPaths.length - 1])
 		var compressPath = "_doc/savepath/" + picPaths[picPaths.length - 1]
 		//		picPaths.splice(picPaths.length - 1, 0, "savePath");
 		return compressPath;
@@ -122,12 +122,12 @@ var compress = (function(mod) {
 		if(data.dst) {
 			options.dst = data.dst; //压缩转换目标图片的路径
 		}
-		console.log('compressImageTo_1MB options ' + JSON.stringify(options));
+		//console.log('compressImageTo_1MB options ' + JSON.stringify(options));
 		mod.compressImageTo_xx(options, function(event) {
-			console.log('compressImageTo_1MB 成功');
+			//console.log('compressImageTo_1MB 成功');
 			successCallBack(event);
 		}, function(error) {
-			console.log('### ERROR ### compressImageTo_1MB 失败 ' + JSON.stringify(error));
+			//console.log('### ERROR ### compressImageTo_1MB 失败 ' + JSON.stringify(error));
 			errorCallBack(error);
 		});
 	}
@@ -146,12 +146,12 @@ var compress = (function(mod) {
 		if(data.dst) {
 			options.dst = data.dst; //压缩转换目标图片的路径
 		}
-		console.log('compressImageTo_512KB options ' + JSON.stringify(options));
+		//console.log('compressImageTo_512KB options ' + JSON.stringify(options));
 		mod.compressImageTo_xx(options, function(event) {
-			console.log('compressImageTo_512KB 成功');
+			//console.log('compressImageTo_512KB 成功');
 			successCallBack(event);
 		}, function(error) {
-			console.log('### ERROR ### compressImageTo_1MB 失败 ' + JSON.stringify(error));
+			//console.log('### ERROR ### compressImageTo_1MB 失败 ' + JSON.stringify(error));
 			errorCallBack(error);
 		});
 	}
@@ -190,7 +190,7 @@ var compress = (function(mod) {
 			options.dst = '_documents/' + myDate.getTime() + '.png'; //压缩转换目标图片的路径
 			options.overwrite = false; //覆盖生成新文件,仅在dst制定的路径文件存在时有效
 		}
-		console.log('compressImageTo_xx options ' + JSON.stringify(options));
+		//console.log('compressImageTo_xx options ' + JSON.stringify(options));
 		plus.zip.compressImage(options,
 			function(event) {
 				//图片压缩成功
@@ -198,7 +198,7 @@ var compress = (function(mod) {
 				//var size = event.size; // 压缩转换后图片的大小，单位为字节（Byte）
 				//var width = event.width; // 压缩转换后图片的实际宽度，单位为px
 				//var height = event.height; // 压缩转换后图片的实际高度，单位为px
-				console.log('compressImageTo_xx 成功 target:' + event.target + ' size:' + event.size + ' width:' + event.width + ' height:' + event.height);
+				//console.log('compressImageTo_xx 成功 target:' + event.target + ' size:' + event.size + ' width:' + event.width + ' height:' + event.height);
 				if(event.size <= sizeMax) {
 					successCallBack(event);
 				} else {
@@ -220,7 +220,7 @@ var compress = (function(mod) {
 				//图片压缩失败
 				//var code = error.code; // 错误编码
 				//var message = error.message; // 错误描述信息
-				console.log('### ERROR ### compressImageTo_xx 失败 ' + JSON.stringify(error));
+				//console.log('### ERROR ### compressImageTo_xx 失败 ' + JSON.stringify(error));
 				errorCallBack(error);
 			}
 		);

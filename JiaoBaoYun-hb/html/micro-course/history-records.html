@@ -242,7 +242,7 @@
 			 */
 			function initData() {
 				main = plus.webview.currentWebview();
-				console.log("main data " + JSON.stringify(main.data));
+				//console.log("main data " + JSON.stringify(main.data));
 				document.getElementById("title").innerText = main.data.CourseName;
 			}
 
@@ -264,7 +264,7 @@
 							document.getElementById('section_list').innerHTML = "";
 							mui(".mui-pull-loading")[0].innerHTML = "";
 							var self = this;
-							console.log("下拉刷新");
+							//console.log("下拉刷新");
 							getAllSectionsAndComments(1);
 							setTimeout(function() {
 								//结束下拉刷新
@@ -275,7 +275,7 @@
 					up: {
 						callback: function() {
 							var self = this;
-							console.log("上拉加载更多");
+							//console.log("上拉加载更多");
 							if(pageIndex <= totalPage) {
 								getAllSectionsAndComments(pageIndex + 1);
 								setTimeout(function() {
@@ -300,7 +300,7 @@
 				//查看节次
 				mui('.section-list').on('tap', '.mui-table-view-cell', function() {
 					var data = sectionData.value[this.id.replace('section_', '')];
-					console.log(JSON.stringify(data));
+					//console.log(JSON.stringify(data));
 					if(data.SecStatus == 1) {
 						data.courseId = main.data.TabId; //课程id
 						events.openNewWindowWithData('course_section.html', data);
@@ -325,7 +325,7 @@
 					pageSize: 10 //每页记录数,传入0，获取总记录数
 				};
 				postDataMCPro_getAllSectionsByCourse(comData, wd, function(data) {
-					console.log('3 获取课程的节次 ' + JSON.stringify(data));
+					//console.log('3 获取课程的节次 ' + JSON.stringify(data));
 					if(data.RspCode == 0) {
 						wd.close();
 						pageIndex = index;
@@ -336,7 +336,7 @@
 
 						if(pageIndex >= data.RspData.totalPage) {
 							mui(".mui-pull-loading")[0].innerHTML = "";
-							console.log('没有下一页');
+							//console.log('没有下一页');
 						}
 
 						if(pageIndex == 1 && data.RspData.Data.length == 0) {
@@ -354,12 +354,12 @@
 			 * @param {Object} data
 			 */
 			function showSectionList(data) {
-				//console.log("showSectionList " + JSON.stringify(data));
+				////console.log("showSectionList " + JSON.stringify(data));
 				var more = document.getElementById("section_more");
 				for(var i in data) {
 					sectionData.key[sectionData.key.length] = data[i].SecId;
 					sectionData.value[data[i].SecId] = data[i];
-					//console.log("showSectionList " + i + " " + JSON.stringify(data[i]));
+					////console.log("showSectionList " + i + " " + JSON.stringify(data[i]));
 					var ele = document.createElement("li");
 					ele.id = "section_" + data[i].SecId;
 					var html = '';

@@ -101,13 +101,13 @@
 							var localPath = event.target;
 							var data = CloudFileUtil.getSingleUploadDataOptions(localPath, 6, 200, 0, saveSpace);
 							CloudFileUtil.getQNUpTokenWithManage(storageKeyName.QNGETUPLOADTOKEN, data.options, function(datas) {
-								console.log("获取的数据：" + JSON.stringify(datas));
+								//console.log("获取的数据：" + JSON.stringify(datas));
 								if(datas.Status == 1) {
 									var tokenInfo = datas.Data;
 
 									//上传文件
 									CloudFileUtil.uploadFile(tokenInfo, localPath, function(uploadData, status) {
-										console.log(JSON.stringify(uploadData));
+										//console.log(JSON.stringify(uploadData));
 										var img = { //图片信息
 											url: tokenInfo.Domain + tokenInfo.Key,
 											thumb: tokenInfo.OtherKey[data.thumbKey],
@@ -121,7 +121,7 @@
 								}
 
 							}, function(xhr, type, errorThrown) {
-								console.log("错误类型：" + type + errorThrown);
+								//console.log("错误类型：" + type + errorThrown);
 								plus.nativeUI.closeWaiting(); //关闭等待框
 							});
 						})
@@ -137,7 +137,7 @@
 			events.addTap('take_camero', function() {
 				var item = this;
 //				jQuery(item).css('pointerEvents', 'none');
-				console.log("item不能点击了！" + item.id);
+				//console.log("item不能点击了！" + item.id);
 				if(CloudFileUtil.files.length > 0) {
 					switch(CloudFileUtil.files[0].type) {
 						case 1:
@@ -181,19 +181,19 @@
 						plus.nativeUI.showWaiting(storageKeyName.UPLOADING, {
 							back: 'none'
 						}); //等待框
-						console.log("保存的路径：" + JSON.stringify(paths));
+						//console.log("保存的路径：" + JSON.stringify(paths));
 						var saveSpace = storageKeyName.CLASSSPACE; //保存路径
 						compress.compressPics(paths, function(compressedPaths) {
-							console.log('获取的图片路径：' + JSON.stringify(compressedPaths));
+							//console.log('获取的图片路径：' + JSON.stringify(compressedPaths));
 							var data = CloudFileUtil.getMultipleUploadDataOptions(compressedPaths, 6, 200, 0, saveSpace); //获取获取token的各参数
 							CloudFileUtil.getQNUpTokenWithManage(storageKeyName.QNGETUPLOADTOKEN, data.options, function(datas) {
-									console.log("传回来的值：" + JSON.stringify(datas)) //回调数据
+									//console.log("传回来的值：" + JSON.stringify(datas)) //回调数据
 									if(datas.Status == 1) { //成功
 										var tokenInfos = datas.Data; //参数信息
 										var imgs = [];
 										//上传图片
 										CloudFileUtil.uploadFiles(compressedPaths, tokenInfos, function(uploadData, status, index) {
-											console.log(JSON.stringify(uploadData));
+											//console.log(JSON.stringify(uploadData));
 											imgs[index] = {
 												url: tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key,
 												thumb: (tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key).replace(saveSpace, saveSpace + "thumb/"),
@@ -212,7 +212,7 @@
 								},
 								//错误的回调
 								function(xhr, type, errorThrown) {
-									console.log("错误类型：" + type + errorThrown);
+									//console.log("错误类型：" + type + errorThrown);
 									plus.nativeUI.closeWaiting();
 								});
 						});
@@ -225,7 +225,7 @@
 			});
 			//发布按钮
 			events.addTap('publish', function() {
-				console.log('' + JSON.stringify(groupInfo));
+				//console.log('' + JSON.stringify(groupInfo));
 				var tempText = document.getElementById('input-content').value;
 				if(!tempText || tempText == '') {
 					mui.toast('请输入内容');
@@ -246,11 +246,11 @@
 				postData.encImg = TAs.encImg;
 				postData.teacherId = parseInt(groupInfo.userId);
 				postData.userIds = arrayToStr(personIds);
-				console.log('传值：' + JSON.stringify(postData));
+				//console.log('传值：' + JSON.stringify(postData));
 				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING)
 				postDataPro_addClassSpace(postData, wd, function(data) {
 					wd.close();
-					console.log(JSON.stringify(data));
+					//console.log(JSON.stringify(data));
 					if(data.RspCode == 0) {
 						mui.toast('发布成功！');
 						document.getElementById('input-content').value = '';
@@ -278,15 +278,15 @@
 		function recordVideo() {
 			video.recordVideo({}, function(path) {
 				events.showWaiting();
-				console.log("保存在本地的路径：" + path);
+				//console.log("保存在本地的路径：" + path);
 				uploadFile(path);
 			}, function(errData) {
-				console.log(errData.code);
+				//console.log(errData.code);
 				if(errData.code != 0) {
 					mui.toast(errData.message);
 				}
 				jQuery("#take_camero").css('pointerEvents', 'all');
-				console.log("item能点击了！")
+				//console.log("item能点击了！")
 			})
 		}
 		/**
@@ -295,18 +295,18 @@
 		 */
 		function uploadFile(path) {
 			load.getManageOptions(2, path, function(mData, thumb) {
-				console.log("视频获取的各项参数：" + JSON.stringify(data));
+				//console.log("视频获取的各项参数：" + JSON.stringify(data));
 				mData.saveSpace = storageKeyName.CLASSSPACE;
 				mData.spaceId = 6;
 				var data = CloudFileUtil.getSingleImgUploadOptions(path, mData.spaceId, mData.spaceType, mData.saveSpace, mData.options);
 				CloudFileUtil.getQNUpTokenWithManage(storageKeyName.QNGETUPLOADTOKEN, data.options, function(datas) {
-					console.log("获取的数据：" + JSON.stringify(datas));
+					//console.log("获取的数据：" + JSON.stringify(datas));
 					if(datas.Status == 1) {
 						var tokenInfo = datas.Data;
 						//上传文件
 						CloudFileUtil.uploadFile(tokenInfo, path, function(uploadData, status) {
-							console.log("获取的上传数据：" + JSON.stringify(uploadData));
-							console.log("获取的token信息：" + JSON.stringify(tokenInfo));
+							//console.log("获取的上传数据：" + JSON.stringify(uploadData));
+							//console.log("获取的token信息：" + JSON.stringify(tokenInfo));
 							var img = { //图片信息
 								url: tokenInfo.Domain + tokenInfo.Key,
 								thumb: tokenInfo.OtherKey[data.thumbKey],
@@ -315,7 +315,7 @@
 								type: 2
 							}
 							img.duration=events.getVideoDuration(img.url);
-							//										console.log("获取的图片信息：" + JSON.stringify(img));
+							//										//console.log("获取的图片信息：" + JSON.stringify(img));
 							//关闭等待框
 							plus.nativeUI.closeWaiting();
 							//放置图片
@@ -325,7 +325,7 @@
 					}
 
 				}, function(xhr, type, errorThrown) {
-					console.log("错误类型：" + type + errorThrown);
+					//console.log("错误类型：" + type + errorThrown);
 					plus.nativeUI.closeWaiting(); //关闭等待框
 					jQuery("#take_camero").css('pointerEvents', 'all');
 				});
@@ -343,7 +343,7 @@
 				vvl: groupId, //群ID，查询的值
 				vvl1: -1 //群员类型，0家长,1管理员,2老师,3学生,-1取全部)
 			}, wd, function(data) {
-				console.log('獲取的群成員信息：' + JSON.stringify(data));
+				//console.log('獲取的群成員信息：' + JSON.stringify(data));
 				wd.close();
 				if(data.RspCode == '0000') {
 					data.RspData.forEach(function(person) {
@@ -379,8 +379,8 @@
 					encAddrs.push(theFile.url);
 					encImgs.push(theFile.thumb);
 				}
-				console.log(JSON.stringify(encAddrs));
-				console.log(JSON.stringify(encImgs));
+				//console.log(JSON.stringify(encAddrs));
+				//console.log(JSON.stringify(encImgs));
 				TAs.encAddr = encAddrs.join('|');
 				TAs.encImg = encImgs.join('|');
 			} else { //不存在附件

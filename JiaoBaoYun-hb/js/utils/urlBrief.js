@@ -24,7 +24,7 @@ var urlBrief = (function(mod) {
 			thisUrl = regex.exec(message);
 			if(thisUrl != null) {
 				mod.urlArrays.push(thisUrl[0]);
-				console.log('thisUrl=' + thisUrl[0]);
+				//console.log('thisUrl=' + thisUrl[0]);
 				//通过网址获取各类信息
 				getInfoFromUrl(thisUrl[0], thisUrl.index,callback);
 			}
@@ -44,7 +44,7 @@ var urlBrief = (function(mod) {
 			timeout: 10000,
 			//得到html
 			success: function(data) {
-				console.log(data)
+				//console.log(data)
 				var UrlItem = new Object();
 				UrlItem.url = urls;
 				UrlItem.title = getInnerHTMLTitle(data);
@@ -53,9 +53,9 @@ var urlBrief = (function(mod) {
 				UrlItem.pic = getFirstHTMLPic(data)
 				UrlItem.words = getWords(data);
 				UrlItem.index = index;
-				console.log("info:" +mod.message);
+				//console.log("info:" +mod.message);
 				UrlItem.message = getSendMessge(UrlItem);
-				console.log("after:" +mod.message);
+				//console.log("after:" +mod.message);
 				mod.itemArray.push(UrlItem);
 //				putMessageInView(document.getElementById('talk'))
 				//获取替换后的信息
@@ -110,7 +110,7 @@ var urlBrief = (function(mod) {
 
 		if(des != null) {
 			var description = des[0].replace(/meta[\s\S]*content=\"/g, "").replace(/"[\w\W]*\/>/g, '');
-			console.log(description);
+			//console.log(description);
 			return description;
 		}
 		return null;
@@ -138,10 +138,10 @@ var urlBrief = (function(mod) {
 		do {
 			var p = regex.exec(data);
 			if(p != null) {
-				console.log(p[0] + p.index)
+				//console.log(p[0] + p.index)
 				var words = p[0].replace(/<p[^>]*>/, '').replace(/<\/?p>/, '');
 				if(words.length > 50) {
-					console.log(words);
+					//console.log(words);
 					return words;
 				}
 			}
@@ -160,7 +160,7 @@ var urlBrief = (function(mod) {
 			'<p>' + UrlItem.desc + '</p>' +
 			UrlItem.words +
 			'</a>'
-		console.log(UrlItem.url)
+		//console.log(UrlItem.url)
 		mod.message =mod.message.replace(UrlItem.url, replaceWords);
 	}
 	/**

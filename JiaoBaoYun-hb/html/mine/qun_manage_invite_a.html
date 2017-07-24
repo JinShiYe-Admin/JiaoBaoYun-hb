@@ -288,7 +288,7 @@
 				//mstype: type, //被邀请成为的类型
 				//vtp: item.mstype //邀请人的类型（用户管理角色,0家长,1管理员,2老师,3学生）
 				//}
-				console.log('邀请群成员获得的数据:' + JSON.stringify(mainData));
+				//console.log('邀请群成员获得的数据:' + JSON.stringify(mainData));
 
 				switch(mainData.mstype) { //被邀请成为类型（0家长,2老师,3学生）
 					case 'student':
@@ -313,7 +313,7 @@
 						mainData.type = '0';
 						break;
 					default:
-						console.log('邀请群成员设置成员类型出错');
+						//console.log('邀请群成员设置成员类型出错');
 						break;
 				}
 
@@ -348,7 +348,7 @@
 				mui('#row_data').on('tap', '.mui-table-view-cell', function() {
 					document.activeElement.blur(); //隐藏键盘
 					var self = this;
-					console.log(self.id + ' ' + clickId);
+					//console.log(self.id + ' ' + clickId);
 					if(clickId == '') { //第一次点击资料
 						self.className = 'mui-table-view-cell data-item data-item-click';
 						clickId = self.id;
@@ -364,7 +364,7 @@
 
 				//确认邀请
 				document.getElementById('commit').addEventListener('tap', function() {
-					console.log('确认');
+					//console.log('确认');
 					invite();
 				});
 
@@ -452,7 +452,7 @@
 			 */
 			function showData() {
 				for(var i = 0; i < allData.length; i++) {
-					//console.log('allData[' + i + '] ' + JSON.stringify(allData[i]));
+					////console.log('allData[' + i + '] ' + JSON.stringify(allData[i]));
 					var element = document.createElement('div');
 					element.className = 'mui-col-xs-3 mui-col-sm-3';
 					element.innerHTML = '<li id="li_' + allData[i].stuid + '" class="mui-table-view-cell data-item">\
@@ -476,7 +476,7 @@
 				document.activeElement.blur(); //隐藏键盘
 
 				var input_search = document.getElementById("input_search"); //搜索输入框
-				console.log('input_search.value ' + input_search.value);
+				//console.log('input_search.value ' + input_search.value);
 				var uid = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).uid; //账号电话
 				var uname = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).uname; //账号
 				if(input_search.value.replace(/(^\s*)|(\s*$)/g, "") == "") {
@@ -513,10 +513,10 @@
 						vtp: vtp //获取类型,nm(用户名),mb(手机号)
 					};
 					postDataPro_PostUList(comData2, wd, function(data) {
-						console.log('11.RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+						//console.log('11.RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 						if(data.RspCode == 0) {
 							for(var i = 0; i < data.RspData.length; i++) {
-								console.log('搜索结果 ' + JSON.stringify(data.RspData[i]));
+								//console.log('搜索结果 ' + JSON.stringify(data.RspData[i]));
 							}
 							userData = data.RspData[0];
 							showUser(1); //显示搜索用户结果
@@ -528,7 +528,7 @@
 						} else {
 							userData = null;
 							mui.toast(data.RspTxt);
-							console.log('### ERROR ### 搜索 ###' + data.RspTxt);
+							//console.log('### ERROR ### 搜索 ###' + data.RspTxt);
 						}
 						wd.close();
 					});
@@ -557,7 +557,7 @@
 						vtp = '0';
 						break;
 					default:
-						console.log('邀请群成员设置成员类型出错');
+						//console.log('邀请群成员设置成员类型出错');
 						break;
 				}
 				//16.通过群ID获取群对象资料
@@ -569,7 +569,7 @@
 					vvl1: vvl1 //类型,0家长,1管理员,2老师,3学生,-1全部
 				};
 				postDataPro_PostGUInf(comData2, wd, function(data) {
-					console.log('16.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					//console.log('16.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
 						for(var i = 0; i < data.RspData.length; i++) {
 							if(data.RspData[i].stuname != '') {
@@ -579,7 +579,7 @@
 					} else {
 						if(data.RspCode != 9) {
 							mui.toast(data.RspTxt);
-							console.log('### ERROR ### 获取群对象资料 ###' + data.RspTxt);
+							//console.log('### ERROR ### 获取群对象资料 ###' + data.RspTxt);
 						}
 					}
 
@@ -604,8 +604,8 @@
 			 */
 			function invite() {
 				var wd = events.showWaiting();
-				console.log('发送邀请 用户信息 ' + JSON.stringify(userData));
-				console.log('发送邀请 资料元素ID ' + clickId);
+				//console.log('发送邀请 用户信息 ' + JSON.stringify(userData));
+				//console.log('发送邀请 资料元素ID ' + clickId);
 				//判断与资料关系
 				var urel = ''; //与资料关系
 				var stuid = clickId.replace('li_', ''); //资料id
@@ -616,7 +616,7 @@
 					}
 					chooseInfo = stuid;
 				}
-				console.log('与资料关系：' + urel);
+				//console.log('与资料关系：' + urel);
 				//判断邀请类型
 				var vtp = ''; //邀请类型
 				if(mainData.vtp == 1 || mainData.vtp == 2) { //邀请人为老师都设为0
@@ -624,7 +624,7 @@
 				} else {
 					vtp = '2';
 				}
-				console.log('邀请人类型 ' + mainData.vtp + ' 邀请类型 ' + vtp);
+				//console.log('邀请人类型 ' + mainData.vtp + ' 邀请类型 ' + vtp);
 				//12.邀请用户入群
 				//需要参数
 				var comData = {
@@ -637,11 +637,11 @@
 					urel: urel, //与资料关系,一般申请加入家长的时候填写,如爸爸,妈妈,其他类型留空
 					vtp: vtp //邀请类型,0老师邀请家长,1个人申请入群,2群员邀请群员
 				};
-				console.log('comData:' + JSON.stringify(comData));
+				//console.log('comData:' + JSON.stringify(comData));
 
 				postDataPro_PostInvGuser(comData, wd, function(data) {
 					wd.close();
-					console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					//console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
 						mui.toast('已发送邀请');
 					} else if(data.RspCode == 9) {
@@ -656,7 +656,7 @@
 						}
 					} else {
 						mui.toast('邀请失败 ' + data.RspTxt);
-						console.log('### ERROR ### 邀请用户入群 ###' + data.RspTxt);
+						//console.log('### ERROR ### 邀请用户入群 ###' + data.RspTxt);
 					}
 				});
 			}

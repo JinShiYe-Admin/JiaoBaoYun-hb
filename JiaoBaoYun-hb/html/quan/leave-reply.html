@@ -62,12 +62,12 @@
 //					tempText = replaceAllBL(tempText);
 				}
 				httpData.msgContent = tempText;
-				console.log('httpData === ' + JSON.stringify(httpData));
+				//console.log('httpData === ' + JSON.stringify(httpData));
 				// 等待的对话框
 				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 				postDataPro_addUserSpaceMsgReply(httpData, wd, function(data) {
 					wd.close();
-					console.log('postDataPro_addUserSpaceMsgReply:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt + data.RspData.TotalCnt);
+					//console.log('postDataPro_addUserSpaceMsgReply:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt + data.RspData.TotalCnt);
 					if(data.RspCode == 0) {
 						mui.toast('成功')
 						leaveContent.value = '';

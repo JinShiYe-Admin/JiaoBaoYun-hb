@@ -109,7 +109,7 @@ var ShowAudioUtil = (function(mod) {
 	mod.initListener = function() {
 		//关闭按钮
 		mui('.audio-show-popover').on('tap', '.icon-guanbi', function() {
-			console.log('guanbi');
+			//console.log('guanbi');
 			mod.Mask.close();
 		});
 
@@ -141,7 +141,7 @@ var ShowAudioUtil = (function(mod) {
 	 * 播放音频
 	 */
 	mod.initAudio = function(data, type) {
-		console.log('initAudio' + JSON.stringify(data));
+		//console.log('initAudio' + JSON.stringify(data));
 		mod.initCircle();
 		document.activeElement.blur();
 		audio_pause.style.display = 'none';
@@ -149,7 +149,7 @@ var ShowAudioUtil = (function(mod) {
 		mui('#audioPopover').popover('show');
 		document.querySelector('.mui-backdrop').style.background = 'rgba(255,255,255,0.5)';
 		mod.Mask = mui.createMask(function() {
-			console.log('createMaskcallback');
+			//console.log('createMaskcallback');
 			if(mod.Mask != null) {
 				mod.Mask = null;
 				mod.closeAudio();
@@ -178,7 +178,7 @@ var ShowAudioUtil = (function(mod) {
 	mod.initAudioPlay = function() {
 		//完全加载成功
 		mod.AudioPlayer.addEventListener('canplaythrough', function() {
-			console.log('canplaythrough');
+			//console.log('canplaythrough');
 			audio_time.innerText = '00:00';
 			audio_pause.style.display = 'inline-block';
 			mod.AudioPlayer.play();
@@ -187,7 +187,7 @@ var ShowAudioUtil = (function(mod) {
 
 		//加载失败
 		mod.AudioPlayer.addEventListener('error', function(e) {
-			console.log('error');
+			//console.log('error');
 			mui.toast('播放失败');
 			mod.Mask.close();
 		});
@@ -213,12 +213,12 @@ var ShowAudioUtil = (function(mod) {
 	 */
 	mod.AudioControlPlay = function() {
 		mod.AudioPlayer.play(function() {
-			console.log('播放完成');
+			//console.log('播放完成');
 			if(mod.Mask) {
 				mod.Mask.close();
 			}
 		}, function(e) {
-			console.log('播放失败 ' + JSON.stringify(e));
+			//console.log('播放失败 ' + JSON.stringify(e));
 			setTimeout(function() {
 				if(showControlTime != undefined) {
 					clearInterval(showControlTime);
@@ -230,10 +230,10 @@ var ShowAudioUtil = (function(mod) {
 			}, 500);
 		});
 		var showControlTime = setInterval(function() {
-			//console.log("showControlTime");
+			////console.log("showControlTime");
 			if(mod.AudioPlayer) {
 				var time = mod.AudioPlayer.getPosition();
-				//console.log('time ' + time);
+				////console.log('time ' + time);
 				if(time != 0) {
 					audio_time.innerText = '00:00';
 					audio_pause.style.display = 'inline-block';
@@ -266,7 +266,7 @@ var ShowAudioUtil = (function(mod) {
 				audioTime = mod.AudioPlayer.duration;
 				mod.fOption.time = Math.ceil(audioTime);
 			}
-			//console.log('audioTime ' + audioTime);
+			////console.log('audioTime ' + audioTime);
 			mod.timeCount = mod.timeCount + 1;
 			mod.showAudioTime(mod.fOption.time);
 		}, 1000);
@@ -277,7 +277,7 @@ var ShowAudioUtil = (function(mod) {
 	 * @param {Object} count
 	 */
 	mod.showAudioTime = function(count) {
-		console.log('showAudioTime ' + mod.timeCount + ' ' + count);
+		//console.log('showAudioTime ' + mod.timeCount + ' ' + count);
 		if(mod.timeCount > count) {
 			return false;
 		}
@@ -312,7 +312,7 @@ var ShowAudioUtil = (function(mod) {
 	 * 关闭audio
 	 */
 	mod.closeAudio = function() {
-		console.log('closeAudio');
+		//console.log('closeAudio');
 		if(mod.intervalId != null) {
 			clearInterval(mod.intervalId);
 			mod.intervalId = null;
@@ -356,7 +356,7 @@ var ShowAudioUtil = (function(mod) {
 			return false;
 		}
 		mod.timeCount = getTime;
-		console.log('changeProgressBarAndTime ' + mod.timeCount);
+		//console.log('changeProgressBarAndTime ' + mod.timeCount);
 		mod.showAudioTime(mod.fOption.time);
 	}
 

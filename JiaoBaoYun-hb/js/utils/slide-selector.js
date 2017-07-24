@@ -28,7 +28,7 @@ var slide_selector = (function(mod) {
 					var div = document.createElement('div');
 					div.className = 'cities-selector';
 					div.innerHTML = getCitiesInner(cities);
-					console.log("页面获取的innerHTML:" + div.innerHTML)
+					//console.log("页面获取的innerHTML:" + div.innerHTML)
 					fragment.appendChild(div);
 				}
 				document.querySelector('.mui-content').appendChild(fragment);
@@ -76,7 +76,7 @@ var slide_selector = (function(mod) {
 				}
 
 				curCity = thisCities[0];
-				console.log("当前的城市为：" + curCity.aname + ",当前的pageId为：" + mod.pages[0].id);
+				//console.log("当前的城市为：" + curCity.aname + ",当前的pageId为：" + mod.pages[0].id);
 				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 				setTimeout(function() {
 					mui.fire(mod.pages[0], 'cityInfo', curCity);
@@ -96,7 +96,7 @@ var slide_selector = (function(mod) {
 	var addSwipe = function() {
 			window.addEventListener("swipe_event", function(event) {
 				// 获取方向以及索引
-				console.log('滑动事件监听')
+				//console.log('滑动事件监听')
 				var direction = event.detail.direction;
 				if(direction == "left") {
 					swipe(1);
@@ -133,7 +133,7 @@ var slide_selector = (function(mod) {
 			curPage.isHide=true;
 			showPage.show("fade-in"); //显示要显示的页面;
 			showPage.isHide=false;
-			console.log("滑动模式：" + type + ",滑动后的要显示的页面id:" + showPage.id);
+			//console.log("滑动模式：" + type + ",滑动后的要显示的页面id:" + showPage.id);
 			mui.fire(showPage, 'cityInfo', curCity); //向显示界面传值
 		}else{
 			
@@ -168,7 +168,7 @@ var slide_selector = (function(mod) {
 			document.addEventListener("swipeleft", function(event) {
 				var angle = event.detail.angle;
 				angle = Math.abs(angle);
-				console.log('左滑事件：' + angle);
+				//console.log('左滑事件：' + angle);
 				/**
 				 * 控制滑动的角度，为避免误操作，可自定义限制滑动角度；
 				 */
@@ -181,7 +181,7 @@ var slide_selector = (function(mod) {
 
 				var angle = event.detail.angle;
 				angle = Math.abs(angle);
-				console.log('右滑事件：' + angle);
+				//console.log('右滑事件：' + angle);
 				/**
 				 * 控制滑动的角度，为避免误操作，可自定义限制滑动角度；
 				 */

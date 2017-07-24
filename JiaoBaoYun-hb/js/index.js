@@ -45,7 +45,7 @@ mui.plusReady(function() {
 	});
 	//登录的监听
 	window.addEventListener("login", function() {
-		console.log("login");
+		//console.log("login");
 		loginRoleType = 1;
 	})
 	//退出的监听
@@ -80,7 +80,7 @@ var addSubPages = function() {
 		var subpage_style = events.getWebStyle(subpages[i]);
 		subpage_style.top = (localStorage.getItem('StatusHeightNo') * 1) + 44 + 'px';
 		subpage_style.bottom = '51px';
-		console.log("子页面样式：" + JSON.stringify(subpage_style));
+		//console.log("子页面样式：" + JSON.stringify(subpage_style));
 		var temp = {};
 		var sub = plus.webview.create(subpages[i], subpages[i].split('/')[subpages[i].split('/').length - 1], subpage_style);
 		if(i > 0) {
@@ -121,7 +121,6 @@ var setListener = function() {
 			setTitle(myStorage.getItem(storageKeyName.SHOWTYPE));
 			console.log("展现获取的类型信息："+myStorage.getItem(storageKeyName.SHOWTYPE));
 		}
-		console.log("活动的页面：" + activeTab);
 		if(targetTab == activeTab) {
 			return;
 		}
@@ -184,11 +183,11 @@ function setTitle(type) {
 }
 //根据登录角色不同，更改界面显示
 var setConditionbyRole = function(role) {
-	console.log("获取的身份信息：" + JSON.stringify(myStorage.getItem(storageKeyName.PERSONALINFO)));
+	//console.log("获取的身份信息：" + JSON.stringify(myStorage.getItem(storageKeyName.PERSONALINFO)));
 	var cloudIcon = document.getElementById("defaultTab");
 	var sceIcon = document.getElementById("tabclass");
 	var active_tab = document.querySelector(".mui-tab-item.mui-active").getAttribute('href');
-	console.log("要隐藏的界面：" + active_tab);
+	//console.log("要隐藏的界面：" + active_tab);
 	plus.webview.hide(active_tab.split("/")[active_tab.split("/").length - 1]);
 	document.querySelector(".mui-tab-item.mui-active").className = "mui-tab-item";
 
@@ -213,8 +212,9 @@ var setActivePage = function() {
 	mui.extend(aniShow, temp);
 	var splitActiveTabs = activeTab.split("/");
 	var activeId = splitActiveTabs[splitActiveTabs.length - 1];
-	console.log("要显示的界面：" + activeTab);
-	if(mui.os.ios) {
+
+	//console.log("要显示的界面：" + activeTab);
+	if(mui.os.ios){
 		plus.webview.show(activeId);
 	} else {
 		plus.webview.show(activeId, "fade-in", 300);

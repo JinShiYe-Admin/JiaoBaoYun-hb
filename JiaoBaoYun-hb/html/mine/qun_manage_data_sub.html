@@ -76,12 +76,12 @@
 			mui.plusReady(function() {
 				var main = plus.webview.currentWebview(); //获取当前窗体对象
 				mainData = main.data; //接收A页面传入参数值
-				console.log('qun_manage_data_sub.html:' + JSON.stringify(mainData));
+				//console.log('qun_manage_data_sub.html:' + JSON.stringify(mainData));
 				getAllData(mainData.gid); //获取所有的资料
 
 				//点击资料
 				mui('#pullrefresh').on('tap', '.mui-table-view-cell', function() {
-					console.log(this.getAttribute('data-info'));
+					//console.log(this.getAttribute('data-info'));
 					var passData = JSON.parse(this.getAttribute('data-info'));
 					passData.gname = mainData.gname; //群名称
 					switch(passData.mstype) { //0家长,1管理员,2老师,3学生
@@ -98,7 +98,7 @@
 							passData.type = 'student'; //资料类型
 							break;
 						default:
-							console.log('资料类型选择出错3');
+							//console.log('资料类型选择出错3');
 							break;
 					}
 					passData.mstype = 1; //管理员
@@ -107,7 +107,7 @@
 
 				//长按资料
 				mui('#pullrefresh').on('longtap', '.mui-table-view-cell', function() {
-					console.log(this.getAttribute('data-info'));
+					//console.log(this.getAttribute('data-info'));
 					var passData = JSON.parse(this.getAttribute('data-info'));
 
 					var btnArray = ['否', '是'];
@@ -132,7 +132,7 @@
 									classId: mainData.gid //班级ID
 								};
 								postDataPro_delNoteByStudent(comData, wd, function(data) {
-									console.log('delNoteByStudent:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+									//console.log('delNoteByStudent:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 									if(data.RspCode == 0) {
 										mui.toast('删除记事成功,正在删除资料...');
 										//33.根据资料表ID删除资料
@@ -145,7 +145,7 @@
 							}
 
 						} else {
-							console.log('不删除资料');
+							//console.log('不删除资料');
 						}
 					});
 				});
@@ -153,7 +153,7 @@
 				//修改资料的姓名
 				window.addEventListener('changeName', function(e) {
 					var data = e.detail.data;
-					console.log('changeName ' + JSON.stringify(data));
+					//console.log('changeName ' + JSON.stringify(data));
 					var element = document.getElementById(data.stuid);
 					document.getElementById("name_" + data.stuid).innerText = data.stuname;
 					var info = JSON.parse(element.getAttribute('data-info'));
@@ -164,13 +164,13 @@
 				//增加一项新的资料
 				window.addEventListener('addData', function(e) {
 					var data = e.detail.data;
-					console.log('addData ' + JSON.stringify(data));
+					//console.log('addData ' + JSON.stringify(data));
 					if(data.mstype == 2) {
 						addDataItem(data, '老师');
 					} else if(data.mstype == 3) {
 						addDataItem(data, '学生');
 					} else {
-						console.log('资料类型异常');
+						//console.log('资料类型异常');
 					}
 				});
 			});
@@ -190,7 +190,7 @@
 			 * @param {Object} type
 			 */
 			function addDataItem(data, type) {
-				console.log('addDataItem ' + JSON.stringify(data));
+				//console.log('addDataItem ' + JSON.stringify(data));
 				var element = document.createElement('li');
 				element.id = data.stuid;
 				element.setAttribute('data-info', JSON.stringify(data));
@@ -233,10 +233,10 @@
 					document.getElementById("teaList").innerHTML = '';
 					document.getElementById("stuList").innerHTML = '';
 					mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
-					console.log('16_PostGUInf_通过群ID获取群对象资料.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					//console.log('16_PostGUInf_通过群ID获取群对象资料.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
 						mui.each(data.RspData, function(index, element) {
-							//console.log('getAllData ' + JSON.stringify(element));
+							////console.log('getAllData ' + JSON.stringify(element));
 							switch(element.mstype) {
 								case 1:
 									adminList.push(element);
@@ -248,7 +248,7 @@
 									stuList.push(element);
 									break;
 								default:
-									console.log('用户在群类型异常');
+									//console.log('用户在群类型异常');
 									break;
 							}
 						});
@@ -292,10 +292,10 @@
 					vtp: 'ids' //资料ID类型,Id:单个ID,ids:ID串
 				};
 				postDataPro_PostStuU(comData2, wd, function(data) {
-					console.log('30.通过资料ID获取关联的人员.postDataPro_PostStuU:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					//console.log('30.通过资料ID获取关联的人员.postDataPro_PostStuU:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
 						mui.each(data.RspData, function(index, element) {
-							//console.log('getGuanLian ' + JSON.stringify(element));
+							////console.log('getGuanLian ' + JSON.stringify(element));
 							if(element.umstype == 0) { //用户在群类型为家长
 								var same = false
 								mui.each(parList, function(index2, element2) {
@@ -349,7 +349,7 @@
 					vvl: strUtid //被备注用户ID,utid或utid串
 				};
 				postDataPro_PostUmk(comData, wd, function(data) {
-					console.log('35_postDataPro_PostUmk_个人获取对某人或一群人的备注.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					//console.log('35_postDataPro_PostUmk_个人获取对某人或一群人的备注.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
 						mui.each(data.RspData, function(index, element) {
 							mui.each(parList, function(index2, element2) {
@@ -388,7 +388,7 @@
 				};
 
 				postDataPro_PostStuD(comData2, wd, function(data) {
-					console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					//console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
 						mui.toast('删除资料成功');
 						document.getElementById(id).parentNode.removeChild(document.getElementById(id));
@@ -415,7 +415,7 @@
 					vtp: 'g' //查询类型,p(个人)g(id串)
 				};
 				postDataPro_PostUinf(comData, wd, function(data) {
-					console.log('21.通过用户ID获取用户资料postDataPro_PostUinf:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					//console.log('21.通过用户ID获取用户资料postDataPro_PostUinf:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
 						mui.each(data.RspData, function(index, element) {
 							mui.each(parList, function(index2, element2) {

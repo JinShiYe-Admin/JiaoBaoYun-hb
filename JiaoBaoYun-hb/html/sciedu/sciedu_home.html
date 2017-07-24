@@ -150,7 +150,7 @@
 				//退出订制城市界面返回的数据
 				window.addEventListener('customizeCity', function(e) {
 					var data = e.detail.data;
-					console.log('获取的修改后的城市信息:' + JSON.stringify(data));
+					//console.log('获取的修改后的城市信息:' + JSON.stringify(data));
 					cities = []; //存储当前定制的城市
 					show = true; //是否显示科教的内容
 					sliderId = ''; //记录显示的城市
@@ -176,7 +176,7 @@
 
 				//网络变化
 				document.addEventListener("netchange", function() {
-					console.log("netchange " + plus.webview.currentWebview().id);
+					//console.log("netchange " + plus.webview.currentWebview().id);
 					if(plus.networkinfo.getCurrentType() != plus.networkinfo.CONNECTION_NONE) {
 						//有网
 						if(cities.length == 0) {
@@ -206,7 +206,7 @@
 			 * 初始化主体
 			 */
 			function initBody(wd) {
-				//console.log('initBody ' + show);
+				////console.log('initBody ' + show);
 				if(show) {
 					//生成滑动控件
 					document.getElementById("content").innerHTML = '\
@@ -221,13 +221,13 @@
 					show = false;
 					//滑动底部列表
 					document.getElementById("slider").addEventListener('slide', function(event) {
-						console.log('slide ' + event.detail.slideNumber);
+						//console.log('slide ' + event.detail.slideNumber);
 						var city = cities[event.detail.slideNumber];
 						sliderId = city.acode;
 						changeIndexHeader();
 						var ipr = pageAndInfo[sliderId];
-						console.log('slide info ' + JSON.stringify(ipr.info));
-						console.log('slide page ' + JSON.stringify(ipr.page));
+						//console.log('slide info ' + JSON.stringify(ipr.info));
+						//console.log('slide page ' + JSON.stringify(ipr.page));
 						if(!ipr.page) {
 							requestCityNews(ipr.info.acode, 1);
 						}
@@ -241,9 +241,9 @@
 						var turl = this.getAttribute('data-turl');
 						var dataHistory = this.getAttribute('data-seHistory');
 						var tabid = this.getAttribute('data-tabid');
-						console.log(id + ' ' + turl + ' ' + dataHistory + ' ' + tabid);
+						//console.log(id + ' ' + turl + ' ' + dataHistory + ' ' + tabid);
 						if(dataHistory != 'true') { //不是历史记录
-							//console.log('dataHistory ' + dataHistory);
+							////console.log('dataHistory ' + dataHistory);
 							this.setAttribute('data-seHistory', true);
 							var personalUID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).uid;
 							var History = window.myStorage.getItem(window.storageKeyName.seHistory + '_' + personalUID);
@@ -255,7 +255,7 @@
 								History.splice(0, 1); //删掉第一个
 							}
 							window.myStorage.setItem(window.storageKeyName.seHistory + '_' + personalUID, History);
-							//console.log('tap seHistory ' + JSON.stringify(History));
+							////console.log('tap seHistory ' + JSON.stringify(History));
 						}
 						document.getElementById("title_" + id).style.color = 'darkgray';
 						events.openNewWindowWithData('sciedu_show_main.html', {
@@ -278,7 +278,7 @@
 								//设置监听上下滑动
 								mui('#sliderGroup .mui-scroll-wrapper').each(function(index, element) {
 									element.addEventListener('scrollend', function(e) {
-										//console.log('scrollstart');
+										////console.log('scrollstart');
 										var placeholder = '../../' + window.storageKeyName.DEFAULTSCIEDUIMAGELOAD;
 										var lazyLoad = mui("#bot_ul_" + sliderId).imageLazyload({
 											placeholder: placeholder.toString(), //缩略图
@@ -356,8 +356,8 @@
 						down: {
 							callback: function() {
 								var ipr = pageAndInfo[sliderId];
-								console.log('down ' + JSON.stringify(ipr.info));
-								console.log('down ' + JSON.stringify(ipr.page));
+								//console.log('down ' + JSON.stringify(ipr.info));
+								//console.log('down ' + JSON.stringify(ipr.page));
 								//获取数据
 								requestCityNews(ipr.info.acode, 1);
 								setTimeout(function() {
@@ -371,8 +371,8 @@
 							callback: function() {
 								var wd = events.showWaiting();
 								var ipr = pageAndInfo[sliderId];
-								console.log('up ' + JSON.stringify(ipr.info));
-								console.log('up ' + JSON.stringify(ipr.page));
+								//console.log('up ' + JSON.stringify(ipr.info));
+								//console.log('up ' + JSON.stringify(ipr.page));
 								if(ipr.page) {
 									requestCityNews(ipr.info.acode, ipr.page.pageIndex + 1, wd);
 								} else {
@@ -389,7 +389,7 @@
 					});
 					var code = pullRefreshEl.id.replace('bot_sc_', '');
 					pageAndInfo[code].refresh = refresh;
-					//console.log('pageAndInfo[' + code + '] ' + JSON.stringify(pageAndInfo[code]));
+					////console.log('pageAndInfo[' + code + '] ' + JSON.stringify(pageAndInfo[code]));
 				});
 				callBack();
 			}
@@ -413,7 +413,7 @@
 					placeholder: placeholder.toString(), //缩略图
 				}); //懒加载控件
 				for(var i = 0; i < data.length; i++) {
-					//console.log('addItems ' + JSON.stringify(data[i]));
+					////console.log('addItems ' + JSON.stringify(data[i]));
 					//拆分日期和时间
 					var tips = data[i].tips;
 					var tipsList = tips.split('|');
@@ -444,7 +444,7 @@
 					});
 				}
 				//lazyLoad.refresh(true);
-				//console.log(document.getElementById("bot_" + cityCode).innerHTML);
+				////console.log(document.getElementById("bot_" + cityCode).innerHTML);
 			}
 
 			/**
@@ -462,7 +462,7 @@
 				if(!parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid)) {
 					var localCity = window.myStorage.getItem(window.storageKeyName.SECITY);
 					if(localCity && localCity.length != 0) {
-						console.log('游客订制的科教城市 ' + JSON.stringify(localCity))
+						//console.log('游客订制的科教城市 ' + JSON.stringify(localCity))
 						eduArray = localCity;
 					}
 					eduArray.push({
@@ -473,12 +473,12 @@
 					callBack(cities, waitingDia);
 				} else {
 					postDataPro_PostUTcity(comData, waitingDia, function(data) {
-						console.log('44 获取个人的订制城市 PostUTcity ' + JSON.stringify(data));
+						//console.log('44 获取个人的订制城市 PostUTcity ' + JSON.stringify(data));
 						if(data.RspCode == 0) {
 							if(data.RspData == null) {
 								//从来就没有订制过城市的就强制添加一个账号所在地
 								var uarea = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).uarea;
-								console.log('个人账号地区的城市 ' + JSON.stringify(uarea));
+								//console.log('个人账号地区的城市 ' + JSON.stringify(uarea));
 								eduArray.push({
 									acode: uarea.acode,
 									aname: uarea.aname
@@ -496,7 +496,7 @@
 										acode: '', //节点代码,通用6位,前两位为省份编码,中间两位为城市编码,后两位为区县编码
 										aname: '', //节点名称
 									};
-									console.log('tempStr:' + tempStr);
+									//console.log('tempStr:' + tempStr);
 									//将分成的每个值，再通过‘_’拆分为model
 									var tempArea = tempStr.split('_');
 									model_area.acode = tempArea[0];
@@ -504,7 +504,7 @@
 									//将对应的这个数组的str和model对换，将数组中的值，替换为model数组
 									eduArray.splice(m, 1, model_area);
 								}
-								console.log('修改后的最终值为:' + JSON.stringify(eduArray));
+								//console.log('修改后的最终值为:' + JSON.stringify(eduArray));
 							}
 						}
 						eduArray.push({
@@ -534,7 +534,7 @@
 				};
 				//45.通过区域代码获取对应区域的分页新闻
 				postDataPro_PostTnews(comData, wd, function(data) {
-					console.log('45 通过区域代码获取对应区域的分页新闻 PostTnews ' + JSON.stringify(data));
+					//console.log('45 通过区域代码获取对应区域的分页新闻 PostTnews ' + JSON.stringify(data));
 
 					if(data.RspCode == 0) {
 						//记录页数
@@ -542,7 +542,7 @@
 							pageIndex: pageIndex, //当前页数
 							totalPage: data.RspData.pg.PageCount //总页数
 						};
-						console.log('ipr ' + JSON.stringify(pageAndInfo[cityCode].page));
+						//console.log('ipr ' + JSON.stringify(pageAndInfo[cityCode].page));
 						if(pageIndex == 1) { //获取的第一页的内容
 							//清空对应的界面
 							document.getElementById("bot_ul_" + cityCode).innerHTML = '';
@@ -560,7 +560,7 @@
 								tempModel.timgs = tempModel.timgs.split('|');
 							}
 						}
-						console.log('科教新闻最终值为 ' + JSON.stringify(tempArr));
+						//console.log('科教新闻最终值为 ' + JSON.stringify(tempArr));
 						//生成每一项
 						addItems(cityCode, tempArr);
 					} else if(data.RspCode == 9) {
@@ -569,7 +569,7 @@
 							pageIndex: pageIndex, //当前页数
 							totalPage: 0 //总页数
 						};
-						console.log('ipr ' + JSON.stringify(pageAndInfo[cityCode].page));
+						//console.log('ipr ' + JSON.stringify(pageAndInfo[cityCode].page));
 						if(pageIndex == 1) { //获取的第一页的内容
 							pageAndInfo[cityCode].refresh.refresh(true); //更新当前控件
 						}
@@ -612,7 +612,7 @@
 			function endPullUp(cityCode) {
 				var ipr = pageAndInfo[cityCode];
 				if(ipr.page && ipr.page.pageIndex >= ipr.page.totalPage) {
-					console.log('没有下一页');
+					//console.log('没有下一页');
 					ipr.refresh.endPullUpToRefresh(true);
 				} else {
 					ipr.refresh.endPullUpToRefresh();

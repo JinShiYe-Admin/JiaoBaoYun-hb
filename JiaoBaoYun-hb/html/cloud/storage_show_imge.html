@@ -115,12 +115,12 @@
 					urls: [fpath] //array 必填 需要获取下载token文件的路径
 				}
 				CloudFileUtil.getQNDownToken(window.storageKeyName.QNGETDOWNTOKENFILE, getDownToken, function(data) {
-					console.log('七牛下载token:' + JSON.stringify(data));
+					//console.log('七牛下载token:' + JSON.stringify(data));
 					allImages[fpath] = {};
 					allImages[fpath].id = fpath;
 					allImages[fpath].token = data.Data[0].Value;
 					allImages[fpath].deadline = allImages[fpath].token.match(/\\?e=(\S*)&token=/)[1];
-					//console.log('allImages ' + JSON.stringify(allImages[fpath]));
+					////console.log('allImages ' + JSON.stringify(allImages[fpath]));
 					showImge(fpath, data.Data[0].Value);
 				}, function(xhr, type, errorThrown) {
 					events.closeWaiting();
@@ -134,7 +134,7 @@
 			 * @param {Object} path 图片的token
 			 */
 			function showImge(id, path) {
-				console.log('showImge ' + path);
+				//console.log('showImge ' + path);
 				showId = id;
 				document.getElementById("content").innerHTML = '<img id="' + id + '" data-preview-src="' + path + '" data-preview-group="' + id + '"/>';
 				previewImage.open(document.getElementById(id), id);

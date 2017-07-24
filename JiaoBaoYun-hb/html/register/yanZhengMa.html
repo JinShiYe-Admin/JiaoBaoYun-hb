@@ -120,7 +120,7 @@
 			function returnLeft() {
 				mui.confirm(' ', '验证码短信可能略有延迟，确定返回并重新开始？', ['取消', '确认'], function(e) {
 					var index = e.index;
-					console.log('index:' + index);
+					//console.log('index:' + index);
 					switch(index) {
 						case 0: //取消
 							break;
@@ -192,7 +192,7 @@
 				var curPage = plus.webview.currentWebview();
 				phoneNum = curPage.data.tempValue;
 				comData = curPage.data.comData;
-				console.log('phoneNum:' + JSON.stringify(phoneNum));
+				//console.log('phoneNum:' + JSON.stringify(phoneNum));
 				codeBox.value = '';
 				phoneNumBox.value = phoneNum.phone;
 				regFlag = phoneNum.flag;
@@ -231,7 +231,7 @@
 						//50.更改用户绑定
 						postDataPro_PostBindMobile(comData1, enData1, wd, function(data) {
 							wd.close();
-							console.log('50.postDataPro_PostBindMobile:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+							//console.log('50.postDataPro_PostBindMobile:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 							if(data.RspCode == 0) {
 								//存储到手机本地
 								personalUTID.uid = document.getElementById("phoneNumber").value;
@@ -239,7 +239,7 @@
 								var tarPagePath = '../mine/setting.html';
 								var tarPageIds = tarPagePath.split('/');
 								var targetPage = plus.webview.getWebviewById(tarPageIds[tarPageIds.length - 1]);
-								console.log('targetPage是否存在:' + Boolean(targetPage))
+								//console.log('targetPage是否存在:' + Boolean(targetPage))
 								if(targetPage) {
 									targetPage.evalJS('document.getElementById("change_phoneNum").innerText =' + personalUTID.uid);
 									plus.webview.currentWebview().opener().close();
@@ -268,7 +268,7 @@
 						//发送网络请求，data为网络返回值
 						postDataEncry(storageKeyName.MAINURL + 'PostShakeHand', enData0, comData1, 0, wd, function(data) {
 							wd.close();
-							console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+							//console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 							if(data.RspCode == 0) {
 								//存储到手机本地
 								window.myStorage.setItem(window.storageKeyName.SHAKEHAND, data.RspData);
@@ -280,7 +280,7 @@
 									postDataEncry(storageKeyName.MAINURL + 'PostReg', enData, comData1, 0, wd, function(data) {
 										//成功，关闭等待框
 										wd.close();
-										console.log('11111success12:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+										//console.log('11111success12:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 										//判断返回值是否正确
 										if(data.RspCode == 0) {
 											//解析省市代码
@@ -321,12 +321,12 @@
 
 									});
 								} else { //验证码模式登录1
-									console.log('yanzhengma denglu');
+									//console.log('yanzhengma denglu');
 									//发送网络请求，data为网络返回值
 									postDataEncry(storageKeyName.MAINURL + 'PostCodeLogin', enData, comData1, 0, wd, function(data) {
 										//成功，关闭等待框
 										wd.close();
-										console.log('11222success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+										//console.log('11222success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 										//判断返回值是否正确
 										if(data.RspCode == 0) {
 											//解析省市代码

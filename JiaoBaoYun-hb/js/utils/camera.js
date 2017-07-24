@@ -13,7 +13,7 @@ var camera = (function(mod) {
 			var res = cmr.supportedImageResolutions[0];
 			var fmt = cmr.supportedImageFormats[0];
 			cmr.captureImage(function(path) {
-					console.log("Capture image success: " + path);
+					//console.log("Capture image success: " + path);
 					//数组添加path
 					//			mod.filePaths.push(mod.getAbsolutePath(path));
 					//处理图片
@@ -26,7 +26,7 @@ var camera = (function(mod) {
 					if(errBack){
 						errBack();
 					}
-					console.log("Capture image failed: " + err.message);
+					//console.log("Capture image failed: " + err.message);
 				}, {
 					format: fmt
 				})
@@ -36,7 +36,7 @@ var camera = (function(mod) {
 			var res = cmr.supportedVideoResolutions[0];
 			var fmt = cmr.supportedVideoFormats[0];
 			cmr.startVideoCapture(function(path) {
-					console.log('视频文件路径：' + path);
+					//console.log('视频文件路径：' + path);
 					manageVideo(mod.getAbsolutePath(path));
 				},
 				function(error) {
@@ -52,7 +52,7 @@ var camera = (function(mod) {
 	mod.getAbsolutePath = function(path) {
 		var abPath = plus.io.convertLocalFileSystemURL(path);
 		abPath = "file://" + abPath;
-		//	 console.log('file path='+abPath);
+		//	 //console.log('file path='+abPath);
 		return abPath;
 	}
 	return mod;
@@ -67,10 +67,10 @@ var gallery = (function(mod) {
 	 */
 	mod.getSinglePic = function(callback) {
 		plus.gallery.pick(function(path) {
-			console.log('选择的单张图片路径为：' + path);
+			//console.log('选择的单张图片路径为：' + path);
 			callback(path);
 		}, function(e) {
-			console.log("取消选择图片");
+			//console.log("取消选择图片");
 		}, {
 			filter: "image"
 		});
@@ -82,12 +82,12 @@ var gallery = (function(mod) {
 	 */
 	mod.getMultiplePic = function(maxNo,callback) {
 		// 从相册中选择图片
-		console.log("从相册中选择多张图片:"+maxNo);
+		//console.log("从相册中选择多张图片:"+maxNo);
 		plus.gallery.pick(function(e) {
-			console.log("选择图片的路径：" +JSON.stringify(e.files));
+			//console.log("选择图片的路径：" +JSON.stringify(e.files));
 			callback(e.files);
 		}, function(e) {
-			console.log("取消选择图片");
+			//console.log("取消选择图片");
 		}, {
 			system:false,
 			filter: "image",

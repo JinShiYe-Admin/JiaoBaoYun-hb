@@ -12,7 +12,7 @@ var isSetRefresh;
 mui.plusReady(function() {
 	selfId = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
 	expertInfo = plus.webview.currentWebview().data.expertInfo;
-	console.log("获取的专家信息：" + JSON.stringify(expertInfo));
+	//console.log("获取的专家信息：" + JSON.stringify(expertInfo));
 	type = plus.webview.currentWebview().data.type;
 	if(type) { //类型 0 他关注的人 1 关注他的人
 		if(expertInfo.UserId == selfId) {
@@ -27,7 +27,7 @@ mui.plusReady(function() {
 			if(customerPersons) {
 				customerPersons.reverse();
 			}
-			console.log("获取的游客关注的人：" + JSON.stringify(customerPersons));
+			//console.log("获取的游客关注的人：" + JSON.stringify(customerPersons));
 			isSelf = true;
 			document.getElementById("title").innerText = "我关注的人";
 		} else {
@@ -35,7 +35,7 @@ mui.plusReady(function() {
 		}
 
 	}
-	console.log('获取的专家信息：' + JSON.stringify(expertInfo));
+	//console.log('获取的专家信息：' + JSON.stringify(expertInfo));
 	flagRef = 0;
 	pageIndex = 1; //当前页面
 	requireData(type); //根据类型获取数据
@@ -55,7 +55,7 @@ var setRefresh = function() {
 		down: {
 			callback: function() {
 				var self = this;
-				console.log("下拉刷新");
+				//console.log("下拉刷新");
 				pageIndex = 1;
 				flagRef = 0;
 				requireData(type); //根据类型获取数据
@@ -68,7 +68,7 @@ var setRefresh = function() {
 		up: {
 			callback: function() {
 				var self = this;
-				console.log("上拉加载更多");
+				//console.log("上拉加载更多");
 				flagRef = 1;
 				pageIndex++;
 				if(events.getUtid()) {
@@ -169,7 +169,7 @@ var requireData = function() {
 			pageIndex: pageIndex,
 			pageSize: 10
 		}, wd, function(data) {
-			console.log('获取的关注此专家的人：' + JSON.stringify(data));
+			//console.log('获取的关注此专家的人：' + JSON.stringify(data));
 			wd.close();
 			if(data.RspCode == 0 && data.RspData.TotalPage > 0) {
 				setBackGround(0);
@@ -197,7 +197,7 @@ var requireData = function() {
 		if(events.getUtid() || !isSelf) {
 			getFocusUsersByUser(expertInfo.UserId);
 		} else {
-			console.log("本地关注的人：" + JSON.stringify(customerPersons));
+			//console.log("本地关注的人：" + JSON.stringify(customerPersons));
 			if(customerPersons && customerPersons.length > 0) {
 				setBackGround(0);
 				requireExperts();
@@ -225,7 +225,7 @@ function getFocusUsersByUser(focusId) {
 	//27.获取某个用户的关注人列表
 	postDataQZPro_getFocusUsersByUser(comData, wd, function(data) {
 		events.closeWaiting();
-		console.log('27.获取某个用户的关注人列表:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+		//console.log('27.获取某个用户的关注人列表:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 		if(data.RspCode == 0 && data.RspData.TotalPage > 0) {
 			setBackGround(0);
 			//总页数
@@ -264,7 +264,7 @@ var requirePersonInfo = function(personIds, persons) {
 		},
 		wd,
 		function(data) {
-			console.log('通过用户id获取的用户资料数据：' + JSON.stringify(data));
+			//console.log('通过用户id获取的用户资料数据：' + JSON.stringify(data));
 			events.closeWaiting();
 			if(data.RspCode == 0) {
 				var personsData = data.RspData;
@@ -291,7 +291,7 @@ var requirePersonInfo = function(personIds, persons) {
  * @param {Object} persons 
  */
 var setData = function(persons) {
-	console.log("要放置的个人数据：" + JSON.stringify(persons));
+	//console.log("要放置的个人数据：" + JSON.stringify(persons));
 	var list = document.getElementById('list-container');
 	for(var i in persons) {
 		if(!events.getUtid()) { //游客登录
@@ -309,7 +309,7 @@ var setData = function(persons) {
 		list.appendChild(li);
 		li.querySelector('.mui-btn').personInfo = persons[i];
 	}
-	console.log("加载完数据后的attentionPersons:" + JSON.stringify(customerPersons));
+	//console.log("加载完数据后的attentionPersons:" + JSON.stringify(customerPersons));
 }
 /**
  * 放置关注人数据
@@ -363,7 +363,7 @@ var getButtonContent = function(focusType) {
  * @param {Object} type 关注状态,0 不关注,1 关注
  */
 var setFocus = function(item, type) {
-	console.log(JSON.stringify(item.personInfo));
+	//console.log(JSON.stringify(item.personInfo));
 	if(events.getUtid()) {
 		var wd = events.showWaiting();
 		postDataQZPro_setUserFocus({
@@ -371,7 +371,7 @@ var setFocus = function(item, type) {
 			focusUserId: item.personInfo.UserId, //关注用户ID
 			status: type //关注状态,0 不关注,1 关注
 		}, wd, function(data) {
-			console.log('获取的关注结果：' + JSON.stringify(data));
+			//console.log('获取的关注结果：' + JSON.stringify(data));
 			wd.close();
 			if(data.RspCode == 0 && data.RspData.Result == 1) {
 				if(type) {
@@ -466,7 +466,7 @@ var setListener = function() {
 		var parent = this.parentNode.parentNode.parentNode.parentNode;
 		//得到父节点的值
 		var info = JSON.parse(parent.getAttribute('data-info'));
-		console.log('dianji 关注他的人：' + JSON.stringify(info));
+		//console.log('dianji 关注他的人：' + JSON.stringify(info));
 		mui.openWindow({
 			url: 'expert-detail.html',
 			id: 'expert-detail.html',

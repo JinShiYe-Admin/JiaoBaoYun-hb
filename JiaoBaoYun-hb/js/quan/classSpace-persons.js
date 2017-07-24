@@ -10,7 +10,7 @@ mui(".mui-scroll-wrapper").scroll();
 var classSpaceInfo;
 mui.plusReady(function() {
 	window.addEventListener('personsList', function(e) {
-		console.log('传过来的数值:' + JSON.stringify(e.detail.data));
+		//console.log('传过来的数值:' + JSON.stringify(e.detail.data));
 		classSpaceInfo = e.detail.data;
 		var title = document.querySelector('.mui-title');
 		document.querySelector("#person-list").innerHTML = "";
@@ -90,7 +90,7 @@ var getZanPersons = function(classSpaceId) {
 		classSpaceId: classSpaceId
 	}, wd, function(data) {
 		wd.close();
-		console.log('获取的点赞列表数据：' + JSON.stringify(data));
+		//console.log('获取的点赞列表数据：' + JSON.stringify(data));
 		if(data.RspCode == 0) {
 			if(data.RspData.Users.length > 0) {
 				getPersonsInfo(data.RspData.Users);
@@ -111,7 +111,7 @@ var getZonePersons = function(userSpaceId) {
 		userSpaceId: userSpaceId
 	}, wd, function(data) {
 		wd.close();
-		console.log('获取的点赞列表数据：' + JSON.stringify(data));
+		//console.log('获取的点赞列表数据：' + JSON.stringify(data));
 		if(data.RspCode == 0) {
 			if(data.RspData.Users.length > 0) {
 				getPersonsInfo(data.RspData.Users);
@@ -138,7 +138,7 @@ var getPersonsInfo = function(users) {
 		vtp: 'g' //查询类型,p(个人)g(id串)
 	}, wd, function(data) {
 		wd.close();
-		console.log("获取的个人信息：" + JSON.stringify(data))
+		//console.log("获取的个人信息：" + JSON.stringify(data))
 		if(data.RspCode == 0) {
 			for(var i in users) {
 				for(var j in data.RspData) {
@@ -172,7 +172,7 @@ var getGroupUsers = function(userIds, infos) {
 	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 	postDataPro_PostGusers(comData, wd, function(data) {
 		wd.close();
-		console.log('获取的用户信息：' + JSON.stringify(data));
+		//console.log('获取的用户信息：' + JSON.stringify(data));
 		if(data.RspCode == 0) {
 			var groupInfos = data.RspData;
 			var realGroupInfos = groupInfos.filter(function(groupInfo, index, groupInfos) {
@@ -209,7 +209,7 @@ var getRemark = function(userIds, groupPersons, infos) {
 		vvl: userIds.toString()
 	}, wd, function(data) {
 		wd.close();
-		console.log("获取的备注信息：" + JSON.stringify(data));
+		//console.log("获取的备注信息：" + JSON.stringify(data));
 		if(data.RspCode == 0) {
 			for(var i in data.RspData) {
 				for(var j in groupPersons) {
@@ -226,11 +226,11 @@ var getRemark = function(userIds, groupPersons, infos) {
 //重整数据
 var rechargeInfo = function(groupPersons, infos) {
 	//	var infos = [];
-	console.log("userIds:" + JSON.stringify(infos) + ';人员信息：' + JSON.stringify(groupPersons))
+	//console.log("userIds:" + JSON.stringify(infos) + ';人员信息：' + JSON.stringify(groupPersons))
 	for(var m in infos) {
 		for(var n in groupPersons) {
 			if(infos[m].utid == groupPersons[n].utid) {
-				//				console.log("userId:" + userIds[m] + ";groupPersonsId:" + groupPersons[n].utid)
+				//				//console.log("userId:" + userIds[m] + ";groupPersonsId:" + groupPersons[n].utid)
 				//				infos.push(groupPersons[n]);
 				jQuery.extend(infos[m], groupPersons[n]);
 				break;
@@ -239,7 +239,7 @@ var rechargeInfo = function(groupPersons, infos) {
 	}
 
 	//	var gride = document.getElementById('gride');
-	console.log("最终要放置的数据：" + JSON.stringify(infos))
+	//console.log("最终要放置的数据：" + JSON.stringify(infos))
 	setData(infos);
 }
 var setData = function(infos) {
@@ -291,7 +291,7 @@ var getChakanPersons = function(classSpaceId) {
 		classSpaceId: classSpaceId
 	}, wd, function(data) {
 		wd.close();
-		console.log('获取的已查看人员数据：' + JSON.stringify(data));
+		//console.log('获取的已查看人员数据：' + JSON.stringify(data));
 		if(data.RspCode == 0) {
 			if(data.RspData.Users.length > 0) {
 				getPersonsInfo(data.RspData.Users);

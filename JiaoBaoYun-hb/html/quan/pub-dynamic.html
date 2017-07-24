@@ -87,7 +87,7 @@
 			//			window.addEventListener('postGroupInfo', function(e) {
 			//
 			//				groupInfo = e.detail.data;
-			//				console.log('发布动态页面获取的值：' + JSON.stringify(groupInfo));
+			//				//console.log('发布动态页面获取的值：' + JSON.stringify(groupInfo));
 			//			});
 			var title = document.getElementById('title');
 			title.innerText = events.shortForString(userInfo.unick, 12)
@@ -97,14 +97,14 @@
 				document.getElementById("inputDiv").style.marginTop = '0px';
 				document.getElementById("input-content").placeholder = '这一刻的想法'
 				document.getElementById("contentDiv").className = 'mui-content';
-				console.log('jxq')
+				//console.log('jxq')
 
 				//				document.getElementById("show").checked = false;
 			} else {
 				var askTitle = document.getElementById("askTitle");
-				console.log(askTitle.outerHTML)
+				//console.log(askTitle.outerHTML)
 				document.getElementById("contentDiv").className = 'mui-content';
-				console.log('zx')
+				//console.log('zx')
 				//				document.getElementById("show").checked = true;
 			}
 
@@ -126,7 +126,7 @@
 				document.activeElement.blur();
 				var item = this;
 				//				jQuery(item).css('pointerEvents', 'none');
-				console.log("item不能点击了！" + item.id);
+				//console.log("item不能点击了！" + item.id);
 				if(CloudFileUtil.files.length > 0) {
 					switch(CloudFileUtil.files[0].type) {
 						case 1:
@@ -168,15 +168,15 @@
 			function recordVideo() {
 				video.recordVideo({}, function(path) {
 					events.showWaiting();
-					console.log("保存在本地的路径：" + path);
+					//console.log("保存在本地的路径：" + path);
 					uploadFile(path);
 				}, function(errData) {
-					console.log(errData.code);
+					//console.log(errData.code);
 					if(errData.code != 0) {
 						mui.toast(errData.message);
 					}
 					jQuery("#take_camero").css('pointerEvents', 'all');
-					console.log("item能点击了！")
+					//console.log("item能点击了！")
 				})
 			}
 			/**
@@ -185,18 +185,18 @@
 			 */
 			function uploadFile(path) {
 				load.getManageOptions(2, path, function(mData, thumb) {
-					console.log("视频获取的各项参数：" + JSON.stringify(data));
+					//console.log("视频获取的各项参数：" + JSON.stringify(data));
 					mData.saveSpace = storageKeyName.PERSONALSPACE;
 					mData.spaceId = 6;
 					var data = CloudFileUtil.getSingleImgUploadOptions(path, mData.spaceId, mData.spaceType, mData.saveSpace, mData.options);
 					CloudFileUtil.getQNUpTokenWithManage(storageKeyName.QNGETUPLOADTOKEN, data.options, function(datas) {
-						console.log("获取的数据：" + JSON.stringify(datas));
+						//console.log("获取的数据：" + JSON.stringify(datas));
 						if(datas.Status == 1) {
 							var tokenInfo = datas.Data;
 							//上传文件
 							CloudFileUtil.uploadFile(tokenInfo, path, function(uploadData, status) {
-								console.log("获取的上传数据：" + JSON.stringify(uploadData));
-								console.log("获取的token信息：" + JSON.stringify(tokenInfo));
+								//console.log("获取的上传数据：" + JSON.stringify(uploadData));
+								//console.log("获取的token信息：" + JSON.stringify(tokenInfo));
 								var img = { //图片信息
 									url: tokenInfo.Domain + tokenInfo.Key,
 									thumb: tokenInfo.OtherKey[data.thumbKey],
@@ -205,7 +205,7 @@
 									type: 2
 								}
 								img.duration = events.getVideoDuration(img.url);
-								//		console.log("获取的图片信息：" + JSON.stringify(img));
+								//		//console.log("获取的图片信息：" + JSON.stringify(img));
 								//关闭等待框
 								plus.nativeUI.closeWaiting();
 								//放置图片
@@ -215,7 +215,7 @@
 						}
 
 					}, function(xhr, type, errorThrown) {
-						console.log("错误类型：" + type + errorThrown);
+						//console.log("错误类型：" + type + errorThrown);
 						plus.nativeUI.closeWaiting(); //关闭等待框
 						jQuery("#take_camero").css('pointerEvents', 'all');
 					});
@@ -231,19 +231,19 @@
 					var picCount = 0; //上传图片计数
 					gallery.getMultiplePic(9 - CloudFileUtil.files.length, function(paths) { //回调函数
 						plus.nativeUI.showWaiting(storageKeyName.UPLOADING); //等待框
-						console.log("保存的路径：" + JSON.stringify(paths));
+						//console.log("保存的路径：" + JSON.stringify(paths));
 						var saveSpace = storageKeyName.PERSONALSPACE; //保存路径
 						compress.compressPics(paths, function(compressedPaths) {
-							console.log('获取的图片路径：' + JSON.stringify(compressedPaths));
+							//console.log('获取的图片路径：' + JSON.stringify(compressedPaths));
 							var data = CloudFileUtil.getMultipleUploadDataOptions(compressedPaths, 6, 200, 0, saveSpace); //获取获取token的各参数
 							CloudFileUtil.getQNUpTokenWithManage(storageKeyName.QNGETUPLOADTOKEN, data.options, function(datas) {
-									console.log("传回来的值：" + JSON.stringify(datas)) //回调数据
+									//console.log("传回来的值：" + JSON.stringify(datas)) //回调数据
 									if(datas.Status == 1) { //成功
 										var tokenInfos = datas.Data; //参数信息
 										var imgs = [];
 										//上传图片
 										CloudFileUtil.uploadFiles(compressedPaths, tokenInfos, function(uploadData, status, index) {
-											console.log(JSON.stringify(uploadData));
+											//console.log(JSON.stringify(uploadData));
 											imgs[index] = {
 												url: tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key,
 												thumb: (tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key).replace(saveSpace, saveSpace + "thumb/"),
@@ -264,7 +264,7 @@
 								},
 								//错误的回调
 								function(xhr, type, errorThrown) {
-									console.log("错误类型：" + type + errorThrown);
+									//console.log("错误类型：" + type + errorThrown);
 									plus.nativeUI.closeWaiting();
 								});
 						});
@@ -288,7 +288,7 @@
 				self.disabled = true;
 				var tempInfo = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
 				var textView = document.getElementById('input-content');
-				console.log('textView：' + textView)
+				//console.log('textView：' + textView)
 				var askTitle = document.getElementById("askTitle");
 				var pubScopes;
 				var msgTitle;
@@ -347,21 +347,21 @@
 					pubArea: pubArea
 				}
 				for(var z = 0; z < utids.length; z++) {
-					console.log(tempInfo.utid);
-					console.log(utids[z]);
+					//console.log(tempInfo.utid);
+					//console.log(utids[z]);
 					if(utids[z] == tempInfo.utid) {
 						utids.splice(z, 1);
 						break;
 					}
 				}
 				postData.userIds = arrayToStr(utids);
-				console.log(JSON.stringify(postData))
+				//console.log(JSON.stringify(postData))
 				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 				postDataPro_addUserSpace(postData, wd, function(data) {
 					wd.close();
 					if(data.RspCode == 0) {
 						mui.toast('发布成功！');
-						console.log('推送个人空间成功' + JSON.stringify(data));
+						//console.log('推送个人空间成功' + JSON.stringify(data));
 						if(askTitle) {
 							askTitle.value = '';
 						}
@@ -398,7 +398,7 @@
 			//	获取用户群
 			postDataPro_PostGList(comData, wd, function(data) {
 				wd.close();
-				console.log('获取用户群_PostGList:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				//console.log('获取用户群_PostGList:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 				if(data.RspCode == 0) {
 					datasource = data.RspData; //底部列表数据
 					var gids = [];
@@ -409,7 +409,7 @@
 					gids = arrayToStr(gids);
 					getAllClassMember(gids)
 				} else if(data.RspCode == 9) { //没有群
-					console.log('显示空白页')
+					//console.log('显示空白页')
 
 				} else {
 					mui.toast(data.RspTxt);
@@ -433,7 +433,7 @@
 			// 通过群ID获取群的正常用户
 			postDataPro_PostGusers(comData, wd, function(data) {
 				wd.close();
-				console.log('通过群ID获取群的正常用户_PostGusers:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				//console.log('通过群ID获取群的正常用户_PostGusers:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 				if(data.RspCode == 0) {
 					var userList = data.RspData;
 					for(var i = 0; i < data.RspData.length; i++) {
@@ -462,14 +462,14 @@
 					var saveSpace = storageKeyName.PERSONALSPACE; //保存空间
 					var data = CloudFileUtil.getSingleUploadDataOptions(picPath, 6, 200, 0, saveSpace);
 					CloudFileUtil.getQNUpTokenWithManage(storageKeyName.QNGETUPLOADTOKEN, data.options, function(datas) {
-						console.log("获取的数据：" + JSON.stringify(datas));
+						//console.log("获取的数据：" + JSON.stringify(datas));
 						if(datas.Status == 1) {
 							var tokenInfo = datas.Data;
 							//压缩照片
 							compress.compressPIC(picPath, function(event) {
 								//上传文件
 								CloudFileUtil.uploadFile(tokenInfo, event.target, function(uploadData, status) {
-									console.log(JSON.stringify(uploadData));
+									//console.log(JSON.stringify(uploadData));
 									var img = { //图片信息
 										url: tokenInfo.Domain + tokenInfo.Key,
 										thumb: tokenInfo.OtherKey[data.thumbKey],
@@ -484,7 +484,7 @@
 
 						}
 					}, function(xhr, type, errorThrown) {
-						console.log("错误类型：" + type + errorThrown);
+						//console.log("错误类型：" + type + errorThrown);
 						plus.nativeUI.closeWaiting(); //关闭等待框
 					});
 				})
@@ -527,8 +527,8 @@
 					encImgs.push(theFile.thumb);
 				}
 
-				console.log(JSON.stringify(encAddrs));
-				console.log(JSON.stringify(encImgs));
+				//console.log(JSON.stringify(encAddrs));
+				//console.log(JSON.stringify(encImgs));
 				TAs.encAddr = encAddrs.join('|');
 				TAs.encImg = encImgs.join('|');
 			} else { //不存在附件

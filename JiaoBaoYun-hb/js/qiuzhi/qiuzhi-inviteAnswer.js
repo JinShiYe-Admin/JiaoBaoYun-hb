@@ -9,7 +9,7 @@ mui.init();
 mui.plusReady(function() {
 	var main = plus.webview.currentWebview();
 	ExpertsInfo = main.data; //接收专家详情页传来的专家用户信息
-	console.log('邀请回答传值:' + JSON.stringify(ExpertsInfo));
+	//console.log('邀请回答传值:' + JSON.stringify(ExpertsInfo));
 	//		mui('.mui-table-view').on('tap', 'img', function() {
 	//			events.openNewWindowWithData('../qiuzhi/expert-detail.html', ExpertsInfo);
 	//		});
@@ -18,7 +18,7 @@ mui.plusReady(function() {
 		//获取存储值
 		var index = this.id.replace('li', '');
 		var modelTemp = answerArray[index];
-		console.log('dianji 标题' + JSON.stringify(modelTemp));
+		//console.log('dianji 标题' + JSON.stringify(modelTemp));
 		//判断回答或则问题是否还存在,flag=1为提问，=2为回答，id为对应id
 		events.askDetailOrAnswerDetail(1, modelTemp.AskId, function(data) {
 			if(data) {
@@ -48,7 +48,7 @@ mui.plusReady(function() {
 				//清除节点
 				document.getElementById('list-container').innerHTML = "";
 				var self = this;
-				console.log("下拉刷新");
+				//console.log("下拉刷新");
 				pageIndex = 1;
 				flagRef = 0;
 				//36.获取某个用户的被邀请问题列表
@@ -62,7 +62,7 @@ mui.plusReady(function() {
 		up: {
 			callback: function() {
 				var self = this;
-				console.log("上拉加载更多");
+				//console.log("上拉加载更多");
 				flagRef = 1;
 				if(pageIndex <= totalPageCount) {
 					//36.获取某个用户的被邀请问题列表
@@ -98,7 +98,7 @@ function getInviteAsksByUser(userId) {
 	//36.获取某个用户的被邀请问题列表
 	postDataQZPro_getInviteAsksByUser(comData, wd, function(data) {
 		wd.close();
-		console.log('36.获取某个用户的被邀请问题列表:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+		//console.log('36.获取某个用户的被邀请问题列表:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 		if(data.RspCode == 0) {
 			//总页数
 			totalPageCount = data.RspData.TotalPage;
@@ -121,13 +121,13 @@ function getInviteAsksByUser(userId) {
 				vvl: tempArray.join(), //用户id，查询的值,p传个人ID,g传ID串
 				vtp: 'g' //查询类型,p(个人)g(id串)
 			}
-			console.log('tempData:' + JSON.stringify(tempData));
+			//console.log('tempData:' + JSON.stringify(tempData));
 			// 等待的对话框
 			var wd2 = events.showWaiting();
 			//21.通过用户ID获取用户资料
 			postDataPro_PostUinf(tempData, wd2, function(data1) {
 				wd2.close();
-				console.log('21.获取个人资料success:RspCode:' + data1.RspCode + ',RspData:' + JSON.stringify(data1.RspData) + ',RspTxt:' + data1.RspTxt);
+				//console.log('21.获取个人资料success:RspCode:' + data1.RspCode + ',RspData:' + JSON.stringify(data1.RspData) + ',RspTxt:' + data1.RspTxt);
 				if(data1.RspCode == 0) {
 					//循环当前的个人信息返回值数组
 					for(var i in data1.RspData) {
@@ -167,7 +167,7 @@ function getInviteAsksByUser(userId) {
 					mui(".mui-pull-loading")[0].innerHTML = "";
 				}
 				setAnswerRecord(tempRspData);
-				console.log('专家循环遍历后的值：' + JSON.stringify(tempRspData));
+				//console.log('专家循环遍历后的值：' + JSON.stringify(tempRspData));
 			});
 
 		} else {

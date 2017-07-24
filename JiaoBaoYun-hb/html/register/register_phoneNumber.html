@@ -134,7 +134,7 @@
 					//发送网络请求，data为网络返回值
 					postDataEncry(storageKeyName.MAINURL + 'PostShakeHand', enData0, comData, 0, wd, function(data) {
 						wd.close();
-						console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+						//console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 						if(data.RspCode == 0) {
 							//存储到手机本地
 							window.myStorage.setItem(window.storageKeyName.SHAKEHAND, data.RspData);
@@ -147,7 +147,7 @@
 							postDataEncry(storageKeyName.MAINURL + 'PostCode', enData, comData, 0, wd, function(data) {
 								//成功，关闭等待框
 								wd.close();
-								//console.log('11111success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+								////console.log('11111success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 								if(data.RspCode != 0000) {
 									mui.toast(data.RspTxt);
 									return;

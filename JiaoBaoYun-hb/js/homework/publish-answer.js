@@ -19,7 +19,7 @@ mui.plusReady(function() {
 		document.getElementById('post-imgs').innerText = '上传';
 		imgs = [];
 		document.getElementById('checkResult').style.display = 'none';
-		console.log('上传答案||作业界面获取的上级页面传过来的信息：' + JSON.stringify(e.detail));
+		//console.log('上传答案||作业界面获取的上级页面传过来的信息：' + JSON.stringify(e.detail));
 		var data = e.detail.data;
 		role = data.role;
 		var studentClasses = data.studentClasses;
@@ -30,7 +30,7 @@ mui.plusReady(function() {
 	 */
 	window.addEventListener('modifyAnswer', function(e) {
 		personalUTID = parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid);
-		console.log('上个页面传回来的值：' + JSON.stringify(e.detail.data));
+		//console.log('上个页面传回来的值：' + JSON.stringify(e.detail.data));
 		answerResultId = e.detail.data.AnswerResultId;
 		imgs = [];
 		stuSubmitAnswer = false;
@@ -54,13 +54,13 @@ mui.plusReady(function() {
 			var data=CloudFileUtil.getSingleUploadDataOptions(picPath,3,200,0,saveSpace);
 			var img;
 			CloudFileUtil.getQNUpTokenWithManage(storageKeyName.QNGETUPLOADTOKEN, data.options, function(datas) {
-				console.log("获取的数据：" + JSON.stringify(datas));
+				//console.log("获取的数据：" + JSON.stringify(datas));
 				if(datas.Status == 1) {
 					var tokenInfo = datas.Data;
 					//压缩照片
 					compress.compressPIC(picPath, function(event) {
 						CloudFileUtil.uploadFile(tokenInfo, event.target, function(uploadData, status) {
-							console.log(JSON.stringify(uploadData));
+							//console.log(JSON.stringify(uploadData));
 							img={
 								url:tokenInfo.Domain+tokenInfo.Key,
 								thumb:tokenInfo.OtherKey[data.thumbKey],
@@ -73,7 +73,7 @@ mui.plusReady(function() {
 
 				}
 			}, function(xhr, type, errorThrown) {
-				console.log("错误类型：" + type + errorThrown);
+				//console.log("错误类型：" + type + errorThrown);
 				plus.nativeUI.closeWaiting();
 			});
 		})
@@ -90,7 +90,7 @@ mui.plusReady(function() {
 			AnswerResultId: answerResultId,
 			workType: 0
 		})
-		console.log('传递的answerResultId：' + answerResultId);
+		//console.log('传递的answerResultId：' + answerResultId);
 		events.openNewWindowWithData('homework-commented.html',teaInfo)
 //		events.fireToPageWithData('homework-commented.html', 'workDetail', teaInfo);
 	})
@@ -107,7 +107,7 @@ var addPostEventListener = function() {
 	
 	//上传按钮点击事件
 	events.addTap('post-imgs', function() {
-		console.log('修改答案字符串'+JSON.stringify(imgs));
+		//console.log('修改答案字符串'+JSON.stringify(imgs));
 		if(imgs.length > 0) {
 			//选择的科目id
 			var selectSubjectID = jQuery('#publish-subjects').val();
@@ -126,7 +126,7 @@ var addPostEventListener = function() {
 				var teachers_container = document.getElementById('receive-teachers'); //selectid
 				teaInfo = teachers_container.options[teachers_container.selectedIndex].teaInfo;
 				//判断是要学生提交答案0，还是修改答案1
-				console.log('teaInfo:' + JSON.stringify(teaInfo))
+				//console.log('teaInfo:' + JSON.stringify(teaInfo))
 				if(stuSubmitAnswer) {
 					//6.	提交答案结果
 					//所需参数
@@ -174,7 +174,7 @@ var getStudentClasses = function(callback) {
 		vvl: personalUTID //查询的各项，对应人的utid，可以是查询的任何人
 	}, wd, function(data) {
 		wd.close();
-		console.log('获取的群信息：' + JSON.stringify(data));
+		//console.log('获取的群信息：' + JSON.stringify(data));
 		var studentClasses = [];
 		if(data.RspCode == 0) {
 			for(var i in data.RspData) {
@@ -241,7 +241,7 @@ var setPic = function(img) {
 	div.className = 'img-div';
 	div.innerHTML = '<img src="' + img.url + '" data-preview-src="' + img.url + '" data-preview-group="1"/>' +
 		'<a class="mui-icon iconfont icon-guanbi"></a>';
-	console.log("放置的图片信息:"+JSON.stringify(img));
+	//console.log("放置的图片信息:"+JSON.stringify(img));
 	pictures.appendChild(div);
 }
 /**
@@ -280,7 +280,7 @@ function requestSubjectList() {
 	//17.获取所有科目列表
 	postDataPro_GetSubjectList(comData, wd, function(data) {
 		wd.close();
-		console.log('上传作业||答案界面获取的科目列表：' + JSON.stringify(data));
+		//console.log('上传作业||答案界面获取的科目列表：' + JSON.stringify(data));
 		if(data.RspCode == 0) {
 			//给科目数组赋值
 			subjectArray = data.RspData.List;
@@ -319,7 +319,7 @@ function requestClassTeacherInfo(stuClasses) {
 		};
 		//13.通过群ID获取群对象资料【model_groupStus】
 		postDataPro_PostGusers(comData, wd, function(data) {
-			console.log('上传答案||作业界面获取的资料数据：' + JSON.stringify(data))
+			//console.log('上传答案||作业界面获取的资料数据：' + JSON.stringify(data))
 			wd.close();
 			if(data.RspCode == 0) {
 				count++;
@@ -369,7 +369,7 @@ var arraySingleItem = function(array) {
 	return r;
 }
 var setTeachers = function(teaInfos) {
-	console.log('上传答案||作业界面要放置的老师资料：' + JSON.stringify(teaInfos))
+	//console.log('上传答案||作业界面要放置的老师资料：' + JSON.stringify(teaInfos))
 	var teaContainer = document.getElementById('receive-teachers');
 	events.clearChild(teaContainer);
 	teaInfos.forEach(function(teaInfo, i) {
@@ -398,7 +398,7 @@ function uploadFileTeacher(picPath, comData, callback) {
 	//11.上传文件；逻辑：如果是图片类型，同时生成缩略图
 	postDataPro_UploadAnswerFile(comData, wd, function(data) {
 		wd.close();
-		console.log('发布答案||作业界面老师上传答案返回值' + JSON.stringify(data));
+		//console.log('发布答案||作业界面老师上传答案返回值' + JSON.stringify(data));
 		if(data.RspCode == 0) {
 			callback(picPath, data.RspData);
 		} else {
@@ -423,7 +423,7 @@ function uploadFileStudent(picPath, comData, callback) {
 	//5.	上传文件；逻辑：如果是图片类型，同时生成缩略图
 	postDataPro_UploadAnswerFileStu(comData, wd, function(data) {
 		wd.close();
-		console.log('发布答案||作业界面学生上传作业返回值' + JSON.stringify(data));
+		//console.log('发布答案||作业界面学生上传作业返回值' + JSON.stringify(data));
 		if(data.RspCode == 0) {
 			callback(picPath, data.RspData);
 		} else {
@@ -439,7 +439,7 @@ function requestPublishAnswer(comData) {
 	//14.发布答案,只能上传图片；
 	postDataPro_PublishAnswer(comData, wd, function(data) {
 		wd.close();
-		console.log('发布答案||作业界面老师发布答案返回值：' + JSON.stringify(data));
+		//console.log('发布答案||作业界面老师发布答案返回值：' + JSON.stringify(data));
 		if(data.RspCode == 0) {
 			mui.toast('上传成功');
 			events.clearChild(document.getElementById('pictures'));
@@ -457,7 +457,7 @@ function requestSubmitAnswer(comData) {
 	//6.	提交答案结果
 	postDataPro_SubmitAnswerResult(comData, wd, function(data) {
 		wd.close();
-		console.log('提交答案||作业界面学生提交作业返回值：' + JSON.stringify(data))
+		//console.log('提交答案||作业界面学生提交作业返回值：' + JSON.stringify(data))
 		if(data.RspCode == 0) {
 			mui.toast('上传成功');
 			stuSubmitAnswer = false;
@@ -477,7 +477,7 @@ function requestModifyAnswer(comData) {
 	//8.修改答案结果；
 	postDataPro_ModifyAnswerResult(comData, wd, function(data) {
 		wd.close();
-		console.log('8.postDataPro_ModifyAnswerResult:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+		//console.log('8.postDataPro_ModifyAnswerResult:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 		if(data.RspCode == 0) {
 			if(data.RspData.r) {
 				mui.toast("修改答案成功！");

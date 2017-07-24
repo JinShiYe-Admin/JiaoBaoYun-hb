@@ -147,10 +147,10 @@
 				//4.获取课程信息
 				postDataMCPro_getCourseInfoById(comData, wd, function(data) {
 					wd.close();
-					console.log('4.获取课程信息:' + JSON.stringify(data));
+					//console.log('4.获取课程信息:' + JSON.stringify(data));
 					if(data.RspCode == 0) {
 						courseInfo.courseInfo = data.RspData;
-						console.log("获取的课程信息：" + JSON.stringify(courseInfo.courseInfo));
+						//console.log("获取的课程信息：" + JSON.stringify(courseInfo.courseInfo));
 						document.querySelector(".course-name").innerText=courseInfo.courseInfo.CourseName;
 					} else {
 						mui.toast(data.RspTxt);
@@ -179,7 +179,7 @@
 				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 				postDataMCPro_getCourseFocusByUser(comData, wd, function(data) {
 					wd.close();
-					console.log('5.获取是否已对某个课程关注:' + JSON.stringify(data));
+					//console.log('5.获取是否已对某个课程关注:' + JSON.stringify(data));
 					if(data.RspCode == 0) {
 						courseInfo.isFocused = data.RspData.Result;
 					}

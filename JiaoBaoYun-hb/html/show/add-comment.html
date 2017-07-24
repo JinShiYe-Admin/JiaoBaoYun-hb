@@ -40,7 +40,7 @@
 		var personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
 		mui.plusReady(function() {
 			var data = plus.webview.currentWebview().data;
-			console.log('传到评论界面的数据：' + JSON.stringify(data));
+			//console.log('传到评论界面的数据：' + JSON.stringify(data));
 			var tempIndex = data.tempIndex;
 			if(tempIndex == '-1') {
 				events.addTap('btn-reply', function() {
@@ -61,7 +61,7 @@
 						var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 						postDataPro_addUserSpaceCommentReply(data.comData, wd, function(data) {
 							wd.close();
-							console.log('添加空间评论回复_addUserSpaceCommentReply' + JSON.stringify(data));
+							//console.log('添加空间评论回复_addUserSpaceCommentReply' + JSON.stringify(data));
 							if(data.RspCode == 0) {
 								mui.fire(plus.webview.currentWebview().opener(), 'refreshZonep', {});
 								mui.back();
@@ -85,7 +85,7 @@
 					mui.toast('不可以回复自己');
 					return;
 				}
-				console.log(JSON.stringify(tempModel));
+				//console.log(JSON.stringify(tempModel));
 				var upperId = tempModel.TabId;
 				var replyUserId;
 				var ReplyIdName;
@@ -99,7 +99,7 @@
 				document.getElementById("msg-content").placeholder = '@' + ReplyIdName + '（字数不超过200字)'
 
 			}
-			console.log(tempIndex + '-----', zonepArray.length)
+			//console.log(tempIndex + '-----', zonepArray.length)
 			events.addTap('btn-reply', function() {
 				var self = this;
 				self.disabled = true;
@@ -127,7 +127,7 @@
 							self.disabled = false;
 							return;
 						}
-						console.log(JSON.stringify(tempModel));
+						//console.log(JSON.stringify(tempModel));
 						var upperId = tempModel.TabId;
 						var replyUserId;
 						var ReplyIdName;
@@ -151,11 +151,11 @@
 							userSpaceId: zonepArray[id].TabId, //用户空间ID
 							commentContent: inputComment.value //回复内容
 						};
-						console.log('comData=====' + JSON.stringify(comData))
+						//console.log('comData=====' + JSON.stringify(comData))
 						var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 						postDataPro_addUserSpaceCommentReply(comData, wd, function(data) {
 							wd.close();
-							console.log('添加空间评论回复_addUserSpaceCommentReply' + JSON.stringify(data));
+							//console.log('添加空间评论回复_addUserSpaceCommentReply' + JSON.stringify(data));
 							if(data.RspCode == 0) {
 								var Reply = {
 									TabId: data.RspData.Result,
@@ -206,7 +206,7 @@
 						var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 						postDataPro_addUserSpaceComment(comData, wd, function(data) {
 							wd.close();
-							console.log('添加空间评论_addUserSpaceComment' + JSON.stringify(data));
+							//console.log('添加空间评论_addUserSpaceComment' + JSON.stringify(data));
 							if(data.RspCode == 0) {
 								var Comment = {
 									TabId: data.RspData.Result,

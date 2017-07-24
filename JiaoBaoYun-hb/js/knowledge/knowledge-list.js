@@ -4,7 +4,7 @@ var list=(function(mod){
 		headImgs.forEach(function(img,index,imgs){
 			data.push(createItem(img,names[index],questions[index],answers[index]))
 		})
-//		console.log(JSON.stringify(data))
+//		//console.log(JSON.stringify(data))
 		return data;
 	}
 	
@@ -18,7 +18,7 @@ var list=(function(mod){
 	}
 	mod.createView=function(data){
 		var list=document.getElementById('knowledge_list')
-//		console.log(JSON.stringify(data))
+//		//console.log(JSON.stringify(data))
 		data.forEach(function(item,i,data){
 			var li=document.createElement('li');
 			li.className='mui-table-view-cell';
@@ -37,7 +37,7 @@ var list=(function(mod){
 		   			+createImgInner(item.question.imgs)+''
 		   			+createAnswersInner(item.answerDetail)
 	   			+'</div>';
-//		   	console.log("inner:"+inner)
+//		   	//console.log("inner:"+inner)
 		   	return inner;
 	}
 	var createImgInner=function(imgs){
@@ -52,7 +52,7 @@ var list=(function(mod){
 			})
 		
 		}
-//		console.log('imginner'+imgInner);
+//		//console.log('imginner'+imgInner);
 		return imgInner;
 	}
 	var createAnswersInner=function(answerDetail){
@@ -74,7 +74,7 @@ var list=(function(mod){
 		   				+'</div>';
 			}   				
 		})
-//		console.log("answer"+answer)
+//		//console.log("answer"+answer)
 		return answer
 	}
 	return mod;

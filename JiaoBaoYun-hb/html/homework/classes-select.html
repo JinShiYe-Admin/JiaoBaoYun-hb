@@ -38,7 +38,7 @@
 			mui.init()
 			mui.plusReady(function(){
 				window.addEventListener('postClasses',function(e){
-					console.log('班级选择界面获取的班级数据：'+JSON.stringify(e.detail.data));
+					//console.log('班级选择界面获取的班级数据：'+JSON.stringify(e.detail.data));
 					classes=e.detail.data;
 					setClasses(classes)
 				})

@@ -203,7 +203,7 @@
 		document.getElementById('list-container').innerHTML = "";
 		//25.获取某个用户的提问列表
 
-		console.log('专家回答页传值：' + JSON.stringify(ExpertsInfo));
+		//console.log('专家回答页传值：' + JSON.stringify(ExpertsInfo));
 		mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
 			var index = this.id.replace('li', '');
 			var modelTemp = datasource[index];
@@ -232,7 +232,7 @@
 					//清除节点
 					document.getElementById('list-container').innerHTML = "";
 					var self = this;
-					console.log("下拉刷新");
+					//console.log("下拉刷新");
 					pageIndex = 1;
 					flagRef = 0;
 					getAsksByUser(ExpertsInfo.UserId);
@@ -245,7 +245,7 @@
 			up: {
 				callback: function() {
 					var self = this;
-					console.log("上拉加载更多");
+					//console.log("上拉加载更多");
 					flagRef = 1;
 					if(pageIndex <= totalPageCount) {
 						getAsksByUser(ExpertsInfo.UserId);
@@ -278,7 +278,7 @@
 		//25.获取某个用户的提问列表
 		postDataQZPro_getAsksByUser(comData, wd, function(data) {
 			wd.close();
-			console.log('25.获取某个用户的提问列表:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+			//console.log('25.获取某个用户的提问列表:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 			if(data.RspCode == 0) {
 				//总页数
 				totalPageCount = data.RspData.TotalPage;

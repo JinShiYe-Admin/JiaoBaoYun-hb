@@ -57,12 +57,12 @@ var getHomeworkRecord = function() {
 		pageIndex: pageIndex
 	}, wd, function(data) {
 		wd.close();
-		console.log('作业记录界面获取的作业记录数据:' + JSON.stringify(data));
+		//console.log('作业记录界面获取的作业记录数据:' + JSON.stringify(data));
 		if(data.RspCode == '0000') {
 			totalPageCount = data.RspData.PageCount;
 			setHomeworkRecord(data.RspData.Dates);
 		} else {
-			console.log('没啦');
+			//console.log('没啦');
 		}
 	})
 }

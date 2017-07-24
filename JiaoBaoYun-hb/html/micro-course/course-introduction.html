@@ -54,9 +54,46 @@
 		<script src="../../js/publicProtocol.js"></script>
 		<script src="../../js/publicQiuzhiProtocol.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/publicMicroClass.js" type="text/javascript" charset="utf-8"></script>
-	</body>
-
-	<script type="text/javascript">
+		<script type="text/javascript">
+			function errorImg(img) {
+				img.src = "../../image/utils/default_personalimage.png";
+			}
+			var nodes = {
+				title: document.getElementById("title"),
+				teaHeadImg: document.getElementById("teaHeadImg"),
+				teaName: document.getElementById("teaName"),
+				teaInfo: document.getElementById("teaInfo"),
+				courseInfo: document.getElementById("courseInfo"),
+				history: document.getElementById("history"),
+				focusBtn: document.getElementById("focusBtn"),
+				focusFlag: 0,
+			}
+			var courseModel; //传值过来的课程model
+			mui.plusReady(function() {
+				var curPage = plus.webview.currentWebview();
+				courseModel = curPage.data;
+				getCourseInfo(courseModel.TabId);
+				getCourseFocusByUser();
+			})
+			var getCourseInfo = function(courseId) {
+				//4.获取课程信息
+				//所需参数
+				var comData = {
+					courseId: courseId //课程ID
+				};
+				// 等待的对话框
+				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+				//4.获取课程信息
+				postDataMCPro_getCourseInfoById(comData, wd, function(data) {
+					wd.close();
+					//console.log('4.获取课程信息:' + JSON.stringify(data));
+					if(data.RspCode == 0) {
+						var courseInfo = data.RspData;
+						createHtmlContent(courseInfo);
+					} else {
+						mui.toast(data.RspTxt);
+					}
+				});
 		var nodes = {
 			title: document.getElementById("title"),
 			teaHeadImg: document.getElementById("teaHeadImg"),
@@ -92,15 +129,21 @@
 				} else {
 					mui.toast(data.RspTxt);
 				}
-			});
 
-		}
-		var getCourseFocusByUser = function() {
-			if(!events.getUtid()) {
-				var focusecourse = window.myStorage.getItem(window.storageKeyName.FOCUSECOURSES);
-				if(focusecourse) {
-					for(var i in focusecourse) {
-						if(focusecourse[i] == courseModel.TabId) {
+				var utid = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+				//5.获取是否已对某个课程关注
+				//所需参数
+				var comData = {
+					userId: utid, //用户ID,登录用户
+					courseId: courseModel.TabId //课程ID
+				};
+				//返回值：非0为已关注
+				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+				postDataMCPro_getCourseFocusByUser(comData, wd, function(data) {
+					wd.close();
+					//console.log('5.获取是否已对某个课程关注:' + JSON.stringify(data));
+					if(data.RspCode == 0) {
+						if(data.RspData.Result == 1) {
 							nodes.focusBtn.style.backgroundColor = '#e4e4e4'
 							nodes.focusBtn.innerHTML = '已关注'
 							nodes.focusFlag = 1;
@@ -173,33 +216,23 @@
 					nodes.focusBtn.style.backgroundColor = '#1db8F1'
 					nodes.focusBtn.innerHTML = '关注'
 				}
-				events.fireToPageNone('course-home1.html', 'focus')
-				return;
-			}
-			var utid = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
-			if(focusFlag == 0) {
-				focusFlag = 1
-			} else {
-				focusFlag = 0
-			}
-			//6.设置对某个课程关注
-			//所需参数
-			var comData = {
-				userId: utid, //用户ID,登录用户
-				courseId: courseModel.TabId, //课程ID
-				status: focusFlag //关注状态，0 不关注，1 关注
-			};
-			//返回值：1为正确
-			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-			postDataMCPro_setCourseFocus(comData, wd, function(data) {
-				wd.close();
-				console.log('6.设置对某个课程关注:' + JSON.stringify(data));
-				if(data.RspCode == 0) {
-					nodes.focusFlag = focusFlag;
-					if(nodes.focusFlag == 1) {
-						nodes.focusBtn.style.backgroundColor = '#e4e4e4'
-						nodes.focusBtn.innerHTML = '已关注'
-
+				//6.设置对某个课程关注
+				//所需参数
+				var comData = {
+					userId: utid, //用户ID,登录用户
+					courseId: courseModel.TabId, //课程ID
+					status: focusFlag //关注状态，0 不关注，1 关注
+				};
+				//返回值：1为正确
+				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+				postDataMCPro_setCourseFocus(comData, wd, function(data) {
+					wd.close();
+					//console.log('6.设置对某个课程关注:' + JSON.stringify(data));
+					if(data.RspCode == 0) {
+						nodes.focusFlag = focusFlag;
+						if(nodes.focusFlag == 1) {
+							nodes.focusBtn.style.backgroundColor = '#e4e4e4';
+							nodes.focusBtn.innerHTML = '已关注';
 					} else {
 						nodes.focusBtn.style.backgroundColor = '#1db8F1'
 						nodes.focusBtn.innerHTML = '关注'

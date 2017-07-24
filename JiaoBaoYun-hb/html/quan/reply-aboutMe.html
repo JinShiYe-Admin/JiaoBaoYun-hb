@@ -67,7 +67,7 @@
 		var postReply = function(value,repliedCell,callback) {
 			var pId=myStorage.getItem(storageKeyName.PERSONALINFO).utid;
 			var msgContent = document.getElementById('msg-content');
-			console.log('类型:' + repliedCell.MsgType)
+			//console.log('类型:' + repliedCell.MsgType)
 			switch(repliedCell.MsgType) {
 				//1为其他用户评论
 				case 1:
@@ -83,10 +83,10 @@
 						userSpaceId: repliedCell.SpaceId, //用户空间ID
 						commentContent: value //回复内容
 					};
-					console.log('开始post回复数据' + JSON.stringify(comData));
+					//console.log('开始post回复数据' + JSON.stringify(comData));
 					var wd = events.showWaiting();
 					postDataPro_addUserSpaceCommentReply(comData, wd, function(data) {
-						console.log('发布回复后返回的数据：' + JSON.stringify(data))
+						//console.log('发布回复后返回的数据：' + JSON.stringify(data))
 						wd.close();
 						if(data.RspCode == 0) {
 							callback();

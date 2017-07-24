@@ -10,7 +10,7 @@ mui.plusReady(function() {
 	//获取性别控件
 	var usex = document.getElementById('sex');
 	document.getElementById('sex-container').addEventListener('tap', function() {
-		//		console.log( "User pressed: "+e.index );
+		//		//console.log( "User pressed: "+e.index );
 		plus.nativeUI.actionSheet({
 			title: "请选择性别",
 			cancel: "取消",
@@ -20,7 +20,7 @@ mui.plusReady(function() {
 				title: "女"
 			}]
 		}, function(e) {
-			console.log("User pressed: " + e.index);
+			//console.log("User pressed: " + e.index);
 			if(e.index > 0) {
 				postSex(e.index, function(data) { //回调函数
 					pInfo.usex = e.index;
@@ -65,7 +65,7 @@ mui.plusReady(function() {
 		//name: data.studentName //资料名称
 	}, function(successCB) {
 		var wd = events.showWaiting('更新头像...');
-		console.log('上传并修改个人头像，成功的回调' + JSON.stringify(successCB));
+		//console.log('上传并修改个人头像，成功的回调' + JSON.stringify(successCB));
 		mui.toast('个人头像更新成功');
 		setTimeout(function() {
 			pInfo.uimg = successCB;
@@ -80,7 +80,7 @@ mui.plusReady(function() {
 			events.infoChanged();
 		}, 2000);
 	}, function(errorCB) {
-		console.log('上传并修改个人头像，失败的回调' + JSON.stringify(errorCB));
+		//console.log('上传并修改个人头像，失败的回调' + JSON.stringify(errorCB));
 		mui.toast(data.RspTxt);
 	});
 
@@ -93,7 +93,7 @@ var postSex = function(index, callback) {
 		vvl: index + ''
 	}, wd, function(data) {
 		wd.close()
-		console.log(JSON.stringify(data));
+		//console.log(JSON.stringify(data));
 		if(data.RspCode == 0) {
 			callback(data);
 		} else {

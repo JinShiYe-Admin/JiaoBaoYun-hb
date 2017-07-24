@@ -121,7 +121,7 @@ var slideNavigation = (function(mod) {
 		window.addEventListener("menu:open", mod.openMenu);
 		//重写mui.menu方法，Android版本menu按键按下可自动打开、关闭侧滑菜单；
 		mui.menu = function() {
-			console.log('menu事件:' + mod.showMenu)
+			//console.log('menu事件:' + mod.showMenu)
 			if(mod.showMenu) {
 				mod.closeMenu();
 			} else {
@@ -152,7 +152,7 @@ var slideNavigation = (function(mod) {
 				}
 			});
 		}, interval);
-		//			console.log('加载了吗？')
+		//			//console.log('加载了吗？')
 	}
 	/**
 	 * 加载主界面左上角图标
@@ -162,23 +162,23 @@ var slideNavigation = (function(mod) {
 	//			var a = document.createElement('img');
 	//			a.id = 'headimge';
 	//			a.className = 'mui-pull-left  img-icon display-none';
-	//			console.log('第一次加載的圖片地址：' + myStorage.getItem(storageKeyName.PERSONALINFO).uimg);
+	//			//console.log('第一次加載的圖片地址：' + myStorage.getItem(storageKeyName.PERSONALINFO).uimg);
 	//			var path = myStorage.getItem(storageKeyName.PERSONALINFO).uimg;
 	//			a.src = path ? path : storageKeyName.DEFAULTPERSONALHEADIMAGE;
-	////			console.log('首页左上角头像:' + a.src);
+	////			//console.log('首页左上角头像:' + a.src);
 	//			//在第一个位置中插入元素
 	//			title_left.appendChild(a);
 	////			a.style.display="none";
 	//		}
 	//安卓系统返回按钮
 	var getBack = function() {
-		//		console.log("show:" + mod.showMenu)
+		//		//console.log("show:" + mod.showMenu)
 		//首页返回键处理
 		//1、若侧滑菜单显示，则关闭侧滑菜单
 		//2、否则，执行mui框架默认的关闭首页功能
 		var _back = mui.back;
 		mui.back = function() {
-			console.log('back:' + mod.showMenu)
+			//console.log('back:' + mod.showMenu)
 			if(mod.showMenu) {
 				mod.closeMenu();
 			} else {

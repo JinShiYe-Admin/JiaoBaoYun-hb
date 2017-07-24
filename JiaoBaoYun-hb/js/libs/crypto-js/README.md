@@ -21,14 +21,14 @@ Modular include:
 var AES = require("crypto-js/aes");
 var SHA256 = require("crypto-js/sha256");
 ...
-console.log(SHA256("Message"));
+//console.log(SHA256("Message"));
 ```
 
 Including all libraries, for access to extra methods:
 
 ```javascript
 var CryptoJS = require("crypto-js");
-console.log(CryptoJS.HmacSHA1("Message", "Key"));
+//console.log(CryptoJS.HmacSHA1("Message", "Key"));
 ```
 
 ## Client (browser)
@@ -58,7 +58,7 @@ require.config({
 });
 
 require(["crypto-js/aes", "crypto-js/sha256"], function (AES, SHA256) {
-    console.log(SHA256("Message"));
+    //console.log(SHA256("Message"));
 });
 ```
 
@@ -73,7 +73,7 @@ require.config({
 });
 
 require(["crypto-js"], function (CryptoJS) {
-    console.log(CryptoJS.HmacSHA1("Message", "Key"));
+    //console.log(CryptoJS.HmacSHA1("Message", "Key"));
 });
 ```
 
@@ -105,7 +105,7 @@ var ciphertext = CryptoJS.AES.encrypt('my message', 'secret key 123');
 var bytes  = CryptoJS.AES.decrypt(ciphertext.toString(), 'secret key 123');
 var plaintext = bytes.toString(CryptoJS.enc.Utf8);
 
-console.log(plaintext);
+//console.log(plaintext);
 ```
 
 #### Object encryption
@@ -122,7 +122,7 @@ var ciphertext = CryptoJS.AES.encrypt(JSON.stringify(data), 'secret key 123');
 var bytes  = CryptoJS.AES.decrypt(ciphertext.toString(), 'secret key 123');
 var decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
 
-console.log(decryptedData);
+//console.log(decryptedData);
 ```
 
 ### List of modules

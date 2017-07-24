@@ -47,13 +47,13 @@ function startRecord() {
 		return;
 	}
 	r.record( {filename:"_doc/audio/"}, function ( p ) {
-		console.log( "录音完成："+p );
+		//console.log( "录音完成："+p );
 		plus.io.resolveLocalFileSystemURL( p, function ( entry ) {
 			entry.file(function(file){
-				console.log(JSON.stringify(file))
+				//console.log(JSON.stringify(file))
 			})
 			entry.getMetadata(function(metadata){
-				console.log(JSON.stringify(metadata))
+				//console.log(JSON.stringify(metadata))
 			})
 			createItem( entry );
 		}, function ( e ) {
@@ -103,9 +103,9 @@ function cleanHistory() {
 	console( "清空录音历史记录：" );
 	gentry.removeRecursively( function () {
 		// Success
-		console.log( "操作成功！" );
+		//console.log( "操作成功！" );
 	}, function ( e ) {
-		console.log( "操作失败："+e.message );
+		//console.log( "操作失败："+e.message );
 	});
 }
 // 获取录音历史列表
@@ -121,7 +121,7 @@ function updateHistory() {
   			}
   		}
   	}, function ( e ) {
-  		console.log( "读取录音列表失败："+e.message );
+  		//console.log( "读取录音列表失败："+e.message );
   	} );
 }
 // 获取录音文件信息
@@ -131,7 +131,7 @@ function updateInformation( li ,range) {
 	}
 	var entry = li.entry;
 	entry.getMetadata( function ( metadata ) {
-//		console.log('获取录音文件信息')
+//		//console.log('获取录音文件信息')
 		li.querySelector( ".ainf" ).innerText = dateToStr( metadata.modificationTime );
 	}, function ( e ) {
 //		outLine( "获取文件\""+entry.name+"\"信息失败："+e.message );
@@ -205,17 +205,17 @@ mui.plusReady(function(){
 	// 重写关闭
 	var _back=mui.back;
 	function resetback(){
-//		console.log("ep display:"+ep.style.display+";er display:"+er.style.display);
+//		//console.log("ep display:"+ep.style.display+";er display:"+er.style.display);
 		// 停止播放
 		if(ep.style.display == "block"){
-			console.log('playing');
+			//console.log('playing');
 			stopPlay();
 		//停止录音
 		}else if(er.style.display == "block"){
-			console.log('recording')
+			//console.log('recording')
 			stopRecord();
 		}else{
-//			console.log('back')
+//			//console.log('back')
 			//获取本地录音文件
 			getLocalRecord();
 			//系统返回方法

@@ -37,12 +37,12 @@
 		 * 获取选择的地区监听
 		 */
 		window.addEventListener("choseArea", function(e) {
-			console.log("获取选中的城市：" + JSON.stringify(e.detail));
+			//console.log("获取选中的城市：" + JSON.stringify(e.detail));
 			if(e.detail.acode != curAreaInfo.acode) {
 				//选择城市后界面滚到前面
 
 				//				$.each(document.querySelectorAll('.mui-scroll-wrapper'),function(index,item){
-				//					console.log('当前选项：'+this.className)
+				//					//console.log('当前选项：'+this.className)
 				//					this.querySelector(".mui-table-view").scrollTo(0,0);
 				//				})
 				curAreaInfo = e.detail;
@@ -58,7 +58,7 @@
 			var checkedNews = e.detail;
 			if(checkedNews.Ischeck != newsDetail.Ischeck) {
 				newsDetail = checkedNews;
-				console.log("当前页面的类名称：" + clickedCell.className)
+				//console.log("当前页面的类名称：" + clickedCell.className)
 
 				setChangedButton(newsDetail.Ischeck, clickedCell);
 				changeList(newsDetail.Ischeck, clickedCell);
@@ -82,7 +82,7 @@
 		 * 子页面加载完成事件
 		 */
 		window.addEventListener("subReady", function(e) {
-			console.log("监听子页面预加载完成");
+			//console.log("监听子页面预加载完成");
 			if(e.detail) {
 				areaReady = true;
 			} else {
@@ -151,7 +151,7 @@
 		var wd = events.showWaiting();
 		postDataPro_PostTnewsC(options, wd, function(data) {
 			wd.close();
-			console.log("获取的城市新闻：" + JSON.stringify(data));
+			//console.log("获取的城市新闻：" + JSON.stringify(data));
 			if(data.RspCode == 0) {
 				if(pageIndex == 1) { //第一页
 					newsData[checkType] = data.RspData.dt;
@@ -170,11 +170,11 @@
 	 * @param {Object} data
 	 */
 	var setNewsData = function(data) {
-		console.log("要放置的城市数据：" + JSON.stringify(data) + ";当前类型：" + checkType);
+		//console.log("要放置的城市数据：" + JSON.stringify(data) + ";当前类型：" + checkType);
 		var list_container;
 		switch(checkType) {
 			case "-1":
-				console.log('-1')
+				//console.log('-1')
 				list_container = document.getElementById("all-list")
 				break;
 			case "0":
@@ -191,12 +191,12 @@
 		}
 		for(var m in data) {
 			if(data[m]) {
-				console.log("整个数据：" + JSON.stringify(data))
-				console.log("要放置的数据：" + m + ":" + JSON.stringify(data[m]))
+				//console.log("整个数据：" + JSON.stringify(data))
+				//console.log("要放置的数据：" + m + ":" + JSON.stringify(data[m]))
 				var li = document.createElement("li");
 				li.className = "mui-table-view-cell";
 				li.innerHTML = createInner(data[m]);
-				console.log(li.innerHTML);
+				//console.log(li.innerHTML);
 				list_container.appendChild(li);
 				li.querySelector(".news-container").newsInfo = data[m];
 			}
@@ -298,7 +298,7 @@
 			}
 		})
 		document.getElementById('slider').addEventListener('slide', function(e) {
-			console.log(e.detail.slideNumber)
+			//console.log(e.detail.slideNumber)
 			checkType = (parseInt(e.detail.slideNumber) - 1).toString();
 			if(!newsData[checkType]) {
 				pageIndex = 1;
@@ -321,7 +321,7 @@
 					title: "屏蔽"
 				}]
 			}, function(e) {
-				console.log(e.index);
+				//console.log(e.index);
 				switch(parseInt(e.index)) {
 					case 1: //通过
 						checkNews(1, clickedButton);
@@ -354,7 +354,7 @@
 			vvl1: type
 		}, wd, function(data) {
 			wd.close();
-			console.log("当前返回状态：" + JSON.stringify(data));
+			//console.log("当前返回状态：" + JSON.stringify(data));
 			if(data.RspCode == 0) {
 				newsDetail.Ischeck = type;
 				setChangedButton(type, checkItem);
@@ -435,7 +435,7 @@
 		}
 	}
 	var openPrePage = function() {
-		//		console.log("当前页面的id:" + plus.webview.currentWebview().subIsReady)
+		//		//console.log("当前页面的id:" + plus.webview.currentWebview().subIsReady)
 		if(areaReady) {
 			events.closeWaiting();
 			events.fireToPageWithData("area-choose.html", "chooseArea", curAreaInfo);

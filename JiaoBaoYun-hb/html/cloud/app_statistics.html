@@ -189,7 +189,7 @@
 					}
 				}
 				//				for(var i = 0; i < monthsArray.length; i++) {
-				//					console.log('monthsArray[' + i + '] ' + JSON.stringify(monthsArray[i]));
+				//					//console.log('monthsArray[' + i + '] ' + JSON.stringify(monthsArray[i]));
 				//				}
 			}
 
@@ -286,7 +286,7 @@
 			 */
 			function initData() {
 				main = plus.webview.currentWebview(); //获取当前窗体对象
-				console.log(main.id + ' ' + JSON.stringify(main.data));
+				//console.log(main.id + ' ' + JSON.stringify(main.data));
 				studentIds = arrayToStr(main.data.dataIdArray);
 			}
 
@@ -296,11 +296,11 @@
 			function initListener() {
 				//滑动底部列表或者点击顶部月份
 				document.getElementById("slider").addEventListener('slide', function() {
-					console.log('slide ' + event.detail.slideNumber);
+					//console.log('slide ' + event.detail.slideNumber);
 					var month = monthsArray[event.detail.slideNumber];
 					var element = document.getElementById(month.id);
 					var value = element.getAttribute('data-get');
-					console.log(JSON.stringify(month) + ' ' + value);
+					//console.log(JSON.stringify(month) + ' ' + value);
 					if(!value) {
 						requestData(month.id);
 					}
@@ -308,14 +308,14 @@
 
 				//点击不是0的统计数据
 				mui('#sliderGroup').on('tap', '.mui-table-view-cell', function() {
-					//console.log('not-zero-num ' + this.id);
+					////console.log('not-zero-num ' + this.id);
 					var self = this;
 					self.disabled = true;
 					var ids = this.id.split('_');
 					var checkType = ids[0];
 					var month = ids[1];
 					var stuid = ids[2];
-					console.log('mui-table-view-cell ' + checkType + ' ' + month + ' ' + stuid);
+					//console.log('mui-table-view-cell ' + checkType + ' ' + month + ' ' + stuid);
 					//跳到统计详情
 					events.openNewWindowWithData('keeprecord_history_a.html', {
 						type: 'statistics', //显示的类型
@@ -367,7 +367,7 @@
 				};
 				var wd = events.showWaiting();
 				postDataPro_getMonthStatisticForMonth(comData, wd, function(data) {
-					console.log('93 getMonthStatisticForMonth ' + JSON.stringify(data));
+					//console.log('93 getMonthStatisticForMonth ' + JSON.stringify(data));
 					document.getElementById(qryMonth).setAttribute('data-get', true); //已经发送了请求这个月的统计
 					if(data.RspCode == 0) {
 						if(data.RspData.Data.length != 0) {
@@ -386,9 +386,9 @@
 			 * 显示数据
 			 */
 			function showData(month, data) {
-				//console.log('showData ' + month);
+				////console.log('showData ' + month);
 				for(var i = 0; i < data.length; i++) {
-					//console.log(JSON.stringify(data[i]));
+					////console.log(JSON.stringify(data[i]));
 					var id = month + '_' + data[i].StudentId;
 					var html_name = 'mui-ellipsis';
 					//有点到记事数据

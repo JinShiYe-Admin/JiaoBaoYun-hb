@@ -139,7 +139,7 @@
 			var utid = window.myStorage.getItem(storageKeyName.PERSONALINFO).utid;
 
 			mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
-				console.log(this.id);
+				//console.log(this.id);
 				if(utid == 0 && utid == ExpertsInfo.UserId) {
 					//判断是否是游客身份登录
 					if(events.judgeLoginMode(this)) {
@@ -175,7 +175,7 @@
 
 			})
 			events.addTap('FocusAsk', function() {
-				console.log('关注的问题');
+				//console.log('关注的问题');
 				events.openNewWindowWithData('focus-question.html', ExpertsInfo);
 //				events.fireToPage('focus-question.html', 'focus-question', function() {
 //					return ExpertsInfo;
@@ -187,7 +187,7 @@
 					expertInfo: ExpertsInfo,
 					type: 0
 				})
-				console.log('他关注的人');
+				//console.log('他关注的人');
 			})
 			events.addTap('IsFocusedMan', function() {
 				if(utid == 0 && utid == ExpertsInfo.UserId) {
@@ -200,7 +200,7 @@
 					expertInfo: ExpertsInfo,
 					type: 1
 				});
-				console.log('专家信息：' + JSON.stringify(ExpertsInfo))
+				//console.log('专家信息：' + JSON.stringify(ExpertsInfo))
 			})
 			events.addTap('focusBtn', function() {
 				if(!events.getUtid()) {
@@ -220,7 +220,7 @@
 					}
 					return;
 				}
-				console.log('点击关注');
+				//console.log('点击关注');
 				if(this.innerText == '关注') {
 					setUserFocus(ExpertsInfo.UserId, 1);
 				} else {
@@ -256,18 +256,18 @@
 				nodes.titleFlag4.innerHTML = '我的评论';
 				var focusequestion = window.myStorage.getItem(window.storageKeyName.FOCUSEQUESTION);
 				var focuseperson = window.myStorage.getItem(window.storageKeyName.FOCUSEPERSEN);
-				console.log('focusequestion=' + focusequestion + ',' + JSON.stringify(focusequestion));
+				//console.log('focusequestion=' + focusequestion + ',' + JSON.stringify(focusequestion));
 				nodes.FocusAskNum.innerHTML = focusequestion ? focusequestion.length : 0;
 				nodes.FocusManNum.innerHTML = focuseperson ? focuseperson.length : 0;
 				return;
 			}
-			console.log('expert-detail.html:' + JSON.stringify(ExpertsInfo));
+			//console.log('expert-detail.html:' + JSON.stringify(ExpertsInfo));
 			//3.获取某个用户的信息
 			getExpertsInfo(ExpertsInfo.UserId);
 			nodes.expertImg.src = updateHeadImg(ExpertsInfo.uimg, 2);
 			window.addEventListener('expert-detail', function(data) {
 				ExpertsInfo = data.detail.data; //接收页面传入参数值，传过来的专家model
-				console.log('expert-detail.html:' + JSON.stringify(ExpertsInfo.UserId));
+				//console.log('expert-detail.html:' + JSON.stringify(ExpertsInfo.UserId));
 				//3.获取某个用户的信息
 				getExpertsInfo(ExpertsInfo.UserId);
 				nodes.expertImg.src = updateHeadImg(ExpertsInfo.uimg, 2);
@@ -305,11 +305,11 @@
 			//3.获取某个用户的信息
 			postDataQZPro_getUserInfo(comData, wd, function(data) {
 				wd.close();
-				console.log('3.获取某个用户的信息:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				//console.log('3.获取某个用户的信息:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 				if(data.RspCode == 0) {
 					//合并，刷新界面
 					ExpertsInfo = $.extend(ExpertsInfo, data.RspData);
-					console.log('合并后ExpertsInfo:' + JSON.stringify(ExpertsInfo));
+					//console.log('合并后ExpertsInfo:' + JSON.stringify(ExpertsInfo));
 					addData();
 					//修改nav显示昵称
 					var titleTemp = document.getElementById("title");
@@ -333,7 +333,7 @@
 			//22.获取是否已对某个用户关注
 			postDataQZPro_getUserFocusByUser(comData, wd, function(data) {
 				wd.close();
-				console.log('22.获取是否已对某个用户关注:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				//console.log('22.获取是否已对某个用户关注:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 				if(data.RspCode == 0) {
 					if(personalUTID == 0 && personalUTID != ExpertsInfo.UserId) {
 						var focuseperson = window.myStorage.getItem(window.storageKeyName.FOCUSEPERSEN);
@@ -380,10 +380,10 @@
 			//23.设置对某个用户的关注
 			postDataQZPro_setUserFocus(comData, wd, function(data) {
 				wd.close();
-				console.log('23.设置对某个用户的关注:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				//console.log('23.设置对某个用户的关注:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 				if(data.RspCode == 0) {
 					//刷新界面显示
-					console.log(nodes.focusBtn.innerText);
+					//console.log(nodes.focusBtn.innerText);
 					//刷新界面显示
 					if(nodes.focusBtn.innerText == '已关注') {
 						nodes.focusBtn.innerText = '关注';
@@ -430,10 +430,10 @@
 			nodes.IsLikeNum.innerHTML = ExpertsInfo.IsLikeNum;
 			nodes.FocusAskNum.innerText = ExpertsInfo.FocusAskNum;
 			nodes.CommentNum.innerHTML = ExpertsInfo.CommentNum + '<span class="mui-icon  iconfont icon-fanhui2" style="color:#b7b7b7"></span>';
-			console.log(nodes.CommentNum.innerHTML)
+			//console.log(nodes.CommentNum.innerHTML)
 			nodes.IsFocusedManNum.innerText = ExpertsInfo.IsFocusedManNum;
 			nodes.AnswerNum.innerHTML = ExpertsInfo.AnswerNum + '<span class="mui-icon  iconfont icon-fanhui2" style="color:#b7b7b7"></span>';
-			console.log(nodes.AnswerNum.innerHTML)
+			//console.log(nodes.AnswerNum.innerHTML)
 			var inviteNumLi = document.getElementById("inviteNumLi");
 			if(ExpertsInfo.IsExpert == 1) {
 				inviteNumLi.className = 'mui-table-view-cell '

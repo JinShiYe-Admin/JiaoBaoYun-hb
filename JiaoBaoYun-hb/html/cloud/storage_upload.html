@@ -126,7 +126,7 @@
 			var upFile = null; //记录上传的文件
 			mui.init();
 			mui.plusReady(function() {
-				console.log("从本地上传")
+				//console.log("从本地上传")
 				initData();
 				initListener()
 				initScroll();
@@ -135,7 +135,7 @@
 
 			function initData() {
 				main = plus.webview.currentWebview(); //获取当前窗体对象
-				console.log(main.id + " " + JSON.stringify(main.data));
+				//console.log(main.id + " " + JSON.stringify(main.data));
 			}
 
 			function initScroll() {
@@ -177,7 +177,7 @@
 							mui.toast("只允许选择" + main.data + "个文件");
 							return false;
 						}
-						console.log('传到安琪界面的数据：' + JSON.stringify(checkedValues))
+						//console.log('传到安琪界面的数据：' + JSON.stringify(checkedValues))
 						events.fireToPageWithData('storage_upload_choose.html', 'chose-files', {
 							dataInfo: checkedValues,
 							local: 1
@@ -197,7 +197,7 @@
 						document.getElementById("folder_" + showFolderId).style.display = 'none';
 						//显示上一个历史界面
 						var show = folderList[folderList.length - 1];
-						console.log('back:showFolderId:' + showFolderId + '|show:' + show);
+						//console.log('back:showFolderId:' + showFolderId + '|show:' + show);
 						document.getElementById("folder_" + show).style.display = 'inline';
 						//顶部列表处理
 						document.getElementById("top_" + show).className = 'mui-control-item mui-active';
@@ -208,7 +208,7 @@
 
 				//点击顶部文件夹列表
 				mui('#folderlist').on('tap', '.mui-control-item', function() {
-					console.log('folderlist:' + this.getAttribute('id') + '|' + this.getAttribute('data-path') + '|' + this.getAttribute('data-name'));
+					//console.log('folderlist:' + this.getAttribute('id') + '|' + this.getAttribute('data-path') + '|' + this.getAttribute('data-name'));
 					var id = this.getAttribute('id');
 					var fid = this.getAttribute('data-path');
 					var fname = this.getAttribute('data-name');
@@ -221,20 +221,20 @@
 					var del = false; //是否删除
 					mui.each(folderList, function(index, item) {
 						if(!del) {
-							console.log('folderList保留:' + item);
+							//console.log('folderList保留:' + item);
 							tempList.push(item);
 							if(item == fid) {
 								del = true;
 							}
 						} else {
-							console.log('folderList删除:' + item);
+							//console.log('folderList删除:' + item);
 							//删除顶部文件夹
 							if(document.getElementById("top_" + item) != null) {
-								//console.log('top_!=null');
+								////console.log('top_!=null');
 								document.getElementById("top_" + item).parentNode.removeChild(document.getElementById("top_" + item));
 							}
 							if(document.getElementById("folder_" + item) != null) {
-								//console.log('folder_!=null');
+								////console.log('folder_!=null');
 								document.getElementById("folder_" + item).parentNode.removeChild(document.getElementById("folder_" + item));
 							}
 						}
@@ -255,19 +255,19 @@
 				 */
 				mui('#all').on('tap', '.mui-table-view-cell', function() {
 					var self = this;
-					console.log(1111111)
+					//console.log(1111111)
 					var id = this.getAttribute('id'); //元素id
 					var fid = this.getAttribute('data-fid'); //文件id
 					var fname = this.getAttribute('data-fname'); //文件或文件夹名字
 					var isFile = this.getAttribute('data-isFile'); //文件类型
 					var isDirectory = this.getAttribute('data-isDirectory'); //文件类型
-					console.log('点击文件或文件夹' + id + '|' + fid + "|" + fname + '|' + isFile + '|' + isDirectory);
+					//console.log('点击文件或文件夹' + id + '|' + fid + "|" + fname + '|' + isFile + '|' + isDirectory);
 					if(isDirectory == 'true') { //点击文件夹
 						if(document.getElementById("folder_" + fid) != null) {
-							console.log('点击文件夹folder_' + fid + '!=null');
+							//console.log('点击文件夹folder_' + fid + '!=null');
 							document.getElementById("folder_" + fid).parentNode.removeChild(document.getElementById("folder_" + fid));
 						} else {
-							console.log('点击文件夹folder_' + fid + '==null');
+							//console.log('点击文件夹folder_' + fid + '==null');
 						}
 						addTop(fid, fname); //顶部
 						addbot(fid); //底部
@@ -308,11 +308,11 @@
 
 						plus.io.resolveLocalFileSystemURL(fid, function(entry) {
 							//请求成功的回调
-							//console.log("请求文件系统成功");
+							////console.log("请求文件系统成功");
 							entry.getMetadata(function(succesCB) {
-								console.log("获取目录或文件的属性成功");
-								//console.log("getMetadata:" + JSON.stringify(succesCB));
-								console.log("readFileSize：" + AndroidFileSystem.readSize(succesCB.size));
+								//console.log("获取目录或文件的属性成功");
+								////console.log("getMetadata:" + JSON.stringify(succesCB));
+								//console.log("readFileSize：" + AndroidFileSystem.readSize(succesCB.size));
 								//限制50M
 								if(succesCB.size > (50 * 1024 * 1024)) {
 									var box = self.querySelector('input[type="checkbox"]')
@@ -331,9 +331,9 @@
 											fname: fname, //本地文件名
 											metadata: succesCB //文件信息
 										}
-										console.log("upFile0:" + JSON.stringify(upFile));
+										//console.log("upFile0:" + JSON.stringify(upFile));
 									} else {
-										console.log("upFile1:" + JSON.stringify(upFile));
+										//console.log("upFile1:" + JSON.stringify(upFile));
 										if(upFile.fileid == id) { //点击相同的文件
 											upFile = null;
 											document.getElementById(id).style.background = 'white';
@@ -349,22 +349,22 @@
 												fname: fname, //本地文件名
 												metadata: succesCB //文件信息
 											}
-											console.log("upFile2:" + JSON.stringify(upFile));
+											//console.log("upFile2:" + JSON.stringify(upFile));
 										}
 									}
 								}
 							}, function(errorCB) {
 								mui.toast('读取文件的信息失败 ' + errorCB.message);
-								console.log("获取目录或文件的属性失败: " + JSON.stringify(errorCB));
+								//console.log("获取目录或文件的属性失败: " + JSON.stringify(errorCB));
 							});
 						}, function(errorCB) {
 							//请求失败的的回调
 							if(errorCB.code == 12) {
 								mui.toast('文件不存在');
-								console.log("请求文件系统失败 " + JSON.stringify(errorCB));
+								//console.log("请求文件系统失败 " + JSON.stringify(errorCB));
 							} else {
 								mui.toast('读取文件的信息失败 ' + errorCB.message);
-								console.log("请求文件系统失败: " + JSON.stringify(errorCB));
+								//console.log("请求文件系统失败: " + JSON.stringify(errorCB));
 							}
 						});
 					}
@@ -372,7 +372,7 @@
 			}
 
 			function initElement(path) {
-				console.log('initElement:' + path);
+				//console.log('initElement:' + path);
 				addTop(path, '手机'); //顶部
 				addbot(path); //底部
 				folderList.push(path);
@@ -388,7 +388,7 @@
 				}, function(errorCB) {
 					//请求失败的的回调
 					mui.toast('请求文件系统失败 ' + errorCB.message);
-					console.log("请求文件系统失败: " + JSON.stringify(errorCB));
+					//console.log("请求文件系统失败: " + JSON.stringify(errorCB));
 				});
 			}
 
@@ -400,7 +400,7 @@
 			function initANDROID() {
 				var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 				//initElement(window.myStorage.getItem(window.storageKeyName.DOCUMENTSPATH) + personalUTID);
-				console.log('initANDROID:' + window.myStorage.getItem(window.storageKeyName.DOCUMENTSPATH));
+				//console.log('initANDROID:' + window.myStorage.getItem(window.storageKeyName.DOCUMENTSPATH));
 				var fileList = window.myStorage.getItem(window.storageKeyName.DOCUMENTSPATH).split('/');
 				var str = ''
 				for(var i = 0; i < fileList.length; i++) {
@@ -420,7 +420,7 @@
 			 * @param {Object} pid 父id
 			 */
 			function addbot(path) {
-				console.log('addbot:' + path);
+				//console.log('addbot:' + path);
 				var top = 45 + 38 + localStorage.getItem('StatusHeightNo') * 1;
 				var div = document.createElement('div');
 				div.setAttribute('id', 'folder_' + path);
@@ -451,7 +451,7 @@
 			 * @param {Object} fname 文件名
 			 */
 			function addTop(path, name) {
-				console.log('addTop:' + path + '|' + name);
+				//console.log('addTop:' + path + '|' + name);
 				var div = document.createElement('div');
 				div.setAttribute('id', 'top_' + path);
 				div.setAttribute('data-path', path);
@@ -470,7 +470,7 @@
 			 * @param {Object} data
 			 */
 			function additem(URL, data) {
-				//console.log('additem:URL：' + URL + '|data：' + data.fullPath);
+				////console.log('additem:URL：' + URL + '|data：' + data.fullPath);
 				if(mui.os.ios) { //ios系统
 					data.fullPath = 'file://' + data.fullPath
 				}
@@ -489,7 +489,7 @@
 				//文件名
 				var html3 = '';
 				//					if(data.name[0] == '.') { //隐藏的文件夹或文件
-				//						//console.log('隐藏的文件夹或文件');
+				//						////console.log('隐藏的文件夹或文件');
 				//					} else
 				if(data.isDirectory) { //文件夹
 					li.className = 'mui-table-view-cell mui-media';
@@ -504,7 +504,7 @@
 					li.className = 'mui-table-view-cell mui-media  mui-checkbox mui-right';
 					html1 = '<input style = "margin-top:10px" type="checkbox" /><span class="mui-media-object mui-pull-right"></span>';
 					var type = cloud.classify2(data.name);
-					//console.log(type);
+					////console.log(type);
 					html2 = '<span class="mui-media-object mui-icon iconfont iconfont-size ' + type + ' mui-pull-left"></span>';
 					html3 = '<div class="mui-media-body">\
 								<div id="fname_' + data.fullPath + '/' + '" class="mui-ellipsis">' + data.name + '</div>\
@@ -530,9 +530,9 @@
 				var directoryReader = entry.createReader();
 				directoryReader.readEntries(function(succesCB) {
 					//succesCB:文件或目录对象的引用,可指向文件或目录对象（DirectoryEntry|FileEntry）
-					console.log("获取当前目录中的所有文件和子目录成功");
+					//console.log("获取当前目录中的所有文件和子目录成功");
 					mui.each(succesCB, function(index, element) {
-						//console.log("directoryReader:" + JSON.stringify(element));
+						////console.log("directoryReader:" + JSON.stringify(element));
 						additem(URL, element)
 					});
 					if(succesCB.length == 0) {
@@ -549,7 +549,7 @@
 					//---滑动end---
 				}, function(errorCB) {
 					mui.toast("读取当前目录中的所有文件和子目录失败 " + errorCB.message);
-					console.log("获取当前目录中的所有文件和子目录失败: " + JSON.stringify(errorCB));
+					//console.log("获取当前目录中的所有文件和子目录失败: " + JSON.stringify(errorCB));
 				});
 			}
 		</script>

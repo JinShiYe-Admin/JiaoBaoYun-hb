@@ -74,7 +74,7 @@
 					autoTextArea.set(document.querySelector(".input-container"), document.getElementById("remark-input"), document.querySelector(".input-left"), 20);
 					type = 0;
 					remarkInfo = e.detail.data;
-					console.log('备注传过来的值' + JSON.stringify(remarkInfo));
+					//console.log('备注传过来的值' + JSON.stringify(remarkInfo));
 					document.getElementById('remark-input').value = remarkInfo.bunick ? remarkInfo.bunick : "";
 					document.getElementById('remark-input').placeholder = "群昵称：" + remarkInfo.ugname + "(请输入备注,最多20字!)"
 					document.querySelector('.mui-title').innerText = '编辑备注';
@@ -85,7 +85,7 @@
 					autoTextArea.set(document.querySelector(".input-container"), document.getElementById("remark-input"), document.querySelector(".input-left"), 20);
 					type = 1;
 					remarkInfo = e.detail.data;
-					console.log('备注传过来的值' + JSON.stringify(remarkInfo));
+					//console.log('备注传过来的值' + JSON.stringify(remarkInfo));
 					document.getElementById('remark-input').value = remarkInfo.ugname;
 					document.getElementById('remark-input').placeholder = "请输入群昵称，最多20字";
 					document.querySelector('.mui-title').innerText = '编辑群昵称';
@@ -140,7 +140,7 @@
 					rid: groupInfo.gid //要修改的群id
 				}, wd, function(data) {
 					wd.close();
-					console.log("修改群信息的返回值：" + JSON.stringify(data));
+					//console.log("修改群信息的返回值：" + JSON.stringify(data));
 					if(data.RspCode == 0) {
 						mui.toast("修改群信息成功！");
 						mui.fire(plus.webview.currentWebview().opener(), "groupInfoChanged", inputValue);
@@ -161,7 +161,7 @@
 				postDataPro_PostUmkD({
 					vvl: remarkInfo.utid
 				}, wd, function(data) {
-					console.log(JSON.stringify(data));
+					//console.log(JSON.stringify(data));
 					wd.close();
 					if(data.RspCode == 0) {
 						mui.toast("删除备注成功！")
@@ -201,11 +201,11 @@
 					vvl1: inputValue
 				}, wd, function(data) {
 					wd.close();
-					console.log('修改群备注的返回值：' + JSON.stringify(data))
+					//console.log('修改群备注的返回值：' + JSON.stringify(data))
 					if(data.RspCode == '0000') {
 						document.getElementById('remark-input').value = "";
 						mui.fire(plus.webview.getWebviewById("group-pInfo.html"), 'remarkChanged');
-						console.log("上级页面的id"+plus.webview.currentWebview().opener().id)
+						//console.log("上级页面的id"+plus.webview.currentWebview().opener().id)
 						mui.toast('修改备注成功！');
 						mui.back();
 					} else {

@@ -36,7 +36,7 @@
 				var title = document.getElementById('title');
 				var inputText = document.getElementById('input-text')
 				var btnSave = document.getElementById('btn-save');
-				console.log('传过来的值：'+JSON.stringify(curPageData))
+				//console.log('传过来的值：'+JSON.stringify(curPageData))
 				/**
 				 * 根据有无数据判断是否是第一次填写
 				 */
@@ -55,7 +55,7 @@
 					//更改信息
 					postDataPro_PostReGinfo({vtp:curPageData.vtpValue,vvl:inputText.value,rid:curPageData.groupId},wd,function(data){
 						wd.close();
-						console.log(JSON.stringify(data))
+						//console.log(JSON.stringify(data))
 						//回调数据
 						if(data.RspCode=='0000'){
 							mui.toast('已成功提交数据');

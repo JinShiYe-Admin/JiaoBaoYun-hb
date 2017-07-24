@@ -9,7 +9,7 @@ var appUpdate = (function(mod) {
 		plus.webview.currentWebview().canJump = false;
 		//版本升级模块
 		//47.获取APP版本号
-		console.log('plus.os.name:' + plus.os.name);
+		//console.log('plus.os.name:' + plus.os.name);
 		var tempVVL = 'android';
 		if(plus.os.name == 'iOS') {
 			tempVVL = "ios";
@@ -24,10 +24,10 @@ var appUpdate = (function(mod) {
 		var wd_0 = events.showWaiting();
 		postDataPro_PostVerInfo(comData9, wd_0, function(data) {
 			wd_0.close();
-			console.log('获取APP版本号0:' + JSON.stringify(data));
+			//console.log('获取APP版本号0:' + JSON.stringify(data));
 			if(data.RspCode == 0) {
 				mod.getAppVersion(JSON.parse(data.RspData));
-				console.log('获取APP版本号:' + JSON.stringify(data.RspData));
+				//console.log('获取APP版本号:' + JSON.stringify(data.RspData));
 			} else {
 				mui.toast(data.RspTxt);
 			}
@@ -40,9 +40,9 @@ var appUpdate = (function(mod) {
 	mod.getAppVersion = function(versionInfo) {
 		plus.runtime.getProperty(plus.runtime.appid, function(inf) {
 			mod.appVersion = getBigVersion(inf.version, plus.runtime.version);
-			console.log('应用版本号:' + plus.runtime.version + ',资源升级版本号:' + inf.version)
-			console.log("当前应用版本：" + mod.appVersion);
-			console.log("服务端应用版本：" + JSON.stringify(versionInfo))
+			//console.log('应用版本号:' + plus.runtime.version + ',资源升级版本号:' + inf.version)
+			//console.log("当前应用版本：" + mod.appVersion);
+			//console.log("服务端应用版本：" + JSON.stringify(versionInfo))
 			getUpCondition(versionInfo); //判断是否更新
 		});
 	}
@@ -68,10 +68,10 @@ var appUpdate = (function(mod) {
 	 * @param {Object} versionInfo
 	 */
 	var getUpCondition = function(version) {
-		console.log("服务器版本信息：" + JSON.stringify(version))
+		//console.log("服务器版本信息：" + JSON.stringify(version))
 		var appVersions = mod.appVersion.split('.');
 		var newestVersions = version.ver.split('.');
-		console.log("当前版本号和服务端版本号：" + JSON.stringify(appVersions) + JSON.stringify(newestVersions))
+		//console.log("当前版本号和服务端版本号：" + JSON.stringify(appVersions) + JSON.stringify(newestVersions))
 		var appVersionMinMax = getMinMax(appVersions);
 		var newestVersionMinMax = getMinMax(newestVersions);
 		if(appVersionMinMax.max < newestVersionMinMax.max) { //整包更新
@@ -79,7 +79,7 @@ var appUpdate = (function(mod) {
 				//询问是否更新
 				setDialog('教宝云有新版本，是否下载？', "您已取消下载", function() {
 					mod.updateFlag = 1;
-					console.log("下载APK路径：" + version.baseverurl)
+					//console.log("下载APK路径：" + version.baseverurl)
 					if(plus.os.name = "Android") {
 						resolveFile(version.baseverurl, 1);
 					} else {
@@ -127,7 +127,7 @@ var appUpdate = (function(mod) {
 	var setDialog = function(hint, cancelToast, callback, cancelCallback) {
 		var btnArray = ['是', '否'];
 		mui.confirm(hint, '教宝云', btnArray, function(e) {
-			console.log("当前点击的东东：" + JSON.stringify(e));
+			//console.log("当前点击的东东：" + JSON.stringify(e));
 			if(e.index == 0) {
 				callback();
 			} else {
@@ -144,7 +144,7 @@ var appUpdate = (function(mod) {
 	 */
 	var getMinMax = function(numArray) {
 		var minMax = {};
-		console.log(JSON.stringify(numArray))
+		//console.log(JSON.stringify(numArray))
 		var min = '';
 		for(var i in numArray) {
 			if(i == 0) {
@@ -163,17 +163,17 @@ var appUpdate = (function(mod) {
 	 * @param {Object} ApkUrl 整包地址
 	 */
 	function downApk(ApkUrl) {
-		console.log(plus.os.name);
+		//console.log(plus.os.name);
 		if(plus.os.name == "Android") {
-			console.log("下载APK路径：" + ApkUrl)
+			//console.log("下载APK路径：" + ApkUrl)
 			var url = "_doc/update/"; // 下载文件地址
 			var dtask = plus.downloader.createDownload(ApkUrl, {
 				filename: "_doc/update/"
 			}, function(d, status) {
-				console.log("下载状态：" + status);
+				//console.log("下载状态：" + status);
 				if(status == 200) { // 下载成功
 					var path = d.filename;
-					console.log(d.filename);
+					//console.log(d.filename);
 					if(mod.installFlag == 0) {
 						setDialog("新版app文件已下载，是否安装？", "您已取消安装", function() {
 							installApk(path);
@@ -191,7 +191,7 @@ var appUpdate = (function(mod) {
 			});
 			dtask.addEventListener("statechanged", onStateChanged, false);
 			dtask.start();
-			console.log("开始下载!")
+			//console.log("开始下载!")
 		}
 	}
 	/**
@@ -203,12 +203,12 @@ var appUpdate = (function(mod) {
 		var dtask = plus.downloader.createDownload(wgtUrl, {
 			filename: "_doc/update/"
 		}, function(d, status) {
-			console.log("当前下载状态：" + status);
+			//console.log("当前下载状态：" + status);
 			if(status == 200) {
-				console.log("下载wgt成功：" + d.filename);
+				//console.log("下载wgt成功：" + d.filename);
 				installWgt(d.filename); // 安装wgt包
 			} else {
-				console.log("下载wgt失败！");
+				//console.log("下载wgt失败！");
 				//				plus.nativeUI.alert("下载wgt失败！");
 			}
 		});
@@ -216,7 +216,7 @@ var appUpdate = (function(mod) {
 		dtask.start();
 	}
 	var onStateChanged = function(download, status) {
-		//		console.log("当前下载状态：" + download.state + ":" + status + ":" + download.totalSize)
+		//		//console.log("当前下载状态：" + download.state + ":" + status + ":" + download.totalSize)
 		if(download.state == 3) {
 			if(!myStorage.getItem("loadFileSize") || myStorage.getItem("loadFileSize") != download.totalSize) {
 				myStorage.setItem("loadFileSize", download.totalSize);
@@ -243,10 +243,10 @@ var appUpdate = (function(mod) {
 		plus.runtime.install(path, {
 			force: true
 		}, function() {
-			console.log("安装wgt文件成功！");
+			//console.log("安装wgt文件成功！");
 		}, function(e) {
 			plus.nativeUI.closeWaiting();
-			console.log("安装wgt文件失败[" + e.code + "]：" + e.message);
+			//console.log("安装wgt文件失败[" + e.code + "]：" + e.message);
 		});
 	}
 	/**
@@ -258,10 +258,10 @@ var appUpdate = (function(mod) {
 		var filePath = "_doc/update/" + fileUrl.split('/')[fileUrl.split('/').length - 1]
 		plus.io.resolveLocalFileSystemURL(filePath, function(entry) {
 			// 可通过entry对象操作test.html文件 
-			console.log('存在文件！' + entry.isFile);
+			//console.log('存在文件！' + entry.isFile);
 			entry.getMetadata(function(metadata) {
 				if(myStorage.getItem("loadFileSize") == metadata.size) {
-					console.log("Remove succeeded:" + myStorage.getItem("loadFileSize"));
+					//console.log("Remove succeeded:" + myStorage.getItem("loadFileSize"));
 					if(type) {
 						if(mod.installFlag == 0) {
 							setDialog("新版app文件已下载，是否安装？", "您已取消安装app", function() {
@@ -289,7 +289,7 @@ var appUpdate = (function(mod) {
 
 				}
 			}, function() {
-				console.log("文件错误");
+				//console.log("文件错误");
 			});
 		}, function(e) {
 			if(type) {

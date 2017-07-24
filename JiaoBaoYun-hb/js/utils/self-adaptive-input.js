@@ -1,7 +1,7 @@
 var autoTextArea = (function(mod) {
 	var minHeight;
 	mod.set = function(parentElem, elem, leftElem, maxWords) {
-		console.log("######################这里运行自适应高度################")
+		//console.log("######################这里运行自适应高度################")
 		var addEvent = function(type, callback) {
 			elem.addEventListener ?
 				//正常人类加载事件方法
@@ -15,14 +15,14 @@ var autoTextArea = (function(mod) {
 		};
 		//最小高度即为当前控件的高度
 		minHeight = parseFloat(getStyle(elem, 'height'));
-		console.log("获取的高度：" + minHeight)
+		//console.log("获取的高度：" + minHeight)
 		//textarea 用户无法调整控件的	尺寸
 		elem.style.resize = 'none';
 		addEvent('propertychange', mod.change); //ie输入事件
 		addEvent('input', mod.change); //输入事件
 		addEvent('focus', mod.change); //获取焦点事件
 		elem.onkeydown=function(event){
-			console.log("键盘输入事件："+JSON.stringify(event))
+			//console.log("键盘输入事件："+JSON.stringify(event))
 			if(event.keyCode==13){
 				return false;
 			}
@@ -35,7 +35,7 @@ var autoTextArea = (function(mod) {
 	}
 	//改变
 	mod.change = function(parentElem, elem, leftElem, maxWords) {
-		console.log("#######################change事件##################")
+		//console.log("#######################change事件##################")
 		//定义scrollTop 高度，
 		//内边距为0
 		var scrollTop, height,
@@ -59,12 +59,12 @@ var autoTextArea = (function(mod) {
 		//输入框初始高度
 		elem.style.height = minHeight + 'px';
 		parentElem.style.height = minHeight + 1 + 'px';
-		console.log("输入框初始高度：" + minHeight);
+		//console.log("输入框初始高度：" + minHeight);
 		
 		//如果滚动高度大于最小宽度
 		leftElem.innerText = maxWords - elem.value.length;
 		if(elem.scrollHeight > minHeight) {
-			console.log("输入框实际高度：" + elem.scrollHeight);
+			//console.log("输入框实际高度：" + elem.scrollHeight);
 
 			//有最大高度 且  滚动高度>最大高度
 			//				if(maxHeight && elem.scrollHeight > maxHeight) {
@@ -77,7 +77,7 @@ var autoTextArea = (function(mod) {
 			style.height = height  + 'px'; //控件高度=实际高度+光标与输入框的距离
 			parentElem.style.height = height  + 1 + 'px';
 
-			console.log("输入框高度：" + style.height);
+			//console.log("输入框高度：" + style.height);
 			scrollTop += parseInt(style.height) - elem.currHeight; //差值
 			document.body.scrollTop = scrollTop; //整个页面的scrollTop
 			document.documentElement.scrollTop = scrollTop; //同上

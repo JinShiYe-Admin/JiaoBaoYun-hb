@@ -2,7 +2,7 @@ var dynamiclistitem = (function($, mod) {
 	mod.addComment = function(gesture, commentNode) {
 		//回复评论时 判断是否为自己
 		if(tempIndex.indexOf('-') >= 0) {
-			console.log(tempIndex)
+			//console.log(tempIndex)
 			var indexArr = tempIndex.split('-');
 			var id = indexArr[0]; //动态的id
 			var commentId = indexArr[1]; //第几个评论
@@ -15,7 +15,7 @@ var dynamiclistitem = (function($, mod) {
 				}
 				return;
 			}
-			//			console.log(JSON.stringify(tempModel));
+			//			//console.log(JSON.stringify(tempModel));
 			var upperId = tempModel.TabId; //添加的评论的上级评论ID
 			var replyUserId; //回复者ID
 			var ReplyIdName; //回复者名字
@@ -29,18 +29,18 @@ var dynamiclistitem = (function($, mod) {
 				ReplyIdName = tempModel.Replys[replyId].UserIdName;
 				currCommentID = tempModel.Replys[replyId].TabId
 			}
-			//			console.log('personalUTID=' + personalUTID + '----' + 'replyUserId=' + replyUserId + 'PublisherId=' + zonepArray[id].PublisherId)
+			//			//console.log('personalUTID=' + personalUTID + '----' + 'replyUserId=' + replyUserId + 'PublisherId=' + zonepArray[id].PublisherId)
 			if(gesture == 'tap' && personalUTID == replyUserId) {
 				mui.toast('不可以回复自己');
 				return;
 			}
 			if(gesture == 'longtap' && personalUTID != zonepArray[id].PublisherId && personalUTID != replyUserId) {
-				console.log('不做任何操作')
+				//console.log('不做任何操作')
 				return;
 			}
 
 			if(gesture == 'longtap' && (personalUTID == zonepArray[id].PublisherId || personalUTID == replyUserId)) { //
-				//				console.log('长按删除')
+				//				//console.log('长按删除')
 				commentNode.style.backgroundColor = 'lightgray'
 				var btnArray = [{
 					title: '删除',
@@ -55,7 +55,7 @@ var dynamiclistitem = (function($, mod) {
 						case 0:
 							{
 								commentNode.style.backgroundColor = 'white'
-								console.log('取消或点击空白----' + commentNode.id + '变为白色')
+								//console.log('取消或点击空白----' + commentNode.id + '变为白色')
 								grayFlag = 0;
 							}
 							break;
@@ -74,20 +74,20 @@ var dynamiclistitem = (function($, mod) {
 										var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 										postDataPro_delUserSpaceCommentById(comData, wd, function(data) {
 											wd.close();
-											console.log('删除空间评论_delUserSpaceCommentById' + JSON.stringify(data));
+											//console.log('删除空间评论_delUserSpaceCommentById' + JSON.stringify(data));
 											if(data.RspCode == 0) {
 												mui.toast('已删除');
 												if(replyId == '评论') {
 													var pageID = sliderId.replace('top_', '')
 													var commentId = 'replyComment' + pageID + idFlag + tempIndex;
-													console.log('commentId=' + commentId)
+													//console.log('commentId=' + commentId)
 													var deleteNode = document.getElementById(commentId);
 													deleteNode.parentNode.removeChild(deleteNode);
 													//tempModel.Replys[replyId].splice(index, 1)
 												} else {
 													var pageID = sliderId.replace('top_', '')
 													var commentId = 'replyComment' + pageID + idFlag + tempIndex;
-													console.log('commentId=' + commentId)
+													//console.log('commentId=' + commentId)
 													var deleteNode = document.getElementById(commentId);
 													deleteNode.parentNode.removeChild(deleteNode);
 													//tempModel.Replys[replyId].splice(index, 1)
@@ -115,7 +115,7 @@ var dynamiclistitem = (function($, mod) {
 	}
 	mod.addSomeEvent = function() {
 		mui(".mui-table-view").on("tap", ".video-container", function() {
-			console.log(this.getAttribute('videourl') + this.getAttribute('thb'))
+			//console.log(this.getAttribute('videourl') + this.getAttribute('thb'))
 			video.playVideo(this.getAttribute('videourl'), this.getAttribute('thb'));
 		})
 		window.addEventListener('praise', function(data) {
@@ -127,7 +127,7 @@ var dynamiclistitem = (function($, mod) {
 		})
 		window.addEventListener('deleteDynamic', function(data) {
 			var index = data.detail
-			console.log('删除动态的监听' + JSON.stringify(index))
+			//console.log('删除动态的监听' + JSON.stringify(index))
 			var deleteNode = document.getElementById(index);
 			deleteNode.parentNode.removeChild(deleteNode);
 
@@ -143,7 +143,7 @@ var dynamiclistitem = (function($, mod) {
 
 			//					var isFocus = jQuery('#'+this.id).data('isFocus');
 			var title, status;
-			console.log(this.id)
+			//console.log(this.id)
 			if(personalUTID == userId) {
 				title = '删除'
 			} else {
@@ -174,7 +174,7 @@ var dynamiclistitem = (function($, mod) {
 								var isDel = title == '关注' ? 0 : 1;
 								events.toggleStorageArray(storageKeyName.SHOWFOCUSEPERSEN, parseInt(userId), isDel);
 								var pageID = sliderId.replace('top_', '')
-								console.log('pageID=' + pageID)
+								//console.log('pageID=' + pageID)
 								setTimeout(function() {
 									//获取数据
 									if(pageID != 1) { //定制的城市
@@ -194,7 +194,7 @@ var dynamiclistitem = (function($, mod) {
 
 											}
 										}
-										console.log('status=' + status)
+										//console.log('status=' + status)
 										if(status == 0) {
 											mui.toast("取消关注成功")
 										} else {
@@ -210,7 +210,7 @@ var dynamiclistitem = (function($, mod) {
 										tempModel.index = 1;
 										tempModel.isRefresh = 0; //是刷新0，还是加载更多1
 										//74.(用户空间）获取多用户空间所有用户动态列表
-										console.log(JSON.stringify(tempModel))
+										//console.log(JSON.stringify(tempModel))
 										getAllUserSpacesByUser(tempModel);
 										for(var item in datasource) {
 											var tempArr = datasource[item]
@@ -245,7 +245,7 @@ var dynamiclistitem = (function($, mod) {
 										};
 										postDataPro_delUserSpaceById(comData, wd, function(data) {
 											wd.close();
-											console.log(JSON.stringify(data))
+											//console.log(JSON.stringify(data))
 											if(data.RspCode == 0) {
 												mui.toast('已删除');
 												var pageID = sliderId.replace('top_', '')
@@ -275,10 +275,10 @@ var dynamiclistitem = (function($, mod) {
 							var wd = events.showWaiting();
 							postDataPro_setUserFocus(comData, wd, function(data) {
 								wd.close();
-								console.log(JSON.stringify(data))
+								//console.log(JSON.stringify(data))
 								if(data.RspCode == 0) {
 									var pageID = sliderId.replace('top_', '')
-									console.log('pageID=' + pageID)
+									//console.log('pageID=' + pageID)
 									setTimeout(function() {
 										//获取数据
 										if(pageID != 1) { //定制的城市
@@ -298,7 +298,7 @@ var dynamiclistitem = (function($, mod) {
 
 												}
 											}
-											console.log('status=' + status)
+											//console.log('status=' + status)
 											if(status == 0) {
 												mui.toast("取消关注成功")
 											} else {
@@ -401,7 +401,7 @@ var dynamiclistitem = (function($, mod) {
 			this.disabled = false;
 			jQuery(this).css("pointerEvents", "all");
 			var pageID = sliderId.replace('top_', '')
-			console.log('id=' + this.id)
+			//console.log('id=' + this.id)
 			tempIndex = this.id.replace('comment' + pageID + idFlag, '');
 			mod.addComment('tap');
 			window.event.stopPropagation()
@@ -430,7 +430,7 @@ var dynamiclistitem = (function($, mod) {
 			}
 			this.disabled = false;
 			jQuery(this).css("pointerEvents", "all");
-			//			console.log('长按删除评论')
+			//			//console.log('长按删除评论')
 			var pageID = sliderId.replace('top_', '')
 			tempIndex = this.id.replace('replyComment' + pageID + idFlag, '');
 			mod.addComment('longtap', this);
@@ -440,7 +440,7 @@ var dynamiclistitem = (function($, mod) {
 		});
 		var grayFlag = 0;
 		mui('.mui-table-view').on('touchstart', '.replyComment', function() {
-			console.log('touchstart---' + this.id + '变为灰色')
+			//console.log('touchstart---' + this.id + '变为灰色')
 			if(grayFlag == 0) {
 				this.style.backgroundColor = 'lightgray'
 				grayFlag = 1;
@@ -448,7 +448,7 @@ var dynamiclistitem = (function($, mod) {
 
 		});
 		mui('.mui-table-view').on('touchend', '.replyComment', function() {
-			console.log('touchend---' + this.id + '变为白色')
+			//console.log('touchend---' + this.id + '变为白色')
 			grayFlag = 0;
 			this.style.backgroundColor = 'white'
 		});
@@ -461,7 +461,7 @@ var dynamiclistitem = (function($, mod) {
 			var pageID = sliderId.replace('top_', '')
 			var tempId = this.id;
 			var index = this.id.replace('btn-focus' + pageID + idFlag, '');
-			console.log('personalUTID=' + personalUTID + '-----' + 'publisherId=' + publisherId)
+			//console.log('personalUTID=' + personalUTID + '-----' + 'publisherId=' + publisherId)
 			//判断是否是游客身份登录
 			if(personalUTID == 0) {
 				events.toggleStorageArray(storageKeyName.SHOWFOCUSEPERSEN, parseInt(publisherId), 0);
@@ -528,7 +528,7 @@ var dynamiclistitem = (function($, mod) {
 			var wd = events.showWaiting();
 			postDataPro_setUserFocus(comData, wd, function(data) {
 				wd.close();
-				console.log(JSON.stringify(data));
+				//console.log(JSON.stringify(data));
 				item.disabled = false;
 				jQuery(item).css("pointerEvents", "all");
 				if(data.RspCode == 0) {
@@ -545,7 +545,7 @@ var dynamiclistitem = (function($, mod) {
 		})
 		//点击点赞人那一行 跳转到点赞的人的列表界面
 		mui('.mui-table-view').on('tap', '.PraiseList', function() {
-			console.log('跳转到点赞人列表界面')
+			//console.log('跳转到点赞人列表界面')
 			var cityID = sliderId.replace('top_', '');
 			var index = this.id.replace('PraiseList' + cityID + idFlag, '');
 			var userSpaceId = zonepArray[index].TabId
@@ -564,7 +564,7 @@ var dynamiclistitem = (function($, mod) {
 					return;
 				}
 			}
-			console.log('点赞者id' + this.dataset.info);
+			//console.log('点赞者id' + this.dataset.info);
 			mui.openWindow({
 				url: '../quan/zone_main.html',
 				id: '../quan/zone_main.html',
@@ -595,7 +595,7 @@ var dynamiclistitem = (function($, mod) {
 			if(this.dataset.info == undefined) {
 				this.dataset.info = personalUTID
 			}
-			console.log('评论者id' + this.dataset.info);
+			//console.log('评论者id' + this.dataset.info);
 			mui.openWindow({
 				url: '../quan/zone_main.html',
 				id: '../quan/zone_main.html',
@@ -692,7 +692,7 @@ var dynamiclistitem = (function($, mod) {
 							}
 						}
 						if(praiseName.length > 1) {
-							console.log('多个人点赞')
+							//console.log('多个人点赞')
 							for(var i = 0; i < praiseName.length; i++) {
 
 								if(praiseName[i].dataset.info == userInfo.utid) {
@@ -703,7 +703,7 @@ var dynamiclistitem = (function($, mod) {
 
 						} else {
 
-							console.log('一个人点赞')
+							//console.log('一个人点赞')
 							var citycode = sliderId.replace('top_', '');
 							var comment0 = document.getElementById('replyComment' + pageID + idFlag + index + '-0-评论');
 							if(comment0) {
@@ -751,7 +751,7 @@ var dynamiclistitem = (function($, mod) {
 			mui.confirm('确定删除此条动态？', '提醒', btnArray, function(e) {
 				if(e.index == 1) {
 					var index = closeId.replace('delete', '');
-					console.log(closeId);
+					//console.log(closeId);
 					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 					var comData = {
 						userSpaceId: zonepArray[index].TabId //用户空间ID
@@ -866,7 +866,7 @@ var dynamiclistitem = (function($, mod) {
 	}
 
 	mod.addItem = function(ulElement, data) {
-		//		console.log(JSON.stringify(data));
+		//		//console.log(JSON.stringify(data));
 		var li = document.createElement('li');
 		li.id = data.id_name;
 		li.className = 'mui-table-view-cell';
@@ -922,7 +922,7 @@ var dynamiclistitem = (function($, mod) {
 	 * @param {Object} data
 	 */
 	mod.addImage = function(ulElement, liElement, data) {
-		console.log("要放置的data:" + JSON.stringify(data));
+		//console.log("要放置的data:" + JSON.stringify(data));
 		var citycode = data.cityCode
 		var ImageUrlList = data.ImageList; //图片路径数组
 		var ImageNum = ImageUrlList.length; //图片总数量
@@ -936,7 +936,7 @@ var dynamiclistitem = (function($, mod) {
 				request.send();
 				var imgInfo = JSON.parse(request.responseText);
 				var winWidth = SCREEN_WIDTH;
-				console.log("获取的图片信息：" + JSON.stringify(imgInfo));
+				//console.log("获取的图片信息：" + JSON.stringify(imgInfo));
 				if(imgInfo.width > imgInfo.height) { //宽>高
 					winWidth = winWidth * 0.75;
 					imgRe.height = 190 + 'px';
@@ -950,7 +950,7 @@ var dynamiclistitem = (function($, mod) {
 				}
 
 			}
-			console.log("要设置的图片宽高：" + JSON.stringify(imgRe));
+			//console.log("要设置的图片宽高：" + JSON.stringify(imgRe));
 
 			if(ImageNum == 1) { //一张图片
 				if(ImageUrlList[0].type === 2) {
@@ -1003,7 +1003,7 @@ var dynamiclistitem = (function($, mod) {
 			height_0 = contentElements[i].offsetHeight;
 			contentElements[i].style.webkitLineClamp = '8';
 			height_1 = contentElements[i].offsetHeight;
-			//console.log(height_0 + '|' + height_1);
+			////console.log(height_0 + '|' + height_1);
 			if(height_0 > height_1) {
 				//内容高度大于八行
 				showAll[i].style.display = 'inline';
@@ -1112,7 +1112,7 @@ var dynamiclistitem = (function($, mod) {
 			htmlCommentList2 = htmlCommentList2 + firstComment + replyComment;
 		});
 		if(commentNum > 20 && (!document.getElementById("spaceDetail"))) {
-			console.log('评论大于20')
+			//console.log('评论大于20')
 			showAll = '<div id="show2' + data.id_name + '" class=" show2" style="color:#B7B7B7;">展开全部</div>'
 		} else {
 			showAll = '';
@@ -1132,7 +1132,7 @@ var dynamiclistitem = (function($, mod) {
 		div.innerHTML = html;
 		liElement.appendChild(div);
 		ulElement.appendChild(liElement);
-//		console.log(ulElement.innerHTML);
+//		//console.log(ulElement.innerHTML);
 	};
 
 	return mod;
