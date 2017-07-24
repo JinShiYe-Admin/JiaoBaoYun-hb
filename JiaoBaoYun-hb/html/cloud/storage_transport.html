@@ -62,6 +62,7 @@
 
 			.mui-checkbox input[type=checkbox] {
 				right: 0px;
+				top: 5px;
 			}
 
 			#cancel {
@@ -123,6 +124,16 @@
 			#failPop .mui-popup .mui-table-view {
 				background-color: white;
 			}
+
+			#downloaded button,
+			#uploaded button {
+				margin-top: 4px;
+			}
+
+			#download button,
+			#upload button {
+				margin-top: 4.5px;
+			}
 		</style>
 	</head>
 
@@ -162,6 +173,26 @@
 										<div style="height: 1px;width: 100%;background: #E4E4E4;"></div>
 									</div>
 									<div id="download">
+										<!--<li class="mui-table-view-cell mui-media">
+											<div class="mui-media-object mui-pull-right">
+												<button id="down_btn_' + id + '" type="button" class="mui-btn mui-btn-outlined" style="visibility: visible;">等待</button>
+											</div>
+											<span class="mui-media-object mui-icon iconfont iconfont-size icon-imge mui-pull-left"></span>
+											<div class="mui-media-body">
+												<div class="mui-ellipsis transport-info">
+													一二三四五六七八九十
+												</div>
+												<div class="transport-info">
+													<div id="down_bar_' + id + '" class="mui-progressbar">
+														<span></span>
+													</div>
+													<p id="down_size_' + id + '" class="mui-pull-left"></p>
+													<p id="down_waiting_' + id + '" class="mui-pull-right">
+														正在等待...
+													</p>
+												</div>
+											</div>
+										</li>-->
 									</div>
 									<div style="margin-top: 10px;background-color: white;">
 										<div id="downloadednum" style="padding:5px;">
@@ -170,6 +201,26 @@
 										<div style="height: 1px;width: 100%;background: #E4E4E4;"></div>
 									</div>
 									<div id="downloaded">
+										<!--<li class="mui-table-view-cell mui-media local-file-delete">
+											<div class="mui-media-object mui-pull-right">
+												<div class="mui-input-row mui-checkbox" v-if="showcheck">
+													<label>&nbsp;</label>
+													<input name="Checkbox" type="checkbox" value="' + li.id + '">
+												</div>
+												<button value="' + fpath + '" type="button" class="mui-btn mui-btn-outlined local-file-open">打开</button>
+											</div>
+											<span class="mui-media-object mui-icon iconfont iconfont-size ' + type + ' mui-pull-left"></span>
+											<div class="mui-media-body">
+												<div class="mui-ellipsis transport-info">
+													一二三四五六七八九十一二三四五六七八九十
+												</div>
+												<div class="transport-info">
+													<p class="mui-ellipsis">
+														一二三四五六七八九十&nbsp;&nbsp;一二三四五六七八九十
+													</p>
+												</div>
+											</div>
+										</li>-->
 									</div>
 								</ul>
 							</div>
@@ -1202,7 +1253,7 @@
 												' + fname + '\
 											</div>\
 											<div class="transport-info">\
-												<div id="up_bar_' + id + '" class="mui-progressbar"">\
+												<div id="up_bar_' + id + '" class="mui-progressbar">\
 													<span></span>\
 												</div>\
 												<p id="up_size_' + id + '" class="mui-pull-left">\
@@ -1280,7 +1331,7 @@
 												' + fname + '\
 											</div>\
 											<div class="transport-info">\
-												<div id="down_bar_' + id + '" class="mui-progressbar"">\
+												<div id="down_bar_' + id + '" class="mui-progressbar">\
 													<span></span>\
 												</div>\
 												<p id="down_size_' + id + '" class="mui-pull-left">\
