@@ -221,10 +221,10 @@ var cloud = (function($, mod) {
 		//转换为小写
 		type = type.toLowerCase(); //转换为小写
 		switch(type) {
-			case 'ogg': //视频类型
+			//case 'ogg': //视频类型
 			case 'mp4':
 			case 'mpeg4':
-			case 'webm':
+			//case 'webm':
 				return 'html5-video';
 				break;
 			case 'jpeg': //图片类型
