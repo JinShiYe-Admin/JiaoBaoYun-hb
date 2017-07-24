@@ -10,7 +10,7 @@ var storageKeyName = (function(mod) {
 			if(object) {
 				argus = hint + JSON.stringify(object);
 			}
-			exLog.apply(this, argus);
+			exLog.apply(this, [argus]);
 		}
 	}
 	switch(mod.key) {
