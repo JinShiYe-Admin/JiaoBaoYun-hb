@@ -4,9 +4,13 @@ var storageKeyName = (function(mod) {
 
 	mod.key = 0; //0,开发;1,测试;2,移动版 3外网
 	var exLog = console.log;
-	console.log = function() {
+	console.log = function(hint, object) {
 		if(mod.key === 0) {
-			exLog.apply(this, arguments);
+			var argus = hint;
+			if(object) {
+				argus = hint + JSON.stringify(object);
+			}
+			exLog.apply(this, argus);
 		}
 	}
 	switch(mod.key) {
