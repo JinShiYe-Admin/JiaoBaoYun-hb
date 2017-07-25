@@ -136,7 +136,7 @@
 			//获取录像按钮
 			events.addTap('take_camero', function() {
 				var item = this;
-//				jQuery(item).css('pointerEvents', 'none');
+				//				jQuery(item).css('pointerEvents', 'none');
 				//console.log("item不能点击了！" + item.id);
 				if(CloudFileUtil.files.length > 0) {
 					switch(CloudFileUtil.files[0].type) {
@@ -149,7 +149,7 @@
 						default:
 							break;
 					}
-//					jQuery(item).css('pointerEvents', 'all');
+					//					jQuery(item).css('pointerEvents', 'all');
 					return;
 				}
 				var btnArr = [{
@@ -160,7 +160,7 @@
 					dia: 0
 				}];
 				var funArr = [recordVideo, pickLocalVideo];
-				events.showActionSheet(btnArr,funArr);
+				events.showActionSheet(btnArr, funArr);
 
 			});
 			//录音按钮
@@ -250,7 +250,7 @@
 				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING)
 				postDataPro_addClassSpace(postData, wd, function(data) {
 					wd.close();
-					//console.log(JSON.stringify(data));
+					console.log("班级空间传值：", postData);
 					if(data.RspCode == 0) {
 						mui.toast('发布成功！');
 						document.getElementById('input-content').value = '';
@@ -314,7 +314,7 @@
 								localPath: path,
 								type: 2
 							}
-							img.duration=events.getVideoDuration(img.url);
+							img.duration = events.getVideoDuration(img.url);
 							//										//console.log("获取的图片信息：" + JSON.stringify(img));
 							//关闭等待框
 							plus.nativeUI.closeWaiting();
@@ -374,7 +374,7 @@
 					theFile = CloudFileUtil.files[i];
 					if(i == 0) {
 						TAs.encType = theFile.type;
-						TAs.duration=theFile.duration?theFile.duration:0;
+						TAs.duration = theFile.duration ? theFile.duration : 0;
 					}
 					encAddrs.push(theFile.url);
 					encImgs.push(theFile.thumb);
@@ -387,6 +387,7 @@
 				TAs.encType = 0;
 				TAs.encAddr = '';
 				TAs.encImg = '';
+				TAs.duration = 0;
 			}
 			return TAs;
 		}
