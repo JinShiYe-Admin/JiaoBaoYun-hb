@@ -873,6 +873,9 @@ var events = (function(mod) {
 	 * @param {Object} data
 	 */
 	mod.singleWebviewInPeriod = function(clickedItem, webviewUrl, data) {
+		if(mod.click){
+			return;
+		}
 		var waiting = mod.showWaiting();
 		if(!data) {
 			data = "";
@@ -896,6 +899,7 @@ var events = (function(mod) {
 				setTimeout(function() {
 					mod.closeWaiting(waiting);
 					if(item) {
+						mod.click=false;
 						item.disabled = false;
 						jQuery(item).css("pointerEvents", "all");
 					}
