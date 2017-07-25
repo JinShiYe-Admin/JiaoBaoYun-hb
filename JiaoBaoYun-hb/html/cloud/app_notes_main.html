@@ -88,7 +88,6 @@
 				margin: 5px 15px;
 				word-break: break-all;
 			}
-
 			/*.note-image-one,
 			.note-image-two,
 			.note-image-three {
@@ -322,7 +321,7 @@
 			</div>
 		</div>
 		<div id="videoPopover" class="mui-popover">
-			<video id="video" style="" controls="controls" webkit-playsinline playsinline>
+			<video id="video" style="position: absolute;z-index: 999;" controls="controls" webkit-playsinline playsinline>
 				您的浏览器不支持 video 标签。
 			</video>
 		</div>
@@ -389,7 +388,9 @@
 		function initListener() {
 			//增加笔记
 			document.getElementById('add').addEventListener('tap', function() {
-				events.openNewWindow('app_notes_create.html');
+				events.clickLimit(function() {
+					events.openNewWindow('app_notes_create.html');
+				});
 			});
 
 			//刷新界面
