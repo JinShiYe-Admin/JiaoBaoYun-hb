@@ -255,7 +255,6 @@
 
 				//点击修改群信息
 				document.getElementById('changeInfo').addEventListener('tap', function() {
-					this.disabled = true;
 					events.openNewWindowWithData('qun_manage_info_change.html', {
 						gid: selectGid, //群ID
 						listener: {
@@ -263,9 +262,6 @@
 							winid: 'changeQunInfo'
 						} //webview的id
 					});
-					setTimeout(function() {
-						document.getElementById('changeInfo').disabled = false;
-					}, 1500);
 				});
 
 				//创建一个群
