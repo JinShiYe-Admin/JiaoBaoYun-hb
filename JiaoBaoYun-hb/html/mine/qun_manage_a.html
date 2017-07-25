@@ -389,9 +389,7 @@
 				//点击资料
 				mui('#slider_group').on('tap', '.mui-table-view-cell', function() {
 					//是否是人员资料
-					var self = this;
-					self.disabled = true;
-					var ids = self.id.split('_');
+					var ids = this.id.split('_');
 					var gid = ids[0];
 					var stuid = ids[1];
 					var dataInfo = qunsInfo[gid].dataAll[stuid].info;
@@ -422,10 +420,6 @@
 							break;
 					}
 					events.openNewWindowWithData('qun_data_details.html', data);
-					setTimeout(function() {
-						self.disabled = false;
-					}, 1500);
-
 				});
 
 				//长按资料

@@ -1784,7 +1784,8 @@
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
-			"image/utils/default_personalimage.png"
+			"image/utils/default_personalimage.png",
+			"image/qiuzhi/qiuzhi_noanswer.png"
 		],
 		"refer": [
 			"html/cloud/keeprecord_callorrecord_main.html",
