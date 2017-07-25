@@ -40,7 +40,7 @@
 		<div class="mui-content mui-fullscreen" style="background-color: white;bottom: 0px;">
 			<div style="text-align: center;padding-top: 10px;"><img src="../../image/mine/jiaobaoyun.png" style="width:50%;height: 50%;"></img>
 			</div>
-			<h5 id="version" style="text-align: center;">教宝云</h5>
+			<h5 id="version" style="text-align: center;">微视学堂</h5>
 			<br />
 
 			<ul id="list" class="mui-table-view ">
@@ -74,7 +74,7 @@
 			mui.plusReady(function() {
 				plus.runtime.getProperty(plus.runtime.appid, function(inf) {
 					//console.log('应用版本号:' + plus.runtime.version + ',资源升级版本号:' + inf.version)
-					document.getElementById("version").innerHTML = '教宝云' + getBigVersion(plus.runtime.version,inf.version);
+					document.getElementById("version").innerHTML = '微视学堂' + getBigVersion(plus.runtime.version,inf.version);
 				})
 
 				mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
