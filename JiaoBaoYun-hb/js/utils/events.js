@@ -36,7 +36,7 @@ window.onerror = function(errorMessage, scriptURI, lineNumber, columnNumber, err
 var events = (function(mod) {
 
 	mod.click = false; //是否是点击状态
-	mod.clickTime = 1500; //点击持续时间，默认1.5秒
+	mod.clickTime = 1000; //点击持续时间，默认1秒
 
 	//去掉所有html标签
 	mod.deleteHtml = function(text) {
@@ -84,6 +84,14 @@ var events = (function(mod) {
 	 * @param {Object} targetPage 目标界面
 	 */
 	mod.openNewWindow = function(tarPagePath) {
+		if(mod.click) {
+			return false;
+		}
+		mod.click = true;
+		setTimeout(function() {
+			mod.click = false;
+		}, mod.clickTime);
+
 		var tarPageIds = tarPagePath.split('/');
 		var targetPage = plus.webview.getWebviewById(tarPageIds[tarPageIds.length - 1]);
 		//console.log('targetPage是否存在:' + Boolean(targetPage))
@@ -113,6 +121,13 @@ var events = (function(mod) {
 	 * @param {Object} passData 获取要传的值
 	 */
 	mod.openNewWindowWithData = function(targetHTML, passData) {
+		if(mod.click) {
+			return false;
+		}
+		mod.click = true;
+		setTimeout(function() {
+			mod.click = false;
+		}, mod.clickTime);
 		mui.openWindow({
 			url: targetHTML,
 			id: targetHTML.split('/')[targetHTML.split('/').length - 1],
@@ -873,9 +888,10 @@ var events = (function(mod) {
 	 * @param {Object} data
 	 */
 	mod.singleWebviewInPeriod = function(clickedItem, webviewUrl, data) {
-		if(mod.click){
+		if(mod.click) {
 			return;
 		}
+		mod.click = true;
 		var waiting = mod.showWaiting();
 		if(!data) {
 			data = "";
@@ -899,7 +915,7 @@ var events = (function(mod) {
 				setTimeout(function() {
 					mod.closeWaiting(waiting);
 					if(item) {
-						mod.click=false;
+						mod.click = false;
 						item.disabled = false;
 						jQuery(item).css("pointerEvents", "all");
 					}
@@ -1423,21 +1439,6 @@ var events = (function(mod) {
 				mod.readyToPage(isReady, url, lisetener, data);
 			}, 500)
 		}
-	}
-
-	/**
-	 * 点击限定
-	 * @param {Function} fun 事件
-	 */
-	mod.clickLimit = function(fun) {
-		if(mod.click) {
-			return false;
-		}
-		mod.click = true;
-		fun();
-		setTimeout(function() {
-			mod.click = false;
-		}, mod.clickTime);
 	}
 
 	return mod;
