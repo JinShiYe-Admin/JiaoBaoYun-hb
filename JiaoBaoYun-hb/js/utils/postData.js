@@ -17,7 +17,7 @@ function postData(url, data, callback, waitingDialog) {
 		contentType: "application/json",
 		timeout: tepTime,
 		success: function(data) {
-			//console.log('data.RspCode:' + data.RspCode + 'data.RspTxt:' + data.RspTxt + 'data.RspData:' + JSON.stringify(data.RspData));
+			console.log('获取的值：',data);
 			if(data.RspCode == 6) {
 				waitingDialog.close();
 				renewToken(0, 'encryData', 'commonData', 'flag', 'waitingDialog', 'callback');
@@ -80,7 +80,7 @@ function postDataEncry(url, encryData, commonData, flag, waitingDialog, callback
 		tempData.sign = sign;
 		// 等待的对话框
 		var urlArr = url.split('/');
-		//console.log('postData.tempData:' + urlArr[urlArr.length - 1] + JSON.stringify(tempData));
+		console.log('传递的参数'+urlArr[urlArr.length-1]+':',tempData);
 		var tepTime = tempTime();
 		//发送协议
 
@@ -92,6 +92,7 @@ function postDataEncry(url, encryData, commonData, flag, waitingDialog, callback
 			timeout: tepTime,
 			//			success: callback,
 			success: function(data) {
+				console.log(urlArr[urlArr.length-1]+"接口获取的值:",data);
 				//console.log('data.RspCode:' + data.RspCode + ',data.RspTxt:' + data.RspTxt + ',data.RspData:' + JSON.stringify(data.RspData) + ',' + url);
 				if(data.RspCode == 6) {
 					waitingDialog.close();
@@ -121,6 +122,7 @@ function postDataEncry(url, encryData, commonData, flag, waitingDialog, callback
 				}
 			},
 			error: function(xhr, type, errorThrown) {
+				console.log("网络连接失败"+url+":"+type+","+errorThrown+":",xhr);
 				//console.log('网络连接失败:' + url + ':' + type + ',' + JSON.stringify(xhr) + ',' + errorThrown);
 				var data = {
 					RspCode: '404',
