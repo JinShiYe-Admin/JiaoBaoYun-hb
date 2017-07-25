@@ -166,9 +166,6 @@
 							break;
 					}
 
-					qname.disabled = true;
-					qnote.disabled = true;
-
 					events.openNewWindowWithData('qun_manage_info_change_post.html', {
 						type: type, //修改的类型
 						value: value, //修改的值
@@ -178,11 +175,6 @@
 							winid: 'valueChange'
 						}] //监听
 					});
-
-					setTimeout(function() {
-						qname.disabled = false;
-						qnote.disabled = false;
-					}, 1500);
 				});
 
 				document.getElementById("commit").addEventListener('tap', function() {

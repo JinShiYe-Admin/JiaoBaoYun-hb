@@ -335,13 +335,9 @@
 
 				//查看搜索结果
 				document.getElementById('user_li').addEventListener('tap', function() {
-					document.getElementById("user_li").disabled = true;
 					events.openNewWindowWithData('qun_manage_invite_info.html', {
 						userData: userData //用户信息
 					});
-					setTimeout(function() {
-						document.getElementById("user_li").disabled = false;
-					}, 1500);
 				});
 
 				//点击资料

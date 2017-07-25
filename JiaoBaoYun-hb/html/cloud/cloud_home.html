@@ -20,43 +20,43 @@
 			.mui-content {
 				background-color: #f2f3f5;
 			}
-			
+
 			#topPopover {
 				position: fixed;
 				top: 46px;
 				right: 6px;
 				width: 150px;
 			}
-			
+
 			#topPopover .mui-popover-arrow {
 				left: auto;
 				right: 6px;
 			}
-			
+
 			.mui-popover {
 				height: 80px;
 				width: 150;
 			}
-			
+
 			.mui-backdrop {
 				/*选择排序的遮罩*/
 				background-color: rgba(0, 0, 0, 0.05);
 			}
-			
+
 			#refreshContainer .mui-table-view:before,
 			#refreshContainer .mui-table-view:after,
 			#refreshContainer .mui-table-view-cell:after {
 				height: 0px;
 			}
-			
+
 			#refreshContainer .mui-table-view {
 				background-color: white;
 			}
-			
+
 			.cloud-item {
 				background-color: white;
 			}
-			
+
 			.cloud-item-left {
 				width: 16%;
 				border-right: 1px solid #D9D9D9;
@@ -65,7 +65,7 @@
 				font-weight: bold;
 				font-size: 1.6rem;
 			}
-			
+
 			.cloud-item-right {
 				/*margin-left: 16%;*/
 				width: 84%;
@@ -83,27 +83,27 @@
 			/*每一项的第二行*/
 			/*background-color: blue;*/
 			/*}*/
-			
+
 			.mui-plus-pullrefresh .mui-scroll {
 				position: absolute;
 				/*width: 100%;*/
 			}
-			
+
 			.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
 				color: black;
 				border: none;
 			}
-			
+
 			#refreshContainer .mui-table-view-cell {
 				display: inline-block;
 				width: auto;
 				padding: 1px 1px;
 			}
-			
+
 			.mui-slider-indicator .mui-table-view-cell.mui-active {
 				background: white;
 			}
-			
+
 			.cloud-red-point {
 				position: absolute;
 				background: red;
@@ -112,27 +112,27 @@
 				border-radius: 50%;
 				display: none;
 			}
-			
+
 			img {
 				border-radius: 50%;
 			}
-			
+
 			#cloudstorage_1 img {
 				border-radius: 0px;
 			}
-			
+
 			.icon-jiaxiabiao {
 				color: #0ABAF5;
 			}
-			
+
 			.icon-banxiabiao {
 				color: #FFBA00;
 			}
-			
+
 			.icon-re {
 				color: #FD681E;
 			}
-			
+
 			.icon-re,
 			.icon-banxiabiao,
 			.icon-jiaxiabiao {
@@ -140,23 +140,22 @@
 				border: none !important;
 				top: 0px;
 			}
-			
+
 			.mui-popup-input input {
 				/*popup 输入框*/
 				height: 34px;
 				border-color: #E4E4E4;
 				margin-top: 5px;
 			}
-			
+
 			.mui-bar-nav.mui-bar .mui-icon.img-icon {
 				padding-top: 7px;
 			}
-			
+
 			.mui-backdrop {
 				bottom: -50px;
 			}
 			/*分情况来做,不是所有页面都需要字体随着屏幕大小改变而改变的.*/
-			
 
 			@media only screen and (min-width:320px) and (max-width:359px) {
 				.mui-popup {
@@ -164,7 +163,7 @@
 				}
 			}
 			/*三星大屏幕机最低宽度:note2-note3,S2-S4*/
-			
+
 			@media only screen and (min-width:360px) {
 				.mui-popup {
 					top: 40%;
@@ -365,14 +364,13 @@
 
 			off_canvas.init();
 			//设置全局beforeSend
-			mui.ajaxSettings.beforeSend = function(xhr, setting) {
-			};
+			mui.ajaxSettings.beforeSend = function(xhr, setting) {};
 
 			//设置全局complete
 			mui.ajaxSettings.complete = function(xhr, status) {
 				httpFlag++;
 				if(httpFlag == 10) { //所有请求完毕
-					httpFlag=0;
+					httpFlag = 0;
 					wd.close();
 				}
 			}
@@ -550,19 +548,14 @@
 				//云盘第一行
 				mui('#cloudstorage_0').on('tap', '.mui-table-view-cell', function() {
 					var id = this.id;
-					var self = this;
 					if(id == 'shoujitongxunlu') { //手机通讯录
 						mui.toast('手机通讯录功能暂未开放');
 					} else if(id == 'shoujituku') { //手机图库
 						mui.toast('手机图库功能暂未开放');
 					} else { //档案
-						self.disabled = true;
 						var data = studentDoc[id.replace('data_', '')];
 						//console.log(JSON.stringify(data));
 						events.openNewWindowWithData('record_student_main.html', data);
-						setTimeout(function() {
-							self.disabled = false;
-						}, 1500);
 					}
 				});
 
@@ -650,8 +643,6 @@
 				//---家校互动---start---
 				mui('#cloudrecord_0').on('tap', '.mui-table-view-cell', function() {
 					var id = this.id;
-					var self = this;
-					self.disabled = true;
 					if(id == 'homework') { //作业
 						requestClassData();
 					} else if(id == 'manage') { //班级管理
@@ -662,12 +653,22 @@
 						var index = this.id.replace('studentsdynamic', '');
 						var stuid = this.getAttribute('data-stuid');
 						document.getElementById("studyn_redpoint_" + stuid).style.display = 'none';
+						if(events.click) {
+							return false;
+						}
+						events.click = true;
+						setTimeout(function() {
+							events.click = false;
+						}, events.clickTime);
 						mui.openWindow({
 							url: '../quan/studentdynamic_main.html',
 							id: '../quan/studentdynamic_main.html',
 							styles: {
 								top: '0px', //设置距离顶部的距离
 								bottom: '0px'
+							},
+							waiting: {
+								title: '正在加载...'
 							},
 							extras: {
 								data: {
@@ -679,14 +680,9 @@
 							},
 						});
 					}
-					setTimeout(function() {
-						self.disabled = false;
-					}, 1500);
 				});
 
 				mui('#cloudrecord_1').on('tap', '.mui-table-view-cell', function() {
-					var self = this;
-					self.disabled = true;
 					var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 					var id = this.id;
 					var gid = this.getAttribute('data-gid');
@@ -699,7 +695,7 @@
 							var index = this.id.replace('tarClass', '');
 							////console.log('index：' + index);
 							document.getElementById("tarClass_" + gid).style.display = 'none';
-							events.singleWebviewInPeriod(self, '../quan/class_space.html', {
+							events.singleWebviewInPeriod(this, '../quan/class_space.html', {
 								classId: datasource[index].gid,
 								className: datasource[index].gname
 							});
@@ -708,12 +704,19 @@
 							var index = this.id.replace('tarClass1', '');
 							//console.log('index：' + index);
 							document.getElementById("tarClass1_" + gid).style.display = 'none';
+							events.click = true;
+							setTimeout(function() {
+								events.click = false;
+							}, events.clickTime);
 							mui.openWindow({
 								url: '../quan/zone_main.html',
 								id: '../quan/zone_main.html',
 								styles: {
 									top: '0px', //设置距离顶部的距离
 									bottom: '0px'
+								},
+								waiting: {
+									title: '正在加载...'
 								},
 								extras: {
 									data: {
@@ -724,25 +727,17 @@
 							});
 						}
 					}
-					setTimeout(function() {
-						self.disabled = false;
-					}, 1500);
 				});
 				//---家校互动---end---
 
 				//---应用---start---
 				mui('#cloudapps').on('tap', '.mui-table-view-cell', function() {
-					var self = this;
-					self.disabled = true;
 					var value = this.getAttribute("value");
 					if(value == '0') { //笔记
 						events.openNewWindow('app_notes_main.html');
 					} else if(value == '1') { //记事
 						events.openNewWindow('app_keeprecord.html');
 					}
-					setTimeout(function() {
-						self.disabled = false;
-					}, 1500);
 				});
 				//---应用---end---
 
@@ -765,13 +760,13 @@
 					if(!parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid)) {
 						return;
 					}
-					
+
 					if(plus.networkinfo.getCurrentType() == plus.networkinfo.CONNECTION_NONE) {
 						//console.log('没有网络');
 						mui.toast("网络异常，请检查网络设置！");
 						return;
 					}
-					httpFlag=0;
+					httpFlag = 0;
 					getAboutMe();
 
 					//26.用户云盘顶层文件及文件夹获取
