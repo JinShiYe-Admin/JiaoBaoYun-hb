@@ -468,7 +468,7 @@
 				<audio id="audio" preload="none"></audio>
 			</div>
 			<div id="video_area" class="video-area">
-				<video id="video" controls="controls" preload="none" poster="null">
+				<video id="video" controls="controls" webkit-playsinline playsinline preload="none" poster="null">
 					您的浏览器不支持video标签
 				</video>
 			</div>
@@ -933,7 +933,7 @@
 			 * 显示顶部节次的数据
 			 */
 			function showTopData(data, wd) {
-				//console.log("showTopData " + JSON.stringify(data));
+				console.log("showTopData " + JSON.stringify(data));
 				sectionId = data.SecId;
 				if(data.SecStatus == 0) { //被屏蔽
 					document.getElementById("section_top").style.display = "none";

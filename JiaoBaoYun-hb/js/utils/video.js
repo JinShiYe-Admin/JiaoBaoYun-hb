@@ -186,7 +186,7 @@ var video = (function(mod) {
 		div.style.cssText = "position:fixed;width:" + win_width + "px;height:" + (win_width / 4) * 3 + "px;top:20%;background-color:#494949;"
 		//console.log("视频信息：" + win_width);
 		//		document.querySelector(".mui-backdrop").style.backgroundColor="#000000";
-		div.innerHTML = '<video id="video-player" style="width:' + win_width + 'px;height:' + win_width / 4 * 3 +
+		div.innerHTML = '<video id="video-player" webkit-playsinline playsinline style="width:' + win_width + 'px;height:' + win_width / 4 * 3 +
 			'px;">your browser does not support the video tag</video>';
 		//		//console.log("fragment.innerHTML"+fragment.innerHTML);
 		content.insertBefore(div, content.querySelector(".mui-content"));
