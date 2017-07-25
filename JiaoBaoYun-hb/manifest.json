@@ -1592,7 +1592,8 @@
 					"js/utils/RSAEncrypt.js",
 					"image/cloud/record_link.gif",
 					"fonts/iconfont.ttf",
-					"fonts/fangzheng.ttf"
+					"fonts/fangzheng.ttf",
+					"image/qiuzhi/qiuzhi_noanswer.png"
 				],
 				"refer": [
 					"html/cloud/keeprecord_callorrecord_main.html",
