@@ -5422,7 +5422,9 @@
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js"
 				],
-				"refer": [],
+				"refer": [
+					"html/cloud/keeprecord_history_a.html"
+				],
 				"priority": 0
 			},
 			"html/micro-course/course-info.html": {
