@@ -1,3 +1,4 @@
+
 //学生查看老师作业评价
 mui.init();
 //作业model
@@ -25,9 +26,9 @@ mui.plusReady(function() {
 		//console.log(JSON.stringify(e.detail.data))
 		homeworkDetailNodes.stuResult.innerHTML = e.detail.data.answer.replace(/ /g,"&nbsp;").replace(/\n/g,"<br/>");
 		homeworkResult.HomeworkResult.Result = e.detail.data.answer;
-		var imgFiles = e.detail.data.Files
+		var imgFiles = e.detail.data.Files;
 		//console.log(JSON.stringify(imgFiles))
-		document.getElementById('brief-imgs-stu').innerHTML = getImgsInner(imgFiles)
+		document.getElementById('brief-imgs-stu').innerHTML = getImgsInner(imgFiles);
 		homeworkResult.HomeworkResult.Files = imgFiles;
 	})
 	//跳转到修改作业界面
@@ -412,6 +413,7 @@ var getImgsInner = function(imgs) {
 }
 //刷新普通作业界面
 function refreshUI() {
+	
 	var className = 'iconfont subject-icon ' + getHomeworkIcon(homeworkModel.Subject);
 	homeworkDetailNodes.img.className = className
 	if(!homeworkModel.HomeworkTitle){
@@ -438,7 +440,8 @@ function refreshUI() {
 		document.getElementById("modifyHomework").style.display='none';
 	}
 	homeworkDetailNodes.commentContent.innerText = Comment;
-
+	console.log('已评论作业详情：',homeworkModel)
+	workCommented.workCommented=homeworkModel;
 }
 var getHomeworkIcon = function(subject) {
 	var subjectIcon = '';
