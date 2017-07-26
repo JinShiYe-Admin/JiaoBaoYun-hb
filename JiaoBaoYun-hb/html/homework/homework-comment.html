@@ -19,7 +19,7 @@
 			<h1 class="mui-title">作业评论</h1>
 		</header>
 
-		<div class="mui-content">
+		<div id="work-comment"  class="mui-content" v-if="workInfo">
 			<!--这里放置真实显示的DOM内容-->
 			<!--作业详情区-->
 			<h6 class="comment-item">完成的作业</h6>
@@ -62,6 +62,7 @@
 		<script src="../../js/mui.previewimage.js "></script>
 		<!--公共事件方法-->
 		<script src="../../js/utils/events.js"></script>
+		<script src="../../js/utils/vue.min.js"></script>
 		<!--接口-->
 		<script src="../../js/publicProtocol.js"></script>
 		<!--作业接口-->

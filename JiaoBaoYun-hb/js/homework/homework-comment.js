@@ -1,3 +1,17 @@
+var homeWorkComment=new Vue({
+	el:"#work-comment",
+	data:{
+		workInfo:{
+			
+		}
+	},
+	methods:{
+		resetData:function(){
+			this.workInfo={};
+		}
+	}
+
+})
 var workInfo;
 var personalUTID;
 mui.init({
@@ -12,6 +26,7 @@ mui.init({
 		document.getElementById('stu-name').innerText = "";
 		document.getElementById('comment-area').value = "";
 		document.querySelector(".commented-words").innerText = "";
+		homeWorkComment.resetData();
 		return true;
 	}
 });
@@ -166,6 +181,7 @@ var requireHomeworkInfo = function() {
  * "Result":"哦哦哦哦哦哦","StudentId":1,"StudentName":null,"UploadTime":"2016-12-17 11:08:43"
  */
 var setHomeWorkInfo = function() {
+	homeWorkComment.workInfo=workInfo;
 	//console.log("要放置的作业数据：" + JSON.stringify(workInfo))
 	document.getElementById('submit-time').innerText = events.shortForDate(workInfo.UploadTime);
 	var homeworkInfo = document.getElementById('homework-info');

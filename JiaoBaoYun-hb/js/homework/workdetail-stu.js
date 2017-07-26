@@ -1,3 +1,14 @@
+var workDetailStu=new Vue({
+	el:"#work-detail-stu",
+	data:{
+		workdetail:{}
+	},
+	methods:{
+		resetData:function(){
+			this.workdetail={};
+		}
+	}
+})
 var personalUTID; //个人utid
 var homeworkInfo; //作业信息
 mui.init({
@@ -12,6 +23,7 @@ mui.init({
 		document.querySelector('.publisher').innerText = "";
 		document.querySelector('.publish-date').innerText = "";
 		document.getElementById('brief-imgs').innerHTML = "";
+		workDetailStu.workdetail={};
 		return true;
 	}
 }); //加载mui
@@ -102,13 +114,14 @@ var requestTeaInfo = function(teaId) {
  * 放置作业内容
  */
 var setContentView = function() {
-	//console.log('学生作业详情界面获取老师后的信息：' + JSON.stringify(homeworkInfo));
+	console.log('学生作业详情界面获取老师后的信息：',homeworkInfo);
 	document.querySelector('.subject-icon').className = "subject-icon iconfont " + getHomeworkIcon(homeworkInfo.Subject);
 	document.querySelector('.brief-title').innerText = homeworkInfo.HomeworkTitle;
 	document.querySelector('.brief-content').innerHTML = homeworkInfo.Contents.replace(/ /g, "&nbsp;").replace(/\n/g, "<br/>");
 	document.querySelector('.publisher').innerText = events.shortForString(homeworkInfo.unick, 6);
 	document.querySelector('.publish-date').innerText = (homeworkInfo.Date ? homeworkInfo.Date : homeworkInfo.MsgDate).split(' ')[0];
 	document.getElementById('brief-imgs').innerHTML = getImgsInner(homeworkInfo.File, homeworkInfo.HomeworkId);
+	workDetailStu.workdetail=homeworkInfo;
 }
 /**
  * 放置图片

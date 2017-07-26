@@ -55,7 +55,7 @@
 			<a id="modifyHomework" class="mui-pull-right display-none">修改</a>
 		</header>
 
-		<div class="mui-content">
+		<div id="work-commented" v-show="workCommented.Contents" class="mui-content">
 			<ul id="list" class="mui-table-view">
 				<li class="mui-table-view-cell mui-media">
 					<img id="headImg" style="display: none;margin-top: 5px;" class="mui-media-object mui-pull-left dynamic-personal-image" />
@@ -90,8 +90,22 @@
 				</li>
 			</ul>
 		</div>
-		<script src="../../js/mui.min.js"></script>
+		
 		<script src="../../js/utils/vue.min.js"></script>
+		<script type="text/javascript">
+			var workCommented = new Vue({
+				el: '#work-commented',
+				data: {
+					workCommented: {}
+				},
+				methods: {
+					resetData: function() {
+						this.workCommented = {};
+					}
+				}
+			})
+		</script>
+		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/utils/events.js"></script>
 		<script src="../../js/mui.zoom.js"></script>
 		<script src="../../js/mui.previewimage.js"></script>
