@@ -8,7 +8,12 @@ var submitOnLine = true; //是否在线提交 默认为是
 var subjectsContainer = document.getElementById('subjects');
 //个人id
 var personalUTID;
-mui.init();
+mui.init({
+	beforeback:function(){
+		homworkPublish.resetData();
+		return true;
+	}
+});
 
 mui.plusReady(function() {
 	mui.fire(plus.webview.currentWebview().opener(),"publishIsReady");
@@ -205,6 +210,7 @@ var setSubjects = function(subjectList) {
 		op.innerText = subject.Text;
 		subjectsContainer.appendChild(op);
 	});
+	homworkPublish.classes=subjectList;
 }
 //	/**
 //	 * 选中科目的监听

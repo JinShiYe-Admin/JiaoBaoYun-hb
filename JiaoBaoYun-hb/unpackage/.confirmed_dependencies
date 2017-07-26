@@ -304,7 +304,8 @@
 			"image/homework/arrow-down.png",
 			"css/mui.min.css",
 			"css/utils/common.css",
-			"css/utils/preview.css"
+			"css/utils/preview.css",
+			"js/libs/crypto-js/crypto-js.js"
 		],
 		"refer": [
 			"html/homework/classes-select.html"
