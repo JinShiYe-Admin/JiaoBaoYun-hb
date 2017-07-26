@@ -31,7 +31,7 @@
 			<a id="submitBtn" class="mui-pull-right header-publish">提交</a>
 		</header>
 		<!--content-->
-		<div class="mui-content">
+		<div id="work-publish" v-show="classes.length>0" class="mui-content">
 
 			<!--表单-->
 			<form class="mui-input-group">
@@ -69,6 +69,20 @@
 				<div id="pictures" class="img-container imgs-extras"></div>
 			</form>
 		</div>
+		<script src="../../js/utils/vue.min.js"></script>
+		<script type="text/javascript">
+			var homworkPublish = new Vue({
+				el: '#work-publish',
+				data: {
+					classes: []
+				},
+				methods: {
+					resetData: function() {
+						this.classes = [];
+					}
+				}
+			})
+		</script>
 		<!--mui库-->
 		<script src="../../js/mui.min.js"></script>
 		<!--公共事件模块-->
