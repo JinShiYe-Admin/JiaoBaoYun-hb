@@ -1025,24 +1025,7 @@
 			function showOrHiddenVideoAudio(type, fpath, time, thumb) {
 				//console.log("showOrHiddenVideoAudio " + type + " " + fpath + " " + time + " " + thumb);
 				var video = document.getElementById("video");
-				//重置音频区域
 				var audio = document.getElementById("audio");
-				audio.pause(); //暂停播放
-				audio.src = ""; //取消视频
-				audio.setAttribute("preload", "none");
-				audio_svg_rect_ani.removeAttribute("to");
-				audio_svg_rect_ani.removeAttribute("dur");
-				var ids = ["audio_svg_icon_first_ani", "audio_svg_icon_second_ani", "audio_svg_icon_third_ani"];
-				for(var i in ids) {
-					var ele = document.getElementById(ids[i]);
-					ele.removeAttribute("repeatCount");
-					//ele.removeAttribute("dur");
-				}
-				audio_svg.unpauseAnimations();
-				audioState = 4;
-				//重置视频区域
-				video.src = "";
-				video.style.backgroundImage = "";
 				var collapse_content_show = document.getElementById("collapse_content_show");
 				if(type == 1) { //视频
 					document.getElementById("scroll_wrapper").style.top = 44 + parseInt(plus.screen.resolutionWidth * 190 / 360) + "px";
@@ -1054,6 +1037,7 @@
 					document.getElementById("section_top_title").style.marginRight = collapse_content_show.offsetWidth + 6 + "px";
 					video.src = fpath;
 					video.style.backgroundImage = "url(" + thumb + ")";
+					events.playVideoCheckWeb();
 				} else if(type == 2) { //音频
 					document.getElementById("scroll_wrapper").style.top = "144px";
 					document.getElementById("video_area").style.display = "none";

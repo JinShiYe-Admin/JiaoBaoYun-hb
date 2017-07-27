@@ -1441,6 +1441,16 @@ var events = (function(mod) {
 		}
 	}
 
+	/**
+	 * 显示视频时，如果不是WiFi环境弹出提示
+	 */
+	mod.playVideoCheckWeb = function() {
+		var type = plus.networkinfo.getCurrentType();
+		if(type != plus.networkinfo.CONNECTION_WIFI && type != plus.networkinfo.CONNECTION_NONE) {
+			mui.toast("请注意当前不是WIFI环境");
+		}
+	}
+
 	return mod;
 
 })(events || {});
