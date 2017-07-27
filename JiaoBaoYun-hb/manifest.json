@@ -2063,7 +2063,8 @@
 					"js/utils/app-update.js",
 					"html/micro-course/course-home1.html",
 					"js/main/off-canvas.js",
-					"html/show/show-home1.html"
+					"html/show/show-home1.html",
+					"fonts/fangzheng.ttf"
 				],
 				"refer": [
 					"html/mine.html",
@@ -2078,7 +2079,8 @@
 					"html/register/login.html",
 					"html/cloud/order-member.html",
 					"html/micro-course/course-home.html",
-					"html/show/show-home2.html"
+					"html/show/show-home2.html",
+					"html/show/show-home.html"
 				],
 				"priority": 0
 			},
@@ -4966,7 +4968,12 @@
 					"image/show/show-default-large.png",
 					"image/show/show-default-small.png",
 					"js/libs/crypto-js/crypto-js.js",
-					"image/utils/loading.gif"
+					"image/utils/loading.gif",
+					"js/show/show-all.js",
+					"js/utils/vue.js",
+					"js/show/show-list.js",
+					"css/show/show-list-vue.css",
+					"fonts/mui.ttf"
 				],
 				"refer": [
 					"html/quan/space-detail.html"
@@ -5000,7 +5007,16 @@
 					"js/libs/crypto-js/crypto-js.js",
 					"image/show/show-default-large.png",
 					"image/show/show-default-small.png",
-					"js/show/show_list1.js"
+					"js/show/show_list1.js",
+					"js/show/show-list.js",
+					"js/utils/vue.js",
+					"js/show/show-all.js",
+					"fonts/mui.ttf",
+					"js/show/show_listnew.js",
+					"image/utils/playvideo.png",
+					"image/utils/img-loading.gif",
+					"image/utils/video-loading.gif",
+					"js/libs/jquery.lazyload.min.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -5132,7 +5148,8 @@
 					"js/libs/jquery.lazyload.min.js",
 					"image/utils/video-loading.gif",
 					"image/utils/playvideo.png",
-					"image/utils/img-loading.gif"
+					"image/utils/img-loading.gif",
+					"fonts/mui.ttf"
 				],
 				"refer": [
 					"html/quan/space-detail.html",
@@ -5210,7 +5227,8 @@
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
-					"js/micro-course/coursedetails.js"
+					"js/micro-course/coursedetails.js",
+					"image/utils/load-img-error.png"
 				],
 				"refer": [
 					"html/micro-course/course_section.html"
@@ -5454,6 +5472,19 @@
 				"refer": [
 					"html/micro-course/history-records.html"
 				],
+				"priority": 0
+			},
+			"html/show/show-home.html": {
+				"resources": [
+					"css/mui.min.css",
+					"html/show/show-attended.html",
+					"js/utils/webviewGroup.js",
+					"css/utils/common.css",
+					"fonts/fangzheng.ttf",
+					"fonts/mui.ttf",
+					"html/show/show-all.html"
+				],
+				"refer": [],
 				"priority": 0
 			}
 		},
