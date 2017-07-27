@@ -53,8 +53,9 @@ var dynamiclistitem = (function($, mod) {
 					var flag = e.index;
 					switch(flag) {
 						case 0:
+						case -1:
 							{
-								commentNode.style.backgroundColor = 'white'
+								commentNode.style.backgroundColor = 'transparent';
 								//console.log('取消或点击空白----' + commentNode.id + '变为白色')
 								grayFlag = 0;
 							}
@@ -450,7 +451,7 @@ var dynamiclistitem = (function($, mod) {
 		mui('.mui-table-view').on('touchend', '.replyComment', function() {
 			//console.log('touchend---' + this.id + '变为白色')
 			grayFlag = 0;
-			this.style.backgroundColor = 'white'
+			this.style.backgroundColor = 'transparent'
 		});
 
 		//
