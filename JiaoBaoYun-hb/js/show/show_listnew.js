@@ -41,8 +41,9 @@ var show_listnew = (function(mod) {
 					showCity.pageIndex++;
 					mod.getUserInfo(data.RspData.Data, function(tempData) {
 						if(tempData.length > 6) { //分为6个一组
-							callback(showCity, listContainer, tempData.slice(0, 6));
-							callback(showCity, listContainer, tempData.slice(6, tempData.length));
+							for(var i=0;i<tempData.length;i=i+6){
+								callback(showCity, listContainer, tempData.slice(i, i+6));
+							}
 						} else {
 							callback(showCity, listContainer, tempData);
 						}

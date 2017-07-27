@@ -11,12 +11,18 @@
 			"image/mine/setting.png",
 			"image/mine/about.png",
 			"fonts/mui.ttf",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"fonts/fangzheng.ttf",
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"css/iconfont/iconfont.css"
 		],
 		"refer": [
 			"html/quan/zone_main.html",
 			"html/mine/setting.html",
-			"html/mine/approval-apply.html"
+			"html/mine/approval-apply.html",
+			"html/mine/account-info.html",
+			"html/mine/qun_manage_a.html"
 		]
 	},
 	"html/show/show-home1.html": {
@@ -34,7 +40,10 @@
 			"css/mui.min.css",
 			"image/utils/playvideo.png",
 			"css/utils/fresh.css",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"image/utils/loading.gif",
+			"image/show/show-default-large.png",
+			"fonts/mui.ttf"
 		],
 		"refer": [
 			"html/register/login.html",
@@ -52,13 +61,16 @@
 			"js/publicHomeworkProtocol.js",
 			"fonts/iconfont.ttf",
 			"js/utils/Statusbar.js",
-			"js/index.js"
+			"js/index.js",
+			"fonts/fangzheng.ttf",
+			"fonts/mui.ttf"
 		],
 		"refer": [
 			"html/cloud/cloud_home.html",
 			"html/sciedu/sciedu_home.html",
 			"html/show/show-home1.html",
-			"html/micro-course/course-home1.html"
+			"html/micro-course/course-home1.html",
+			"html/show/show-home.html"
 		]
 	},
 	"html/micro-course/course-home1.html": {
@@ -74,6 +86,9 @@
 			"css/utils/common.css",
 			"image/utils/loading.gif",
 			"js/libs/crypto-js/crypto-js.js"
+		],
+		"refer": [
+			"html/micro-course/course_details.html"
 		]
 	},
 	"html/cloud/cloud_home.html": {
@@ -185,7 +200,12 @@
 			"js/qiniu/qiniu.js",
 			"js/cloud/AndroidFileSystem.js",
 			"js/utils/playutil.js",
-			"fonts/mui.ttf"
+			"fonts/mui.ttf",
+			"css/cloud/file.css",
+			"fonts/fangzheng.ttf",
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"css/iconfont/iconfont.css"
 		]
 	},
 	"html/show/show-detail.html": {
@@ -202,7 +222,11 @@
 			"css/utils/preview.css",
 			"js/utils/all-preview.js",
 			"fonts/mui.ttf",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"css/utils/common.css",
+			"css/iconfont/iconfont.css",
+			"css/mui.min.css",
+			"fonts/fangzheng.ttf"
 		],
 		"refer": [
 			"html/quan/classSpace-persons.html"
@@ -392,7 +416,9 @@
 	"html/mine/qun_manage_a.html": {
 		"resources": [
 			"css/mine/manager_data.css",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		],
 		"refer": [
 			"html/quan/group-pInfo.html"
@@ -409,6 +435,71 @@
 			"css/quan/custom-textarea.css",
 			"js/utils/compress.js",
 			"js/utils/camera.js"
+		]
+	},
+	"html/show/show-home.html": {
+		"resources": [
+			"css/mui.min.css",
+			"html/show/show-attended.html",
+			"js/utils/webviewGroup.js",
+			"css/utils/common.css",
+			"fonts/fangzheng.ttf",
+			"fonts/mui.ttf",
+			"html/show/show-all.html"
+		],
+		"refer": [
+			"html/show/show-attended.html",
+			"html/show/show-all.html"
+		]
+	},
+	"html/show/show-all.html": {
+		"resources": [
+			"css/mui.min.css",
+			"js/show/show-all.js",
+			"js/libs/crypto-js/crypto-js.js",
+			"js/utils/vue.js",
+			"js/show/show-list.js",
+			"css/show/show-list.css",
+			"css/utils/common.css",
+			"image/show/show-default-small.png",
+			"css/show/show-list-vue.css",
+			"fonts/mui.ttf",
+			"image/show/show-default-large.png"
+		]
+	},
+	"html/show/show-attended.html": {
+		"resources": [
+			"css/mui.min.css",
+			"js/show/show-list.js",
+			"css/show/show-list.css",
+			"css/utils/common.css",
+			"js/libs/crypto-js/crypto-js.js",
+			"js/utils/vue.js",
+			"image/show/show-default-small.png",
+			"js/show/show-all.js",
+			"fonts/mui.ttf",
+			"fonts/fangzheng.ttf",
+			"image/show/show-default-large.png",
+			"js/show/show_listnew.js",
+			"image/utils/playvideo.png",
+			"image/utils/img-loading.gif",
+			"image/utils/video-loading.gif",
+			"js/libs/jquery.lazyload.min.js"
+		]
+	},
+	"html/micro-course/course_details.html": {
+		"resources": [
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"js/libs/crypto-js/crypto-js.js",
+			"js/micro-course/coursedetails.js"
+		]
+	},
+	"html/mine/account-info.html": {
+		"resources": [
+			"js/utils/load.js",
+			"js/utils/UploadHeadImage.js",
+			"js/mine/account-info.js"
 		]
 	}
 }
