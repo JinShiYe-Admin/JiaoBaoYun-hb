@@ -495,7 +495,12 @@
 			"css/mui.min.css",
 			"css/utils/common.css",
 			"js/libs/crypto-js/crypto-js.js",
-			"js/micro-course/coursedetails.js"
+			"js/micro-course/coursedetails.js",
+			"image/qiuzhi/qiuzhi_noanswer.png",
+			"image/utils/playvideo.png"
+		],
+		"refer": [
+			"html/micro-course/course-info.html"
 		]
 	},
 	"html/mine/account-info.html": {
@@ -503,6 +508,37 @@
 			"js/utils/load.js",
 			"js/utils/UploadHeadImage.js",
 			"js/mine/account-info.js"
+		]
+	},
+	"html/micro-course/course-info.html": {
+		"resources": [
+			"js/utils/vue.min.js",
+			"css/mui.min.css",
+			"js/micro-course/course-info.js",
+			"css/utils/common.css",
+			"js/libs/crypto-js/crypto-js.js"
+		],
+		"refer": [
+			"html/micro-course/history-records.html"
+		]
+	},
+	"html/micro-course/history-records.html": {
+		"resources": [
+			"image/utils/load-img-error.png",
+			"image/utils/loading.gif",
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"js/libs/crypto-js/crypto-js.js"
+		],
+		"refer": [
+			"html/micro-course/course_section.html"
+		]
+	},
+	"html/micro-course/course_section.html": {
+		"resources": [
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"js/libs/crypto-js/crypto-js.js"
 		]
 	}
 }

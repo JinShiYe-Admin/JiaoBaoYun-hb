@@ -228,13 +228,11 @@
 			var totalPage = 0;
 			mui.init();
 			mui.plusReady(function() {
-				//events.closeWaiting();
-				var wd = events.showWaiting();
 				initData();
 				courseDetails.init();
 				initControl();
 				initListener();
-				getAllSectionsAndComments(pageIndex + 1, wd);
+				getAllSectionsAndComments(pageIndex + 1, 0);
 			});
 
 			/**
@@ -261,33 +259,21 @@
 					down: {
 						callback: function() {
 							//清除节点
-							document.getElementById('section_list').innerHTML = "";
 							mui(".mui-pull-loading")[0].innerHTML = "";
 							var self = this;
-							//console.log("下拉刷新");
-							getAllSectionsAndComments(1);
-							setTimeout(function() {
-								//结束下拉刷新
-								self.endPullDownToRefresh();
-							}, 1000);
+							getAllSectionsAndComments(1, 1, self);
 						}
 					},
 					up: {
 						callback: function() {
-							var self = this;
 							//console.log("上拉加载更多");
+							var self = this;
 							if(pageIndex <= totalPage) {
-								getAllSectionsAndComments(pageIndex + 1);
-								setTimeout(function() {
-									//结束下拉刷新
-									self.endPullUpToRefresh();
-								}, 1000);
-
-							} else { //结束下拉刷新
+								getAllSectionsAndComments(pageIndex + 1, 2, self);
+							} else { //上拉加载更多
 								self.endPullUpToRefresh();
 								mui(".mui-pull-loading")[0].innerHTML = "没有更多了";
 							}
-
 						}
 					}
 				});
@@ -316,35 +302,40 @@
 			 * @param {Object} index 当前页数
 			 * @param {Object} wd 等待框
 			 */
-			function getAllSectionsAndComments(index, wd) {
-				wd = wd || events.showWaiting();
+			function getAllSectionsAndComments(index, type, self) {
 				var comData = {
 					userId: myStorage.getItem(storageKeyName.PERSONALINFO).utid, //用户ID,登录用户
 					courseId: main.data.TabId, //课程ID
 					pageIndex: index, //当前页数
 					pageSize: 10 //每页记录数,传入0，获取总记录数
 				};
-				postDataMCPro_getAllSectionsByCourse(comData, wd, function(data) {
+				postDataMCPro_getAllSectionsByCourse(comData, null, function(data) {
 					//console.log('3 获取课程的节次 ' + JSON.stringify(data));
 					if(data.RspCode == 0) {
-						wd.close();
 						pageIndex = index;
 						totalPage = data.RspData.totalPage;
+						if(index == 1) {//获取第一页
+							document.getElementById('section_list').innerHTML = "";
+						}
 						if(data.RspData.Data.length != 0) {
 							showSectionList(data.RspData.Data);
 						}
 
 						if(pageIndex >= data.RspData.totalPage) {
 							mui(".mui-pull-loading")[0].innerHTML = "";
-							//console.log('没有下一页');
 						}
 
 						if(pageIndex == 1 && data.RspData.Data.length == 0) {
 							mui.toast('没有节次')
 						}
 					} else {
-						wd.close();
 						mui.toast(data.RspTxt);
+					}
+					if(type == 1) { //结束下拉刷新
+						self.endPullDownToRefresh();
+					}
+					if(type == 2) { //结束上拉加载
+						self.endPullUpToRefresh();
 					}
 				});
 			}

@@ -5227,7 +5227,8 @@
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
-					"js/micro-course/coursedetails.js"
+					"js/micro-course/coursedetails.js",
+					"image/utils/load-img-error.png"
 				],
 				"refer": [
 					"html/micro-course/course_section.html"
