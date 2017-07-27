@@ -594,7 +594,9 @@
 			"js/libs/crypto-js/crypto-js.js"
 		],
 		"refer": [
-			"html/cloud/keeprecord_callorrecord_main.html"
+			"html/cloud/keeprecord_callorrecord_main.html",
+			"html/cloud/keeprecord_history_a.html",
+			"html/cloud/app_statistics.html"
 		]
 	},
 	"html/cloud/keeprecord_callorrecord_main.html": {
@@ -609,6 +611,30 @@
 			"js/utils/gallerypick.js",
 			"js/libs/crypto-js/crypto-js.js",
 			"image/utils/loading.gif"
+		]
+	},
+	"html/cloud/keeprecord_history_a.html": {
+		"resources": [
+			"js/mui.zoom.js",
+			"css/utils/pullToRefresh.css",
+			"css/mui.min.css",
+			"js/utils/showvideoutil.js",
+			"js/mui.previewimage.js",
+			"image/utils/playvideo.png",
+			"css/utils/common.css",
+			"image/utils/loading.gif",
+			"css/utils/preview.css",
+			"js/libs/crypto-js/crypto-js.js"
+		]
+	},
+	"html/cloud/app_statistics.html": {
+		"resources": [
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"js/libs/crypto-js/crypto-js.js"
+		],
+		"refer": [
+			"html/cloud/keeprecord_history_a.html"
 		]
 	}
 }

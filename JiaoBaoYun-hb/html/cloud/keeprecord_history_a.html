@@ -212,12 +212,11 @@
 				}
 			});
 			mui.plusReady(function() {
-				var wd = events.showWaiting();
 				initData();
 				initControl();
 				initListener();
 				//获取数据
-				requestData(1, wd);
+				requestData(1, 0);
 			});
 
 			/**
@@ -252,10 +251,7 @@
 				pullRefresh = mui('.mui-scroll-wrapper .mui-scroll').pullToRefresh({
 					down: {
 						callback: function() {
-							requestData(1);
-							setTimeout(function() {
-								pullRefresh.endPullDownToRefresh(); //结束下拉刷新
-							}, 1000);
+							requestData(1, 1);
 						}
 					},
 					up: {
@@ -263,13 +259,11 @@
 						contentnomore: '', //隐藏没有更多提示
 						callback: function() {
 							if(page) {
-								requestData(page.pageIndex + 1);
+								requestData(page.pageIndex + 1, 2);
 							} else {
+								pullRefresh.endPullUpToRefresh();
 								mui.toast('数据异常，请下拉刷新后重新尝试');
 							}
-							setTimeout(function() {
-								endPullUp();
-							}, 1000);
 						}
 					}
 				});
@@ -328,8 +322,11 @@
 			 * 获取针对某班的点到记事列表
 			 * @param {Object} pageIndex 当前页数
 			 */
-			function requestData(pageIndex, wd) {
-				var wd = wd || events.showWaiting();
+			function requestData(pageIndex, type) {
+				var wd = null;
+				if(type == 0) {
+					wd = events.showWaiting();
+				}
 				if(mainData.type == 'history') {
 					//66.（点到记事）获取针对某班的点到记事列表
 					var comData = {
@@ -340,7 +337,7 @@
 					};
 					postDataPro_getNotesForClass(comData, wd, function(data) {
 						//console.log('66 获取针对某班的点到记事列表 getNotesForClass ' + JSON.stringify(data));
-						requestDataCallBack(pageIndex, wd, data);
+						requestDataCallBack(pageIndex, wd, data, type);
 					});
 				} else if(mainData.type == 'statistics') {
 					//94.（点到记事）获取某学生的点到记事统计
@@ -354,7 +351,7 @@
 					};
 					postDataPro_getNotesStatisticForStudent(comData, wd, function(data) {
 						//console.log('94 获取某学生的点到记事统计 getNotesStatisticForStudent ' + JSON.stringify(data));
-						requestDataCallBack(pageIndex, wd, data);
+						requestDataCallBack(pageIndex, wd, data, type);
 					});
 				}
 			}
@@ -513,7 +510,7 @@
 			 * 请求数据后的回调
 			 * @param {Object} data
 			 */
-			function requestDataCallBack(pageIndex, wd, data) {
+			function requestDataCallBack(pageIndex, wd, data, type) {
 				if(data.RspCode == 0) { //成功获取
 					//记录页数
 					page = {
@@ -559,7 +556,13 @@
 								createItem(tempRspData[i]);
 							}
 							////console.log(document.getElementById("data_table").innerHTML);
-							wd.close();
+							if(type == 0) {
+								wd.close();
+							}
+							if(type == 1) { //结束下拉刷新
+								pullRefresh.endPullDownToRefresh();
+							}
+							endPullUp();
 						});
 					}
 
@@ -580,7 +583,13 @@
 				}
 
 				if(mainData.type == 'history') {
-					wd.close();
+					if(type == 0) {
+						wd.close();
+					}
+					if(type == 1) { //结束下拉刷新
+						pullRefresh.endPullDownToRefresh();
+					}
+					endPullUp();
 				}
 			}
 
