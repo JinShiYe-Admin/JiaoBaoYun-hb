@@ -130,7 +130,8 @@
 			"html/homework/homework-tea.html",
 			"html/quan/class_space.html",
 			"html/mine/qun_manage_a.html",
-			"html/cloud/app_notes_main.html"
+			"html/cloud/app_notes_main.html",
+			"html/cloud/app_keeprecord.html"
 		]
 	},
 	"html/sciedu/sciedu_home.html": {
@@ -584,6 +585,30 @@
 			"js/libs/crypto-js/crypto-js.js",
 			"css/utils/audiopopover.css",
 			"css/utils/preview.css"
+		]
+	},
+	"html/cloud/app_keeprecord.html": {
+		"resources": [
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"js/libs/crypto-js/crypto-js.js"
+		],
+		"refer": [
+			"html/cloud/keeprecord_callorrecord_main.html"
+		]
+	},
+	"html/cloud/keeprecord_callorrecord_main.html": {
+		"resources": [
+			"css/utils/pullToRefresh.css",
+			"js/utils/compress.js",
+			"css/mui.min.css",
+			"js/utils/MultiMedia.js",
+			"css/utils/MultiMedia.css",
+			"css/utils/common.css",
+			"js/utils/recordvideoutil.js",
+			"js/utils/gallerypick.js",
+			"js/libs/crypto-js/crypto-js.js",
+			"image/utils/loading.gif"
 		]
 	}
 }

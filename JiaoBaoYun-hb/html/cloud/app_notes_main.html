@@ -554,7 +554,7 @@
 				if(type == 1) { //结束下拉刷新
 					pullRefresh.endPullDownToRefresh();
 				}
-				endPullUp()
+				endPullUp();
 			});
 		}
 
@@ -695,7 +695,7 @@
 		 */
 		function endPullUp() {
 			if(page && page.pageIndex >= page.totalPage) {
-				console.log('没有下一页');
+				//console.log('没有下一页');
 				pullRefresh.endPullUpToRefresh(true);
 			} else {
 				pullRefresh.endPullUpToRefresh();
