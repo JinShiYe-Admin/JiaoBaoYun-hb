@@ -4721,7 +4721,8 @@
 					"html/mine/qun_manage_invite_a.html",
 					"html/mine/qun_manage_info.html",
 					"html/mine/qun_data_details.html",
-					"html/mine/qun_data_create.html"
+					"html/mine/qun_data_create.html",
+					"html/mine/qun_manage_info_change.html"
 				],
 				"priority": 0
 			},

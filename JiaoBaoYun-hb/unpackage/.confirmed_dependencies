@@ -132,7 +132,8 @@
 			"html/mine/qun_manage_a.html",
 			"html/cloud/app_notes_main.html",
 			"html/cloud/app_keeprecord.html",
-			"html/cloud/record_student_main.html"
+			"html/cloud/record_student_main.html",
+			"html/quan/studentdynamic_main.html"
 		]
 	},
 	"html/sciedu/sciedu_home.html": {
@@ -381,7 +382,8 @@
 	"html/quan/group-pInfo.html": {
 		"resources": [
 			"css/quan/group-pInfo.css",
-			"js/quan/group-pInfo.js"
+			"js/quan/group-pInfo.js",
+			"image/utils/default_personalimage.png"
 		],
 		"refer": [
 			"html/quan/edit-remark.html"
@@ -424,10 +426,15 @@
 			"css/mine/manager_data.css",
 			"js/libs/crypto-js/crypto-js.js",
 			"css/mui.min.css",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"css/mine/manager_member.css"
 		],
 		"refer": [
-			"html/quan/group-pInfo.html"
+			"html/quan/group-pInfo.html",
+			"html/mine/qun_data_create.html",
+			"html/mine/qun_manage_info_change.html",
+			"html/mine/qun_manage_info.html",
+			"html/mine/qun_manage_invite_a.html"
 		]
 	},
 	"html/utils/customizeCity.html": {
@@ -663,6 +670,42 @@
 			"css/utils/common.css",
 			"js/utils/gallerypick.js",
 			"js/libs/crypto-js/crypto-js.js"
+		]
+	},
+	"html/quan/studentdynamic_main.html": {
+		"resources": [
+			"css/mui.min.css",
+			"image/utils/playvideo.png",
+			"css/utils/common.css",
+			"image/utils/loading.gif",
+			"js/utils/UploadHeadImage.js",
+			"js/libs/crypto-js/crypto-js.js",
+			"js/mui.zoom.js",
+			"css/utils/pullToRefresh.css",
+			"js/utils/compress.js",
+			"js/utils/showvideoutil.js",
+			"js/mui.previewimage.js",
+			"css/utils/preview.css"
+		]
+	},
+	"html/mine/qun_manage_info_change.html": {
+		"resources": [
+			"js/libs/crypto-js/crypto-js.js",
+			"css/mui.min.css",
+			"css/utils/common.css"
+		]
+	},
+	"html/mine/qun_manage_info.html": {
+		"resources": [
+			"css/mui.min.css",
+			"js/utils/MultiMedia.js",
+			"css/utils/common.css",
+			"js/utils/gallerypick.js"
+		]
+	},
+	"html/mine/qun_manage_invite_a.html": {
+		"resources": [
+			"image/mine/invite_none_0.png"
 		]
 	}
 }
