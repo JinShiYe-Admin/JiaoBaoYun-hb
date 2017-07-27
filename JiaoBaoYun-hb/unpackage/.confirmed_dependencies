@@ -145,7 +145,8 @@
 			"js/libs/crypto-js/crypto-js.js",
 			"fonts/fangzheng.ttf",
 			"/image/utils/default_load_2.gif",
-			"css/mui.min.css"
+			"css/mui.min.css",
+			"image/utils/loading.gif"
 		],
 		"refer": [
 			"html/utils/customizeCity.html"
@@ -427,7 +428,9 @@
 	"html/utils/customizeCity.html": {
 		"resources": [
 			"css/mui.min.css",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"js/libs/crypto-js/crypto-js.js",
+			"image/utils/delete.png"
 		]
 	},
 	"html/homework/doHomework-stu.html": {
