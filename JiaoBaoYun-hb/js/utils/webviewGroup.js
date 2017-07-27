@@ -29,8 +29,8 @@ proto._initParent = function() {
 };
 proto._initNativeView = function() {
 	this.nativeView = new plus.nativeObj.View('__MUI_TAB_NATIVE', {
-		'top': '44px',//这个需要根据顶部导航及顶部选项卡高度自动调整
-		'height': (window.screen.height-44)+"px",
+		'top': '83px',//这个需要根据顶部导航及顶部选项卡高度自动调整
+		'height': (window.screen.height - 83)+"px",
 		'left': '100%',
 		'width': '100%',
 		"backgroundColor":"#ffffff"
@@ -38,7 +38,6 @@ proto._initNativeView = function() {
 	this.nativeView.show();
 };
 proto._initWebviewContexts = function() {
-	//循环加载webview
 	for(var len = this.items.length, i = len - 1; i >= 0; i--) {
 		var webviewOptions = this.items[i];
 		var id = webviewOptions.id;
@@ -48,31 +47,24 @@ proto._initWebviewContexts = function() {
 		var extras = webviewOptions.extras;
 		extras.__mui_url = webviewOptions.url;
 		extras.__mui_index = i;
-		//左侧
+
 		extras.__mui_left = isFirst ? '' : this.items[i - 1].id;
-		//右侧
 		extras.__mui_right = isLast ? '' : this.items[i + 1].id;
 
 		var styles = webviewOptions.styles || {};
-		//如果大于要显示的页面
+
 		if(i > this.options.index) {
 			styles.left = '100%';
-		//如果小于要显示的页面
 		} else if(i < this.options.index) {
 			styles.left = '-100%';
-		//如果是要显示的页面
 		} else {
 			styles.left = '0';
 		}
-		//webviewContext 将id 之类的赋值给webviewContext
 		var webviewContext = new webviewGroupContext(id, webviewOptions, this);
 		this.webviewContexts[id] = webviewContext;
-		//要显示的默认页面
 		if(isCurrent) {
 			webviewContext.webview = plus.webview.getWebviewById(id);
-			//创建页面
 			webviewContext.createWebview();
-			//
 			webviewContext.webview.show("none");
 			this._initDrags(webviewContext.webview);
 			this.currentWebview = webviewContext.webview;
@@ -154,9 +146,6 @@ proto._checkDrags = function(webview) {
 		}
 	}
 };
-proto.addWebView=function(){
-	
-}
 proto.getCurrentWebview = function() {
 	return this.currentWebview;
 };
@@ -168,28 +157,19 @@ proto.getCurrentWebviewContext = function() {
 };
 proto.switchTab = function(id) {
 	id = id.replace('_0', ''); //首页需要替换为appid
-	//当前页面
 	var fromWebview = this.currentWebview;
-	//要显示的页面跟当前是同一页面
 	if(id === fromWebview.id) {
 		return;
 	}
-	//目标页面的参数
 	var toWebviewContext = this.webviewContexts[id];
-	//目标页面
 	var toWebview = toWebviewContext.webview;
-	
 	var fromToLeft = '100%';
-	
 	var toFromLeft = '-100%';
-	//目标页面在当前页面右侧
 	if(toWebviewContext.options.extras.__mui_index > fromWebview.__mui_index) {
 		fromToLeft = '-100%';
 		toFromLeft = '100%';
 	}
-	//不是新页面
 	var isNew = false;
-	//如果目标页面不存在
 	if(!toWebview) {
 		isNew = true;
 		toWebviewContext.createWebview('startAnimation');
@@ -200,8 +180,8 @@ proto.switchTab = function(id) {
 		this._checkDrags(toWebview); //新建的时候均需校验
 	}
 	var self = this;
-//	//console.log("current:" + fromWebview.id + ",to:" + fromToLeft);
-//	//console.log("next:" + toWebview.id + ",from:" + toFromLeft);
+//	console.log("current:" + fromWebview.id + ",to:" + fromToLeft);
+//	console.log("next:" + toWebview.id + ",from:" + toFromLeft);
 
 	plus.webview.startAnimation({
 			'view': fromWebview,
@@ -219,9 +199,9 @@ proto.switchTab = function(id) {
 			'action': 'show'
 		},
 		function(e) {
-			////console.log("startAnimation callback...");
+			//console.log("startAnimation callback...");
 			if(e.id === toWebview.id) {
-				isNew && plus.nativeUI.showWaiting("加载中...");
+				isNew && plus.nativeUI.showWaiting();
 				this.currentWebview = toWebview;
 				this.onChange({
 					index: toWebview.__mui_index
@@ -246,7 +226,7 @@ var webviewGroupContext = function(id, webviewOptions, groupContext) {
 };
 
 var _proto = webviewGroupContext.prototype;
-//创建webView;
+
 _proto.createWebview = function(from) {
 	var options = this.options;
 	options.styles = options.styles || {
@@ -264,7 +244,7 @@ _proto.createWebview = function(from) {
 		options.styles.left = '100%';
 		if(from !== 'startAnimation') {
 			options.styles.left = '0';
-			plus.nativeUI.showWaiting("加载中...");
+			plus.nativeUI.showWaiting();
 		}
 		this.webview = plus.webview.create(this.url, this.id, options.styles, options.extras);
 		//append进去，避免返回时闪屏

@@ -1,23 +1,21 @@
-var show_listnew = (function(mod) {
+var show_list = (function(mod) {
 	/**
 	 * 获取展现的数据
 	 * @param {Object} showCity 地区
 	 * @param {Object} listContainer 列表
 	 * @param {Object} callback 回调
 	 */
-	mod.getShowList = function(showCity, listContainer, callback) {
+	mod.getShowList = function(showCity, callback) {
 		//个人信息
-		var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
-		//		var wd = events.showWaiting();
 		if(showCity.pageFlag == 0) { //关注
 			//console.log('关注界面拉');
 			//81.（用户空间）获取用户所有关注的用户
-			if(personal.utid == 0) { //游客
+			if(events.getUtid() == 0) { //游客
 				var showfocusperson = window.myStorage.getItem(window.storageKeyName.SHOWFOCUSEPERSEN);
 				//74.(用户空间）获取多用户空间所有用户动态列表
-				getAllUserSpacesByUser(showCity, showfocusperson, listContainer, callback);
+				getAllUserSpacesByUser(showCity, showfocusperson, callback);
 			} else {
-				getFocusByUser(showCity, listContainer, callback);
+				getFocusByUser(showCity, callback);
 			}
 		} else { //全部
 			var wd = events.showWaiting();
@@ -25,7 +23,7 @@ var show_listnew = (function(mod) {
 			 * 78.（用户空间）获取区域用户空间列表
 			 */
 			postDataPro_getUserSpacesByArea({
-				userId: personal.utid, //用户ID
+				userId: events.getUtid(), //用户ID
 				area: '0', //区域
 				pageIndex: showCity.pageIndex, //当前页数
 				pageSize: 12 //每页记录数
@@ -34,17 +32,17 @@ var show_listnew = (function(mod) {
 				//console.log('78.（用户空间）获取区域用户空间列表:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 				if(data.RspCode == 0) {
 					if(showCity.pageIndex == 1) {
-						listContainer.innerHTML = "";
+						//						listContainer.innerHTML = "";
 					}
 					//总页数
 					showCity.totalPage = data.RspData.TotalPage;
-					showCity.pageIndex++;
 					mod.getUserInfo(data.RspData.Data, function(tempData) {
 						if(tempData.length > 6) { //分为6个一组
-							callback(showCity, listContainer, tempData.slice(0, 6));
-							callback(showCity, listContainer, tempData.slice(6, tempData.length));
+							for(var i = 0; i < tempData.length; i = i + 6) {
+								callback(showCity, tempData.slice(i, i + 6));
+							}
 						} else {
-							callback(showCity, listContainer, tempData);
+							callback(showCity, tempData);
 						}
 					});
 				} else {
@@ -116,10 +114,9 @@ var show_listnew = (function(mod) {
 	/**
 	 * //81.（用户空间）获取用户所有关注的用户
 	 * @param {Object} showCity 地区信息
-	 * @param {Object} listContainer 加载内容的控件
 	 * @param {Object} callback 回调
 	 */
-	function getFocusByUser(showCity, listContainer, callback) {
+	function getFocusByUser(showCity, callback) {
 		//个人信息
 		var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
 		//所需参数
@@ -140,9 +137,9 @@ var show_listnew = (function(mod) {
 				//				//console.log('tempID=', tempID);
 				//74.(用户空间）获取多用户空间所有用户动态列表
 				if(tempID.length > 0) {
-					getAllUserSpacesByUser(showCity, tempID, listContainer, callback);
+					getAllUserSpacesByUser(showCity, tempID, callback);
 				} else {
-					listContainer.innerHTML = "";
+
 				}
 			} else {
 				mui.toast(data.RspTxt);
@@ -154,10 +151,9 @@ var show_listnew = (function(mod) {
 	 * //74.(用户空间）获取多用户空间所有用户动态列表
 	 * @param {Object} showCity 地区信息
 	 * @param {Object} paraModel 关注人信息数组
-	 * @param {Object} listContainer 加载数据的控件
 	 * @param {Object} callback 请求的回调
 	 */
-	function getAllUserSpacesByUser(showCity, paraModel, listContainer, callback) {
+	function getAllUserSpacesByUser(showCity, paraModel, callback) {
 		//个人信息
 		var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
 		//所需参数
@@ -183,10 +179,10 @@ var show_listnew = (function(mod) {
 					mod.getUserInfo(data.RspData.Data, function(tempData) {
 						showArray = tempData;
 						if(tempData.length > 6) { //分为6个一组
-							callback(showCity, listContainer, tempData.slice(0, 6));
-							callback(showCity, listContainer, tempData.slice(6, tempData.length));
+							callback(showCity, tempData.slice(0, 6));
+							callback(showCity, tempData.slice(6, tempData.length));
 						} else {
-							callback(showCity, listContainer, tempData);
+							callback(showCity, tempData);
 						}
 					});
 				}
@@ -203,13 +199,69 @@ var show_listnew = (function(mod) {
 	 * @param {Object} showData 加载的数据
 	 */
 	mod.setShowList = function(showCity, listContainer, showData) {
-		if(showCity.pageFlag){//全部
-			showList.allList.push(showData);
-		}else{
-			showList.attendedList.push(showData);
+		var div = document.createElement("div");
+		div.className = "mui-table-view cityNews-container";
+		//		var listDiv = document.createElement("div");
+		//		listDiv.className = "mui-table-view";
+		for(var i in showData) {
+			var subDiv = document.createElement("li");
+			subDiv.className = "mui-table-view-cell news-container";
+			subDiv.innerHTML = mod.getShowInner(showData[i]);
+			//			listDiv.appendChild(subDiv);
+			div.appendChild(subDiv);
+			subDiv.info = showData[i];
 		}
-//		jQuery(".img-container").lazyload();
+		listContainer.appendChild(div);
+		//console.log("listContainer.innerHTML:" + listContainer.innerHTML);
+		jQuery(".img-container").lazyload();
 		//		mod.endFresh();
+	}
+	/**
+	 * 根据展现单条数据 生成单条数据的cell
+	 * @param {Object} data
+	 */
+	mod.getShowInner = function(data) {
+		return mod.getVideoMenu(data) +
+			'<div class="news-words"><p class="news-title single-line">' + data.MsgTitle + '</p>' +
+			'<div class="anthor-date"><p class="news-anthor single-line">' + data.unick + '</p><p class="news-date">' +
+			data.PublishDate + '</p></div></div>';
+	}
+	/**
+	 * 获取视频按钮控件
+	 * @param {Object} cell
+	 */
+	mod.getVideoMenu = function(cell) {
+		var isVideo = false;
+		if(cell.EncType) {
+			switch(cell.EncType) {
+				case 2: //视频
+					isVideo = true;
+					break;
+				case 5: //图文混合
+					var addrs = cell.EncAddr.split(".");
+					switch(addrs[addrs.length - 1]) {
+						case "mp4":
+						case "MP4":
+							isVideo = true;
+							break;
+						default:
+							break;
+					}
+					break;
+				default:
+					break;
+			}
+		}
+
+		if(isVideo) {
+			return '<div class="img-container news-img" data-original="' + cell.EncImgAddr.split("|")[0] +
+				'" style="background-image:url(../../image/utils/video-loading.gif);text-align:center;background-position:center;background-size:cover;">' +
+				'<img class="play-video" src="../../image/utils/playvideo.png"/>' +
+				'</div>'
+		}
+		return '<div class="img-container news-img" data-original="' + cell.EncImgAddr.split("|")[0] +
+			'" style="background-image:url(../../image/utils/img-loading.gif);text-align:center;background-position:center;background-size:cover;">' +
+			'</div>';
 	}
 	/**
 	 * 暂不用
@@ -241,19 +293,53 @@ var show_listnew = (function(mod) {
 			}
 		});
 	}
+	//	mod.endFresh = function() {
+	//		events.closeWaiting();
+	//		//console.log("freshFlag:" + freshFlag);
+	//		if(freshContainer) {
+	//			//console.log("freshContainer className" + freshContainer.className)
+	//			if(freshFlag == 1) {
+	//				//console.log("走这吗？？？？？");
+	//				freshContainer.endPullDownToRefresh();
+	//				mui(".mui-pull-loading")[0].innerText = "上拉加载更多";
+	//			} else if(freshFlag == 2) {
+	//				freshContainer.endPullUpToRefresh();
+	//			} else {
+	//				mui(".mui-pull-loading")[0].innerText = "上拉加载更多";
+	//			}
+	//		}
+	//		freshFlag = 0;
+	//	}
 	/**
 	 * 加载监听
 	 */
 	mod.setListListener = function() {
+		//展现动态点击监听
+		mui(".mui-slider-group").on("tap", ".news-container", function(e) {
+			this.info.focusFlag = 1;
+			jumpToShowDetail(this);
+			//			events.singleWebviewInPeriod(this, "../quan/space-detail.html", this.info);
+		})
 		//发布的点击事件
 		document.getElementById("publish-show").addEventListener("tap", function() {
 			var item = this;
 			if(events.judgeLoginMode(item)) {
-				return
+				return;
 			}
 			item.disabled = true;
 			events.singleWebviewInPeriod(item, "../quan/pub-dynamic.html", "zx");
 		})
 	}
+
+	function jumpToShowDetail(item) {
+		if(detailReady) {
+			events.fireToPageWithData("show-detail.html", "showDetail", item.info);
+		} else {
+			setTimeout(function() {
+				jumpToShowDetail(item);
+			}, 500)
+
+		}
+	}
 	return mod;
-})(show_listnew || {})
+})(show_list || {})
