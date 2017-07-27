@@ -1430,7 +1430,7 @@ var events = (function(mod) {
 	 * @param {Object} data 传递的数据
 	 */
 	mod.readyToPage = function(isReady, url, lisetener, data) {
-		//console.log("是否已准备变形：" + isReady);
+		console.log("是否已准备变形：" + isReady);
 		if(isReady) {
 			//console.log("要传递的数据：" + JSON.stringify(data));
 			mod.fireToPageWithData(url, lisetener, data);

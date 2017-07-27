@@ -31,19 +31,10 @@ var show_list = (function(mod) {
 				events.closeWaiting();
 				//console.log('78.（用户空间）获取区域用户空间列表:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 				if(data.RspCode == 0) {
-					if(showCity.pageIndex == 1) {
-						//						listContainer.innerHTML = "";
-					}
 					//总页数
 					showCity.totalPage = data.RspData.TotalPage;
 					mod.getUserInfo(data.RspData.Data, function(tempData) {
-						if(tempData.length > 6) { //分为6个一组
-							for(var i = 0; i < tempData.length; i = i + 6) {
-								callback(showCity, tempData.slice(i, i + 6));
-							}
-						} else {
-							callback(showCity, tempData);
-						}
+						callback(showCity, tempData);
 					});
 				} else {
 					mui.toast(data.RspTxt);
@@ -170,20 +161,11 @@ var show_list = (function(mod) {
 			//console.log("获取的问题数据：" + JSON.stringify(data));
 			//			//console.log('74.(用户空间）获取多用户空间所有用户动态列表:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 			if(data.RspCode == 0) {
-				if(showCity.pageIndex == 1) {
-					listContainer.innerHTML = "";
-				}
 				if(data.RspData.TotalCnt > 0) {
-					showCity.pageIndex++;
 					showCity.totalPage = data.RspData.TotalPage;
 					mod.getUserInfo(data.RspData.Data, function(tempData) {
 						showArray = tempData;
-						if(tempData.length > 6) { //分为6个一组
-							callback(showCity, tempData.slice(0, 6));
-							callback(showCity, tempData.slice(6, tempData.length));
-						} else {
-							callback(showCity, tempData);
-						}
+						callback(showCity, tempData);
 					});
 				}
 			} else {

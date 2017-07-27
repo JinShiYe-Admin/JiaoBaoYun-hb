@@ -47,7 +47,7 @@
 				</div>
 				<!--<hr style="width: 100%;height: 1px;color: #E4E4E4;border: none;" />-->
 				<br />
-				<br  />
+				<br />
 				<div style="width: 100%;height: 1px; background-color: #E4E4E4;margin-bottom: 12px;"></div>
 				<div v-if="showDetail.LikeUsers&&showDetail.LikeUsers.length>0" style="width: 100%;">
 					<p v-on:tap="openLikers" class="p-likers">
@@ -125,7 +125,8 @@
 				ShowVideoUtil.initVideo(document.getElementById("video"));
 				events.preload('../quan/classSpace-persons.html', 50);
 				events.fireToPageNone("../quan/aboutme.html", "detailReady");
-				events.fireToPageNone("show-home1.html", "detailReady");
+				events.fireToPageNone("show-home.html","detailReady");
+				myStorage.setItem(storageKeyName.ISSHOWDETAILREADY,true);
 				window.addEventListener('showDetail', function(e) {
 					pageIndex = 1;
 					//console.log("获取的数据:" + JSON.stringify(e.detail.data));
@@ -202,14 +203,14 @@
 			 * 获取展现详情
 			 */
 			function requestShowDetail() {
-				 wd = events.showWaiting();
+				wd = events.showWaiting();
 				postDataPro_getUserSpaceByUser({
 					userId: events.getUtid(), //用户ID
 					userSpaceId: tableId, //用户动态ID
 					pageIndex: pageIndex, //评论当前页数
 					pageSize: 10 //评论每页记录数
 				}, wd, function(data) {
-					
+
 					//console.log("获取的展现详情:" + JSON.stringify(data));
 					if(data.RspCode == 0) {
 						pageIndex++;
@@ -330,11 +331,11 @@
 					vvl: ids.toString(),
 					vtp: 'g'
 				}, wd, function(data) {
-					
+
 					//console.log("获取的数据：" + JSON.stringify(data));
 					if(data.RspCode == 0) {
 						getRemark(showDetail, ids, data.RspData, callback);
-					}else{
+					} else {
 						wd.close();
 					}
 					//					getRemark(showDetail, ids, [], callback);
@@ -346,7 +347,7 @@
 			 * @param {Object} ids
 			 */
 			function getRemark(showDetail, ids, dataInfos, callback) {
-				
+
 				postDataPro_PostUmk({
 					vvl: ids.toString()
 				}, wd, function(data) {
@@ -363,7 +364,7 @@
 
 							}
 						}
-					}else{
+					} else {
 						wd.close();
 					}
 					callback(showDetail, dataInfos);

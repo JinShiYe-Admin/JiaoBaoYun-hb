@@ -19,7 +19,7 @@
 				<!--数据列表-->
 				<div v-show="listData.length>0" class="show-list">
 					<div v-for="cardData of listData" class="mui-table-view cityNews-container">
-						<li v-for="(item,index) of cardData" class="mui-table-view-cell news-container">
+						<li v-for="(item,index) of cardData" class="mui-table-view-cell news-container" v-on:tap="jumpToPage(item)">
 							<div class="img-container news-img" v-bind:style="{'background-image':'url('+getBackImg(item,index)+')','background-position':'center','background-size':'cover'}">
 							</div>
 							<div class="news-words">
@@ -41,11 +41,20 @@
 			var showAtt = new Vue({
 				el: '#show-att',
 				data: {
-					listData: []
+					listData: [],
+					detailReady: false
 				},
 				methods: {
 					resetData: function() {
 						this.listData = [];
+					},
+					addData: function(pageIndex, dataArr) {
+						if(pageIndex == 1) {
+							this.listData = [];
+						}
+						for(var i = 0; i < dataArr.length; i += 6) {
+							this.listData.push(dataArr.slice(i, i + 6));
+						}
 					},
 					getBackImg: function(item, index) {
 						if(item.EncImgAddr) {
@@ -56,8 +65,15 @@
 						}
 						return '../../image/show/show-default-large.png';
 					},
-					jumpToPage: function() {
-
+					jumpToPage: function(item) {
+						
+						if(myStorage.getItem(storageKeyName.ISSHOWDETAILREADY)) {
+							events.fireToPageWithData("show-detail.html", "showDetail", item);
+						} else {
+							setTimeout(function() {
+								arguments.callee(item);
+							}, 500);
+						}
 					}
 				}
 			})
@@ -66,9 +82,9 @@
 		<script src="../../js/show/show-list.js"></script>
 		<script type="text/javascript">
 			var showCity = {
-				pageFlag: 1, //全部
+				pageFlag: 0, //关注
 				acode: 1,
-				aname: '全部',
+				aname: '关注',
 				aflag: 1, //0为根据省市编码获取数据，1为获取关注的人的列表
 				pageIndex: 1,
 				totalPage: 0
@@ -82,7 +98,6 @@
 					container: '#show-att',
 					down: {
 						style: 'circle',
-						offset: '50px',
 						callback: pulldownRefresh
 					},
 					up: {
@@ -96,10 +111,7 @@
 				showCity.pageIndex = 1;
 				show_list.getShowList(showCity, function(showCity, data) {
 					console.log('获取的关注数据：', data);
-					if(showCity.pageIndex == 1) {
-						showAtt.listData = [];
-					}
-					showAtt.listData.push(data);
+					showAtt.addData(showCity.pageIndex, data);
 					showCity.pageIndex++;
 					mui('#show-att').pullRefresh().endPulldown();
 				})
@@ -109,24 +121,27 @@
 				console.log("上拉加载更多")
 				show_list.getShowList(showCity, function(showCity, data) {
 					console.log('获取的关注数据：', data);
-					if(showCity.pageIndex == 1) {
-						showAtt.listData = [];
-					}
-					showAtt.listData.push(data);
+					showAtt.addData(showCity.pageIndex, data);
 					showCity.pageIndex++;
 					mui('#show-att').pullRefresh().endPullupToRefresh();
 				})
 			}
 			mui.plusReady(function() {
+				showAtt.detailReady = plus.webview.currentWebview().detailReady;
+				console.log("showAtt.detailReady" + showAtt.detailReady);
 				show_list.getShowList(showCity, function(showCity, data) {
-					console.log('获取的关注数据：', data);
-					if(showCity.pageIndex == 1) {
-						showAtt.listData = [];
-					}
-					showAtt.listData.push(data);
+					showAtt.addData(showCity.pageIndex, data);
 					showCity.pageIndex++;
 				})
+				setListener();
 			})
+
+			function setListener() {
+				window.addEventListener("detailReady", function() {
+					console.log("show-attended获取监听事件 detailReady");
+					showAtt.detailReady = true;
+				})
+			}
 		</script>
 	</body>
 

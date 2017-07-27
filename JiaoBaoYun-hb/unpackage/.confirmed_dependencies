@@ -449,7 +449,10 @@
 		],
 		"refer": [
 			"html/show/show-attended.html",
-			"html/show/show-all.html"
+			"html/show/show-all.html",
+			"html/show/add-comment.html",
+			"html/register/login.html",
+			"html/show/show-detail.html"
 		]
 	},
 	"html/show/show-all.html": {
@@ -465,6 +468,9 @@
 			"css/show/show-list-vue.css",
 			"fonts/mui.ttf",
 			"image/show/show-default-large.png"
+		],
+		"refer": [
+			"html/show/show-detail.html"
 		]
 	},
 	"html/show/show-attended.html": {
@@ -500,6 +506,13 @@
 			"js/utils/load.js",
 			"js/utils/UploadHeadImage.js",
 			"js/mine/account-info.js"
+		]
+	},
+	"html/show/add-comment.html": {
+		"resources": [
+			"css/quan/custom-textarea.css",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		]
 	}
 }

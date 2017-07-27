@@ -2,7 +2,7 @@
 
 var storageKeyName = (function(mod) {
 
-	mod.key = 3; //0,开发;1,测试;2,移动版 3外网
+	mod.key = 1; //0,开发;1,测试;2,移动版 3外网
 	var exLog = console.log;
 	console.log = function(hint, object) {
 		if(mod.key === 0) {
@@ -107,6 +107,7 @@ var storageKeyName = (function(mod) {
 	mod.COURSELASTTIME = "courseLastTime";
 	mod.SHOWTYPE = "showType";
 	mod.COURSETYPE = "courseType";
+	mod.ISSHOWDETAILREADY="isDetailReady";//预加载是否完成
 
 	mod.MAINHOMEWORKURLTEACHER = mod.MAINHOMEWORKURL + 'TeacherService.svc/'; //老师作业url
 	mod.MAINHOMEWORKURLSTUDENT = mod.MAINHOMEWORKURL + 'StudentService.svc/'; //学生作业url

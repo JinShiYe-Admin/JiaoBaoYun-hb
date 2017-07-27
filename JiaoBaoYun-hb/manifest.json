@@ -4976,7 +4976,8 @@
 					"fonts/mui.ttf"
 				],
 				"refer": [
-					"html/quan/space-detail.html"
+					"html/quan/space-detail.html",
+					"html/show/show-detail.html"
 				],
 				"priority": 0
 			},
@@ -5483,7 +5484,11 @@
 					"fonts/mui.ttf",
 					"html/show/show-all.html"
 				],
-				"refer": [],
+				"refer": [
+					"html/show/add-comment.html",
+					"html/register/login.html",
+					"html/show/show-detail.html"
+				],
 				"priority": 0
 			}
 		},

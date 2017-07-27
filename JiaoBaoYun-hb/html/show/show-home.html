@@ -35,19 +35,6 @@
 				top: 24px;
 			}
 			
-			.mui-pull-top-wrapper {
-				width: 42px;
-				height: 42px;
-				display: block;
-				text-align: center;
-				background-color: #efeff4;
-				border: 1px solid #ddd;
-				border-radius: 25px;
-				background-clip: padding-box;
-				box-shadow: 0 4px 10px #bbb;
-				overflow: hidden;
-			}
-			
 			.mui-pull-top-tips.mui-transitioning {
 				-webkit-transition-duration: 200ms;
 				transition-duration: 200ms;
@@ -60,58 +47,33 @@
 				margin: 0;
 			}
 			
-			.mui-pull-top-wrapper .mui-icon,
-			.mui-pull-top-wrapper .mui-spinner {
-				margin-top: 7px;
+			.mui-slider-indicator {
+				margin-left: -10px;
+				bottom: -3px;
 			}
 			
-			.mui-pull-top-wrapper .mui-icon.mui-reverse {
-				/*-webkit-transform: rotate(180deg) translateZ(0);*/
+			.mui-slider-indicator .mui-indicator {
+				margin: 1px 2px;
 			}
-			
-			.mui-pull-bottom-tips {
-				text-align: center;
-				background-color: #efeff4;
-				font-size: 15px;
-				line-height: 40px;
-				color: #777;
-			}
-			
-			.mui-pull-top-canvas {
-				overflow: hidden;
-				background-color: #fafafa;
-				border-radius: 40px;
-				box-shadow: 0 4px 10px #bbb;
-				width: 40px;
-				height: 40px;
-				margin: 0 auto;
-			}
-			
-			.mui-pull-top-canvas canvas {
-				width: 40px;
-			}
-			
-			.mui-slider-indicator.mui-segmented-control {
-				background-color: #efeff4;
-			}
-
 		</style>
 	</head>
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
-			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">标题</h1>
+			<h1 class="mui-title">关注</h1>
+			<div id="header-indicator" class="mui-slider-indicator">
+				<div class="mui-indicator mui-active"></div>
+				<div class="mui-indicator"></div>
+			</div>
+			<a id="publish-show" class="mui-pull-right" style="">发布</a>
 		</header>
 		<div class="mui-content">
 			<div id="slider" class="mui-slider mui-fullscreen">
 				<div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
 					<div class="mui-scroll">
 						<a class="mui-control-item mui-active" href="#item1mobile" data-wid="show-attended.html">
-
 						</a>
 						<a class="mui-control-item" href="#item2mobile" data-wid="show-all.html">
-
 						</a>
 					</div>
 				</div>
@@ -120,41 +82,154 @@
 		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/utils/webviewGroup.js"></script>
+		<script src="../../js/utils/events.js"></script>
+		<script src="../../js/publicProtocol.js"></script>
 		<script type="text/javascript">
+			var detailReady = false;
+			var attendedItem = {
+				id: "show-attended.html",
+				url: "show-attended.html",
+				styles: {
+					top: '44px',
+					bottom: 0
+				},
+				extras: {}
+			};
+			var items = [{
+				id: "show-all.html",
+				url: "show-all.html",
+				styles: {
+					top: '44px',
+					bottom: 0
+				},
+				extras: {}
+			}];
 			mui.init();
 			mui.plusReady(function() {
-				var group = new webviewGroup("show-home.html", {
-					items: [{
-						id: "show-attended.html",
-						url: "show-attended.html",
-						styles:{
-							top:'44px',
-							bottom:0
-						},
-						extras: {}
-					}, {
-						id: "show-all.html",
-						url: "show-all.html",
-						styles:{
-							top:'44px',
-							bottom:0
-						},
-						extras: {}
-					}],
-					onChange: function(obj) {
-						var c = document.querySelector(".mui-control-item.mui-active");
-						if(c) {
-							c.classList.remove("mui-active");
+				events.preload("show-detail.html", 100);
+				getFocusedPerson(function(isShow) {
+					if(isShow) {
+						attendedItem.extras.detailReady = detailReady;
+						items.splice(0, 0, attendedItem);
+					}
+					setWebGroup();
+					if(items.length == 1) {
+						setTitle(0);
+					} else {
+						setTitle(11);
+					}
+
+				})
+				setListener();
+			});
+
+			function setListener() {
+				window.addEventListener("detailReady", function() {
+					detailReady = true;
+				})
+				window.addEventListener('focus', function() {
+					console.log("show-home.html获取关注事件")
+					getFocusedPerson(function(isShow) {
+						if(isShow) {
+							if(items.length == 1) {
+								items.splice(0, 0, attendedItem);
+								setWebGroup();
+							}
+						} else {
+							if(items.length == 2) {
+								items.splice(0, 1);
+								setWebGroup();
+							}
 						}
-						document.querySelector(".mui-scroll .mui-control-item:nth-child(" + (parseInt(obj.index) + 1) + ")").classList.add("mui-active");
+						console.log("获取的加载网页："+items.length,items)
+						
+						if(items.length == 1) {
+							setTitle(0);
+						}else{
+							setTitle(11);
+						}
+					})
+				})
+				document.getElementById('publish-show').addEventListener('tap', function(e) {
+					var item = e.target;
+					if(events.judgeLoginMode(item)) {
+						return;
+					}
+					item.disabled = true;
+					events.singleWebviewInPeriod(item, "../quan/pub-dynamic.html", "zx");
+				})
+			}
+
+			function setWebGroup() {
+				var group = new webviewGroup("show-home.html", {
+					items: items,
+					onChange: function(obj) {
+						console.log("当前界面index:" + parseInt(obj.index));
+						if(items.length > 1) {
+							if(parseInt(obj.index) == 1) {
+								setTitle(10);
+							} else {
+								setTitle(11);
+							}
+						}
 					}
 				});
-				mui(".mui-scroll").on("tap", ".mui-control-item", function(e) {
-					var wid = this.getAttribute("data-wid");
-					group.switchTab(wid);
-				});
-
-			});
+			}
+			/**
+			 * 获取关注的人
+			 * @param {Object} callback 回调方法
+			 */
+			function getFocusedPerson(callback) {
+				if(!events.getUtid()) {
+					var showFocusedPersen = myStorage.getItem(storageKeyName.SHOWFOCUSEPERSEN);
+					if(showFocusedPersen && showFocusedPersen.length > 0) {
+						callback(true);
+					} else {
+						callback(false);
+					}
+					return;
+				}
+				var wd = events.showWaiting();
+				postDataPro_getFocusByUser({
+					userId: events.getUtid()
+				}, wd, function(data) {
+					wd.close();
+					//console.log("获取关注的人列表" + JSON.stringify(data));
+					if(data.RspCode == 0 && data.RspData.Users.length > 0) {
+						callback(true);
+					} else {
+						callback(false);
+					}
+				})
+			}
+			/**
+			 * 设置标题
+			 * @param {Object} type 0 只有全部 10 显示全部 11 显示关注
+			 */
+			function setTitle(type) {
+				var title = document.querySelector(".mui-title");
+				var indicator = document.querySelector("#header-indicator");
+				switch(type) {
+					case 0: //全部
+						title.innerText = "全部";
+						indicator.style.display = "none";
+						break;
+					case 10: //全部
+						title.innerText = "全部";
+						indicator.style.display = "block";
+						indicator.firstElementChild.className = "mui-indicator";
+						indicator.lastElementChild.className = "mui-indicator mui-active";
+						break;
+					case 11: //关注
+						title.innerText = "关注";
+						indicator.style.display = "block";
+						indicator.firstElementChild.className = "mui-indicator mui-active";
+						indicator.lastElementChild.className = "mui-indicator";
+						break;
+					default:
+						break;
+				}
+			}
 		</script>
 	</body>
 
