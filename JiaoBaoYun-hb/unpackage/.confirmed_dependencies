@@ -15,7 +15,8 @@
 			"fonts/fangzheng.ttf",
 			"css/mui.min.css",
 			"css/utils/common.css",
-			"css/iconfont/iconfont.css"
+			"css/iconfont/iconfont.css",
+			"image/utils/default_personalimage.png"
 		],
 		"refer": [
 			"html/quan/zone_main.html",
@@ -128,7 +129,8 @@
 			"html/cloud/storage_transport.html",
 			"html/homework/homework-tea.html",
 			"html/quan/class_space.html",
-			"html/mine/qun_manage_a.html"
+			"html/mine/qun_manage_a.html",
+			"html/cloud/app_notes_main.html"
 		]
 	},
 	"html/sciedu/sciedu_home.html": {
@@ -149,7 +151,8 @@
 			"image/utils/loading.gif"
 		],
 		"refer": [
-			"html/utils/customizeCity.html"
+			"html/utils/customizeCity.html",
+			"html/sciedu/sciedu_show_main.html"
 		]
 	},
 	"html/quan/classSpace-persons.html": {
@@ -500,7 +503,8 @@
 			"image/utils/playvideo.png"
 		],
 		"refer": [
-			"html/micro-course/course-info.html"
+			"html/micro-course/course-info.html",
+			"html/register/login.html"
 		]
 	},
 	"html/mine/account-info.html": {
@@ -539,6 +543,47 @@
 			"css/mui.min.css",
 			"css/utils/common.css",
 			"js/libs/crypto-js/crypto-js.js"
+		]
+	},
+	"html/cloud/app_notes_main.html": {
+		"resources": [
+			"css/utils/pullToRefresh.css",
+			"css/mui.min.css",
+			"css/utils/audiopopover.css",
+			"css/utils/common.css",
+			"css/utils/preview.css",
+			"js/libs/crypto-js/crypto-js.js",
+			"js/utils/showaudio.js",
+			"js/mui.zoom.js",
+			"image/cloud/notes_bg2.jpg",
+			"js/utils/showvideoutil.js",
+			"js/mui.previewimage.js",
+			"image/utils/playvideo.png",
+			"image/utils/loading.gif",
+			"image/qiuzhi/qiuzhi_noanswer.png"
+		],
+		"refer": [
+			"html/cloud/app_notes_create.html"
+		]
+	},
+	"html/sciedu/sciedu_show_main.html": {
+		"resources": [
+			"css/mui.min.css",
+			"css/utils/common.css"
+		]
+	},
+	"html/cloud/app_notes_create.html": {
+		"resources": [
+			"js/utils/compress.js",
+			"css/mui.min.css",
+			"js/utils/MultiMedia.js",
+			"css/utils/MultiMedia.css",
+			"css/utils/common.css",
+			"js/utils/gallerypick.js",
+			"js/utils/recordvideoutil.js",
+			"js/libs/crypto-js/crypto-js.js",
+			"css/utils/audiopopover.css",
+			"css/utils/preview.css"
 		]
 	}
 }

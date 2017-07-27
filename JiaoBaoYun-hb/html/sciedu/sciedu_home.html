@@ -507,13 +507,17 @@
 			 * @param {Object} type 获取数据的类型，0初始获取，1下拉刷新，2上拉加载更多
 			 */
 			function requestCityNews(cityCode, pageIndex, type) {
+				var wd = null;
+				if(type == 0) { //获取初始数据
+					wd = events.showWaiting();
+				}
 				var comData = {
 					top: '10', //每页行数，
 					vvl: cityCode, //查询的区域代码,省份截取城市代码前两位,城市截取城市代码的前4位
 					vvl1: pageIndex //页码,获取第几页
 				};
 				//45.通过区域代码获取对应区域的分页新闻
-				postDataPro_PostTnews(comData, null, function(data) {
+				postDataPro_PostTnews(comData, wd, function(data) {
 					//console.log('45 通过区域代码获取对应区域的分页新闻 PostTnews ' + JSON.stringify(data));
 					if(data.RspCode == 0) {
 						//记录页数
@@ -552,7 +556,9 @@
 					if(pageIndex == 1) { //获取的第一页的内容
 						pageAndInfo[cityCode].refresh.refresh(true); //更新当前控件
 					}
-					if(type == 1) { //下拉刷新
+					if(type == 0) {
+						wd.close();
+					} else if(type == 1) { //下拉刷新
 						pageAndInfo[cityCode].refresh.endPullDownToRefresh(); //结束下拉刷新
 					}
 					endPullUp(cityCode);

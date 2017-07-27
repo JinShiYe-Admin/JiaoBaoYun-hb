@@ -303,18 +303,22 @@
 			 * @param {Object} wd 等待框
 			 */
 			function getAllSectionsAndComments(index, type, self) {
+				var wd = null;
+				if(type == 0) { //获取初始数据
+					wd = events.showWaiting();
+				}
 				var comData = {
 					userId: myStorage.getItem(storageKeyName.PERSONALINFO).utid, //用户ID,登录用户
 					courseId: main.data.TabId, //课程ID
 					pageIndex: index, //当前页数
 					pageSize: 10 //每页记录数,传入0，获取总记录数
 				};
-				postDataMCPro_getAllSectionsByCourse(comData, null, function(data) {
+				postDataMCPro_getAllSectionsByCourse(comData, wd, function(data) {
 					//console.log('3 获取课程的节次 ' + JSON.stringify(data));
 					if(data.RspCode == 0) {
 						pageIndex = index;
 						totalPage = data.RspData.totalPage;
-						if(index == 1) {//获取第一页
+						if(index == 1) { //获取第一页
 							document.getElementById('section_list').innerHTML = "";
 						}
 						if(data.RspData.Data.length != 0) {
@@ -331,10 +335,11 @@
 					} else {
 						mui.toast(data.RspTxt);
 					}
-					if(type == 1) { //结束下拉刷新
+					if(type == 0) {
+						wd.close();
+					} else if(type == 1) { //结束下拉刷新
 						self.endPullDownToRefresh();
-					}
-					if(type == 2) { //结束上拉加载
+					} else if(type == 2) { //结束上拉加载
 						self.endPullUpToRefresh();
 					}
 				});

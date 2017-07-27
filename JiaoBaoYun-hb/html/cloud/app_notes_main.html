@@ -375,11 +375,10 @@
 
 		mui.plusReady(function() {
 			////console.log(parseInt(((plus.screen.resolutionWidth - 30) * 10 / 12 - 16) * 32 / 100 * 5 / 6));
-			var wd = events.showWaiting();
 			initData();
 			initControl();
 			initListener(); //请求数据
-			requestData(1, wd);
+			requestData(1, 0);
 		});
 
 		/**
@@ -393,7 +392,7 @@
 
 			//刷新界面
 			window.addEventListener('refreshView', function() {
-				requestData(1);
+				requestData(1, 0);
 			});
 
 			//双击标题返回列表顶部
@@ -474,10 +473,7 @@
 				down: {
 					callback: function() {
 						//console.log('down ' + JSON.stringify(page));
-						requestData(1);
-						setTimeout(function() {
-							pullRefresh.endPullDownToRefresh(); //结束下拉刷新
-						}, 1000);
+						requestData(1, 1);
 					}
 				},
 				up: {
@@ -486,13 +482,11 @@
 					callback: function() {
 						//console.log('up ' + JSON.stringify(page));
 						if(page) {
-							requestData(page.pageIndex + 1);
+							requestData(page.pageIndex + 1, 2);
 						} else {
+							pullRefresh.endPullUpToRefresh();
 							mui.toast('数据异常，请下拉刷新后重新尝试');
 						}
-						setTimeout(function() {
-							endPullUp();
-						}, 1000);
 					}
 				}
 			});
@@ -511,8 +505,11 @@
 		}
 
 		//请求数据
-		function requestData(pageIndex, wd) {
-			var wd = wd || events.showWaiting();
+		function requestData(pageIndex, type) {
+			var wd = null;
+			if(type == 0) {
+				wd = events.showWaiting();
+			}
 			var comData = {
 				userId: userId, //用户ID
 				publisherId: userId, //发布用户ID
@@ -540,7 +537,6 @@
 						}
 						pullRefresh.refresh(true); //更新当前控件
 					}
-					////console.log(document.getElementById("list").innerHTML);
 					if(data.RspData.Data.length == 0 && pageIndex == 1) {
 						//第一页的数据为空
 						notesNone(); //显示无笔记界面
@@ -549,11 +545,16 @@
 							createNotes(data.RspData.Data[i]);
 						}
 					}
-					endPullUp();
 				} else {
 					mui.toast(data.RspTxt);
 				}
-				events.closeWaiting(wd);
+				if(type == 0) {
+					wd.close();
+				}
+				if(type == 1) { //结束下拉刷新
+					pullRefresh.endPullDownToRefresh();
+				}
+				endPullUp()
 			});
 		}
 
@@ -578,8 +579,6 @@
 			if(year == today.split('-')[0]) { //今年
 				yearItem = '';
 			}
-			////console.log('dateItem ' + dateItem);
-			////console.log('timeItem ' + timeItem);
 			if(markDate != dateItem) {
 				var element = document.createElement('div');
 				element.className = 'dynamic-date-parent'
@@ -677,8 +676,6 @@
 					contentEl.setAttribute('data-offsetHeight', contentEl.offsetHeight);
 				}
 			}
-			////console.log("dateItem" + dateItem);
-			////console.log(document.getElementById("list").innerHTML);
 			markDate = dateItem;
 		}
 
@@ -698,7 +695,7 @@
 		 */
 		function endPullUp() {
 			if(page && page.pageIndex >= page.totalPage) {
-				//console.log('没有下一页');
+				console.log('没有下一页');
 				pullRefresh.endPullUpToRefresh(true);
 			} else {
 				pullRefresh.endPullUpToRefresh();
