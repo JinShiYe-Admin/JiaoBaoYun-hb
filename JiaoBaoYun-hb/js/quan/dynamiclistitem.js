@@ -53,6 +53,7 @@ var dynamiclistitem = (function($, mod) {
 					var flag = e.index;
 					switch(flag) {
 						case 0:
+						case -1:
 							{
 								commentNode.style.backgroundColor = 'white'
 								//console.log('取消或点击空白----' + commentNode.id + '变为白色')
