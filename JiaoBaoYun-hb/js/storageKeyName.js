@@ -2,7 +2,7 @@
 
 var storageKeyName = (function(mod) {
 
-	mod.key = 3; //0,开发;1,测试;2,移动版 3外网
+	mod.key = 0; //0,开发;1,测试;2,移动版 3外网
 	var exLog = console.log;
 	console.log = function(hint, object) {
 		if(mod.key === 0) {
