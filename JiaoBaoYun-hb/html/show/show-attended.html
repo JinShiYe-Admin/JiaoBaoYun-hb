@@ -74,7 +74,7 @@
 				totalPage: 0
 			};
 			mui.init({
-				swipeBack: false,				
+				swipeBack: false,
 				keyEventBind: {
 					backbutton: false //关闭back按键监听
 				},
@@ -114,6 +114,7 @@
 					}
 					showAtt.listData.push(data);
 					showCity.pageIndex++;
+					mui('#show-att').pullRefresh().endPullupToRefresh();
 				})
 			}
 			mui.plusReady(function() {
