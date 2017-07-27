@@ -474,8 +474,7 @@
 
 				//双击标题返回列表顶部
 				document.getElementById('title').addEventListener('doubletap', function() {
-					var scrollTop = mui('#pullrefresh').scroll(); //话题列表区域
-					scrollTop.scrollTo(0, 0, 100);
+					mui('#pullrefresh').scroll().scrollTo(0, 0, 100);
 				});
 
 				/**
@@ -606,14 +605,14 @@
 			 * @param {Object} wd
 			 */
 			function finishCommit(wd, type) {
+				mui('#pullrefresh').scroll().scrollTo(0, 0, 100);
+				changeCommit();
 				if(type == 3) {
 					getNotes(1, 0, wd);
-					changeCommit();
 					return;
 				}
 				setTimeout(function() {
 					getNotes(1, 0, wd);
-					changeCommit();
 				}, 1000);
 			}
 

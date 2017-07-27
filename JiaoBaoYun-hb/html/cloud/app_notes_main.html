@@ -392,6 +392,7 @@
 
 			//刷新界面
 			window.addEventListener('refreshView', function() {
+				mui('#pullrefresh').scroll().scrollTo(0, 0, 100);
 				requestData(1, 0);
 			});
 

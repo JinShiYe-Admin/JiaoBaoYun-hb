@@ -131,7 +131,8 @@
 			"html/quan/class_space.html",
 			"html/mine/qun_manage_a.html",
 			"html/cloud/app_notes_main.html",
-			"html/cloud/app_keeprecord.html"
+			"html/cloud/app_keeprecord.html",
+			"html/cloud/record_student_main.html"
 		]
 	},
 	"html/sciedu/sciedu_home.html": {
@@ -610,7 +611,8 @@
 			"js/utils/recordvideoutil.js",
 			"js/utils/gallerypick.js",
 			"js/libs/crypto-js/crypto-js.js",
-			"image/utils/loading.gif"
+			"image/utils/loading.gif",
+			"image/utils/playvideo.png"
 		]
 	},
 	"html/cloud/keeprecord_history_a.html": {
@@ -635,6 +637,32 @@
 		],
 		"refer": [
 			"html/cloud/keeprecord_history_a.html"
+		]
+	},
+	"html/cloud/record_student_main.html": {
+		"resources": [
+			"css/utils/pullToRefresh.css",
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"css/utils/preview.css",
+			"js/utils/recordvideoutil.js",
+			"js/libs/crypto-js/crypto-js.js",
+			"image/utils/playvideo.png",
+			"image/utils/loading.gif"
+		],
+		"refer": [
+			"html/cloud/record_student_add.html"
+		]
+	},
+	"html/cloud/record_student_add.html": {
+		"resources": [
+			"js/utils/compress.js",
+			"css/mui.min.css",
+			"js/utils/MultiMedia.js",
+			"css/utils/MultiMedia.css",
+			"css/utils/common.css",
+			"js/utils/gallerypick.js",
+			"js/libs/crypto-js/crypto-js.js"
 		]
 	}
 }
