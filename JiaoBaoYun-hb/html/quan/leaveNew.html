@@ -113,7 +113,7 @@
 							flagRef = 1;
 							if(pageIndex <= totalPageCount) {
 								//24.获取某个用户的回答列表
-								getUserSpaceMsgsById(userID);
+								getUserSpaceMsgsById(userID,self);
 							} else {
 								mui.toast('没有更多了');
 								self.endPullDownToRefresh();

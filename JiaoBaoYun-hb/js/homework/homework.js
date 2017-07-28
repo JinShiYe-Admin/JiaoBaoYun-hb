@@ -427,10 +427,8 @@ var requireHomeWork = function(classModel, callback) {
 	}
 	comData.classId = classModel.gid;
 	comData.pageIndex = classModel.pageIndex;
-	var wd = events.showWaiting();
 	if(role == 2) {
-		postDataPro_GetHomeworkList(comData, wd, function(data) {
-			//			wd.close();
+		postDataPro_GetHomeworkList(comData, null, function(data) {
 			//console.log('老师、作业主界面获取的作业列表：' + JSON.stringify(data));
 			if(data.RspCode == 0) {
 				totalPageCount = data.RspData.PageCount;
@@ -438,15 +436,12 @@ var requireHomeWork = function(classModel, callback) {
 				setHashData(comData, data);
 				callback(data.RspData.Dates, 2);
 			} else {
-				endFresh();
 				mui.toast(data.RspTxt);
-				wd.close();
 			}
-
+				endFresh();
 		})
 	} else { //家长学生
-		postDataPro_GetHomeworkListStu(comData, wd, function(data) {
-			//			wd.close();
+		postDataPro_GetHomeworkListStu(comData, null, function(data) {
 			//console.log('学生、作业主界面获取的作业列表：' + JSON.stringify(data));
 			if(data.RspCode == 0) {
 				totalPageCount = data.RspData.PageCount;
@@ -476,8 +471,7 @@ var requireHomeWork = function(classModel, callback) {
 						vtp: 'g' //查询类型,p(个人)g(id串)
 					};
 					//21.通过用户ID或ID串获取用户资料
-					postDataPro_PostUinf(comData1, wd, function(data1) {
-						//						wd.close();
+					postDataPro_PostUinf(comData1, null, function(data1) {
 						//console.log('通过用户ID或ID串获取用户资料：' + JSON.stringify(data1));
 						if(data1.RspCode == 0) {
 							//循环遍历
@@ -507,8 +501,6 @@ var requireHomeWork = function(classModel, callback) {
 							selectGContainer.classInfo.totalPageCount = totalPageCount;
 							setHashData(comData, data);
 							callback(data.RspData.Dates, 30)
-							//						}else{
-							//							wd.close();
 						}
 					});
 				} else { //没有临时作业
@@ -517,10 +509,9 @@ var requireHomeWork = function(classModel, callback) {
 					callback(data.RspData.Dates)
 				}
 			} else {
-				endFresh();
-				wd.close();
 				mui.toast(data.RspTxt);
 			}
+			endFresh();
 		})
 	}
 

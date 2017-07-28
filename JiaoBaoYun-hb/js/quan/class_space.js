@@ -80,9 +80,7 @@ var class_space = (function(mod) {
 				utids.push(list[i].PublisherId);
 			}
 			getPersonalImg(utids.toString());
-		} else {
-			mod.wd.close();
-		}
+		} 
 	}
 	/**
 	 * 
@@ -262,7 +260,6 @@ var class_space = (function(mod) {
 			}
 			classWords_container.info = list[i];
 		}
-		mod.wd.close();
 		jQuery(".img-container").lazyload();
 		endFresh();
 	}
