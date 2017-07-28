@@ -16,8 +16,12 @@
 		<!--下拉刷新容器-->
 		<div id="show-att" class="mui-content mui-scroll-wrapper">
 			<div class="mui-scroll">
+				<div v-if="isAttended==0" class="" style="min-height:300px;text-align: center;padding-top: 20%;">
+					<img src="../../image/mine/invite_none_0.png" width="50%" height="auto">
+					<p style="margin: auto 0;padding: 10px;">暂无关注的人~~</p>
+				</div>
 				<!--数据列表-->
-				<div v-show="listData.length>0" class="show-list">
+				<div v-else v-show="listData.length>0" class="show-list">
 					<div v-for="cardData of listData" class="mui-table-view cityNews-container">
 						<li v-for="(item,index) of cardData" class="mui-table-view-cell news-container" v-on:tap="jumpToPage(item)">
 							<div class="img-container news-img" v-bind:style="{'background-image':'url('+getBackImg(item,index)+')','background-position':'center','background-size':'cover'}">
@@ -42,7 +46,21 @@
 				el: '#show-att',
 				data: {
 					listData: [],
-					detailReady: false
+					detailReady: false,
+					isAttended: 0
+				},
+				watch: {
+					isAttended: function(val) {
+						if(val) {
+							showCity.pageIndex=1;
+							show_list.getShowList(showCity, function(showCity, data) {
+								console.log('获取的关注数据：', data);
+								showAtt.addData(showCity.pageIndex, data);
+								showCity.pageIndex++;
+								mui('#show-att').pullRefresh().endPulldown();
+							})
+						}
+					}
 				},
 				methods: {
 					resetData: function() {
@@ -66,7 +84,7 @@
 						return '../../image/show/show-default-large.png';
 					},
 					jumpToPage: function(item) {
-						
+
 						if(myStorage.getItem(storageKeyName.ISSHOWDETAILREADY)) {
 							events.fireToPageWithData("show-detail.html", "showDetail", item);
 						} else {
@@ -128,6 +146,7 @@
 			}
 			mui.plusReady(function() {
 				showAtt.detailReady = plus.webview.currentWebview().detailReady;
+				showAtt.isAttended=plus.webview.currentWebview().isAttended;
 				console.log("showAtt.detailReady" + showAtt.detailReady);
 				show_list.getShowList(showCity, function(showCity, data) {
 					showAtt.addData(showCity.pageIndex, data);
@@ -140,6 +159,9 @@
 				window.addEventListener("detailReady", function() {
 					console.log("show-attended获取监听事件 detailReady");
 					showAtt.detailReady = true;
+				})
+				window.addEventListener("showAttended",function(e){
+					showAtt.isAttended=e.detail.data;
 				})
 			}
 		</script>

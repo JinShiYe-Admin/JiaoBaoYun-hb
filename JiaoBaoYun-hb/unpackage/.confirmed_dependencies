@@ -490,7 +490,8 @@
 			"image/utils/playvideo.png",
 			"image/utils/img-loading.gif",
 			"image/utils/video-loading.gif",
-			"js/libs/jquery.lazyload.min.js"
+			"js/libs/jquery.lazyload.min.js",
+			"image/mine/invite_none_0.png"
 		]
 	},
 	"html/micro-course/course_details.html": {

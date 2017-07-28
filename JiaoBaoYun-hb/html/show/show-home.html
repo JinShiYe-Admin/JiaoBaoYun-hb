@@ -105,28 +105,19 @@
 				},
 				extras: {}
 			}
-			var items = [];
+			var items = [attendedItem,allItem];
 			mui.init();
 			mui.plusReady(function() {
 				events.preload("show-detail.html", 100);
 				getFocusedPerson(function(isShow) {
 					if(isShow) {
-						attendedItem.extras.detailReady = detailReady;
-						attendedItem.index = 0;
-						allItem.index = 1;
-						items = [attendedItem, allItem];
+						attendedItem.extras.isAttended=true;
 					} else {
-						allItem.index = 0;
-						items = [allItem];
+						attendedItem.extras.isAttended=false;
 					}
 					console.log("展现主界面加载的items",items);
 					setWebGroup();
-					if(items.length == 1) {
-						setTitle(0);
-					} else {
-						setTitle(11);
-					}
-
+					setTitle(11);
 				})
 				setListener();
 			});
@@ -138,22 +129,7 @@
 				window.addEventListener('focus', function() {
 					console.log("show-home.html获取关注事件")
 					getFocusedPerson(function(isShow) {
-						if(isShow) {
-							if(items.length == 1) {
-								attendedItem.index = 0;
-								allItem.index = 1;
-								items = [attendedItem, allItem]
-								setWebGroup();
-								setTitle(11);
-							}
-						} else {
-							if(items.length == 2) {
-								allItem.index = 0;
-								items = [allItem];
-								setWebGroup();
-								setTitle(0);
-							}
-						}
+						events.fireToPageNone("show-attended.html","showAttended",isShow);
 						console.log("获取的加载网页：" + items.length, items);
 					})
 				})
@@ -190,6 +166,7 @@
 			}
 
 			function setWebGroup() {
+				console.log("获取的iten:"+items.length,items)
 				group = new webviewGroup("show-home.html", {
 					items: items,
 					onChange: function(obj) {
