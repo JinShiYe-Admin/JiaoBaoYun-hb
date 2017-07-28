@@ -39,7 +39,7 @@ mui.plusReady(function() {
 	setConditionbyRole(loginRoleType);
 	//	slideNavigation.add('mine.html', 200); //加载侧滑导航栏
 	window.addEventListener('infoChanged', function() {
-		events.fireToPageNone("cloud_home.html", "infoChanged");
+//		events.fireToPageNone("cloud_home.html", "infoChanged");
 //		events.fireToPageNone("qiuzhi_home.html", "infoChanged");
 		events.fireToPageNone("course_home.html", "infoChanged");
 	});
