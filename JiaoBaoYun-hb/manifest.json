@@ -4858,7 +4858,8 @@
 					"js/utils/signHmacSHA1.js",
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
-					"js/utils/RSAEncrypt.js"
+					"js/utils/RSAEncrypt.js",
+					"fonts/fangzheng.ttf"
 				],
 				"refer": [
 					"html/micro-course/course-search.html"
@@ -4891,7 +4892,9 @@
 					"css/utils/common.css",
 					"fonts/fangzheng.ttf",
 					"js/publicProtocol.js",
-					"js/micro-course/course-list1.js"
+					"js/micro-course/course-list1.js",
+					"js/utils/vue.js",
+					"image/mine/invite_none_0.png"
 				],
 				"refer": [
 					"html/micro-course/course_details.html"
@@ -4974,7 +4977,8 @@
 					"js/utils/vue.js",
 					"js/show/show-list.js",
 					"css/show/show-list-vue.css",
-					"fonts/mui.ttf"
+					"fonts/mui.ttf",
+					"image/utils/playvideo.png"
 				],
 				"refer": [
 					"html/quan/space-detail.html",

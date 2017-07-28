@@ -1,0 +1,182 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/utils/common.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../css/micro-course/course-list.css" />
+		<style>
+			.mui-slider-indicator {
+				margin-left: -10px;
+				bottom: -3px;
+			}
+			
+			.mui-slider-indicator .mui-indicator {
+				margin: 1px 2px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--下拉刷新容器-->
+		<div id="course-att" class="mui-content mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<div v-if="isAttended==0" class="" style="min-height:300px;text-align: center;padding-top: 20%;">
+					<img src="../../image/mine/invite_none_0.png" width="50%" height="auto">
+					<p style="margin: auto 0;padding: 10px;">暂无关注的课程~~</p>
+				</div>
+				<!--数据列表-->
+				<ul v-show="listData.length>0" class="mui-table-view">
+					<li v-for="li of listData" class="mui-table-view-cell">
+						<div class="course-container">
+							<div class="img-container"><img class="course-img" v-bind:src='li.CoursePic' />
+								<span class="red-circle"></span></div>
+							<div class="course-detail">
+								<div class="courseName-button">
+									<p class="course-name single-line">{{li.CourseName}}</p>
+									<button id="btn-focused" type="button" class="input-btn" v-bind:class="[li.IsFocus?'btn-focused':'btn-unfocus']" v-on:tap="toggleFocus(li)">{{li.IsFocus?'已关注':'关注'}}</button>
+								</div>
+								<p class="course-info double-line">{{li.SecName}}</p>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/utils/vue.js"></script>
+		<script type="text/javascript">
+			var courseAtt = new Vue({
+				el: "#course-att",
+				data: {
+					listData: [],
+					isAttended: 0
+				},
+				watch: {
+					isAttended: function(val) {
+						console.log("关注的监听");
+						if(val) {
+							courseInfo.pageIndex = 1;
+							course_list.getData(courseInfo, function(data) {
+								addData(data);
+							})
+						}
+					}
+				},
+				methods: {
+					isFocus: function(course) {
+						var isFocused = false;
+						if(events.getUtid()) {
+							isFocused = Boolean.parse(course.IsFocus);
+						} else {
+							isFocused = parseInt(events.isExistInStorageArray(storageKeyName.FOCUSECOURSES, course.TabId)[1]) > 0;
+						}
+						course.IsFocus = isFocused;
+						return course;
+					},
+					toggleFocus: function(course) {
+						if(!events.getUtid()) {
+							events.toggleStorageArray(storageKeyName.FOCUSECOURSES, courseInfo.TabId, courseInfo.IsFocus);
+							course.IsFocus = !course.IsFocus;
+							courseAtt.isFocused = parseInt(myStorage.getItem(storageKeyName.FOCUSECOURSES) && myStorage.getItem(storageKeyName.FOCUSECOURSES).length > 0);
+							return;
+						}
+						//所需参数
+						var comData = {
+							userId: personal.utid, //用户ID,登录用户
+							courseId: courseInfo.TabId, //课程ID
+							status: courseInfo.IsFocus ? 0 : 1 //关注状态，0 不关注，1 关注
+						};
+						// 等待的对话框
+						var wd = null;
+						//6.设置对某个课程关注
+						postDataMCPro_setCourseFocus(comData, wd, function(data) {
+							//console.log('6.设置对某个课程关注:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+							if(data.RspCode == 0) { //成功
+								course.IsFocus = !course.IsFocus;
+								courseAtt.isAttended = data.RspData.FocusCnt > 0;
+
+							} else {
+								mui.toast(data.RspTxt);
+							}
+						});
+					}
+				}
+			})
+		</script>
+		<script src="../../js/utils/events.js"></script>
+		<script src="../../js/micro-course/course-list.js"></script>
+		<script src="../../js/publicProtocol.js"></script>
+		<script src="../../js/publicMicroClass.js"></script>
+		<script type="text/javascript">
+			var courseInfo = {
+				type: 0, //类型 1为全部 0为关注
+				pageIndex: 1, //页码
+				totalPage: 0 //总页码
+			}
+			mui.init({
+				keyEventBind: {
+					backbutton: false //关闭back按键监听
+				},
+				pullRefresh: {
+					container: "#course-att",
+					down: {
+						style: 'circle',
+						offset: 0,
+						callback: pulldownRefresh
+					},
+					up: {
+						contentrefresh: "上拉加载更多",
+						callback: pullupRefresh
+					}
+				}
+			});
+
+			function pulldownRefresh() {
+				courseInfo.pageIndex = 1;
+				course_list.getData(courseInfo, function(data) {
+					addData(data);
+					mui("#course-att").pullRefresh().endPulldown();
+				})
+			}
+
+			function pullupRefresh() {
+				course_list.getData(courseInfo, function(data) {
+					addData(data);
+					mui("#course-att").pullRefresh().endPullUpToRefresh();
+				})
+			}
+
+			function addData(data) {
+				data.map(function(course, index, data) {
+					courseAtt.isFocus(course);
+				});
+				if(courseInfo.pageIndex === 1) {
+					courseAtt.listData = [];
+				}
+				courseAtt.listData = courseAtt.listData.concat(data);
+				courseInfo.pageIndex++;
+			}
+			mui.plusReady(function() {
+				courseAtt.isAttended = plus.webview.currentWebview().isAttended;
+				console.log("主界面传过来的值：", courseAtt.isAttended);
+				setListener();
+			})
+
+			function setListener() {
+				window.addEventListener("courseAttended", function(e) {
+					console.log("传递的事件：", e.detail);
+					if(e.detail.data == null) {
+						courseAtt.isAttended = 0;
+					} else {
+						courseAtt.isAttended = parseInt(e.detail.data);
+					}
+				})
+			}
+		</script>
+	</body>
+
+</html>

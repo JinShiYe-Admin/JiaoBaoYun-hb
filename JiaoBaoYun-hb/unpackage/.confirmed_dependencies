@@ -70,7 +70,8 @@
 			"html/sciedu/sciedu_home.html",
 			"html/show/show-home1.html",
 			"html/micro-course/course-home1.html",
-			"html/show/show-home.html"
+			"html/show/show-home.html",
+			"html/micro-course/course-home.html"
 		]
 	},
 	"html/micro-course/course-home1.html": {
@@ -467,7 +468,8 @@
 			"image/show/show-default-small.png",
 			"css/show/show-list-vue.css",
 			"fonts/mui.ttf",
-			"image/show/show-default-large.png"
+			"image/show/show-default-large.png",
+			"image/utils/playvideo.png"
 		],
 		"refer": [
 			"html/show/show-detail.html"
@@ -514,6 +516,41 @@
 			"css/quan/custom-textarea.css",
 			"css/mui.min.css",
 			"css/utils/common.css"
+		]
+	},
+	"html/micro-course/course-home.html": {
+		"resources": [
+			"js/utils/webviewGroup.js",
+			"fonts/fangzheng.ttf",
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"html/micro-course/course-attended.html"
+		],
+		"refer": [
+			"html/micro-course/course-attended.html",
+			"html/micro-course/course-all.html"
+		]
+	},
+	"html/micro-course/course-attended.html": {
+		"resources": [
+			"css/mui.min.css",
+			"css/micro-course/course-list.css",
+			"css/utils/common.css",
+			"js/libs/crypto-js/crypto-js.js",
+			"js/utils/vue.js",
+			"js/publicMicroClass.js",
+			"js/micro-course/course-list.js",
+			"image/mine/invite_none_0.png"
+		]
+	},
+	"html/micro-course/course-all.html": {
+		"resources": [
+			"css/mui.min.css",
+			"js/publicMicroClass.js",
+			"css/micro-course/course-list.css",
+			"css/utils/common.css",
+			"js/micro-course/course-list.js",
+			"js/libs/crypto-js/crypto-js.js"
 		]
 	}
 }
