@@ -85,6 +85,7 @@
 		<script src="../../js/utils/events.js"></script>
 		<script src="../../js/publicProtocol.js"></script>
 		<script type="text/javascript">
+			var group;
 			var detailReady = false;
 			var attendedItem = {
 				id: "show-attended.html",
@@ -95,7 +96,7 @@
 				},
 				extras: {}
 			};
-			var items = [{
+			var allItem = {
 				id: "show-all.html",
 				url: "show-all.html",
 				styles: {
@@ -103,15 +104,22 @@
 					bottom: 0
 				},
 				extras: {}
-			}];
+			}
+			var items = [];
 			mui.init();
 			mui.plusReady(function() {
 				events.preload("show-detail.html", 100);
 				getFocusedPerson(function(isShow) {
 					if(isShow) {
 						attendedItem.extras.detailReady = detailReady;
-						items.splice(0, 0, attendedItem);
+						attendedItem.index = 0;
+						allItem.index = 1;
+						items = [attendedItem, allItem];
+					} else {
+						allItem.index = 0;
+						items = [allItem];
 					}
+					console.log("展现主界面加载的items",items);
 					setWebGroup();
 					if(items.length == 1) {
 						setTitle(0);
@@ -132,13 +140,16 @@
 					getFocusedPerson(function(isShow) {
 						if(isShow) {
 							if(items.length == 1) {
-								items.splice(0, 0, attendedItem);
+								attendedItem.index = 0;
+								allItem.index = 1;
+								items = [attendedItem, allItem]
 								setWebGroup();
-								setTitle(12);
+								setTitle(11);
 							}
 						} else {
 							if(items.length == 2) {
-								items.splice(0, 1);
+								allItem.index = 0;
+								items = [allItem];
 								setWebGroup();
 								setTitle(0);
 							}
@@ -155,17 +166,31 @@
 					events.singleWebviewInPeriod(item, "../quan/pub-dynamic.html", "zx");
 				})
 			}
-			function clearChild(){
-				if(plus.webview.getWebviewById("show-attended.html")){
+
+			function clearChild() {
+				if(plus.webview.getWebviewById("show-attended.html")) {
 					plus.webview.getWebviewById("show-attended.html").close();
 				}
-				if(plus.webview.getWebviewById("show-all.html")){
+				if(plus.webview.getWebviewById("show-all.html")) {
 					plus.webview.getWebviewById("show-all.html").close();
 				}
-				
+
 			}
+
+			function stopMove() {
+				if(group.getCurrentWebview().id == 'show-all.html') {
+					group.getCurrentWebview().drag({
+						direction: 'left',
+						moveMode: 'followFinger'
+					}, {
+						view: 'none',
+						moveMode: 'follow'
+					})
+				}
+			}
+
 			function setWebGroup() {
-				var group = new webviewGroup("show-home.html", {
+				group = new webviewGroup("show-home.html", {
 					items: items,
 					onChange: function(obj) {
 						console.log("当前界面index:" + parseInt(obj.index));
