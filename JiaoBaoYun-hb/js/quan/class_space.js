@@ -11,9 +11,7 @@ var class_space = (function(mod) {
 	mod.getList = function(postData, pageIndex, pageSize, callback) {
 		postData.pageIndex = pageIndex;
 		postData.pageSize = pageSize;
-		mod.wd = events.showWaiting();
-		postDataPro_getClassSpacesByUserForClass(postData, mod.wd, function(pagedata) {
-			//			wd.close();
+		postDataPro_getClassSpacesByUserForClass(postData, null, function(pagedata) {
 			if(pagedata.RspCode == 0) {
 				//console.log('获取的班级动态：' + JSON.stringify(pagedata));
 				mod.totalPagNo = pagedata.RspData.TotalPage;
@@ -22,7 +20,7 @@ var class_space = (function(mod) {
 					if(pagedata.RspData.TotalCnt) {
 						showNoData(0);
 						setFresh();
-						setReaded(postData.userId, postData.classId, mod.wd);
+						setReaded(postData.userId, postData.classId, null);
 					} else {
 						showNoData(1);
 					}
@@ -30,7 +28,6 @@ var class_space = (function(mod) {
 				callback();
 			} else {
 				endFresh();
-				mod.wd.close();
 				errCallback();
 
 				if(pagedata.RspTxt != 404) {
@@ -530,9 +527,8 @@ var setReaded = function(userId, classId, wd) {
 	postDataPro_setClassSpaceReadByUser({
 		userId: userId,
 		classId: classId
-	}, wd, function(data) {
+	}, null, function(data) {
 		//console.log('是否已读：' + JSON.stringify(data));
-		wd.close();
 		if(data.RspCode == 0) {
 			var main = plus.webview.getWebviewById('../quan/tab-zone.html');
 			//触发tab-zone页面的setRead事件
