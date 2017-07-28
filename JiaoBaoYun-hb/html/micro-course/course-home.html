@@ -65,15 +65,14 @@
 				<div class="mui-indicator mui-active"></div>
 				<div class="mui-indicator"></div>
 			</div>
-			<a id="publish-show" class="mui-pull-right" style="">发布</a>
 		</header>
 		<div class="mui-content">
 			<div id="slider" class="mui-slider mui-fullscreen">
 				<div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
 					<div class="mui-scroll">
-						<a class="mui-control-item mui-active" href="#item1mobile" data-wid="show-attended.html">
+						<a class="mui-control-item mui-active" href="#item1mobile" data-wid="course-attended.html">
 						</a>
-						<a class="mui-control-item" href="#item2mobile" data-wid="show-all.html">
+						<a class="mui-control-item" href="#item2mobile" data-wid="course-all.html">
 						</a>
 					</div>
 				</div>
@@ -88,8 +87,8 @@
 			var group;
 			var detailReady = false;
 			var attendedItem = {
-				id: "show-attended.html",
-				url: "show-attended.html",
+				id: "course-attended.html",
+				url: "course-attended.html",
 				styles: {
 					top: '44px',
 					bottom: 0
@@ -97,25 +96,25 @@
 				extras: {}
 			};
 			var allItem = {
-				id: "show-all.html",
-				url: "show-all.html",
+				id: "course-all.html",
+				url: "course-all.html",
 				styles: {
 					top: '44px',
 					bottom: 0
 				},
 				extras: {}
 			}
-			var items = [attendedItem,allItem];
+			var items = [attendedItem, allItem];
 			mui.init();
 			mui.plusReady(function() {
-				events.preload("show-detail.html", 100);
-				getFocusedPerson(function(isShow) {
+				mui.fire(plus.webview.getLaunchWebview(), "indexReady");
+				getAttendedClasses(function(isShow) {
 					if(isShow) {
-						attendedItem.extras.isAttended=true;
+						attendedItem.extras.isAttended = true;
 					} else {
-						attendedItem.extras.isAttended=false;
+						attendedItem.extras.isAttended = false;
 					}
-					console.log("展现主界面加载的items",items);
+					console.log("展现主界面加载的items", items);
 					setWebGroup();
 					setTitle(11);
 				})
@@ -127,48 +126,17 @@
 					detailReady = true;
 				})
 				window.addEventListener('focus', function() {
-					
-					getFocusedPerson(function(isShow) {
-						console.log("show-home.html获取关注事件"+isShow)
-						events.fireToPageNone("show-attended.html","showAttended",isShow);
+					getAttendedClasses(function(isShow) {
+						console.log("show-home.html获取关注事件" + isShow)
+						events.fireToPageNone("course-attended.html", "courseAttended", isShow);
 						console.log("获取的加载网页：" + items.length, items);
 					})
 				})
-				document.getElementById('publish-show').addEventListener('tap', function(e) {
-					var item = e.target;
-					if(events.judgeLoginMode(item)) {
-						return;
-					}
-					item.disabled = true;
-					events.singleWebviewInPeriod(item, "../quan/pub-dynamic.html", "zx");
-				})
-			}
-
-			function clearChild() {
-				if(plus.webview.getWebviewById("show-attended.html")) {
-					plus.webview.getWebviewById("show-attended.html").close();
-				}
-				if(plus.webview.getWebviewById("show-all.html")) {
-					plus.webview.getWebviewById("show-all.html").close();
-				}
-
-			}
-
-			function stopMove() {
-				if(group.getCurrentWebview().id == 'show-all.html') {
-					group.getCurrentWebview().drag({
-						direction: 'left',
-						moveMode: 'followFinger'
-					}, {
-						view: 'none',
-						moveMode: 'follow'
-					})
-				}
 			}
 
 			function setWebGroup() {
-				console.log("获取的iten:"+items.length,items)
-				group = new webviewGroup("show-home.html", {
+				console.log("获取的iten:" + items.length, items)
+				group = new webviewGroup("course-home.html", {
 					items: items,
 					onChange: function(obj) {
 						console.log("当前界面index:" + parseInt(obj.index));
@@ -183,31 +151,33 @@
 				});
 			}
 			/**
-			 * 获取关注的人
-			 * @param {Object} callback 回调方法
+			 * 获取关注的课程
+			 * @param {Object} callback
 			 */
-			function getFocusedPerson(callback) {
-				if(!events.getUtid()) {
-					var showFocusedPersen = myStorage.getItem(storageKeyName.SHOWFOCUSEPERSEN);
-					if(showFocusedPersen && showFocusedPersen.length > 0) {
+			function getAttendedClasses(callback) {
+				if(events.getUtid()) {
+					// 等待的对话框
+					var wd = events.showWaiting();
+					postDataMCPro_getAllFocusCourses({
+						userId: events.getUtid(), //用户ID,登录用户
+						pageIndex: 1, //当前页数
+						pageSize: 1 //每页记录数,传入0，获取总记录数
+					}, wd, function(data) {
+						wd.close();
+						if(data.RspCode == 0 && data.RspData.totalCount) {
+							callback(1);
+						} else {
+							callback(0);
+						}
+					})
+				} else {
+					if(myStorage.getItem(storageKeyName.FOCUSECOURSES) && myStorage.getItem(storageKeyName.FOCUSECOURSES).length > 0) {
 						callback(1);
 					} else {
 						callback(0);
 					}
-					return;
 				}
-				var wd = null;
-				postDataPro_getFocusByUser({
-					userId: events.getUtid()
-				}, wd, function(data) {
-//					wd.close();
-					//console.log("获取关注的人列表" + JSON.stringify(data));
-					if(data.RspCode == 0 && data.RspData.Users.length > 0) {
-						callback(1);
-					} else {
-						callback(0);
-					}
-				})
+
 			}
 			/**
 			 * 设置标题

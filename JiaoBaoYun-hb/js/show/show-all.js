@@ -2,7 +2,7 @@ var showAll = new Vue({
 	el: '#show-all',
 	data: {
 		listData: [],
-		detailReady:false
+		detailReady: false
 	},
 	methods: {
 		resetData: function() {
@@ -27,13 +27,37 @@ var showAll = new Vue({
 		},
 		jumpToPage: function(item) {
 			console.log("点击事件")
-			if(myStorage.getItem(storageKeyName.ISSHOWDETAILREADY)){
-				events.fireToPageWithData("show-detail.html","showDetail",item);
-			}else{
-				setTimeout(function(){
+			if(myStorage.getItem(storageKeyName.ISSHOWDETAILREADY)) {
+				events.fireToPageWithData("show-detail.html", "showDetail", item);
+			} else {
+				setTimeout(function() {
 					showAll.jumpToPage(item)
-				},500);
+				}, 500);
 			}
+		},
+		isVideo: function(cell) {
+			var isVideo = false;
+			if(cell.EncType) {
+				switch(cell.EncType) {
+					case 2: //视频
+						isVideo = true;
+						break;
+					case 5: //图文混合
+						var addrs = cell.EncAddr.split(".");
+						switch(addrs[addrs.length - 1]) {
+							case "mp4":
+							case "MP4":
+								isVideo = true;
+								break;
+							default:
+								break;
+						}
+						break;
+					default:
+						break;
+				}
+			}
+			return isVideo
 		}
 	}
 })

@@ -274,6 +274,7 @@
 				//console.log("pageIndex:" + pageIndex);
 				if((pageIndex - 1) === 1) {
 					commentList.showDetail = showDetail;
+					commentList.showDetail.IsFocused=commentList.getFocused(showDetail);
 				} else {
 					if(commentList.TabId) {
 						commentList.Comments = commentList.Comments.concat(showDetail.Comments);

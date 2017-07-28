@@ -18,7 +18,7 @@ var show_list = (function(mod) {
 				getFocusByUser(showCity, callback);
 			}
 		} else { //全部
-			var wd = events.showWaiting();
+			var wd = null;
 			/**
 			 * 78.（用户空间）获取区域用户空间列表
 			 */
@@ -28,7 +28,7 @@ var show_list = (function(mod) {
 				pageIndex: showCity.pageIndex, //当前页数
 				pageSize: 12 //每页记录数
 			}, wd, function(data) {
-				events.closeWaiting();
+//				events.closeWaiting();
 				//console.log('78.（用户空间）获取区域用户空间列表:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 				if(data.RspCode == 0) {
 					//总页数
@@ -76,10 +76,10 @@ var show_list = (function(mod) {
 			vvl: tempArray.toString(), //用户id，查询的值,p传个人ID,g传ID串
 			vtp: 'g' //查询类型,p(个人)g(id串)
 		}
-		var wd = events.showWaiting();
+		var wd = null;
 		//21.通过用户ID获取用户资料
 		postDataPro_PostUinf(tempData, wd, function(data1) {
-			wd.close();
+//			wd.close();
 			//console.log('获取个人资料success:RspCode:' + data1.RspCode + ',RspData:' + JSON.stringify(data1.RspData) + ',RspTxt:' + data1.RspTxt);
 			if(data1.RspCode == 0) {
 				for(var item in tempRspData) {
@@ -114,11 +114,11 @@ var show_list = (function(mod) {
 		var comData = {
 			userId: personal.utid //用户ID
 		};
-		var wd = events.showWaiting();
+		var wd = null;
 		//81.（用户空间）获取用户所有关注的用户
 		postDataPro_getFocusByUser(comData, wd, function(data) {
 			//console.log('81.（用户空间）获取用户所有关注的用户：' + JSON.stringify(data));
-			wd.close();
+//			wd.close();
 			if(data.RspCode == 0) {
 				var tempID = [];
 				for(var i in data.RspData.Users) {
@@ -155,9 +155,9 @@ var show_list = (function(mod) {
 			pageSize: 12 //每页记录数
 		};
 		// 等待的对话框
-		var wd1 = events.showWaiting();
+		var wd1 = null;
 		postDataPro_getUserSpacesForAreaByIds(comData, wd1, function(data) {
-			wd1.close();
+//			wd1.close();
 			//console.log("获取的问题数据：" + JSON.stringify(data));
 			//			//console.log('74.(用户空间）获取多用户空间所有用户动态列表:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 			if(data.RspCode == 0) {
@@ -256,7 +256,7 @@ var show_list = (function(mod) {
 					oldPageIndex = showCity.pageIndex;
 					freshFlag = 1;
 					showCity.pageIndex = 1;
-					wd = events.showWaiting(); //2.获取符合条件的专家信息
+//					wd = events.showWaiting(); //2.获取符合条件的专家信息
 					mod.getShowList(showCity, document.getElementById("list-container"), mod.setShowList);
 				}
 			},
@@ -265,7 +265,7 @@ var show_list = (function(mod) {
 					freshContainer = this;
 					if(showCity.pageIndex < totalPage) {
 						freshFlag = 2;
-						wd = events.showWaiting();
+//						wd = events.showWaiting();
 						mod.getShowList(showCity, document.getElementById("list-container"), mod.setShowList);
 					} else {
 						freshContainer.endPullUpToRefresh();
