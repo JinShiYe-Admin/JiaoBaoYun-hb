@@ -400,9 +400,9 @@
 					})
 					events.singleWebviewInPeriod(item, "order-member.html");
 				})
-//				window.addEventListener("infoChanged", function() {
-//					document.querySelector(".img-icon>img").src = updateHeadImg(myStorage.getItem(storageKeyName.PERSONALINFO).uimg, 2)
-//				})
+				window.addEventListener("infoChanged", function() {
+					document.querySelector(".img-icon>img").src = updateHeadImg(myStorage.getItem(storageKeyName.PERSONALINFO).uimg, 2)
+				})
 				//下拉刷新
 				mui("#refreshContainer").pullToRefresh({
 					down: {
