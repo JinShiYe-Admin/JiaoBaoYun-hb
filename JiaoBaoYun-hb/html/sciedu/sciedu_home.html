@@ -108,28 +108,24 @@
 			});
 
 			mui.plusReady(function() {
-				var wd = events.showWaiting();
 				initListener();
-				initData(wd);
+				initData();
 			});
 
 			/**
 			 * 初始化数据
 			 */
-			function initData(wd) {
-				var initwd = wd || events.showWaiting();
+			function initData() {
 				var main = plus.webview.currentWebview(); //获取当前窗体对象
 
 				//游客身份
 				if(!parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid)) {
-					initBody(initwd);
+					initBody();
 					changeIndexHeader();
-				} else {
-					initwd.close();
 				}
 				//Webview窗口显示事件
 				main.addEventListener("show", function(e) {
-					initBody(initwd);
+					initBody();
 					changeIndexHeader();
 				});
 			}
@@ -186,14 +182,13 @@
 								var displayWebview = plus.webview.getDisplayWebview();
 								for(var i in displayWebview) {
 									if(displayWebview[i].id == "sciedu_home.html") {
-										getData = true;//科教界面现在在屏幕上
+										getData = true; //科教界面现在在屏幕上
 										break;
 									}
 								}
 							}
 							if(getData) {
-								var wd = events.showWaiting();
-								initBody(wd);
+								initBody();
 								changeIndexHeader();
 							}
 						}
@@ -205,7 +200,7 @@
 			/**
 			 * 初始化主体
 			 */
-			function initBody(wd) {
+			function initBody() {
 				////console.log('initBody ' + show);
 				if(show) {
 					//生成滑动控件
@@ -229,7 +224,7 @@
 						//console.log('slide info ' + JSON.stringify(ipr.info));
 						//console.log('slide page ' + JSON.stringify(ipr.page));
 						if(!ipr.page) {
-							requestCityNews(ipr.info.acode, 1);
+							requestCityNews(ipr.info.acode, 1, 0);
 						}
 					});
 
@@ -262,7 +257,7 @@
 					});
 
 					//获取定制的城市
-					requestCustomizationCity(wd, function(data, wait) {
+					requestCustomizationCity(function(data) {
 						//生成滑动框架
 						addCitiesSilders(data, function() {
 							changeIndexHeader();
@@ -281,7 +276,7 @@
 										lazyLoad.refresh(true);
 									});
 								});
-								requestCityNews(cities[0].acode, 1, wait);
+								requestCityNews(cities[0].acode, 1, 0);
 							});
 						});
 					});
@@ -354,31 +349,23 @@
 								//console.log('down ' + JSON.stringify(ipr.info));
 								//console.log('down ' + JSON.stringify(ipr.page));
 								//获取数据
-								requestCityNews(ipr.info.acode, 1);
-								setTimeout(function() {
-									ipr.refresh.endPullDownToRefresh(); //结束下拉刷新
-								}, 1000);
+								requestCityNews(ipr.info.acode, 1, 1);
 							}
 						},
 						up: {
 							contentinit: '',
 							contentnomore: '', //隐藏没有更多提示
 							callback: function() {
-								var wd = events.showWaiting();
 								var ipr = pageAndInfo[sliderId];
 								//console.log('up ' + JSON.stringify(ipr.info));
 								//console.log('up ' + JSON.stringify(ipr.page));
+								console.log("上拉加载更多");
 								if(ipr.page) {
-									requestCityNews(ipr.info.acode, ipr.page.pageIndex + 1, wd);
+									requestCityNews(ipr.info.acode, ipr.page.pageIndex + 1, 2);
 								} else {
 									mui.toast('数据异常，请下拉刷新后重新尝试');
+									ipr.refresh.endPullUpToRefresh();
 								}
-								setTimeout(function() {
-									if(!ipr.page) {
-										wd.close();
-									}
-									endPullUp(ipr.info.acode);
-								}, 1000);
 							}
 						}
 					});
@@ -446,8 +433,7 @@
 			 * 获取个人的订制城市
 			 * @param {Object} callBack 成功后的回调
 			 */
-			function requestCustomizationCity(wd, callBack) {
-				var waitingDia = wd || events.showWaiting();
+			function requestCustomizationCity(callBack) {
 				var comData = {
 					vvl: '0' //订制频道,0科教频道,1展示频道,其他待定
 				};
@@ -465,9 +451,9 @@
 						aname: "全部"
 					});
 					cities = eduArray.slice(0); //拷贝数组
-					callBack(cities, waitingDia);
+					callBack(cities);
 				} else {
-					postDataPro_PostUTcity(comData, waitingDia, function(data) {
+					postDataPro_PostUTcity(comData, null, function(data) {
 						//console.log('44 获取个人的订制城市 PostUTcity ' + JSON.stringify(data));
 						if(data.RspCode == 0) {
 							if(data.RspData == null) {
@@ -508,7 +494,7 @@
 						});
 
 						cities = eduArray.slice(0); //拷贝数组
-						callBack(cities, waitingDia);
+						callBack(cities);
 					});
 				}
 
@@ -518,10 +504,13 @@
 			 * 通过区域代码获取对应区域的分页新闻
 			 * @param {Object} cityCode
 			 * @param {Object} pageIndex
-			 * @param {Object} wd
+			 * @param {Object} type 获取数据的类型，0初始获取，1下拉刷新，2上拉加载更多
 			 */
-			function requestCityNews(cityCode, pageIndex, wd) {
-				var wd = wd || events.showWaiting();
+			function requestCityNews(cityCode, pageIndex, type) {
+				var wd = null;
+				if(type == 0) { //获取初始数据
+					wd = events.showWaiting();
+				}
 				var comData = {
 					top: '10', //每页行数，
 					vvl: cityCode, //查询的区域代码,省份截取城市代码前两位,城市截取城市代码的前4位
@@ -530,7 +519,6 @@
 				//45.通过区域代码获取对应区域的分页新闻
 				postDataPro_PostTnews(comData, wd, function(data) {
 					//console.log('45 通过区域代码获取对应区域的分页新闻 PostTnews ' + JSON.stringify(data));
-
 					if(data.RspCode == 0) {
 						//记录页数
 						pageAndInfo[cityCode].page = {
@@ -541,9 +529,7 @@
 						if(pageIndex == 1) { //获取的第一页的内容
 							//清空对应的界面
 							document.getElementById("bot_ul_" + cityCode).innerHTML = '';
-							pageAndInfo[cityCode].refresh.refresh(true); //更新当前控件
 						}
-						endPullUp(cityCode);
 						//新闻总页数
 						var tempArr = data.RspData.dt;
 						//将返回的新闻遍历
@@ -564,15 +550,18 @@
 							pageIndex: pageIndex, //当前页数
 							totalPage: 0 //总页数
 						};
-						//console.log('ipr ' + JSON.stringify(pageAndInfo[cityCode].page));
-						if(pageIndex == 1) { //获取的第一页的内容
-							pageAndInfo[cityCode].refresh.refresh(true); //更新当前控件
-						}
-						endPullUp(cityCode);
 					} else {
 						mui.toast(data.RspTxt);
 					}
-					wd.close();
+					if(pageIndex == 1) { //获取的第一页的内容
+						pageAndInfo[cityCode].refresh.refresh(true); //更新当前控件
+					}
+					if(type == 0) {
+						wd.close();
+					} else if(type == 1) { //下拉刷新
+						pageAndInfo[cityCode].refresh.endPullDownToRefresh(); //结束下拉刷新
+					}
+					endPullUp(cityCode);
 				});
 			}
 

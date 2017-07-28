@@ -235,11 +235,10 @@
 		});
 
 		mui.plusReady(function() {
-			var wd = events.showWaiting();
 			initData();
 			initControl();
 			initListener();
-			getNotes(1, wd);
+			getNotes(1, 0);
 		});
 
 		/**
@@ -278,10 +277,7 @@
 				down: {
 					callback: function() {
 						//console.log('down ' + JSON.stringify(page));
-						getNotes(1);
-						setTimeout(function() {
-							pullRefresh.endPullDownToRefresh(); //结束下拉刷新
-						}, 1000);
+						getNotes(1, 1);
 					}
 				},
 				up: {
@@ -290,13 +286,11 @@
 					callback: function() {
 						//console.log('up ' + JSON.stringify(page));
 						if(page) {
-							getNotes(page.pageIndex + 1);
+							getNotes(page.pageIndex + 1, 2);
 						} else {
+							pullRefresh.endPullUpToRefresh();
 							mui.toast('数据异常，请下拉刷新后重新尝试');
 						}
-						setTimeout(function() {
-							endPullUp();
-						}, 1000);
 					}
 				}
 			});
@@ -375,8 +369,11 @@
 		 * 获取用户针对某学生的点到记事列表
 		 * @param {Object} pageIndex 当前页数
 		 */
-		function getNotes(pageIndex, wd) {
-			var wd = wd || events.showWaiting();
+		function getNotes(pageIndex, type) {
+			var wd = null;
+			if(type == 0) {
+				wd = events.showWaiting();
+			}
 			var comData = {
 				userId: userId, //用户ID----utid
 				classId: mainData.classId, //班级id
@@ -414,8 +411,6 @@
 						});
 						pullRefresh.refresh(true); //更新当前控件
 					}
-					endPullUp();
-
 					if(data.RspData.Data.length == 0 && pageIndex == 1) {
 						mui.toast('学生动态为空');
 					} else {
@@ -426,7 +421,13 @@
 				} else {
 					mui.toast(data.RspTxt);
 				}
-				wd.close();
+				if(type == 0) {
+					wd.close();
+				} 
+				if(type == 1) { //结束下拉刷新
+					pullRefresh.endPullDownToRefresh();
+				}
+				endPullUp();
 			});
 		}
 

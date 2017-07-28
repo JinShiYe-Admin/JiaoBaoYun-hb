@@ -134,20 +134,16 @@
 							if(items.length == 1) {
 								items.splice(0, 0, attendedItem);
 								setWebGroup();
+								setTitle(12);
 							}
 						} else {
 							if(items.length == 2) {
 								items.splice(0, 1);
 								setWebGroup();
+								setTitle(0);
 							}
 						}
-						console.log("获取的加载网页："+items.length,items)
-						
-						if(items.length == 1) {
-							setTitle(0);
-						}else{
-							setTitle(11);
-						}
+						console.log("获取的加载网页：" + items.length, items);
 					})
 				})
 				document.getElementById('publish-show').addEventListener('tap', function(e) {
@@ -159,7 +155,15 @@
 					events.singleWebviewInPeriod(item, "../quan/pub-dynamic.html", "zx");
 				})
 			}
-
+			function clearChild(){
+				if(plus.webview.getWebviewById("show-attended.html")){
+					plus.webview.getWebviewById("show-attended.html").close();
+				}
+				if(plus.webview.getWebviewById("show-all.html")){
+					plus.webview.getWebviewById("show-all.html").close();
+				}
+				
+			}
 			function setWebGroup() {
 				var group = new webviewGroup("show-home.html", {
 					items: items,
@@ -225,6 +229,9 @@
 						indicator.style.display = "block";
 						indicator.firstElementChild.className = "mui-indicator mui-active";
 						indicator.lastElementChild.className = "mui-indicator";
+						break;
+					case 12:
+						indicator.style.display = "block";
 						break;
 					default:
 						break;
