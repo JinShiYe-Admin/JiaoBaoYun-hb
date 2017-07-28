@@ -196,11 +196,11 @@
 					}
 					return;
 				}
-				var wd = events.showWaiting();
+				var wd = null;
 				postDataPro_getFocusByUser({
 					userId: events.getUtid()
 				}, wd, function(data) {
-					wd.close();
+//					wd.close();
 					//console.log("获取关注的人列表" + JSON.stringify(data));
 					if(data.RspCode == 0 && data.RspData.Users.length > 0) {
 						callback(1);
