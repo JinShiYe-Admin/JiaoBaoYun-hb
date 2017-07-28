@@ -127,8 +127,9 @@
 					detailReady = true;
 				})
 				window.addEventListener('focus', function() {
-					console.log("show-home.html获取关注事件")
+					
 					getFocusedPerson(function(isShow) {
+						console.log("show-home.html获取关注事件"+isShow)
 						events.fireToPageNone("show-attended.html","showAttended",isShow);
 						console.log("获取的加载网页：" + items.length, items);
 					})
@@ -189,9 +190,9 @@
 				if(!events.getUtid()) {
 					var showFocusedPersen = myStorage.getItem(storageKeyName.SHOWFOCUSEPERSEN);
 					if(showFocusedPersen && showFocusedPersen.length > 0) {
-						callback(true);
+						callback(1);
 					} else {
-						callback(false);
+						callback(0);
 					}
 					return;
 				}
@@ -202,9 +203,9 @@
 					wd.close();
 					//console.log("获取关注的人列表" + JSON.stringify(data));
 					if(data.RspCode == 0 && data.RspData.Users.length > 0) {
-						callback(true);
+						callback(1);
 					} else {
-						callback(false);
+						callback(0);
 					}
 				})
 			}

@@ -57,8 +57,9 @@
 								console.log('获取的关注数据：', data);
 								showAtt.addData(showCity.pageIndex, data);
 								showCity.pageIndex++;
-								mui('#show-att').pullRefresh().endPulldown();
 							})
+						}else{
+							mui('#show-att').pullRefresh().endPulldown();
 						}
 					}
 				},
@@ -84,7 +85,6 @@
 						return '../../image/show/show-default-large.png';
 					},
 					jumpToPage: function(item) {
-
 						if(myStorage.getItem(storageKeyName.ISSHOWDETAILREADY)) {
 							events.fireToPageWithData("show-detail.html", "showDetail", item);
 						} else {
@@ -161,7 +161,13 @@
 					showAtt.detailReady = true;
 				})
 				window.addEventListener("showAttended",function(e){
-					showAtt.isAttended=e.detail.data;
+					if(e.detail.data==null){
+						showAtt.isAttended=0;
+					}else{
+						showAtt.isAttended=parseInt(e.detail.data);
+					}
+					
+					console.log("获取的关注信息：",showAtt.isAttended)
 				})
 			}
 		</script>
