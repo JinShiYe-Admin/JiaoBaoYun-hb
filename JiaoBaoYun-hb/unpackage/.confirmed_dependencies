@@ -15,7 +15,8 @@
 			"fonts/fangzheng.ttf",
 			"css/mui.min.css",
 			"css/utils/common.css",
-			"css/iconfont/iconfont.css"
+			"css/iconfont/iconfont.css",
+			"image/utils/default_personalimage.png"
 		],
 		"refer": [
 			"html/quan/zone_main.html",
@@ -128,7 +129,11 @@
 			"html/cloud/storage_transport.html",
 			"html/homework/homework-tea.html",
 			"html/quan/class_space.html",
-			"html/mine/qun_manage_a.html"
+			"html/mine/qun_manage_a.html",
+			"html/cloud/app_notes_main.html",
+			"html/cloud/app_keeprecord.html",
+			"html/cloud/record_student_main.html",
+			"html/quan/studentdynamic_main.html"
 		]
 	},
 	"html/sciedu/sciedu_home.html": {
@@ -149,7 +154,8 @@
 			"image/utils/loading.gif"
 		],
 		"refer": [
-			"html/utils/customizeCity.html"
+			"html/utils/customizeCity.html",
+			"html/sciedu/sciedu_show_main.html"
 		]
 	},
 	"html/quan/classSpace-persons.html": {
@@ -376,7 +382,8 @@
 	"html/quan/group-pInfo.html": {
 		"resources": [
 			"css/quan/group-pInfo.css",
-			"js/quan/group-pInfo.js"
+			"js/quan/group-pInfo.js",
+			"image/utils/default_personalimage.png"
 		],
 		"refer": [
 			"html/quan/edit-remark.html"
@@ -419,10 +426,15 @@
 			"css/mine/manager_data.css",
 			"js/libs/crypto-js/crypto-js.js",
 			"css/mui.min.css",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"css/mine/manager_member.css"
 		],
 		"refer": [
-			"html/quan/group-pInfo.html"
+			"html/quan/group-pInfo.html",
+			"html/mine/qun_data_create.html",
+			"html/mine/qun_manage_info_change.html",
+			"html/mine/qun_manage_info.html",
+			"html/mine/qun_manage_invite_a.html"
 		]
 	},
 	"html/utils/customizeCity.html": {
@@ -495,7 +507,13 @@
 			"css/mui.min.css",
 			"css/utils/common.css",
 			"js/libs/crypto-js/crypto-js.js",
-			"js/micro-course/coursedetails.js"
+			"js/micro-course/coursedetails.js",
+			"image/qiuzhi/qiuzhi_noanswer.png",
+			"image/utils/playvideo.png"
+		],
+		"refer": [
+			"html/micro-course/course-info.html",
+			"html/register/login.html"
 		]
 	},
 	"html/mine/account-info.html": {
@@ -503,6 +521,191 @@
 			"js/utils/load.js",
 			"js/utils/UploadHeadImage.js",
 			"js/mine/account-info.js"
+		]
+	},
+	"html/micro-course/course-info.html": {
+		"resources": [
+			"js/utils/vue.min.js",
+			"css/mui.min.css",
+			"js/micro-course/course-info.js",
+			"css/utils/common.css",
+			"js/libs/crypto-js/crypto-js.js"
+		],
+		"refer": [
+			"html/micro-course/history-records.html"
+		]
+	},
+	"html/micro-course/history-records.html": {
+		"resources": [
+			"image/utils/load-img-error.png",
+			"image/utils/loading.gif",
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"js/libs/crypto-js/crypto-js.js"
+		],
+		"refer": [
+			"html/micro-course/course_section.html"
+		]
+	},
+	"html/micro-course/course_section.html": {
+		"resources": [
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"js/libs/crypto-js/crypto-js.js"
+		]
+	},
+	"html/cloud/app_notes_main.html": {
+		"resources": [
+			"css/utils/pullToRefresh.css",
+			"css/mui.min.css",
+			"css/utils/audiopopover.css",
+			"css/utils/common.css",
+			"css/utils/preview.css",
+			"js/libs/crypto-js/crypto-js.js",
+			"js/utils/showaudio.js",
+			"js/mui.zoom.js",
+			"image/cloud/notes_bg2.jpg",
+			"js/utils/showvideoutil.js",
+			"js/mui.previewimage.js",
+			"image/utils/playvideo.png",
+			"image/utils/loading.gif",
+			"image/qiuzhi/qiuzhi_noanswer.png"
+		],
+		"refer": [
+			"html/cloud/app_notes_create.html"
+		]
+	},
+	"html/sciedu/sciedu_show_main.html": {
+		"resources": [
+			"css/mui.min.css",
+			"css/utils/common.css"
+		]
+	},
+	"html/cloud/app_notes_create.html": {
+		"resources": [
+			"js/utils/compress.js",
+			"css/mui.min.css",
+			"js/utils/MultiMedia.js",
+			"css/utils/MultiMedia.css",
+			"css/utils/common.css",
+			"js/utils/gallerypick.js",
+			"js/utils/recordvideoutil.js",
+			"js/libs/crypto-js/crypto-js.js",
+			"css/utils/audiopopover.css",
+			"css/utils/preview.css"
+		]
+	},
+	"html/cloud/app_keeprecord.html": {
+		"resources": [
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"js/libs/crypto-js/crypto-js.js"
+		],
+		"refer": [
+			"html/cloud/keeprecord_callorrecord_main.html",
+			"html/cloud/keeprecord_history_a.html",
+			"html/cloud/app_statistics.html"
+		]
+	},
+	"html/cloud/keeprecord_callorrecord_main.html": {
+		"resources": [
+			"css/utils/pullToRefresh.css",
+			"js/utils/compress.js",
+			"css/mui.min.css",
+			"js/utils/MultiMedia.js",
+			"css/utils/MultiMedia.css",
+			"css/utils/common.css",
+			"js/utils/recordvideoutil.js",
+			"js/utils/gallerypick.js",
+			"js/libs/crypto-js/crypto-js.js",
+			"image/utils/loading.gif",
+			"image/utils/playvideo.png"
+		]
+	},
+	"html/cloud/keeprecord_history_a.html": {
+		"resources": [
+			"js/mui.zoom.js",
+			"css/utils/pullToRefresh.css",
+			"css/mui.min.css",
+			"js/utils/showvideoutil.js",
+			"js/mui.previewimage.js",
+			"image/utils/playvideo.png",
+			"css/utils/common.css",
+			"image/utils/loading.gif",
+			"css/utils/preview.css",
+			"js/libs/crypto-js/crypto-js.js"
+		]
+	},
+	"html/cloud/app_statistics.html": {
+		"resources": [
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"js/libs/crypto-js/crypto-js.js"
+		],
+		"refer": [
+			"html/cloud/keeprecord_history_a.html"
+		]
+	},
+	"html/cloud/record_student_main.html": {
+		"resources": [
+			"css/utils/pullToRefresh.css",
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"css/utils/preview.css",
+			"js/utils/recordvideoutil.js",
+			"js/libs/crypto-js/crypto-js.js",
+			"image/utils/playvideo.png",
+			"image/utils/loading.gif"
+		],
+		"refer": [
+			"html/cloud/record_student_add.html"
+		]
+	},
+	"html/cloud/record_student_add.html": {
+		"resources": [
+			"js/utils/compress.js",
+			"css/mui.min.css",
+			"js/utils/MultiMedia.js",
+			"css/utils/MultiMedia.css",
+			"css/utils/common.css",
+			"js/utils/gallerypick.js",
+			"js/libs/crypto-js/crypto-js.js"
+		]
+	},
+	"html/quan/studentdynamic_main.html": {
+		"resources": [
+			"css/mui.min.css",
+			"image/utils/playvideo.png",
+			"css/utils/common.css",
+			"image/utils/loading.gif",
+			"js/utils/UploadHeadImage.js",
+			"js/libs/crypto-js/crypto-js.js",
+			"js/mui.zoom.js",
+			"css/utils/pullToRefresh.css",
+			"js/utils/compress.js",
+			"js/utils/showvideoutil.js",
+			"js/mui.previewimage.js",
+			"css/utils/preview.css"
+		]
+	},
+	"html/mine/qun_manage_info_change.html": {
+		"resources": [
+			"js/libs/crypto-js/crypto-js.js",
+			"css/mui.min.css",
+			"css/utils/common.css"
+		]
+	},
+	"html/mine/qun_manage_info.html": {
+		"resources": [
+			"css/mui.min.css",
+			"js/utils/MultiMedia.js",
+			"css/utils/common.css",
+			"js/utils/gallerypick.js"
+		]
+	},
+	"html/mine/qun_manage_invite_a.html": {
+		"resources": [
+			"image/mine/invite_none_0.png"
 		]
 	}
 }

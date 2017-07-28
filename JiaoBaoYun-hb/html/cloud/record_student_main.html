@@ -286,12 +286,11 @@
 		var checkRight = parseInt((offsetWidth * 0.12 - 18) / 2);
 
 		mui.plusReady(function() {
-			events.closeWaiting()
 			initData();
 			initControl();
 			initListener();
 			//获取数据
-			requestData(1);
+			requestData(1, 0);
 		});
 
 		/**
@@ -329,10 +328,7 @@
 					callback: function() {
 						if(!deleteRecord) {
 							//console.log('down ' + JSON.stringify(page));
-							requestData(1);
-							setTimeout(function() {
-								pullRefresh.endPullDownToRefresh(); //结束下拉刷新
-							}, 1000);
+							requestData(1, 1);
 						} else {
 							pullRefresh.endPullDownToRefresh(); //结束下拉刷新
 						}
@@ -344,13 +340,11 @@
 					callback: function() {
 						//console.log('up ' + JSON.stringify(page));
 						if(page) {
-							requestData(page.pageIndex + 1);
+							requestData(page.pageIndex + 1, 2);
 						} else {
+							pullRefresh.endPullUpToRefresh();
 							mui.toast('数据异常，请下拉刷新后重新尝试');
 						}
-						setTimeout(function() {
-							endPullUp();
-						}, 1000);
 					}
 				}
 			});
@@ -396,9 +390,10 @@
 				}
 			});
 
-			//下拉刷新的监听
+			//刷新的监听
 			window.addEventListener('refreshView', function() {
-				requestData(1);
+				mui('#pullrefresh').scroll().scrollTo(0, 0, 100);
+				requestData(1, 0);
 			});
 
 			//点击图片的数字
@@ -504,7 +499,15 @@
 		 * @param {Object} pageIndex 页码
 		 * @param {Object} wd 等待框
 		 */
-		function requestData(pageIndex, wait) {
+		function requestData(pageIndex, type, wait) {
+			var wd = null;
+			if(type == 0) {
+				if(wait) {
+					wd = wait;
+				} else {
+					wd = events.showWaiting();
+				}
+			}
 			var userId = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 			var comData = {
 				parentId: userId, //家长ID
@@ -513,8 +516,6 @@
 				pageIndex: pageIndex, //当前页数
 				pageSize: '10' //每页记录数
 			};
-			// 等待的对话框
-			var wd = wait || events.showWaiting();
 			//69.（云档案）按家长获取学生档案
 			postDataPro_getStudentFile(comData, wd, function(data) {
 				//console.log('69 按家长获取学生档案 getStudentFile ' + JSON.stringify(data));
@@ -533,7 +534,7 @@
 						studentFile = {} //清空记录
 						pullRefresh.refresh(true); //更新当前控件
 					}
-					endPullUp();
+
 					if(data.RspData.Data.length == 0 && pageIndex == 1) {
 						mui.toast('档案为空');
 					} else {
@@ -544,7 +545,13 @@
 				} else {
 					mui.toast(data.RspTxt);
 				}
-				wd.close();
+				if(type == 0) {
+					wd.close();
+				}
+				if(type == 1) { //结束下拉刷新
+					pullRefresh.endPullDownToRefresh();
+				}
+				endPullUp();
 			});
 		}
 
@@ -810,9 +817,9 @@
 					//退出删除状态
 					quitDel();
 					//获取数据
-					requestData(1, data.wd);
+					requestData(1, 0, data.wd);
 				} else {
-					events.closeWaiting(data.wd);
+					data.wd.close();
 					mui.toast(data.data.RspTxt);
 				}
 			});
