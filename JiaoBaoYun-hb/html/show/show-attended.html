@@ -52,13 +52,13 @@
 				watch: {
 					isAttended: function(val) {
 						if(val) {
-							showCity.pageIndex=1;
+							showCity.pageIndex = 1;
 							show_list.getShowList(showCity, function(showCity, data) {
 								console.log('获取的关注数据：', data);
 								showAtt.addData(showCity.pageIndex, data);
 								showCity.pageIndex++;
 							})
-						}else{
+						} else {
 							mui('#show-att').pullRefresh().endPulldown();
 						}
 					}
@@ -126,6 +126,10 @@
 			});
 
 			function pulldownRefresh() {
+				if(showAtt.isAttended === 0) {
+					mui('#show-att').pullRefresh().endPulldown();
+					return;
+				}
 				showCity.pageIndex = 1;
 				show_list.getShowList(showCity, function(showCity, data) {
 					console.log('获取的关注数据：', data);
@@ -146,7 +150,7 @@
 			}
 			mui.plusReady(function() {
 				showAtt.detailReady = plus.webview.currentWebview().detailReady;
-				showAtt.isAttended=plus.webview.currentWebview().isAttended;
+				showAtt.isAttended = plus.webview.currentWebview().isAttended;
 				console.log("showAtt.detailReady" + showAtt.detailReady);
 				show_list.getShowList(showCity, function(showCity, data) {
 					showAtt.addData(showCity.pageIndex, data);
@@ -160,14 +164,14 @@
 					console.log("show-attended获取监听事件 detailReady");
 					showAtt.detailReady = true;
 				})
-				window.addEventListener("showAttended",function(e){
-					if(e.detail.data==null){
-						showAtt.isAttended=0;
-					}else{
-						showAtt.isAttended=parseInt(e.detail.data);
+				window.addEventListener("showAttended", function(e) {
+					if(e.detail.data == null) {
+						showAtt.isAttended = 0;
+					} else {
+						showAtt.isAttended = parseInt(e.detail.data);
 					}
-					
-					console.log("获取的关注信息：",showAtt.isAttended)
+
+					console.log("获取的关注信息：", showAtt.isAttended)
 				})
 			}
 		</script>
