@@ -161,6 +161,9 @@
 					showAtt.addData(showCity.pageIndex, data);
 					showCity.pageIndex++;
 					mui('#show-att').pullRefresh().endPulldown();
+				},function(err){
+					mui.toast(err.RspTxt);
+					mui('#show-att').pullRefresh().endPulldown();
 				})
 			}
 
@@ -171,16 +174,15 @@
 					showAtt.addData(showCity.pageIndex, data);
 					showCity.pageIndex++;
 					mui('#show-att').pullRefresh().endPullupToRefresh();
+				},function(err){
+					mui.toast(err.RspTxt);
+					mui('#show-att').pullRefresh().endPullupToRefresh();
 				})
 			}
 			mui.plusReady(function() {
 				showAtt.detailReady = plus.webview.currentWebview().detailReady;
 				showAtt.isAttended = plus.webview.currentWebview().isAttended;
 				console.log("showAtt.detailReady" + showAtt.detailReady);
-//				show_list.getShowList(showCity, function(showCity, data) {
-//					showAtt.addData(showCity.pageIndex, data);
-//					showCity.pageIndex++;
-//				})
 				setListener();
 			})
 
@@ -195,7 +197,6 @@
 					} else {
 						showAtt.isAttended = parseInt(e.detail.data);
 					}
-
 					console.log("获取的关注信息：", showAtt.isAttended)
 				})
 			}

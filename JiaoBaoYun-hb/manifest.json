@@ -4894,7 +4894,8 @@
 					"js/publicProtocol.js",
 					"js/micro-course/course-list1.js",
 					"js/utils/vue.js",
-					"image/mine/invite_none_0.png"
+					"image/mine/invite_none_0.png",
+					"fonts/mui.ttf"
 				],
 				"refer": [
 					"html/micro-course/course_details.html"

@@ -76,6 +76,9 @@
 					showAll.addData(showCity.pageIndex, data);
 					showCity.pageIndex++;
 					mui('#show-all').pullRefresh().endPulldown();
+				},function(err){
+					mui.toast(err.RspTxt);
+					mui('#show-all').pullRefresh().endPulldown();
 				})
 			}
 
@@ -86,6 +89,9 @@
 					showAll.addData(showCity.pageIndex, data);
 					showCity.pageIndex++;
 					mui('#show-all').pullRefresh().endPullupToRefresh();
+				},function(err){
+					mui.toast(err.RspTxt);
+					mui('#show-all').pullRefresh().endPullupToRefresh();
 				})
 			}
 			mui.plusReady(function() {
@@ -93,6 +99,8 @@
 					console.log('获取的关注数据：', data);
 					showAll.addData(showCity.pageIndex, data);
 					showCity.pageIndex++;
+				},function(err){
+					mui.toast(err.RspTxt);
 				})
 				setListener();
 			})
