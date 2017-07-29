@@ -15,7 +15,8 @@
 			"fonts/fangzheng.ttf",
 			"css/mui.min.css",
 			"css/utils/common.css",
-			"css/iconfont/iconfont.css"
+			"css/iconfont/iconfont.css",
+			"image/utils/default_personalimage.png"
 		],
 		"refer": [
 			"html/quan/zone_main.html",
@@ -430,7 +431,8 @@
 	"html/utils/customizeCity.html": {
 		"resources": [
 			"css/mui.min.css",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"js/libs/crypto-js/crypto-js.js"
 		]
 	},
 	"html/homework/doHomework-stu.html": {
@@ -505,7 +507,8 @@
 			"css/mui.min.css",
 			"css/utils/common.css",
 			"js/libs/crypto-js/crypto-js.js",
-			"js/micro-course/coursedetails.js"
+			"js/micro-course/coursedetails.js",
+			"css/iconfont/iconfont.css"
 		]
 	},
 	"html/mine/account-info.html": {
@@ -587,7 +590,8 @@
 			"js/utils/files.js",
 			"css/utils/preview.css",
 			"js/utils/gallerypick.js",
-			"js/utils/recordvideoutil.js"
+			"js/utils/recordvideoutil.js",
+			"js/libs/crypto-js/crypto-js.js"
 		]
 	}
 }

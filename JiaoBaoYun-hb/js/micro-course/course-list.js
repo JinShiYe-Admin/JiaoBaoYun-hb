@@ -8,11 +8,9 @@ var course_list = (function(mod) {
 	 * @param {Object} callback
 	 */
 	mod.getData = function(model, callback, errBack) {
-		//个人信息
-		var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
 		//所需参数
 		var comData = {
-			userId: personal.utid, //用户ID,登录用户
+			userId: events.getUtid(), //用户ID,登录用户
 			pageIndex: model.pageIndex, //当前页数
 			pageSize: 10 //每页记录数,传入0，获取总记录数
 		};
@@ -37,15 +35,13 @@ var course_list = (function(mod) {
 			if(!events.getUtid()) {
 				//游客关注的课程
 				var focuseTemp = window.myStorage.getItem(window.storageKeyName.FOCUSECOURSES);
-				if(focuseTemp == null || focuseTemp.length == 0) {
-					if(plus.webview.currentWebview().isVisible()) {
-						mui.toast('暂时还没有关注的课程');
-					}
+				if(!focuseTemp || focuseTemp.length == 0) {
+					callback([]);
 					return;
 				}
 				//所需参数
 				var comData = {
-					userId: personal.utid, //用户ID，登录用户
+					userId: events.getUtid(), //用户ID，登录用户
 					courseIds: arrayToStr(focuseTemp), //课程ID，例如[1,2,3]
 					pageIndex: model.pageIndex, //当前页数
 					pageSize: 0 //每页记录数，传入0，获取总记录数
@@ -66,7 +62,7 @@ var course_list = (function(mod) {
 				return;
 			}
 			var comData1 = {
-				userId: personal.utid, //用户ID,登录用户
+				userId: events.getUtid(), //用户ID,登录用户
 				pageIndex: model.pageIndex, //当前页数
 				pageSize: 10 //每页记录数,传入0，获取总记录数
 			};

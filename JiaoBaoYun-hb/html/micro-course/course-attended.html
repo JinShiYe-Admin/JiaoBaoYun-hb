@@ -227,8 +227,10 @@
 					}
 				})
 				window.addEventListener("infoChanged", function() {
+					console.log("courseAtt传值********:"+events.getUtid());
 					courseInfo.pageIndex = 1;
 					course_list.getData(courseInfo, function(data) {
+						console.log("courseAtt获取的数据信息:",data)
 						if(data.length > 0) {
 							if(courseAtt.isAttended == 1) {
 								courseInfo.pageIndex = 1;
@@ -239,6 +241,8 @@
 								})
 							}
 							courseAtt.isAttended = 1;
+						}else{
+							courseAtt.isAttended = 0;
 						}
 					}, function(err) {
 						console.log("出现错误:", err);

@@ -202,9 +202,11 @@
 					console.log("获取的关注信息：", showAtt.isAttended)
 				});
 				window.addEventListener("infoChanged", function() {
+					console.log("信息更改？？？？？？？？？？？？？？？？？？？？？？？？")
 					showCity.pageIndex = 1;
 					show_list.getShowList(showCity, function(showCity, data) {
-						if(data.length > 0) {
+						console.log("show-attended传过来的值:",data)
+						if(data&&data.length > 0) {
 							if(showAtt.isAttended == 1) {
 								showCity.pageIndex = 1;
 								show_list.getShowList(showCity, function(showCity, data) {
@@ -221,6 +223,7 @@
 						}
 
 					}, function(err) {
+						console.log("show-attended传过来的值:",err)
 						mui.toast(err.RspTxt);
 					})
 				})

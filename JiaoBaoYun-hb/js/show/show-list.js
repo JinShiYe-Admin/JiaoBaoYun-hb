@@ -142,6 +142,10 @@ var show_list = (function(mod) {
 	 * @param {Object} callback 请求的回调
 	 */
 	function getAllUserSpacesByUser(showCity, paraModel, callback, errBack) {
+		if(!paraModel||paraModel.length==0){
+			callback(showCity,[]);
+			return;
+		}
 		//个人信息
 		var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
 		//所需参数
