@@ -36,6 +36,9 @@ var SciEduHomeItem = (function(mod) {
 		li.className = 'mui-table-view-cell mui-media';
 		li.setAttribute('data-tabid', data.tabid);
 		li.setAttribute('data-turl', data.turl);
+		li.setAttribute('data-title', data.title);
+		li.setAttribute('data-rotips', data.rotips);
+		li.setAttribute('data-tips', data.tips);
 		li.setAttribute('data-seHistory', data.seHistory);
 		li.id = itemId;
 		itemId++;
