@@ -12,38 +12,77 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="../../css/utils/common.css" />
+		<style>
+			body,
+			.mui-content {
+				background-color: white;
+				word-break: break-all;
+			}
+
+			#news_title {
+				font-size: 21px;
+				color: #323232;
+				text-align: center;
+				padding: 10px 10px 0px 10px;
+				/*background-color: wheat;*/
+			}
+
+			#news_tips {
+				margin-top: 5px;
+				font-size: 12px;
+				color: #B7B7B7;
+				text-align: center;
+				margin-bottom: 10px;
+			}
+		</style>
 	</head>
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<a id="spinner" class="mui-pull-right" style="padding-top: 10px;">
-				<span class="mui-spinner"></span>
-			</a>
+			<h1 class="mui-title">新闻详情</h1>
 		</header>
+		<div class="mui-content mui-content-padded">
+			<div id="news_title"></div>
+			<div id="news_tips"></div>
+			<div id="news_content"></div>
+		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script type="text/javascript" src="../../js/utils/events.js"></script>
+		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
 		<script type="text/javascript">
 			mui.init();
 			mui.plusReady(function() {
-				events.blurBack();
+				var wd = events.showWaiting();
 				var main = plus.webview.currentWebview(); //获取当前窗体对象
-				var data = main.data; //接收A页面传入参数值
-				//console.log('main-data:' + JSON.stringify(data));
-				var sub = events.createSubAppendMain(main, data.turl, {}, function() {
-					//console.log('sub loaded');
-					document.getElementById("spinner").style.display = 'none';
+				console.dir(main.id + ' ' + JSON.stringify(main.data));
+
+				document.getElementById("news_title").innerText = main.data.title;
+				var tips = main.data.rotips.split("|");
+				var from = tips[1];
+
+				var times = tips[0].split(" ");
+				var year = times[0];
+				var newsDate = times[1].split(':');
+				var newsTips = from + " | " + year + " " + newsDate[0] + ":" + newsDate[1]
+				document.getElementById("news_tips").innerText = newsTips;
+				var comData = {
+					top: '1', //每页行数，
+					vvl: main.data.acode + "|" + main.data.tabId, //查询的区域代码,省份截取城市代码前两位,城市截取城市代码的前4位
+					vvl1: '1' //页码,获取第几页
+				};
+				//45.通过区域代码获取对应区域的分页新闻
+				postDataPro_PostTnews(comData, wd, function(data) {
+					console.dir('45 PostTnews ' + JSON.stringify(data));
+					if(data.RspCode == 0) {
+						if(data.RspData.dt[0] && data.RspData.dt[0].content != undefined && data.RspData.dt[0].content != null) {
+							document.getElementById("news_content").innerHTML = data.RspData.dt[0].content;
+						}
+					} else {
+						mui.toast(data.RspTxt);
+					}
+					wd.close();
 				});
-				sub.addEventListener("loading", function() { //Webview窗口页面开始加载事件
-					//console.log('sub loading');
-					sub.evalJS('window.onerror = function(){//console.log("news error");window.close();}');
-				});
-				sub.addEventListener("error", function() { //Webview窗口错误事件
-					//console.log('sub error');
-					document.getElementById("spinner").style.display = 'none';
-					mui.toast('加载失败');
-				});
-				//---获取数据---end---
 			});
 		</script>
 	</body>
