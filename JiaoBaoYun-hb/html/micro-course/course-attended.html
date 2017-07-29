@@ -56,11 +56,15 @@
 					isAttended: 0
 				},
 				watch: {
-					isAttended: function(val) {
-						console.log("关注的监听");
+					isAttended: function(val, old) {
+						console.log("关注的监听新值：" + val, "旧值：" + old);
 						if(val) {
 							courseInfo.pageIndex = 1;
 							course_list.getData(courseInfo, function(data) {
+								if(data.length == 0) {
+									courseAtt.isAttended = 0;
+									return;
+								}
 								addData(data);
 							}, function(err) {
 								mui.toast(err.RspTxt);
@@ -72,7 +76,7 @@
 					isFocus: function(course) {
 						var isFocused = false;
 						if(events.getUtid()) {
-							isFocused = Boolean.parse(course.IsFocus);
+							isFocused = course.IsFocus > 0;
 						} else {
 							isFocused = parseInt(events.isExistInStorageArray(storageKeyName.FOCUSECOURSES, course.TabId)[1]) >= 0;
 							courseAtt.isUpdate(course);
@@ -85,12 +89,12 @@
 							events.toggleStorageArray(storageKeyName.FOCUSECOURSES, course.TabId, course.IsFocus);
 							course.IsFocus = !course.IsFocus;
 							courseAtt.isAttended = Number(myStorage.getItem(storageKeyName.FOCUSECOURSES) && myStorage.getItem(storageKeyName.FOCUSECOURSES).length > 0);
-							console.log("是否已关注课程："+courseAtt.isAttended)
+							console.log("是否已关注课程：" + courseAtt.isAttended)
 							return;
 						}
 						//所需参数
 						var comData = {
-							userId: personal.utid, //用户ID,登录用户
+							userId: events.getUtid(), //用户ID,登录用户
 							courseId: course.TabId, //课程ID
 							status: course.IsFocus ? 0 : 1 //关注状态，0 不关注，1 关注
 						};
@@ -101,7 +105,7 @@
 							//console.log('6.设置对某个课程关注:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 							if(data.RspCode == 0) { //成功
 								course.IsFocus = !course.IsFocus;
-								courseAtt.isAttended = data.RspData.FocusCnt > 0;
+								courseAtt.isAttended = Number(data.RspData.FocusCnt > 0);
 							} else {
 								mui.toast(data.RspTxt);
 							}
@@ -159,7 +163,7 @@
 			});
 
 			function pulldownRefresh() {
-				if(!courseAtt.isAttended){
+				if(!courseAtt.isAttended) {
 					mui("#course-att").pullRefresh().endPulldown();
 					return;
 				}
@@ -174,7 +178,7 @@
 			}
 
 			function pullupRefresh() {
-				if(!courseAtt.isAttended){
+				if(!courseAtt.isAttended) {
 					mui("#course-att").pullRefresh().endPullupToRefresh();
 					return;
 				}
@@ -198,7 +202,7 @@
 				courseInfo.pageIndex++;
 			}
 			mui.plusReady(function() {
-				courseAtt.isAttended = plus.webview.currentWebview().isAttended;
+				courseAtt.isAttended = Number(plus.webview.currentWebview().isAttended);
 				console.log("主界面传过来的值：", courseAtt.isAttended);
 				setListener();
 			})
@@ -206,14 +210,14 @@
 			function setListener() {
 				window.addEventListener("courseAttended", function(e) {
 					console.log("传递的事件：", e.detail);
-					var oldValue=courseAtt.isAttended;
+					var oldValue = courseAtt.isAttended;
 					if(e.detail.data == null) {
 						courseAtt.isAttended = 0;
 					} else {
 						courseAtt.isAttended = Number(e.detail.data);
 					}
 					console.log("获取的值：", courseAtt.isAttended);
-					if(courseAtt.isAttended&&oldValue) {
+					if(courseAtt.isAttended && oldValue) {
 						courseInfo.pageIndex = 1;
 						course_list.getData(courseInfo, function(data) {
 							addData(data);
@@ -221,6 +225,24 @@
 							console.log("出现错误：", err);
 						})
 					}
+				})
+				window.addEventListener("infoChanged", function() {
+					courseInfo.pageIndex = 1;
+					course_list.getData(courseInfo, function(data) {
+						if(data.length > 0) {
+							if(courseAtt.isAttended == 1) {
+								courseInfo.pageIndex = 1;
+								course_list.getData(courseInfo, function(data) {
+									addData(data);
+								}, function(err) {
+									console.log("出现错误：", err);
+								})
+							}
+							courseAtt.isAttended = 1;
+						}
+					}, function(err) {
+						console.log("出现错误:", err);
+					})
 				})
 			}
 		</script>

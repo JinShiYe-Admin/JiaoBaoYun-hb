@@ -157,7 +157,8 @@
 		"resources": [
 			"js/quan/classSpace-persons.js",
 			"css/mui.min.css",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"fonts/mui.ttf"
 		]
 	},
 	"html/index/firstPage.html": {
@@ -447,14 +448,16 @@
 			"css/utils/common.css",
 			"fonts/fangzheng.ttf",
 			"fonts/mui.ttf",
-			"html/show/show-all.html"
+			"html/show/show-all.html",
+			"js/libs/crypto-js/crypto-js.js"
 		],
 		"refer": [
 			"html/show/show-attended.html",
 			"html/show/show-all.html",
 			"html/show/add-comment.html",
 			"html/register/login.html",
-			"html/show/show-detail.html"
+			"html/show/show-detail.html",
+			"html/quan/pub-dynamic.html"
 		]
 	},
 	"html/show/show-all.html": {
@@ -509,7 +512,9 @@
 		"resources": [
 			"js/utils/load.js",
 			"js/utils/UploadHeadImage.js",
-			"js/mine/account-info.js"
+			"js/mine/account-info.js",
+			"js/utils/compress.js",
+			"js/utils/camera.js"
 		]
 	},
 	"html/show/add-comment.html": {
@@ -526,7 +531,9 @@
 			"css/mui.min.css",
 			"css/utils/common.css",
 			"html/micro-course/course-attended.html",
-			"html/micro-course/course-all.html"
+			"html/micro-course/course-all.html",
+			"js/publicMicroClass.js",
+			"js/libs/crypto-js/crypto-js.js"
 		],
 		"refer": [
 			"html/micro-course/course-attended.html",
@@ -543,7 +550,8 @@
 			"js/publicMicroClass.js",
 			"js/micro-course/course-list.js",
 			"image/mine/invite_none_0.png",
-			"fonts/mui.ttf"
+			"fonts/mui.ttf",
+			"fonts/fangzheng.ttf"
 		],
 		"refer": [
 			"html/micro-course/course_details.html"
@@ -566,6 +574,20 @@
 		"resources": [
 			"css/mui.min.css",
 			"css/utils/common.css"
+		]
+	},
+	"html/quan/pub-dynamic.html": {
+		"resources": [
+			"css/homework/publish-answer.css",
+			"js/utils/ASFiles.js",
+			"js/utils/load.js",
+			"css/quan/custom-textarea.css",
+			"js/utils/compress.js",
+			"js/utils/camera.js",
+			"js/utils/files.js",
+			"css/utils/preview.css",
+			"js/utils/gallerypick.js",
+			"js/utils/recordvideoutil.js"
 		]
 	}
 }

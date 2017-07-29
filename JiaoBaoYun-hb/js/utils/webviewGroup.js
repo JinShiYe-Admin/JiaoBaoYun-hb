@@ -201,7 +201,7 @@ proto.switchTab = function(id) {
 		function(e) {
 			//console.log("startAnimation callback...");
 			if(e.id === toWebview.id) {
-				isNew && plus.nativeUI.showWaiting();
+//				isNew && plus.nativeUI.showWaiting();
 				this.currentWebview = toWebview;
 				this.onChange({
 					index: toWebview.__mui_index
@@ -244,7 +244,7 @@ _proto.createWebview = function(from) {
 		options.styles.left = '100%';
 		if(from !== 'startAnimation') {
 			options.styles.left = '0';
-			plus.nativeUI.showWaiting();
+//			plus.nativeUI.showWaiting();
 		}
 		this.webview = plus.webview.create(this.url, this.id, options.styles, options.extras);
 		//append进去，避免返回时闪屏

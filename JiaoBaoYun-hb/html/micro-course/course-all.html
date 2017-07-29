@@ -54,7 +54,7 @@
 					isFocus: function(course) {
 						var isFocused = false;
 						if(events.getUtid()) {
-							isFocused = Boolean.parse(courseInfo.IsFocus);
+							isFocused = Boolean(course.IsFocus);
 						} else {
 							console.log("保存的数组：", myStorage.getItem(storageKeyName.FOCUSECOURSES))
 							console.log("events的判断", events.isExistInStorageArray(storageKeyName.FOCUSECOURSES, parseInt(course.TabId))[1])
@@ -74,7 +74,7 @@
 						}
 						//所需参数
 						var comData = {
-							userId: personal.utid, //用户ID,登录用户
+							userId: events.getUtid(), //用户ID,登录用户
 							courseId: course.TabId, //课程ID
 							status: course.IsFocus ? 0 : 1 //关注状态，0 不关注，1 关注
 						};
@@ -179,7 +179,19 @@
 				}, function(err) {
 					console.log("出现错误：", err);
 				})
+				setListener();
 			})
+
+			function setListener() {
+				window.addEventListener("infoChanged", function() {
+					courseInfo.pageIndex = 1;
+					course_list.getData(courseInfo, function(data) {
+						addData(data);
+					}, function(err) {
+						console.log("出现错误：", err);
+					})
+				})
+			}
 		</script>
 	</body>
 

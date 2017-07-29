@@ -4859,7 +4859,8 @@
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
-					"fonts/fangzheng.ttf"
+					"fonts/fangzheng.ttf",
+					"js/libs/crypto-js/crypto-js.js"
 				],
 				"refer": [
 					"html/micro-course/course-search.html"
@@ -5491,12 +5492,14 @@
 					"css/utils/common.css",
 					"fonts/fangzheng.ttf",
 					"fonts/mui.ttf",
-					"html/show/show-all.html"
+					"html/show/show-all.html",
+					"js/libs/crypto-js/crypto-js.js"
 				],
 				"refer": [
 					"html/show/add-comment.html",
 					"html/register/login.html",
-					"html/show/show-detail.html"
+					"html/show/show-detail.html",
+					"html/quan/pub-dynamic.html"
 				],
 				"priority": 0
 			}
