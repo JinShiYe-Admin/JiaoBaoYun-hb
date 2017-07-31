@@ -683,7 +683,7 @@ var postDataPro_PostUTcity = function(commonData, wd, callback) {
 //所需参数
 //		var comData = {
 //			top:'',//每页行数，
-//			vvl:'',//查询的区域代码,省份截取城市代码前两位,城市截取城市代码的前4位
+//			vvl:'',//省份截取城市代码前两位,城市截取城市代码的前4位,查询新闻:区域代码|新闻ID
 //			vvl1:''//页码,获取第几页
 //		};
 //返回值：
