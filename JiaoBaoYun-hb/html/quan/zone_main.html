@@ -48,6 +48,7 @@
 		<script type="text/javascript" src="../../js/utils/playutil.js"></script>
 		<script type="text/javascript" src="../../js/utils/showvideoutil.js"></script>
 		<script type="text/javascript ">
+		var wd=null;
 			mui.init({
 				beforeback: function() {
 					events.closeWaiting();
@@ -56,17 +57,16 @@
 				pullRefresh: {
 					container: '#content',
 					down: {
-						style:'circle',
-						offset:'50px',
+						style: 'circle',
+						offset: '50px',
 						callback: pulldownRefresh
 					},
 					up: {
-						auto:true,
 						contentrefresh: '正在加载...',
 						callback: pullupRefresh
 					}
 				},
-					gestureConfig: {
+				gestureConfig: {
 					longtap: true
 				}
 			})
@@ -108,7 +108,7 @@
 			var SCREEN_WIDTH;
 			var tempPage = 1; //页码，请求第几页数据
 			var totalCnt = 0; //当前留言的总条数
-			var flag = 2; //判断是加载更多1，还是刷新2
+			var flag = 0; //判断是加载更多1，还是刷新2
 			var zonepArray = []; //页码请求到要显示的数据，array[model_userNoteInfo]
 			var isPersonal; //判断是个人空间还是多用户空间
 
@@ -120,12 +120,13 @@
 
 				} else {
 					isPersonal = 0;
+					if(flag == 0) {
+						wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+					}
 					// 等待的对话框
-					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 
 					//28.（用户空间）获取用户针对某用户的空间列表
 					postDataPro_getUserSpacesByUserForPublisher(comData, wd, function(data) {
-						wd.close();
 						//console.log('获取个人空间列表_getUserSpacesByUserForPublisher:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 						if(data.RspCode == 0) {
 							if(data.RspData.Data.length == 0) {
@@ -181,7 +182,6 @@
 
 							//21.通过用户ID获取用户资料
 							postDataPro_PostUinf(tempData, wd, function(data1) {
-								wd.close();
 								//console.log('获取个人资料success:RspCode:' + data1.RspCode + ',RspData:' + JSON.stringify(data1.RspData) + ',RspTxt:' + data1.RspTxt);
 								if(data1.RspCode == 0) {
 									//循环当前的个人信息返回值数组
@@ -238,9 +238,17 @@
 								}
 								//console.log('循环遍历后的值：' + JSON.stringify(tempRspData));
 								PostUmk(tempArray.join(), tempRspData);
+								if(wd) {
+								wd.close()
+							}
+								
 
 							});
 						} else {
+							if(wd) {
+								wd.close()
+							}
+
 							mui.toast(data.RspTxt);
 						}
 					});
@@ -258,7 +266,6 @@
 				ShowVideoUtil.initVideo(document.getElementById("video"));
 				tempPage = 1; //页码，请求第几页数据
 				totalCnt = 0; //当前留言的总条数
-				flag = 2; //判断是加载更多1，还是刷新2
 				var comData = {
 					userId: personalUTID, //用户ID
 					publisherId: publisherId, //发布用户ID
@@ -383,9 +390,8 @@
 					publisherIds: upString
 				};
 
-				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+				var wd;
 				postDataPro_setUserSpaceReadByUser(comData, wd, function(data) {
-					wd.close();
 					//console.log('设置空间状态为已读_setUserSpaceReadByUser' + JSON.stringify(data));
 					if(data.RspCode == 0) {
 						//获得主页面的webview
@@ -428,7 +434,7 @@
 				//			setTimeout(function() {
 				flag = 1; //上拉加载更多
 				if(tempPage * 10 > totalCnt || tempPage * 10 == totalCnt) {
-					//				mui.toast('没有更多了...');
+					//									mui.toast('没有更多了...');
 					mui('#content').pullRefresh().endPullup(true);
 				} else {
 					tempPage++;
@@ -441,9 +447,11 @@
 					};
 					//请求数据
 					requestData(comData);
+//					
 				}
 
 			}
+			
 			// 通过群ID获取群的正常用户
 			function getBottomList() {
 				//需要参数
@@ -453,10 +461,12 @@
 					vvl1: '-1', //群员类型，0家长,1管理员,2老师,3学生,-1取全部
 
 				};
-				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+				
+				if(flag==0){
+					wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+				}
 				// 通过群ID获取群的正常用户
 				postDataPro_PostGusers(comData, wd, function(data) {
-					wd.close();
 					//console.log('通过群ID获取群的正常用户_PostGusers:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
 						datasource = data.RspData;
@@ -475,6 +485,9 @@
 						getAllUserSpacesByUser(upString); //获取多用户空间列表
 
 					} else {
+						if(wd){
+							wd.close();
+						}
 						mui.toast(data.RspTxt);
 					}
 				});
@@ -490,9 +503,7 @@
 					pageSize: 10 //每页记录数
 				};
 				// 等待的对话框
-				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 				postDataPro_getAllUserSpacesByUser(comData, wd, function(data) {
-					wd.close();
 					//console.log('74.(用户空间）获取多用户空间所有用户动态列表:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
 						if(data.RspData.Data.length == 0) {
@@ -550,7 +561,6 @@
 
 						//21.通过用户ID获取用户资料
 						postDataPro_PostUinf(tempData, wd, function(data1) {
-							wd.close();
 							//console.log('获取个人资料success:RspCode:' + data1.RspCode + ',RspData:' + JSON.stringify(data1.RspData) + ',RspTxt:' + data1.RspTxt);
 							if(data1.RspCode == 0) {
 								//循环当前的个人信息返回值数组
@@ -608,9 +618,13 @@
 								}
 							}
 							PostUmk(tempArray.join(), tempRspData);
+							wd.close()
 
 						});
 					} else {
+						if(wd){
+							wd.close();
+						}
 						mui.toast(data.RspTxt);
 					}
 
@@ -622,9 +636,8 @@
 				var postData = {
 					vvl: upString //被备注用户ID,utid或utid串
 				};
-				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+				var wd;
 				postDataPro_PostUmk(postData, wd, function(data) {
-					wd.close();
 					//console.log('获取多用户备注_PostUmk:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
 						for(var j = 0; j < tempRspData.length; j++) {
@@ -649,11 +662,12 @@
 						//合并数组
 						zonepArray = zonepArray.concat(tempRspData);
 
-//						mui('#pullrefresh').pullRefresh().endPullupToRefresh(); //参数为true代表没有更多数据了。
+						//						mui('#pullrefresh').pullRefresh().endPullupToRefresh(); //参数为true代表没有更多数据了。
 						for(var i = tempLength; i < zonepArray.length; i++) {
 							var data = addData(i);
 							dynamiclistitem.addItem(table, data);
 						}
+						mui('#content').pullRefresh().endPullup();
 					} else {
 						tempPage = 1;
 						zonepArray = tempRspData;

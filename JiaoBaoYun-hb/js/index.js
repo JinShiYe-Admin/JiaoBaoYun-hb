@@ -70,9 +70,8 @@ var addSubPages = function() {
 	//设置默认打开首页显示的子页序号；
 	var Index = 0;
 	//把子页的路径写在数组里面（空间，求知，剪辑，云盘 ）四个个子页面
-	//	var subpages = ['../cloud/cloud_home.html', '../sciedu/sciedu_home.html', '../show/show_home_1.html', '../qiuzhi/qiuzhi_home.html'];
-	//	var titles = ['云盘', '科教', '展现', '求知'];
-	var subpages = ['../show/show-home1.html', '../micro-course/course-home1.html'];
+	var subpages = ['../show/show-home.html', '../micro-course/course-home.html'];
+
 	//创建子页面，首个选项卡页面显示，其它均隐藏；
 	var self = plus.webview.currentWebview();
 	for(var i = 0; i < 2; i++) {

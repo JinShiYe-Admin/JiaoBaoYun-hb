@@ -45,6 +45,9 @@ body,
 .mui-table-view-cell:active {
 	background-color: #FFFFFF;
 }
+.mui-table-view-cell.mui-active {
+	background-color: white
+}
 
 .mui-table-view {
 	background: #f2f3f5;

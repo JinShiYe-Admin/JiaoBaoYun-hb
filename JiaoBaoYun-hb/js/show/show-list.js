@@ -1,54 +1,41 @@
-var show_listnew = (function(mod) {
+var show_list = (function(mod) {
 	/**
 	 * 获取展现的数据
 	 * @param {Object} showCity 地区
 	 * @param {Object} listContainer 列表
 	 * @param {Object} callback 回调
 	 */
-	mod.getShowList = function(showCity, listContainer, callback) {
+	mod.getShowList = function(showCity, callback,errBack) {
 		//个人信息
-		var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
-		//		var wd = events.showWaiting();
 		if(showCity.pageFlag == 0) { //关注
 			//console.log('关注界面拉');
 			//81.（用户空间）获取用户所有关注的用户
-			if(personal.utid == 0) { //游客
+			if(events.getUtid() == 0) { //游客
 				var showfocusperson = window.myStorage.getItem(window.storageKeyName.SHOWFOCUSEPERSEN);
 				//74.(用户空间）获取多用户空间所有用户动态列表
-				getAllUserSpacesByUser(showCity, showfocusperson, listContainer, callback);
+				getAllUserSpacesByUser(showCity, showfocusperson, callback, errBack);
 			} else {
-				getFocusByUser(showCity, listContainer, callback);
+				getFocusByUser(showCity, callback, errBack);
 			}
 		} else { //全部
-			var wd = events.showWaiting();
+			var wd = null;
 			/**
 			 * 78.（用户空间）获取区域用户空间列表
 			 */
 			postDataPro_getUserSpacesByArea({
-				userId: personal.utid, //用户ID
+				userId: events.getUtid(), //用户ID
 				area: '0', //区域
 				pageIndex: showCity.pageIndex, //当前页数
 				pageSize: 12 //每页记录数
 			}, wd, function(data) {
-				events.closeWaiting();
-				//console.log('78.（用户空间）获取区域用户空间列表:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 				if(data.RspCode == 0) {
-					if(showCity.pageIndex == 1) {
-						listContainer.innerHTML = "";
-					}
 					//总页数
 					showCity.totalPage = data.RspData.TotalPage;
-					showCity.pageIndex++;
 					mod.getUserInfo(data.RspData.Data, function(tempData) {
-						if(tempData.length > 6) { //分为6个一组
-							callback(showCity, listContainer, tempData.slice(0, 6));
-							callback(showCity, listContainer, tempData.slice(6, tempData.length));
-						} else {
-							callback(showCity, listContainer, tempData);
-						}
+						callback(showCity, tempData);
 					});
 				} else {
-					mui.toast(data.RspTxt);
+					errBack(data);
 				}
 			})
 		}
@@ -87,10 +74,10 @@ var show_listnew = (function(mod) {
 			vvl: tempArray.toString(), //用户id，查询的值,p传个人ID,g传ID串
 			vtp: 'g' //查询类型,p(个人)g(id串)
 		}
-		var wd = events.showWaiting();
+		var wd = null;
 		//21.通过用户ID获取用户资料
 		postDataPro_PostUinf(tempData, wd, function(data1) {
-			wd.close();
+			//			wd.close();
 			//console.log('获取个人资料success:RspCode:' + data1.RspCode + ',RspData:' + JSON.stringify(data1.RspData) + ',RspTxt:' + data1.RspTxt);
 			if(data1.RspCode == 0) {
 				for(var item in tempRspData) {
@@ -108,7 +95,6 @@ var show_listnew = (function(mod) {
 					}
 				}
 			}
-			//			//console.log('循环遍历后的值：' + JSON.stringify(tempRspData));
 			callback(tempRspData);
 		});
 	}
@@ -116,21 +102,20 @@ var show_listnew = (function(mod) {
 	/**
 	 * //81.（用户空间）获取用户所有关注的用户
 	 * @param {Object} showCity 地区信息
-	 * @param {Object} listContainer 加载内容的控件
 	 * @param {Object} callback 回调
 	 */
-	function getFocusByUser(showCity, listContainer, callback) {
+	function getFocusByUser(showCity, callback,errBack) {
 		//个人信息
 		var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
 		//所需参数
 		var comData = {
 			userId: personal.utid //用户ID
 		};
-		var wd = events.showWaiting();
+		var wd = null;
 		//81.（用户空间）获取用户所有关注的用户
 		postDataPro_getFocusByUser(comData, wd, function(data) {
 			//console.log('81.（用户空间）获取用户所有关注的用户：' + JSON.stringify(data));
-			wd.close();
+			//			wd.close();
 			if(data.RspCode == 0) {
 				var tempID = [];
 				for(var i in data.RspData.Users) {
@@ -140,12 +125,12 @@ var show_listnew = (function(mod) {
 				//				//console.log('tempID=', tempID);
 				//74.(用户空间）获取多用户空间所有用户动态列表
 				if(tempID.length > 0) {
-					getAllUserSpacesByUser(showCity, tempID, listContainer, callback);
+					getAllUserSpacesByUser(showCity, tempID, callback,errBack);
 				} else {
-					listContainer.innerHTML = "";
+
 				}
 			} else {
-				mui.toast(data.RspTxt);
+				errBack(data);
 			}
 		});
 	}
@@ -154,10 +139,13 @@ var show_listnew = (function(mod) {
 	 * //74.(用户空间）获取多用户空间所有用户动态列表
 	 * @param {Object} showCity 地区信息
 	 * @param {Object} paraModel 关注人信息数组
-	 * @param {Object} listContainer 加载数据的控件
 	 * @param {Object} callback 请求的回调
 	 */
-	function getAllUserSpacesByUser(showCity, paraModel, listContainer, callback) {
+	function getAllUserSpacesByUser(showCity, paraModel, callback, errBack) {
+		if(!paraModel||paraModel.length==0){
+			callback(showCity,[]);
+			return;
+		}
 		//个人信息
 		var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
 		//所需参数
@@ -168,92 +156,24 @@ var show_listnew = (function(mod) {
 			pageSize: 12 //每页记录数
 		};
 		// 等待的对话框
-		var wd1 = events.showWaiting();
+		var wd1 = null;
 		postDataPro_getUserSpacesForAreaByIds(comData, wd1, function(data) {
-			wd1.close();
-			//console.log("获取的问题数据：" + JSON.stringify(data));
-			//			//console.log('74.(用户空间）获取多用户空间所有用户动态列表:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 			if(data.RspCode == 0) {
-				if(showCity.pageIndex == 1) {
-					listContainer.innerHTML = "";
-				}
 				if(data.RspData.TotalCnt > 0) {
-					showCity.pageIndex++;
 					showCity.totalPage = data.RspData.TotalPage;
 					mod.getUserInfo(data.RspData.Data, function(tempData) {
 						showArray = tempData;
-						if(tempData.length > 6) { //分为6个一组
-							callback(showCity, listContainer, tempData.slice(0, 6));
-							callback(showCity, listContainer, tempData.slice(6, tempData.length));
-						} else {
-							callback(showCity, listContainer, tempData);
-						}
+						callback(showCity, tempData);
 					});
 				}
 			} else {
-				mui.toast(data.RspTxt);
+				errBack(data);
 			}
 
 		});
 	}
-	/**
-	 * 生成展现列表
-	 * @param {Object} showCity 展现地区信息
-	 * @param {Object} listContainer 加载内容的子控件
-	 * @param {Object} showData 加载的数据
-	 */
-	mod.setShowList = function(showCity, listContainer, showData) {
-		if(showCity.pageFlag){//全部
-			showList.allList.push(showData);
-		}else{
-			showList.attendedList.push(showData);
-		}
-//		jQuery(".img-container").lazyload();
-		//		mod.endFresh();
-	}
-	/**
-	 * 暂不用
-	 */
-	mod.initFresh = function() {
-		mui(".mui-scroll-wrapper .mui-scroll").pullToRefresh({
-			down: {
-				callback: function() {
-					freshContainer = this;
-					oldPageIndex = showCity.pageIndex;
-					freshFlag = 1;
-					showCity.pageIndex = 1;
-					wd = events.showWaiting(); //2.获取符合条件的专家信息
-					mod.getShowList(showCity, document.getElementById("list-container"), mod.setShowList);
-				}
-			},
-			up: {
-				callback: function() {
-					freshContainer = this;
-					if(showCity.pageIndex < totalPage) {
-						freshFlag = 2;
-						wd = events.showWaiting();
-						mod.getShowList(showCity, document.getElementById("list-container"), mod.setShowList);
-					} else {
-						freshContainer.endPullUpToRefresh();
-						mui(".mui-pull-loading")[0].innerHTML = "没有更多了";
-					}
-				}
-			}
-		});
-	}
-	/**
-	 * 加载监听
-	 */
-	mod.setListListener = function() {
-		//发布的点击事件
-		document.getElementById("publish-show").addEventListener("tap", function() {
-			var item = this;
-			if(events.judgeLoginMode(item)) {
-				return
-			}
-			item.disabled = true;
-			events.singleWebviewInPeriod(item, "../quan/pub-dynamic.html", "zx");
-		})
-	}
+
+
+
 	return mod;
-})(show_listnew || {})
+})(show_list || {})

@@ -2,11 +2,9 @@
 
 var storageKeyName = (function(mod) {
 
-
 	mod.key = 2; //0,开发;1,测试;2,移动版 3外网
-	var exLog = console.log;
 	console.log = function(hint, object) {
-		if(mod.key === 0) {
+		if(mod.key === 1) {
 			var argus = hint;
 			if(object) {
 				argus = hint + JSON.stringify(object);
@@ -108,6 +106,8 @@ var storageKeyName = (function(mod) {
 	mod.COURSELASTTIME = "courseLastTime";
 	mod.SHOWTYPE = "showType";
 	mod.COURSETYPE = "courseType";
+	mod.ISSHOWDETAILREADY="isDetailReady";//预加载是否完成
+	mod.VIEWCANCLICK='viewCanClick';
 
 	mod.MAINHOMEWORKURLTEACHER = mod.MAINHOMEWORKURL + 'TeacherService.svc/'; //老师作业url
 	mod.MAINHOMEWORKURLSTUDENT = mod.MAINHOMEWORKURL + 'StudentService.svc/'; //学生作业url

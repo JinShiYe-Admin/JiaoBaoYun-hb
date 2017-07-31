@@ -364,12 +364,16 @@
 
 			off_canvas.init();
 			//设置全局beforeSend
-			mui.ajaxSettings.beforeSend = function(xhr, setting) {};
+			mui.ajaxSettings.beforeSend = function(xhr, setting) {
+				httpFlag++
+				console.log('发送前httpFlag=========='+httpFlag)
+			};
 
 			//设置全局complete
 			mui.ajaxSettings.complete = function(xhr, status) {
-				httpFlag++;
-				if(httpFlag == 10) { //所有请求完毕
+				httpFlag--;
+				console.log('完成后httpFlag=========='+httpFlag)
+				if(httpFlag <= 0) { //所有请求完毕
 					httpFlag = 0;
 					wd.close();
 				}
@@ -384,6 +388,7 @@
 
 				//发送协议
 				changeData();
+				
 				addcloudapps_0(); //应用
 				off_canvas.add('../index/mine.html', 200);
 				document.querySelector(".img-icon>img").src = updateHeadImg(myStorage.getItem(storageKeyName.PERSONALINFO).uimg, 2);

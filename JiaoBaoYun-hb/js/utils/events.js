@@ -37,7 +37,13 @@ var events = (function(mod) {
 
 	mod.click = false; //是否是点击状态
 	mod.clickTime = 1000; //点击持续时间，默认1秒
-
+	//	mod.setClickAble=function(canClick){
+	//		myStorage.setItem(storageKeyName.VIEWCANCLICK,canClick);
+	//	}
+	//	mod.getClickAble=function(){
+	//	   return Boolean.parse(myStorage.getItem(storageKeyName.VIEWCANCLICK));
+	//	}
+	//	mod.setClickAble(true);
 	//去掉所有html标签
 	mod.deleteHtml = function(text) {
 		//		var dd = text.replace(/<\/?.+?>/g, "");
@@ -411,12 +417,12 @@ var events = (function(mod) {
 		mui.fire(plus.webview.getWebviewById("index.html"), 'infoChanged');
 		events.fireToPageNone('qiuzhi_home.html', 'infoChanged');
 		events.fireToPageNone('aboutme_sub.html', 'infoChanged');
-		//		events.fireToPageNone("course-all.html","infoChanged");
-		//		events.fireToPageNone("course-attended.html","infoChanged");
-		//		events.fireToPageNone("show-all.html","infoChanged");
-		//		events.fireToPageNone("show-attended.html","infoChanged");
-		events.fireToPageNone("show-home1.html", "infoChanged");
-		events.fireToPageNone("course-home1.html", "infoChanged");
+		events.fireToPageNone("course-all.html", "infoChanged");
+		events.fireToPageNone("course-attended.html", "infoChanged");
+		events.fireToPageNone("show-all.html", "infoChanged");
+		events.fireToPageNone("show-attended.html", "infoChanged");
+		events.fireToPageNone("show-home.html", "infoChanged");
+		events.fireToPageNone("course-home.html", "infoChanged");
 	}
 	mod.shortForString = function(str, len) {
 		if(!str) {
@@ -888,10 +894,6 @@ var events = (function(mod) {
 	 * @param {Object} data
 	 */
 	mod.singleWebviewInPeriod = function(clickedItem, webviewUrl, data) {
-		if(mod.click) {
-			return;
-		}
-		mod.click = true;
 		var waiting = mod.showWaiting();
 		if(!data) {
 			data = "";
@@ -915,7 +917,6 @@ var events = (function(mod) {
 				setTimeout(function() {
 					mod.closeWaiting(waiting);
 					if(item) {
-						mod.click = false;
 						item.disabled = false;
 						jQuery(item).css("pointerEvents", "all");
 					}
@@ -1430,7 +1431,7 @@ var events = (function(mod) {
 	 * @param {Object} data 传递的数据
 	 */
 	mod.readyToPage = function(isReady, url, lisetener, data) {
-		//console.log("是否已准备变形：" + isReady);
+		console.log("是否已准备变形：" + isReady);
 		if(isReady) {
 			//console.log("要传递的数据：" + JSON.stringify(data));
 			mod.fireToPageWithData(url, lisetener, data);
@@ -1438,6 +1439,16 @@ var events = (function(mod) {
 			setTimeout(function() {
 				mod.readyToPage(isReady, url, lisetener, data);
 			}, 500)
+		}
+	}
+
+	/**
+	 * 显示视频时，如果不是WiFi环境弹出提示
+	 */
+	mod.playVideoCheckWeb = function() {
+		var type = plus.networkinfo.getCurrentType();
+		if(type != plus.networkinfo.CONNECTION_WIFI && type != plus.networkinfo.CONNECTION_NONE) {
+			mui.toast("请注意当前不是WIFI环境");
 		}
 	}
 

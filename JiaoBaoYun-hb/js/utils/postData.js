@@ -5,8 +5,16 @@
 function postData(url, data, callback, waitingDialog) {
 	if(plus.networkinfo.getCurrentType() == plus.networkinfo.CONNECTION_NONE) {
 		//console.log('没有网络');
-		waitingDialog.close();
-		mui.toast("网络异常，请检查网络设置！");
+		var data = {
+				RspCode: '404',
+				RspData: '',
+				RspTxt: '网络异常，请检查网络设置！'
+			}
+
+			callback(data);
+			if(waitingDialog != null) {
+				waitingDialog.close();
+			}
 		return;
 	}
 	var tepTime = tempTime();
@@ -17,9 +25,11 @@ function postData(url, data, callback, waitingDialog) {
 		contentType: "application/json",
 		timeout: tepTime,
 		success: function(data) {
-			console.log('获取的值：',data);
+			console.log('获取的值：', data);
 			if(data.RspCode == 6) {
-				waitingDialog.close();
+				if(waitingDialog != null) {
+					waitingDialog.close();
+				}
 				renewToken(0, 'encryData', 'commonData', 'flag', 'waitingDialog', 'callback');
 			} else {
 				callback(data);
@@ -36,7 +46,9 @@ function postData(url, data, callback, waitingDialog) {
 			}
 
 			callback(data);
-			waitingDialog.close();
+			if(waitingDialog != null) {
+				waitingDialog.close();
+			}
 		}
 	});
 }
@@ -63,9 +75,16 @@ function tempTime() {
 //callback,返回值
 function postDataEncry(url, encryData, commonData, flag, waitingDialog, callback) {
 	if(plus.networkinfo.getCurrentType() == plus.networkinfo.CONNECTION_NONE) {
-		//console.log('没有网络');
-		waitingDialog.close();
-		mui.toast("网络异常，请检查网络设置！");
+		var data = {
+				RspCode: '404',
+				RspData: '',
+				RspTxt: '网络异常，请检查网络设置！'
+			}
+
+			callback(data);
+			if(waitingDialog != null) {
+				waitingDialog.close();
+			}
 		return;
 	}
 	//拼接登录需要的签名
@@ -80,7 +99,7 @@ function postDataEncry(url, encryData, commonData, flag, waitingDialog, callback
 		tempData.sign = sign;
 		// 等待的对话框
 		var urlArr = url.split('/');
-		console.log('传递的参数'+urlArr[urlArr.length-1]+':',tempData);
+		console.log('传递的参数' + urlArr[urlArr.length - 1] + ':', tempData);
 		var tepTime = tempTime();
 		//发送协议
 
@@ -92,10 +111,12 @@ function postDataEncry(url, encryData, commonData, flag, waitingDialog, callback
 			timeout: tepTime,
 			//			success: callback,
 			success: function(data) {
-				console.log(urlArr[urlArr.length-1]+"接口获取的值:",data);
+				console.log(urlArr[urlArr.length - 1] + "接口获取的值:", data);
 				//console.log('data.RspCode:' + data.RspCode + ',data.RspTxt:' + data.RspTxt + ',data.RspData:' + JSON.stringify(data.RspData) + ',' + url);
 				if(data.RspCode == 6) {
-					waitingDialog.close();
+					if(waitingDialog != null) {
+						waitingDialog.close();
+					}
 					renewToken(1, url, {}, commonData, flag, waitingDialog, callback);
 				} else {
 					//如果是21号协议，21.通过用户ID或ID串获取用户资料，判断返回值中，人员有没有名称，没有的话，主动给添加一个‘新用户’，
@@ -122,7 +143,7 @@ function postDataEncry(url, encryData, commonData, flag, waitingDialog, callback
 				}
 			},
 			error: function(xhr, type, errorThrown) {
-				console.log("网络连接失败"+url+":"+type+","+errorThrown+":",xhr);
+				console.log("网络连接失败" + url + ":" + type + "," + errorThrown + ":", xhr);
 				//console.log('网络连接失败:' + url + ':' + type + ',' + JSON.stringify(xhr) + ',' + errorThrown);
 				var data = {
 					RspCode: '404',
@@ -131,7 +152,9 @@ function postDataEncry(url, encryData, commonData, flag, waitingDialog, callback
 				}
 
 				callback(data);
-				waitingDialog.close();
+				if(waitingDialog != null) {
+					waitingDialog.close();
+				}
 				//mui.toast("网络连接失败，请重新尝试一下");
 			}
 		});

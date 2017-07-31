@@ -1,0 +1,198 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/utils/common.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../css/micro-course/course-list.css" />
+		<style>
+			.mui-slider-indicator {
+				margin-left: -10px;
+				bottom: -3px;
+			}
+			
+			.mui-slider-indicator .mui-indicator {
+				margin: 1px 2px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--下拉刷新容器-->
+		<div id="course-all" class="mui-content mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<!--数据列表-->
+				<ul v-show="listData.length>0" class="mui-table-view">
+					<li v-for="li of listData" class="mui-table-view-cell" v-on:tap="jumpToPage(li)">
+						<div class="course-container">
+							<div class="img-container"><img class="course-img" v-bind:src='li.CoursePic' />
+								<span class="red-circle" v-bind:class="{'display-none':li.IsUpdate==0}"></span></div>
+							<div class="course-detail">
+								<div class="courseName-button">
+									<p class="course-name single-line">{{li.CourseName}}</p>
+									<button id="btn-focused" type="button" class="input-btn" v-bind:class="[li.IsFocus?'btn-focused':'btn-unfocus']" v-on:tap.stop="toggleFocus(li)">{{li.IsFocus?'已关注':'关注'}}</button>
+								</div>
+								<p class="course-info double-line">{{li.SecName}}</p>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/utils/vue.js"></script>
+		<script type="text/javascript">
+			var courseAll = new Vue({
+				el: "#course-all",
+				data: {
+					listData: []
+				},
+				methods: {
+					isFocus: function(course) {
+						var isFocused = false;
+						if(events.getUtid()) {
+							isFocused = Boolean(course.IsFocus);
+						} else {
+							console.log("保存的数组：", myStorage.getItem(storageKeyName.FOCUSECOURSES))
+							console.log("events的判断", events.isExistInStorageArray(storageKeyName.FOCUSECOURSES, parseInt(course.TabId))[1])
+							isFocused = (parseInt(events.isExistInStorageArray(storageKeyName.FOCUSECOURSES, parseInt(course.TabId))[1]) >= 0);
+							courseAll.isUpdate(course);
+						}
+						course.IsFocus = isFocused;
+						console.log("获取的课程关注信息:", course);
+						return course;
+					},
+					toggleFocus: function(course) {
+						if(!events.getUtid()) {
+							events.toggleStorageArray(storageKeyName.FOCUSECOURSES, course.TabId, course.IsFocus);
+							course.IsFocus = !course.IsFocus;
+							events.fireToPageNone("course-attended.html", "courseAttended", (myStorage.getItem(storageKeyName.FOCUSECOURSES) && myStorage.getItem(storageKeyName.FOCUSECOURSES).length > 0));
+							return;
+						}
+						//所需参数
+						var comData = {
+							userId: events.getUtid(), //用户ID,登录用户
+							courseId: course.TabId, //课程ID
+							status: course.IsFocus ? 0 : 1 //关注状态，0 不关注，1 关注
+						};
+						// 等待的对话框
+						var wd = null;
+						//6.设置对某个课程关注
+						postDataMCPro_setCourseFocus(comData, wd, function(data) {
+							//console.log('6.设置对某个课程关注:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+							if(data.RspCode == 0) { //成功
+								course.IsFocus = !course.IsFocus;
+								var isAttended = data.RspData.FocusCnt > 0;
+								events.fireToPageNone("course-attended.html", "courseAttended", isAttended);
+							} else {
+								mui.toast(data.RspTxt);
+							}
+						});
+					},
+					isUpdate: function(course) {
+						var courseTime = events.isExistInStorageMap(storageKeyName.COURSELASTTIME, course.TabId);
+						//console.log("获取的更新时间：" + JSON.stringify(courseTime));
+						if(courseTime) {
+							if(courseTime < Date.parse(course.UpdateTime)) {
+								course.IsUpdate = 1;
+							} else {
+								course.IsUpdate = 0;
+							}
+						} else {
+							course.IsUpdate = 1;
+						}
+					},
+					jumpToPage: function(course) {
+						course.IsUpdate = 0;
+						events.singleWebviewInPeriod(undefined, 'course_details.html', course);
+						if(!events.getUtid()) {
+							events.setValueInMap(storageKeyName.COURSELASTTIME, course.TabId, Date.now());
+						}
+					}
+				}
+			})
+		</script>
+		<script src="../../js/utils/events.js"></script>
+		<script src="../../js/micro-course/course-list.js"></script>
+		<script src="../../js/publicProtocol.js"></script>
+		<script src="../../js/publicMicroClass.js"></script>
+		<script type="text/javascript">
+			var courseInfo = {
+				type: 1, //类型 1为全部 0为关注
+				pageIndex: 1, //页码
+				totalPage: 0 //总页码
+			}
+			mui.init({
+				keyEventBind: {
+					backbutton: false //关闭back按键监听
+				},
+				pullRefresh: {
+					container: "#course-all",
+					down: {
+						style: 'circle',
+						offset: 0,
+						callback: pulldownRefresh
+					},
+					up: {
+						contentrefresh: "上拉加载更多",
+						callback: pullupRefresh
+					}
+				}
+			});
+
+			function pulldownRefresh() {
+				courseInfo.pageIndex = 1;
+				course_list.getData(courseInfo, function(data) {
+					addData(data);
+					mui("#course-all").pullRefresh().endPulldown();
+				}, function(err) {
+					mui("#course-all").pullRefresh().endPulldown();
+				})
+			}
+
+			function pullupRefresh() {
+				course_list.getData(courseInfo, function(data) {
+					addData(data);
+					mui("#course-all").pullRefresh().endPullupToRefresh();
+				}, function(err) {
+					mui("#course-all").pullRefresh().endPullupToRefresh();
+				})
+			}
+
+			function addData(data) {
+				data = data.map(function(course, index, data) {
+					return courseAll.isFocus(course);
+				});
+				console.log("微课加载的课程：", data);
+				if(courseInfo.pageIndex === 1) {
+					courseAll.listData = [];
+				}
+				courseAll.listData = courseAll.listData.concat(data);
+				courseInfo.pageIndex++;
+			}
+			mui.plusReady(function() {
+				course_list.getData(courseInfo, function(data) {
+					addData(data);
+				}, function(err) {
+					console.log("出现错误：", err);
+				})
+				setListener();
+			})
+
+			function setListener() {
+				window.addEventListener("infoChanged", function() {
+					courseInfo.pageIndex = 1;
+					course_list.getData(courseInfo, function(data) {
+						addData(data);
+					}, function(err) {
+						console.log("出现错误：", err);
+					})
+				})
+			}
+		</script>
+	</body>
+
+</html>
