@@ -23,7 +23,8 @@
 			"html/mine/setting.html",
 			"html/mine/approval-apply.html",
 			"html/mine/account-info.html",
-			"html/mine/qun_manage_a.html"
+			"html/mine/qun_manage_a.html",
+			"html/mine/about.html"
 		]
 	},
 	"html/show/show-home1.html": {
@@ -130,7 +131,9 @@
 			"html/cloud/storage_transport.html",
 			"html/homework/homework-tea.html",
 			"html/quan/class_space.html",
-			"html/mine/qun_manage_a.html"
+			"html/mine/qun_manage_a.html",
+			"html/quan/zone_main.html",
+			"html/quan/studentdynamic_main.html"
 		]
 	},
 	"html/sciedu/sciedu_home.html": {
@@ -147,7 +150,8 @@
 			"js/libs/crypto-js/crypto-js.js",
 			"fonts/fangzheng.ttf",
 			"/image/utils/default_load_2.gif",
-			"css/mui.min.css"
+			"css/mui.min.css",
+			"image/utils/loading.gif"
 		],
 		"refer": [
 			"html/utils/customizeCity.html",
@@ -379,7 +383,8 @@
 	"html/quan/group-pInfo.html": {
 		"resources": [
 			"css/quan/group-pInfo.css",
-			"js/quan/group-pInfo.js"
+			"js/quan/group-pInfo.js",
+			"image/utils/default_personalimage.png"
 		],
 		"refer": [
 			"html/quan/edit-remark.html"
@@ -402,7 +407,8 @@
 			"css/mui.min.css",
 			"css/utils/preview.css",
 			"css/quan/class_space.css",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"js/libs/jquery.lazyload.min.js"
 		],
 		"refer": [
 			"html/quan/class-group.html"
@@ -517,7 +523,10 @@
 			"js/utils/UploadHeadImage.js",
 			"js/mine/account-info.js",
 			"js/utils/compress.js",
-			"js/utils/camera.js"
+			"js/utils/camera.js",
+			"image/utils/default_personalimage.png",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		]
 	},
 	"html/show/add-comment.html": {
@@ -592,6 +601,18 @@
 			"js/utils/gallerypick.js",
 			"js/utils/recordvideoutil.js",
 			"js/libs/crypto-js/crypto-js.js"
+		]
+	},
+	"html/mine/about.html": {
+		"resources": [
+			"image/mine/jiaobaoyun.png"
+		]
+	},
+	"html/quan/studentdynamic_main.html": {
+		"resources": [
+			"css/utils/pullToRefresh.css",
+			"js/utils/compress.js",
+			"js/utils/UploadHeadImage.js"
 		]
 	}
 }

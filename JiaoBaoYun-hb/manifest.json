@@ -2064,7 +2064,8 @@
 					"html/micro-course/course-home1.html",
 					"js/main/off-canvas.js",
 					"html/show/show-home1.html",
-					"fonts/fangzheng.ttf"
+					"fonts/fangzheng.ttf",
+					"html/show/show-home.html"
 				],
 				"refer": [
 					"html/mine.html",
@@ -2079,8 +2080,7 @@
 					"html/register/login.html",
 					"html/cloud/order-member.html",
 					"html/micro-course/course-home.html",
-					"html/show/show-home2.html",
-					"html/show/show-home.html"
+					"html/show/show-home2.html"
 				],
 				"priority": 0
 			},
@@ -4528,7 +4528,8 @@
 					"fonts/mui.ttf",
 					"js/utils/events.js",
 					"css/mui.min.css",
-					"css/utils/common.css"
+					"css/utils/common.css",
+					"js/libs/crypto-js/crypto-js.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -5025,7 +5026,8 @@
 					"image/utils/img-loading.gif",
 					"image/utils/video-loading.gif",
 					"js/libs/jquery.lazyload.min.js",
-					"image/mine/invite_none_0.png"
+					"image/mine/invite_none_0.png",
+					"js/mui.js"
 				],
 				"refer": [],
 				"priority": 0

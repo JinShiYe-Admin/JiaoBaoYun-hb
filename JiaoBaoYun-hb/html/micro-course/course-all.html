@@ -24,6 +24,10 @@
 		<!--下拉刷新容器-->
 		<div id="course-all" class="mui-content mui-scroll-wrapper">
 			<div class="mui-scroll">
+				<div v-if="listData.length==0" class="" style="min-height:300px;text-align: center;padding-top: 20%;">
+					<img src="../../image/mine/invite_none_0.png" width="50%" height="auto">
+					<p style="margin: auto 0;padding: 10px;">没有获取到课程~~</p>
+				</div>
 				<!--数据列表-->
 				<ul v-show="listData.length>0" class="mui-table-view">
 					<li v-for="li of listData" class="mui-table-view-cell" v-on:tap="jumpToPage(li)">

@@ -16,8 +16,12 @@
 		<!--下拉刷新容器-->
 		<div id="show-all" class="mui-content mui-fullscreen mui-scroll-wrapper">
 			<div class="mui-scroll">
+				<div v-if="listData.length==0" class="" style="min-height:300px;text-align: center;padding-top: 20%;">
+					<img src="../../image/mine/invite_none_0.png" width="50%" height="auto">
+					<p style="margin: auto 0;padding: 10px;">没有获取到数据~~</p>
+				</div>
 				<!--数据列表-->
-				<div v-show="listData.length>0" class=" show-list">
+				<div v-show="listData.length>0" class="show-list">
 					<div v-for="cardData of listData" class="mui-table-view cityNews-container">
 						<li v-for="(item,index) of cardData" class="mui-table-view-cell news-container" v-on:tap="jumpToPage(item)">
 							<div class="img-container news-img" v-bind:style="{'background-image':'url('+getBackImg(item,index)+')','background-position':'center','background-size':'cover','text-align':'center'}">

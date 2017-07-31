@@ -5,7 +5,7 @@ var storageKeyName = (function(mod) {
 	mod.key = 1; //0,开发;1,测试;2,移动版 3外网
 	var exLog = console.log;
 	console.log = function(hint, object) {
-		if(mod.key === 0) {
+		if(mod.key === 1) {
 			var argus = hint;
 			if(object) {
 				argus = hint + JSON.stringify(object);
@@ -40,7 +40,7 @@ var storageKeyName = (function(mod) {
 			mod.MAINJIAOXIAOURL = 'http://192.168.1.178:8080/JiaoBaoCloudService/'; //家校圈url
 			mod.MAINHOMEWORKURL = 'http://192.168.1.178:8088/'; //作业主url
 			mod.MAINQIUZHI = 'http://192.168.1.178:8080/JiaoBaoCloudService/'; //求知主url
-			mod.MAINMICROCLASS = 'http://192.168.1.178:8080//JiaoBaoCloudService/'; //微课主url
+			mod.MAINMICROCLASS = 'http://192.168.12.178:8080//JiaoBaoCloudService/'; //微课主url
 			//---测试---end---
 
 			//---七牛空间和接口---测试---start---
