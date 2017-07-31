@@ -99,12 +99,11 @@ var addSubPages = function() {
 //加载监听
 var setListener = function() {
 	var title = document.getElementById("title");
-	//	var aniShow = {};
 	window.addEventListener('showTitle', function(e) {
 		console.log("获取的数据：" + JSON.stringify(e.detail));
 		console.log("当前活动页面：" + activeTab);
 		var data = e.detail;
-		if((data.flag == 0 && activeTab == '../show/show-home1.html') || (data.flag && activeTab == '../micro-course/course-home1.html')) {
+		if((data.flag == 0 && activeTab == '../show/show-home.html') || (data.flag && activeTab == '../micro-course/course-home.html')) {
 			setTitle(data.type);
 		}
 	})
@@ -112,7 +111,7 @@ var setListener = function() {
 	mui('.mui-bar-tab').on('tap', 'a', function(e) {
 		var targetTab = this.getAttribute('href');
 
-		if(targetTab == '../micro-course/course-home1.html') {
+		if(targetTab == '../micro-course/course-home.html') {
 			document.getElementById("publish-show").style.display = 'none';
 			setTitle(myStorage.getItem(storageKeyName.COURSETYPE));
 		} else {

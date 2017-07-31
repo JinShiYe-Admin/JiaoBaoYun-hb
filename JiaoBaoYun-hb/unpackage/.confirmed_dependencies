@@ -1,1 +1,167 @@
-null
+{
+	"html/index/firstPage.html": {
+		"resources": [
+			"js/storageKeyName.js",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"js/utils/app-update.js",
+			"js/libs/myStorage/myStorage.js",
+			"js/libs/crypto-js/crypto-js.js",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"js/libs/RSA/BigInt.js",
+			"css/mui.min.css",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js",
+			"image/ios_1242-2208.png"
+		],
+		"refer": [
+			"html/index/index.html"
+		]
+	},
+	"html/show/show-home.html": {
+		"resources": [
+			"js/utils/webviewGroup.js",
+			"fonts/fangzheng.ttf",
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"html/show/show-attended.html",
+			"html/show/show-all.html"
+		],
+		"refer": [
+			"html/show/show-attended.html",
+			"html/show/show-all.html",
+			"html/show/show-detail.html"
+		]
+	},
+	"html/index/mine.html": {
+		"resources": [
+			"image/mine/setting.png",
+			"css/iconfont/iconfont.css",
+			"fonts/mui.ttf",
+			"css/home/index-menu.css",
+			"image/mine/about.png",
+			"fonts/fangzheng.ttf",
+			"css/mui.min.css",
+			"css/utils/common.css"
+		]
+	},
+	"html/index/index.html": {
+		"resources": [
+			"image/utils/default_personalimage.png",
+			"css/iconfont/iconfont.css",
+			"css/utils/slide_navigatian.css",
+			"html/show/show-home.html",
+			"css/mui.min.css",
+			"js/publicHomeworkProtocol.js",
+			"js/main/off-canvas.js",
+			"fonts/iconfont.ttf",
+			"js/utils/Statusbar.js",
+			"css/home/index.css",
+			"css/utils/common.css",
+			"js/index.js"
+		],
+		"refer": [
+			"html/show/show-home.html",
+			"html/index/mine.html",
+			"html/micro-course/course-home.html",
+			"html/register/login.html"
+		]
+	},
+	"html/micro-course/course-home.html": {
+		"resources": [
+			"js/utils/webviewGroup.js",
+			"fonts/fangzheng.ttf",
+			"js/publicMicroClass.js",
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"html/micro-course/course-attended.html"
+		],
+		"refer": [
+			"html/micro-course/course-attended.html",
+			"html/micro-course/course-all.html"
+		]
+	},
+	"html/micro-course/course-attended.html": {
+		"resources": [
+			"css/micro-course/course-list.css",
+			"js/micro-course/course-list.js",
+			"image/mine/invite_none_0.png",
+			"js/utils/vue.js",
+			"css/mui.min.css",
+			"css/utils/common.css"
+		]
+	},
+	"html/show/show-attended.html": {
+		"resources": [
+			"css/show/show-list.css",
+			"image/mine/invite_none_0.png",
+			"js/utils/vue.js",
+			"js/show/show-list.js",
+			"image/utils/playvideo.png",
+			"js/mui.js",
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"js/libs/crypto-js/crypto-js.js"
+		]
+	},
+	"html/quan/classSpace-persons.html": {
+		"resources": [
+			"js/quan/classSpace-persons.js",
+			"css/mui.min.css",
+			"css/utils/common.css"
+		]
+	},
+	"html/show/show-all.html": {
+		"resources": [
+			"css/show/show-list.css",
+			"css/mui.min.css",
+			"image/utils/playvideo.png",
+			"css/utils/common.css",
+			"js/show/show-all.js",
+			"js/libs/crypto-js/crypto-js.js"
+		]
+	},
+	"html/show/show-detail.html": {
+		"resources": [
+			"js/utils/vue.min.js",
+			"js/show/show-comment.js",
+			"js/mui.zoom.js",
+			"css/show/show-detail.css",
+			"js/utils/video.js",
+			"image/dynamic/praise.png",
+			"js/utils/showvideoutil.js",
+			"js/mui.previewimage.js",
+			"css/utils/preview.css",
+			"js/utils/all-preview.js",
+			"css/iconfont/iconfont.css",
+			"css/utils/common.css",
+			"css/mui.min.css",
+			"image/utils/playvideo.png"
+		],
+		"refer": [
+			"html/quan/classSpace-persons.html"
+		]
+	},
+	"html/register/login.html": {
+		"resources": [
+			"html/register/js/mui.enterfocus.js",
+			"js/utils/sortSign.js",
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"html/register/js/app.js"
+		]
+	},
+	"html/micro-course/course-all.html": {
+		"resources": [
+			"css/mui.min.css",
+			"css/micro-course/course-list.css",
+			"css/utils/common.css",
+			"js/libs/crypto-js/crypto-js.js"
+		]
+	}
+}

@@ -3,8 +3,9 @@
 var storageKeyName = (function(mod) {
 
 	mod.key = 2; //0,开发;1,测试;2,移动版 3外网
+	var exLog = console.log;
 	console.log = function(hint, object) {
-		if(mod.key === 1) {
+		if(mod.key === 2) {
 			var argus = hint;
 			if(object) {
 				argus = hint + JSON.stringify(object);
@@ -55,10 +56,10 @@ var storageKeyName = (function(mod) {
 			//---移动版---start---
 			mod.MAINEDU = 'http://114.215.222.186:8009/'; //科教图片url
 			mod.MAINURL = 'http://114.215.222.186:8009/api/CloudApi/'; //主url
-			mod.MAINJIAOXIAOURL = 'http://114.215.222.194:8080/YDJiaoBaoCloudService/'; //家校圈url
+			mod.MAINJIAOXIAOURL = 'http://114.215.222.194:8080/YiDongJiaoBaoCloudService/'; //家校圈url
 			mod.MAINHOMEWORKURL = 'http://114.215.222.186:8008/'; //作业主url
-			mod.MAINQIUZHI = 'http://114.215.222.194:8080/YDJiaoBaoCloudService/'; //求知主url
-			mod.MAINMICROCLASS = 'http://114.215.222.194:8080/YDJiaoBaoCloudService/'; //微课主url
+			mod.MAINQIUZHI = 'http://114.215.222.194:8080/YiDongJiaoBaoCloudService/'; //求知主url
+			mod.MAINMICROCLASS = 'http://114.215.222.194:8080/YiDongJiaoBaoCloudService/'; //微课主url
 			//---外网---end---
 
 			//---七牛空间和接口---测试---start---
@@ -106,8 +107,8 @@ var storageKeyName = (function(mod) {
 	mod.COURSELASTTIME = "courseLastTime";
 	mod.SHOWTYPE = "showType";
 	mod.COURSETYPE = "courseType";
-	mod.ISSHOWDETAILREADY="isDetailReady";//预加载是否完成
-	mod.VIEWCANCLICK='viewCanClick';
+	mod.ISSHOWDETAILREADY = "isDetailReady"; //预加载是否完成
+	mod.VIEWCANCLICK = 'viewCanClick';
 
 	mod.MAINHOMEWORKURLTEACHER = mod.MAINHOMEWORKURL + 'TeacherService.svc/'; //老师作业url
 	mod.MAINHOMEWORKURLSTUDENT = mod.MAINHOMEWORKURL + 'StudentService.svc/'; //学生作业url
