@@ -34,6 +34,10 @@
 				text-align: center;
 				margin-bottom: 10px;
 			}
+
+			img {
+				width: 100%;
+			}
 		</style>
 	</head>
 
@@ -45,7 +49,24 @@
 		<div class="mui-content mui-content-padded">
 			<div id="news_title"></div>
 			<div id="news_tips"></div>
-			<div id="news_content"></div>
+			<div id="news_content">
+				<!--<div class="article-content">
+					<p>2017 年全国青少年“未来之星”阳光体育大会山东分会场比赛于 2017 年 7 月 17 日至 21 日在曲阜市举行，本次比赛设定向运动、高中男子三人制篮球、初中男子五人制足球、跳绳、拔河5个项目。经过激烈角逐，我市代表队拔得头筹，济南代表团获得团体一等奖第一名、定向运动一等奖、跳绳团体二等奖、三对三篮球二等奖、五人制足球比赛拔河二等奖、拔河团体三等奖。其中，济南第十一中学获得定向运动第一名、山东省实验中学获得三对三篮球比赛第三名、济南甸柳第一中学获得五人制足球比赛第三名、济南第一中学获得跳绳比赛第五名，团体拔河比赛获得第三名；</p>
+					<p>全国青少年“未来之星”阳光体育大会是目前全国规模最大、影响最广的青少年大型综合性体育活动，旨在吸引更多青少年参与体育锻炼，享受阳光体育。此次山东分会场活动由省体育局、省教育厅、团省委主办，来自全省17地市的18支代表队近500名师生参加活动。(体卫艺处)</p>
+					<p><img src="http://www.jnedu.gov.cn/picture/0/s1707241015380973538.jpg"></p>
+					<p>&nbsp;</p>
+					<p><img src="http://www.jnedu.gov.cn/picture/0/s1707241015519288501.jpg"></p>
+					<p>&nbsp;</p>
+					<p><img src="http://www.jnedu.gov.cn/picture/0/s1707241015599388008.jpg"></p>
+					<p>&nbsp;</p>
+					<p>&nbsp;</p>
+					<p>&nbsp;</p>
+					<p><img src="http://www.jnedu.gov.cn/picture/0/s1707241016065131988.jpg"></p>
+					<p>&nbsp;</p>
+					<p><img src="http://www.jnedu.gov.cn/picture/0/s1707241018517776535.jpg"></p>
+					<p></p>
+				</div>-->
+			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script type="text/javascript" src="../../js/utils/events.js"></script>
@@ -55,7 +76,7 @@
 			mui.plusReady(function() {
 				var wd = events.showWaiting();
 				var main = plus.webview.currentWebview(); //获取当前窗体对象
-				console.dir(main.id + ' ' + JSON.stringify(main.data));
+				//console.log(main.id + ' ' + JSON.stringify(main.data));
 
 				document.getElementById("news_title").innerText = main.data.title;
 				var tips = main.data.rotips.split("|");
@@ -73,7 +94,7 @@
 				};
 				//45.通过区域代码获取对应区域的分页新闻
 				postDataPro_PostTnews(comData, wd, function(data) {
-					console.dir('45 PostTnews ' + JSON.stringify(data));
+					//console.log('45 PostTnews ' + JSON.stringify(data));
 					if(data.RspCode == 0) {
 						if(data.RspData.dt[0] && data.RspData.dt[0].content != undefined && data.RspData.dt[0].content != null) {
 							document.getElementById("news_content").innerHTML = data.RspData.dt[0].content;

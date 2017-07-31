@@ -438,7 +438,8 @@
 		"resources": [
 			"css/mui.min.css",
 			"css/utils/common.css",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"image/utils/delete.png"
 		]
 	},
 	"html/homework/doHomework-stu.html": {
