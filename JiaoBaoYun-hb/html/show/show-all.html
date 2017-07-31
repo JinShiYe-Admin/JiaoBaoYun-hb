@@ -18,7 +18,8 @@
 			<div class="mui-scroll">
 				<div v-if="listData.length==0" class="" style="min-height:300px;text-align: center;padding-top: 20%;">
 					<img src="../../image/mine/invite_none_0.png" width="50%" height="auto">
-					<p style="margin: auto 0;padding: 10px;">没有获取到数据~~</p>
+				
+					<p style="margin: auto 0;padding: 10px;"><span v-if="!isRequired" class="mui-spinner" style="vertical-align: center;height: 15px;width: 15px;margin-bottom: -4px;"></span>{{isRequired?'没有获取到展现内容~~':'数据加载中~~'}}</p>
 				</div>
 				<!--数据列表-->
 				<div v-show="listData.length>0" class="show-list">
@@ -100,10 +101,12 @@
 			}
 			mui.plusReady(function() {
 				show_list.getShowList(showCity, function(showCity, data) {
+					showAll.isRequired=true;
 					console.log('获取的关注数据：', data);
 					showAll.addData(showCity.pageIndex, data);
 					showCity.pageIndex++;
 				}, function(err) {
+					showAll.isRequired=true;
 					mui.toast(err.RspTxt);
 				})
 				setListener();

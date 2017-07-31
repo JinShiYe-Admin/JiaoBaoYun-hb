@@ -514,7 +514,11 @@
 			"css/utils/common.css",
 			"js/libs/crypto-js/crypto-js.js",
 			"js/micro-course/coursedetails.js",
-			"css/iconfont/iconfont.css"
+			"css/iconfont/iconfont.css",
+			"image/qiuzhi/qiuzhi_noanswer.png"
+		],
+		"refer": [
+			"html/micro-course/course-info.html"
 		]
 	},
 	"html/mine/account-info.html": {
@@ -585,7 +589,8 @@
 	"html/sciedu/sciedu_show_main.html": {
 		"resources": [
 			"css/mui.min.css",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"js/libs/crypto-js/crypto-js.js"
 		]
 	},
 	"html/quan/pub-dynamic.html": {
@@ -613,6 +618,21 @@
 			"css/utils/pullToRefresh.css",
 			"js/utils/compress.js",
 			"js/utils/UploadHeadImage.js"
+		]
+	},
+	"html/micro-course/course-info.html": {
+		"resources": [
+			"js/micro-course/course-info.js"
+		],
+		"refer": [
+			"html/micro-course/history-records.html"
+		]
+	},
+	"html/micro-course/history-records.html": {
+		"resources": [
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"js/libs/crypto-js/crypto-js.js"
 		]
 	}
 }

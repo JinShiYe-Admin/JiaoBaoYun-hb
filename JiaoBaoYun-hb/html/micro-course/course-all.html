@@ -26,7 +26,7 @@
 			<div class="mui-scroll">
 				<div v-if="listData.length==0" class="" style="min-height:300px;text-align: center;padding-top: 20%;">
 					<img src="../../image/mine/invite_none_0.png" width="50%" height="auto">
-					<p style="margin: auto 0;padding: 10px;">没有获取到课程~~</p>
+					<p style="margin: auto 0;padding-top: 10px;"><span v-if="!isRequired" class="mui-spinner"  style="vertical-align: center;width: 15px; height: 15px;margin-bottom: -4px;"></span>{{isRequired?'没有获取到课程~~':'数据加载中~~'}}</p>
 				</div>
 				<!--数据列表-->
 				<ul v-show="listData.length>0" class="mui-table-view">
@@ -52,7 +52,8 @@
 			var courseAll = new Vue({
 				el: "#course-all",
 				data: {
-					listData: []
+					listData: [],
+					isRequired: false
 				},
 				methods: {
 					isFocus: function(course) {
@@ -180,8 +181,10 @@
 			mui.plusReady(function() {
 				course_list.getData(courseInfo, function(data) {
 					addData(data);
+					courseAll.isRequired = true;
 				}, function(err) {
 					console.log("出现错误：", err);
+					courseAll.isRequired = true;
 				})
 				setListener();
 			})
