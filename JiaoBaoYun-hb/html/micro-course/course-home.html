@@ -83,6 +83,7 @@
 		<script src="../../js/utils/webviewGroup.js"></script>
 		<script src="../../js/utils/events.js"></script>
 		<script src="../../js/publicProtocol.js"></script>
+		<script src="../../js/publicMicroClass.js"></script>
 		<script type="text/javascript">
 			var group;
 			var detailReady = false;
@@ -110,9 +111,9 @@
 				mui.fire(plus.webview.getLaunchWebview(), "indexReady");
 				getAttendedClasses(function(isShow) {
 					if(isShow) {
-						attendedItem.extras.isAttended = true;
+						attendedItem.extras.isAttended = 1;
 					} else {
-						attendedItem.extras.isAttended = false;
+						attendedItem.extras.isAttended = 0;
 					}
 					console.log("展现主界面加载的items", items);
 					setWebGroup();
@@ -164,6 +165,7 @@
 						pageSize: 1 //每页记录数,传入0，获取总记录数
 					}, wd, function(data) {
 						wd.close();
+						console.log("course-home微课主界面：",data);
 						if(data.RspCode == 0 && data.RspData.totalCount) {
 							callback(1);
 						} else {

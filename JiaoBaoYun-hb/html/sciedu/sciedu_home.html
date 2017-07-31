@@ -231,9 +231,13 @@
 					//点击每一项的监听
 					mui('#sliderGroup').on('tap', '.mui-table-view-cell', function() {
 						var id = this.getAttribute('id');
-						var turl = this.getAttribute('data-turl');
-						var dataHistory = this.getAttribute('data-seHistory');
 						var tabid = this.getAttribute('data-tabid');
+						var turl = this.getAttribute('data-turl');
+						var title = this.getAttribute('data-title');
+						var tips = this.getAttribute('data-tips');
+						var rotips = this.getAttribute('data-rotips');
+						var dataHistory = this.getAttribute('data-seHistory');
+
 						//console.log(id + ' ' + turl + ' ' + dataHistory + ' ' + tabid);
 						if(dataHistory != 'true') { //不是历史记录
 							////console.log('dataHistory ' + dataHistory);
@@ -252,6 +256,11 @@
 						}
 						document.getElementById("title_" + id).style.color = 'darkgray';
 						events.openNewWindowWithData('sciedu_show_main.html', {
+							acode: sliderId,
+							tabId: tabid,
+							title: title,
+							tips: tips,
+							rotips: rotips,
 							turl: turl
 						});
 					});
@@ -398,6 +407,7 @@
 					////console.log('addItems ' + JSON.stringify(data[i]));
 					//拆分日期和时间
 					var tips = data[i].tips;
+					data[i].rotips = tips;
 					var tipsList = tips.split('|');
 					var date = tipsList[0].split(' ')[0]; //日期
 					var time = tipsList[0].split(' ')[1]; //日期

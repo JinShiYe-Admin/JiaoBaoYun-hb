@@ -5,10 +5,16 @@
 function postData(url, data, callback, waitingDialog) {
 	if(plus.networkinfo.getCurrentType() == plus.networkinfo.CONNECTION_NONE) {
 		//console.log('没有网络');
-		if(waitingDialog != null) {
-			waitingDialog.close();
-		}
-		mui.toast("网络异常，请检查网络设置！");
+		var data = {
+				RspCode: '404',
+				RspData: '',
+				RspTxt: '网络异常，请检查网络设置！'
+			}
+
+			callback(data);
+			if(waitingDialog != null) {
+				waitingDialog.close();
+			}
 		return;
 	}
 	var tepTime = tempTime();
@@ -69,11 +75,16 @@ function tempTime() {
 //callback,返回值
 function postDataEncry(url, encryData, commonData, flag, waitingDialog, callback) {
 	if(plus.networkinfo.getCurrentType() == plus.networkinfo.CONNECTION_NONE) {
-		//console.log('没有网络');
-		if(waitingDialog != null) {
-			waitingDialog.close();
-		}
-		mui.toast("网络异常，请检查网络设置！");
+		var data = {
+				RspCode: '404',
+				RspData: '',
+				RspTxt: '网络异常，请检查网络设置！'
+			}
+
+			callback(data);
+			if(waitingDialog != null) {
+				waitingDialog.close();
+			}
 		return;
 	}
 	//拼接登录需要的签名

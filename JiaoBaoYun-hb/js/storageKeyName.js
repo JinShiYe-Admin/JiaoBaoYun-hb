@@ -108,6 +108,7 @@ var storageKeyName = (function(mod) {
 	mod.SHOWTYPE = "showType";
 	mod.COURSETYPE = "courseType";
 	mod.ISSHOWDETAILREADY="isDetailReady";//预加载是否完成
+	mod.VIEWCANCLICK='viewCanClick';
 
 	mod.MAINHOMEWORKURLTEACHER = mod.MAINHOMEWORKURL + 'TeacherService.svc/'; //老师作业url
 	mod.MAINHOMEWORKURLSTUDENT = mod.MAINHOMEWORKURL + 'StudentService.svc/'; //学生作业url

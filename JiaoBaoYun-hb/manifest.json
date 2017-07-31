@@ -4859,7 +4859,8 @@
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
-					"fonts/fangzheng.ttf"
+					"fonts/fangzheng.ttf",
+					"js/libs/crypto-js/crypto-js.js"
 				],
 				"refer": [
 					"html/micro-course/course-search.html"
@@ -4894,7 +4895,8 @@
 					"js/publicProtocol.js",
 					"js/micro-course/course-list1.js",
 					"js/utils/vue.js",
-					"image/mine/invite_none_0.png"
+					"image/mine/invite_none_0.png",
+					"fonts/mui.ttf"
 				],
 				"refer": [
 					"html/micro-course/course_details.html"
@@ -5490,12 +5492,14 @@
 					"css/utils/common.css",
 					"fonts/fangzheng.ttf",
 					"fonts/mui.ttf",
-					"html/show/show-all.html"
+					"html/show/show-all.html",
+					"js/libs/crypto-js/crypto-js.js"
 				],
 				"refer": [
 					"html/show/add-comment.html",
 					"html/register/login.html",
-					"html/show/show-detail.html"
+					"html/show/show-detail.html",
+					"html/quan/pub-dynamic.html"
 				],
 				"priority": 0
 			}

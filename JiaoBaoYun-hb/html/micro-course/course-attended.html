@@ -29,15 +29,15 @@
 					<p style="margin: auto 0;padding: 10px;">暂无关注的课程~~</p>
 				</div>
 				<!--数据列表-->
-				<ul v-show="listData.length>0" class="mui-table-view">
-					<li v-for="li of listData" class="mui-table-view-cell">
+				<ul v-else v-show="listData.length>0" class="mui-table-view">
+					<li v-for="li of listData" v-if="li.IsFocus" class="mui-table-view-cell" v-on:tap="jumpToPage(li)">
 						<div class="course-container">
 							<div class="img-container"><img class="course-img" v-bind:src='li.CoursePic' />
-								<span class="red-circle"></span></div>
+								<span class="red-circle" v-bind:class="{'display-none':li.IsUpdate==0}"></span></div>
 							<div class="course-detail">
 								<div class="courseName-button">
 									<p class="course-name single-line">{{li.CourseName}}</p>
-									<button id="btn-focused" type="button" class="input-btn" v-bind:class="[li.IsFocus?'btn-focused':'btn-unfocus']" v-on:tap="toggleFocus(li)">{{li.IsFocus?'已关注':'关注'}}</button>
+									<button id="btn-focused" type="button" class="input-btn" v-bind:class="[li.IsFocus?'btn-focused':'btn-unfocus']" v-on:tap.stop="toggleFocus(li)">{{li.IsFocus?'已关注':'关注'}}</button>
 								</div>
 								<p class="course-info double-line">{{li.SecName}}</p>
 							</div>
@@ -56,12 +56,18 @@
 					isAttended: 0
 				},
 				watch: {
-					isAttended: function(val) {
-						console.log("关注的监听");
+					isAttended: function(val, old) {
+						console.log("关注的监听新值：" + val, "旧值：" + old);
 						if(val) {
 							courseInfo.pageIndex = 1;
 							course_list.getData(courseInfo, function(data) {
+								if(data.length == 0) {
+									courseAtt.isAttended = 0;
+									return;
+								}
 								addData(data);
+							}, function(err) {
+								mui.toast(err.RspTxt);
 							})
 						}
 					}
@@ -70,25 +76,27 @@
 					isFocus: function(course) {
 						var isFocused = false;
 						if(events.getUtid()) {
-							isFocused = Boolean.parse(course.IsFocus);
+							isFocused = course.IsFocus > 0;
 						} else {
-							isFocused = parseInt(events.isExistInStorageArray(storageKeyName.FOCUSECOURSES, course.TabId)[1]) > 0;
+							isFocused = parseInt(events.isExistInStorageArray(storageKeyName.FOCUSECOURSES, course.TabId)[1]) >= 0;
+							courseAtt.isUpdate(course);
 						}
 						course.IsFocus = isFocused;
 						return course;
 					},
 					toggleFocus: function(course) {
 						if(!events.getUtid()) {
-							events.toggleStorageArray(storageKeyName.FOCUSECOURSES, courseInfo.TabId, courseInfo.IsFocus);
+							events.toggleStorageArray(storageKeyName.FOCUSECOURSES, course.TabId, course.IsFocus);
 							course.IsFocus = !course.IsFocus;
-							courseAtt.isFocused = parseInt(myStorage.getItem(storageKeyName.FOCUSECOURSES) && myStorage.getItem(storageKeyName.FOCUSECOURSES).length > 0);
+							courseAtt.isAttended = Number(myStorage.getItem(storageKeyName.FOCUSECOURSES) && myStorage.getItem(storageKeyName.FOCUSECOURSES).length > 0);
+							console.log("是否已关注课程：" + courseAtt.isAttended)
 							return;
 						}
 						//所需参数
 						var comData = {
-							userId: personal.utid, //用户ID,登录用户
-							courseId: courseInfo.TabId, //课程ID
-							status: courseInfo.IsFocus ? 0 : 1 //关注状态，0 不关注，1 关注
+							userId: events.getUtid(), //用户ID,登录用户
+							courseId: course.TabId, //课程ID
+							status: course.IsFocus ? 0 : 1 //关注状态，0 不关注，1 关注
 						};
 						// 等待的对话框
 						var wd = null;
@@ -97,12 +105,31 @@
 							//console.log('6.设置对某个课程关注:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 							if(data.RspCode == 0) { //成功
 								course.IsFocus = !course.IsFocus;
-								courseAtt.isAttended = data.RspData.FocusCnt > 0;
-
+								courseAtt.isAttended = Number(data.RspData.FocusCnt > 0);
 							} else {
 								mui.toast(data.RspTxt);
 							}
 						});
+					},
+					isUpdate: function(course) {
+						var courseTime = events.isExistInStorageMap(storageKeyName.COURSELASTTIME, course.TabId);
+						//console.log("获取的更新时间：" + JSON.stringify(courseTime));
+						if(courseTime) {
+							if(courseTime < Date.parse(course.UpdateTime)) {
+								course.IsUpdate = 1;
+							} else {
+								course.IsUpdate = 0;
+							}
+						} else {
+							course.IsUpdate = 1;
+						}
+					},
+					jumpToPage: function(course) {
+						course.IsUpdate = 0;
+						events.singleWebviewInPeriod(undefined, 'course_details.html', course);
+						if(!events.getUtid()) {
+							events.setValueInMap(storageKeyName.COURSELASTTIME, course.TabId, Date.now());
+						}
 					}
 				}
 			})
@@ -136,23 +163,37 @@
 			});
 
 			function pulldownRefresh() {
+				if(!courseAtt.isAttended) {
+					mui("#course-att").pullRefresh().endPulldown();
+					return;
+				}
 				courseInfo.pageIndex = 1;
 				course_list.getData(courseInfo, function(data) {
 					addData(data);
 					mui("#course-att").pullRefresh().endPulldown();
+				}, function(err) {
+					mui("#course-att").pullRefresh().endPulldown();
+					mui.toast(err.RspTxt);
 				})
 			}
 
 			function pullupRefresh() {
+				if(!courseAtt.isAttended) {
+					mui("#course-att").pullRefresh().endPullupToRefresh();
+					return;
+				}
 				course_list.getData(courseInfo, function(data) {
 					addData(data);
-					mui("#course-att").pullRefresh().endPullUpToRefresh();
+					mui("#course-att").pullRefresh().endPullupToRefresh();
+				}, function(err) {
+					mui("#course-att").pullRefresh().endPullupToRefresh();
+					mui.toast(err.RspTxt);
 				})
 			}
 
 			function addData(data) {
 				data.map(function(course, index, data) {
-					courseAtt.isFocus(course);
+					return courseAtt.isFocus(course);
 				});
 				if(courseInfo.pageIndex === 1) {
 					courseAtt.listData = [];
@@ -161,7 +202,7 @@
 				courseInfo.pageIndex++;
 			}
 			mui.plusReady(function() {
-				courseAtt.isAttended = plus.webview.currentWebview().isAttended;
+				courseAtt.isAttended = Number(plus.webview.currentWebview().isAttended);
 				console.log("主界面传过来的值：", courseAtt.isAttended);
 				setListener();
 			})
@@ -169,11 +210,43 @@
 			function setListener() {
 				window.addEventListener("courseAttended", function(e) {
 					console.log("传递的事件：", e.detail);
+					var oldValue = courseAtt.isAttended;
 					if(e.detail.data == null) {
 						courseAtt.isAttended = 0;
 					} else {
-						courseAtt.isAttended = parseInt(e.detail.data);
+						courseAtt.isAttended = Number(e.detail.data);
 					}
+					console.log("获取的值：", courseAtt.isAttended);
+					if(courseAtt.isAttended && oldValue) {
+						courseInfo.pageIndex = 1;
+						course_list.getData(courseInfo, function(data) {
+							addData(data);
+						}, function(err) {
+							console.log("出现错误：", err);
+						})
+					}
+				})
+				window.addEventListener("infoChanged", function() {
+					console.log("courseAtt传值********:"+events.getUtid());
+					courseInfo.pageIndex = 1;
+					course_list.getData(courseInfo, function(data) {
+						console.log("courseAtt获取的数据信息:",data)
+						if(data.length > 0) {
+							if(courseAtt.isAttended == 1) {
+								courseInfo.pageIndex = 1;
+								course_list.getData(courseInfo, function(data) {
+									addData(data);
+								}, function(err) {
+									console.log("出现错误：", err);
+								})
+							}
+							courseAtt.isAttended = 1;
+						}else{
+							courseAtt.isAttended = 0;
+						}
+					}, function(err) {
+						console.log("出现错误:", err);
+					})
 				})
 			}
 		</script>
