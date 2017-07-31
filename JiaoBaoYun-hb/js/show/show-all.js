@@ -2,7 +2,8 @@ var showAll = new Vue({
 	el: '#show-all',
 	data: {
 		listData: [],
-		detailReady: false
+		detailReady: false,
+		isRequired:false
 	},
 	methods: {
 		resetData: function() {
