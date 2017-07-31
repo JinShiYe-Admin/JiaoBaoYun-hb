@@ -4897,7 +4897,8 @@
 					"js/micro-course/course-list1.js",
 					"js/utils/vue.js",
 					"image/mine/invite_none_0.png",
-					"fonts/mui.ttf"
+					"fonts/mui.ttf",
+					"js/utils/vue.min.js"
 				],
 				"refer": [
 					"html/micro-course/course_details.html"
@@ -5027,7 +5028,8 @@
 					"image/utils/video-loading.gif",
 					"js/libs/jquery.lazyload.min.js",
 					"image/mine/invite_none_0.png",
-					"js/mui.js"
+					"js/mui.js",
+					"js/utils/vue.min.js"
 				],
 				"refer": [],
 				"priority": 0

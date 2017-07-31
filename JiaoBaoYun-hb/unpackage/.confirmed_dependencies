@@ -482,7 +482,8 @@
 			"css/show/show-list-vue.css",
 			"fonts/mui.ttf",
 			"image/show/show-default-large.png",
-			"image/utils/playvideo.png"
+			"image/utils/playvideo.png",
+			"fonts/fangzheng.ttf"
 		],
 		"refer": [
 			"html/show/show-detail.html"
@@ -506,7 +507,8 @@
 			"image/utils/img-loading.gif",
 			"image/utils/video-loading.gif",
 			"js/libs/jquery.lazyload.min.js",
-			"image/mine/invite_none_0.png"
+			"image/mine/invite_none_0.png",
+			"js/utils/vue.min.js"
 		]
 	},
 	"html/micro-course/course_details.html": {
@@ -568,7 +570,8 @@
 			"js/micro-course/course-list.js",
 			"image/mine/invite_none_0.png",
 			"fonts/mui.ttf",
-			"fonts/fangzheng.ttf"
+			"fonts/fangzheng.ttf",
+			"js/utils/vue.min.js"
 		],
 		"refer": [
 			"html/micro-course/course_details.html"
@@ -623,7 +626,10 @@
 	},
 	"html/micro-course/course-info.html": {
 		"resources": [
-			"js/micro-course/course-info.js"
+			"js/micro-course/course-info.js",
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"js/libs/crypto-js/crypto-js.js"
 		],
 		"refer": [
 			"html/micro-course/history-records.html"

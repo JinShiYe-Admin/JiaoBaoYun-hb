@@ -3,7 +3,16 @@ var showAll = new Vue({
 	data: {
 		listData: [],
 		detailReady: false,
-		isRequired:false
+		isRequired: false
+	},
+	watch: {
+		listData:function(val){
+			if(val.length>0){
+				mui('#show-all').pullRefresh().enablePullupToRefresh();
+			}else{
+				mui('#show-all').pullRefresh().disablePullupToRefresh();
+			}
+		}
 	},
 	methods: {
 		resetData: function() {

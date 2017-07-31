@@ -18,7 +18,7 @@
 			<div class="mui-scroll">
 				<div v-if="listData.length==0" class="" style="min-height:300px;text-align: center;padding-top: 20%;">
 					<img src="../../image/mine/invite_none_0.png" width="50%" height="auto">
-				
+
 					<p style="margin: auto 0;padding: 10px;"><span v-if="!isRequired" class="mui-spinner" style="vertical-align: center;height: 15px;width: 15px;margin-bottom: -4px;"></span>{{isRequired?'没有获取到展现内容~~':'数据加载中~~'}}</p>
 				</div>
 				<!--数据列表-->
@@ -40,7 +40,7 @@
 				</div>
 			</div>
 		</div>
-		<script src="../../js/mui.js"></script>
+		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/utils/events.js" type="text/javascript"></script>
 		<script src="../../js/utils/vue.js"></script>
 		<script src="../../js/show/show-all.js"></script>
@@ -81,13 +81,19 @@
 					showAll.addData(showCity.pageIndex, data);
 					showCity.pageIndex++;
 					mui('#show-all').pullRefresh().endPulldown();
+					mui('#show-all').pullRefresh().refresh(true);
 				}, function(err) {
 					mui.toast(err.RspTxt);
 					mui('#show-all').pullRefresh().endPulldown();
+					mui('#show-all').pullRefresh().refresh(true);
 				})
 			}
 
 			function pullupRefresh() {
+				if(showCity.pageIndex > showCity.totalPage) {
+					mui('#show-all').pullRefresh().endPullupToRefresh(true);
+					return;
+				}
 				console.log("上拉加载更多")
 				show_list.getShowList(showCity, function(showCity, data) {
 					console.log('获取的关注数据：', data);
@@ -101,12 +107,12 @@
 			}
 			mui.plusReady(function() {
 				show_list.getShowList(showCity, function(showCity, data) {
-					showAll.isRequired=true;
+					showAll.isRequired = true;
 					console.log('获取的关注数据：', data);
 					showAll.addData(showCity.pageIndex, data);
 					showCity.pageIndex++;
 				}, function(err) {
-					showAll.isRequired=true;
+					showAll.isRequired = true;
 					mui.toast(err.RspTxt);
 				})
 				setListener();
