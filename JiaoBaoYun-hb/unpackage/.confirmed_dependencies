@@ -123,7 +123,8 @@
 			"image/utils/playvideo.png",
 			"css/utils/common.css",
 			"js/show/show-all.js",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"image/show/show-default-large.png"
 		]
 	},
 	"html/show/show-detail.html": {
@@ -141,7 +142,9 @@
 			"css/iconfont/iconfont.css",
 			"css/utils/common.css",
 			"css/mui.min.css",
-			"image/utils/playvideo.png"
+			"image/utils/playvideo.png",
+			"image/utils/default_personalimage.png",
+			"js/libs/crypto-js/crypto-js.js"
 		],
 		"refer": [
 			"html/quan/classSpace-persons.html"
@@ -160,6 +163,21 @@
 		"resources": [
 			"css/mui.min.css",
 			"css/micro-course/course-list.css",
+			"css/utils/common.css",
+			"js/libs/crypto-js/crypto-js.js"
+		]
+	},
+	"html/sciedu/sciedu_home.html": {
+		"refer": [
+			"html/sciedu/sciedu_show_main.html"
+		],
+		"resources": [
+			"image/utils/loading.gif"
+		]
+	},
+	"html/sciedu/sciedu_show_main.html": {
+		"resources": [
+			"css/mui.min.css",
 			"css/utils/common.css",
 			"js/libs/crypto-js/crypto-js.js"
 		]

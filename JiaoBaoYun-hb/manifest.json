@@ -4528,7 +4528,8 @@
 					"fonts/mui.ttf",
 					"js/utils/events.js",
 					"css/mui.min.css",
-					"css/utils/common.css"
+					"css/utils/common.css",
+					"js/libs/crypto-js/crypto-js.js"
 				],
 				"refer": [],
 				"priority": 0
