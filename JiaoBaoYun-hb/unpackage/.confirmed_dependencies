@@ -74,7 +74,8 @@
 			"html/show/show-home1.html",
 			"html/micro-course/course-home1.html",
 			"html/show/show-home.html",
-			"html/micro-course/course-home.html"
+			"html/micro-course/course-home.html",
+			"html/sciedu/sciedu-home.html"
 		]
 	},
 	"html/micro-course/course-home1.html": {
@@ -453,7 +454,8 @@
 			"css/mui.min.css",
 			"css/utils/common.css",
 			"js/libs/crypto-js/crypto-js.js",
-			"image/utils/delete.png"
+			"image/utils/delete.png",
+			"fonts/fangzheng.ttf"
 		]
 	},
 	"html/homework/doHomework-stu.html": {
@@ -743,6 +745,13 @@
 		"refer": [
 			"html/check/area-choose.html",
 			"html/check/news-detail.html"
+		]
+	},
+	"html/sciedu/sciedu-home.html": {
+		"resources": [
+			"css/mui.min.css",
+			"js/libs/crypto-js/crypto-js.js",
+			"css/utils/common.css"
 		]
 	}
 }

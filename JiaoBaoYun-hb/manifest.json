@@ -2080,7 +2080,8 @@
 					"html/register/login.html",
 					"html/cloud/order-member.html",
 					"html/micro-course/course-home.html",
-					"html/show/show-home2.html"
+					"html/show/show-home2.html",
+					"html/sciedu/sciedu-home.html"
 				],
 				"priority": 0
 			},
@@ -5510,6 +5511,15 @@
 					"html/show/show-detail.html",
 					"html/quan/pub-dynamic.html"
 				],
+				"priority": 0
+			},
+			"html/sciedu/sciedu-home.html": {
+				"resources": [
+					"css/mui.min.css",
+					"js/libs/crypto-js/crypto-js.js",
+					"css/utils/common.css"
+				],
+				"refer": [],
 				"priority": 0
 			}
 		},

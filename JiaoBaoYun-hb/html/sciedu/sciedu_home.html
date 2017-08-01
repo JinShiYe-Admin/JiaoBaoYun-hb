@@ -453,7 +453,6 @@
 				if(!parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid)) {
 					var localCity = window.myStorage.getItem(window.storageKeyName.SECITY);
 					if(localCity && localCity.length != 0) {
-						//console.log('游客订制的科教城市 ' + JSON.stringify(localCity))
 						eduArray = localCity;
 					}
 					eduArray.push({
@@ -464,7 +463,7 @@
 					callBack(cities);
 				} else {
 					postDataPro_PostUTcity(comData, null, function(data) {
-						//console.log('44 获取个人的订制城市 PostUTcity ' + JSON.stringify(data));
+						console.log('44 获取个人的订制城市 PostUTcity ',data);
 						if(data.RspCode == 0) {
 							if(data.RspData == null) {
 								//从来就没有订制过城市的就强制添加一个账号所在地

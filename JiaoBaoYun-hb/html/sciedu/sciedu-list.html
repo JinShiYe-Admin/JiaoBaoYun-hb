@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<!--下拉刷新容器-->
+		<div id="sciedu-list" class="mui-content mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<!--数据列表-->
+				<template v-show="listData.length>0">
+					<ul class="mui-table-view">
+						<li v-for="item of listData" v-on:tap="showDetail(item)">
+							
+						</li>
+					</ul>
+				</template>
+			</div>
+		</div>
+		<script src="../../js/utils/vue.js"></script>
+		<script src="../../js/sciedu/sciedu-list.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init({
+				pullRefresh:{
+					container:'#sciedu-list',
+					down:{
+						style:'cicle',
+						offset:0,
+						callback:pulldownRefresh
+					},
+					up:{
+						contentrefresh:"上拉加载更多",
+						callback:pullupRefresh
+					}
+				}
+			});
+			/**
+			 * 下拉刷新回调方法
+			 */
+			function pulldownRefresh(){
+				scieduList.resetPageInfo();
+				scieduList.requireListData(function(){
+					mui('#sciedu-list').pullRefresh().endPulldown();
+					mui('#sciedu-list').pullRefresh().refresh(true);
+				})
+			}
+			/**
+			 * 上拉加载更多回调方法
+			 */
+			function pullupRefresh(){
+				if(scieduList.pageInfo.pageIndex>scieduList.pageInfo.totalPage){
+					mui('#sciedu-list').pullRefresh().disablePullupToRefresh();
+					return;
+				}
+				scieduList.requireListData(function(){
+					mui('#sciedu-list').pullRefresh().endPullupToRefresh();
+				})
+			}
+			mui.plusReady(function(){
+				setListener();
+			});
+			function setListeners(){
+				window.addEventListener("seCities",function(e){
+					var cities=e.detail.data;
+					scieduList.cityInfo=cities[0];
+				})
+			}
+		</script>
+	</body>
+
+</html>
