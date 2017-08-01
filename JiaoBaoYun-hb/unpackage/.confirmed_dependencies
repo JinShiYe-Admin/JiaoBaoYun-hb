@@ -24,7 +24,8 @@
 			"html/mine/approval-apply.html",
 			"html/mine/account-info.html",
 			"html/mine/qun_manage_a.html",
-			"html/mine/about.html"
+			"html/mine/about.html",
+			"html/check/check-news.html"
 		]
 	},
 	"html/show/show-home1.html": {
@@ -151,7 +152,20 @@
 			"fonts/fangzheng.ttf",
 			"/image/utils/default_load_2.gif",
 			"css/mui.min.css",
-			"image/utils/loading.gif"
+			"image/utils/loading.gif",
+			"js/storageKeyName.js",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"js/libs/myStorage/myStorage.js",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"js/libs/RSA/BigInt.js",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
 		],
 		"refer": [
 			"html/utils/customizeCity.html",
@@ -483,7 +497,22 @@
 			"fonts/mui.ttf",
 			"image/show/show-default-large.png",
 			"image/utils/playvideo.png",
-			"fonts/fangzheng.ttf"
+			"fonts/fangzheng.ttf",
+			"js/storageKeyName.js",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"js/libs/myStorage/myStorage.js",
+			"image/mine/invite_none_0.png",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"js/libs/RSA/BigInt.js",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js",
+			"js/utils/vue.min.js"
 		],
 		"refer": [
 			"html/show/show-detail.html"
@@ -508,7 +537,20 @@
 			"image/utils/video-loading.gif",
 			"js/libs/jquery.lazyload.min.js",
 			"image/mine/invite_none_0.png",
-			"js/utils/vue.min.js"
+			"js/utils/vue.min.js",
+			"js/storageKeyName.js",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"js/libs/myStorage/myStorage.js",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"js/libs/RSA/BigInt.js",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
 		]
 	},
 	"html/micro-course/course_details.html": {
@@ -518,7 +560,8 @@
 			"js/libs/crypto-js/crypto-js.js",
 			"js/micro-course/coursedetails.js",
 			"css/iconfont/iconfont.css",
-			"image/qiuzhi/qiuzhi_noanswer.png"
+			"image/qiuzhi/qiuzhi_noanswer.png",
+			"image/utils/playvideo.png"
 		],
 		"refer": [
 			"html/micro-course/course-info.html"
@@ -571,7 +614,20 @@
 			"image/mine/invite_none_0.png",
 			"fonts/mui.ttf",
 			"fonts/fangzheng.ttf",
-			"js/utils/vue.min.js"
+			"js/utils/vue.min.js",
+			"js/storageKeyName.js",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"js/libs/myStorage/myStorage.js",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"js/libs/RSA/BigInt.js",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
 		],
 		"refer": [
 			"html/micro-course/course_details.html"
@@ -584,7 +640,23 @@
 			"css/micro-course/course-list.css",
 			"css/utils/common.css",
 			"js/micro-course/course-list.js",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"js/storageKeyName.js",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"js/libs/myStorage/myStorage.js",
+			"js/utils/vue.min.js",
+			"image/mine/invite_none_0.png",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"fonts/fangzheng.ttf",
+			"js/libs/RSA/BigInt.js",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
 		],
 		"refer": [
 			"html/micro-course/course_details.html"
@@ -640,6 +712,37 @@
 			"css/mui.min.css",
 			"css/utils/common.css",
 			"js/libs/crypto-js/crypto-js.js"
+		]
+	},
+	"html/check/area-choose.html": {
+		"resources": [
+			"css/check/area-choose.css",
+			"js/check/area-choose.js",
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"js/libs/crypto-js/crypto-js.js"
+		]
+	},
+	"html/check/news-detail.html": {
+		"resources": [
+			"js/check/news-detail.js",
+			"js/libs/crypto-js/crypto-js.js"
+		]
+	},
+	"html/check/check-news.html": {
+		"resources": [
+			"css/check/check-news.css",
+			"image/utils/default_load_2.gif",
+			"js/check/check-news.js",
+			"js/libs/jquery.lazyload.min.js",
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"js/libs/crypto-js/crypto-js.js",
+			"image/utils/loading.gif"
+		],
+		"refer": [
+			"html/check/area-choose.html",
+			"html/check/news-detail.html"
 		]
 	}
 }

@@ -8,9 +8,9 @@ var showAll = new Vue({
 	watch: {
 		listData:function(val){
 			if(val.length>0){
-				mui('#show-all').pullRefresh().enablePullupToRefresh();
+				document.body.style.backgroundColor="transparent";
 			}else{
-				mui('#show-all').pullRefresh().disablePullupToRefresh();
+				document.body.style.backgroundColor="white";
 			}
 		}
 	},

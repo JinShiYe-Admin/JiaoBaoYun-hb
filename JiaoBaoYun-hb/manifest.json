@@ -4929,7 +4929,10 @@
 					"css/utils/common.css",
 					"css/utils/fresh.css",
 					"image/utils/loading.gif",
-					"fonts/fangzheng.ttf"
+					"fonts/fangzheng.ttf",
+					"js/utils/vue.min.js",
+					"image/mine/invite_none_0.png",
+					"js/publicProtocol.js"
 				],
 				"refer": [
 					"html/micro-course/course_details.html"
@@ -4982,7 +4985,9 @@
 					"js/show/show-list.js",
 					"css/show/show-list-vue.css",
 					"fonts/mui.ttf",
-					"image/utils/playvideo.png"
+					"image/utils/playvideo.png",
+					"image/mine/invite_none_0.png",
+					"js/utils/vue.min.js"
 				],
 				"refer": [
 					"html/quan/space-detail.html",

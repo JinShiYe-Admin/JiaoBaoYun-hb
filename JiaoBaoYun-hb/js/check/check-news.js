@@ -40,11 +40,6 @@
 			//console.log("获取选中的城市：" + JSON.stringify(e.detail));
 			if(e.detail.acode != curAreaInfo.acode) {
 				//选择城市后界面滚到前面
-
-				//				$.each(document.querySelectorAll('.mui-scroll-wrapper'),function(index,item){
-				//					//console.log('当前选项：'+this.className)
-				//					this.querySelector(".mui-table-view").scrollTo(0,0);
-				//				})
 				curAreaInfo = e.detail;
 				clearAll();
 				setCurArea();
@@ -108,7 +103,6 @@
 					callback: function() {
 						var self = this;
 						if(newsPage[checkType]) {
-						/*	self.endPullUpToRefresh(newsPage[checkType].PageIndex >= newsPage[checkType].PageCount)*/
 							if(newsPage[checkType].PageIndex < newsPage[checkType].PageCount) {
 								pageIndex = newsPage[checkType].PageIndex + 1;
 								requestAreaNews();
@@ -117,11 +111,9 @@
 								}, 1000);
 							}else{
 								self.endPullUpToRefresh();
-								mui.toast("没有更多了！");
 							}
 						} else {
 							self.endPullUpToRefresh();
-							mui.toast("没有数据！");
 						}
 					}
 				}
@@ -161,7 +153,7 @@
 				setNewsData(data.RspData.dt)
 				newsPage[checkType] = data.RspData.pg;
 			} else {
-				mui.toast(data.RspTxt);
+				mui.toast("获取新闻失败:"+data.RspTxt);
 			}
 		})
 	}
@@ -284,9 +276,6 @@
 	 * 设置监听
 	 */
 	var setListener = function() {
-		//		mui(".mui-table-view").on('tap', "", function() {
-		//			
-		//		})
 		events.addTap("choose-area", function() {
 			openPrePage();
 		})
@@ -354,13 +343,13 @@
 			vvl1: type
 		}, wd, function(data) {
 			wd.close();
-			//console.log("当前返回状态：" + JSON.stringify(data));
+			console.log("审核新闻后的当返回状态：",data);
 			if(data.RspCode == 0) {
 				newsDetail.Ischeck = type;
 				setChangedButton(type, checkItem);
 				changeList(type, checkItem)
 			} else {
-				mui.toast("审核失败，打回重审");
+				mui.toast("审核失败:"+data.RspTxt);
 			}
 		})
 	}

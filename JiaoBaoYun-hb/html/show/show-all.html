@@ -10,41 +10,43 @@
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link href="../../css/utils/common.css" rel="stylesheet" />
 		<link href="../../css/show/show-list.css" rel="stylesheet" />
+		<script src="../../js/utils/vue.min.js"></script>
 	</head>
 
-	<body>
+	<body style="background-color: white;">
 		<!--下拉刷新容器-->
-		<div id="show-all" class="mui-content mui-fullscreen mui-scroll-wrapper">
+		<div id="show-all" class="mui-content mui-fullscreen mui-scroll-wrapper" v-bind:class="{'background-white':listData.length==0&&isRequired}">
 			<div class="mui-scroll">
-				<div v-if="listData.length==0" class="" style="min-height:300px;text-align: center;padding-top: 20%;">
+				<div v-if="listData.length==0&&isRequired" class="" style="min-height:300px;text-align: center;padding-top: 20%;">
 					<img src="../../image/mine/invite_none_0.png" width="50%" height="auto">
-
-					<p style="margin: auto 0;padding: 10px;"><span v-if="!isRequired" class="mui-spinner" style="vertical-align: center;height: 15px;width: 15px;margin-bottom: -4px;"></span>{{isRequired?'没有获取到展现内容~~':'数据加载中~~'}}</p>
+					<p style="margin: auto 0;padding: 10px;">
+						没有获取到展现内容~~</p>
 				</div>
 				<!--数据列表-->
-				<div v-show="listData.length>0" class="show-list">
-					<div v-for="cardData of listData" class="mui-table-view cityNews-container">
-						<li v-for="(item,index) of cardData" class="mui-table-view-cell news-container" v-on:tap="jumpToPage(item)">
-							<div class="img-container news-img" v-bind:style="{'background-image':'url('+getBackImg(item,index)+')','background-position':'center','background-size':'cover','text-align':'center'}">
-								<img class="play-video" v-if="isVideo(item)" src="../../image/utils/playvideo.png" />
-							</div>
-							<div class="news-words">
-								<p class="news-title single-line">{{item.MsgTitle}}</p>
-								<div class="anthor-date">
-									<p class="news-anthor single-line">{{item.unick}}</p>
-									<p class="news-date">{{item.PublishDate}}</p>
+				<template v-else-if="listData.length>0&&isRequired">
+					<div class="show-list">
+						<div v-for="cardData of listData" class="mui-table-view cityNews-container">
+							<li v-for="(item,index) of cardData" class="mui-table-view-cell news-container" v-on:tap="jumpToPage(item)">
+								<div class="img-container news-img" v-bind:style="{'background-image':'url('+getBackImg(item,index)+')','background-position':'center','background-size':'cover','text-align':'center'}">
+									<img class="play-video" v-if="isVideo(item)" src="../../image/utils/playvideo.png" />
 								</div>
-							</div>
-						</li>
+								<div class="news-words">
+									<p class="news-title single-line">{{item.MsgTitle}}</p>
+									<div class="anthor-date">
+										<p class="news-anthor single-line">{{item.unick}}</p>
+										<p class="news-date">{{item.PublishDate}}</p>
+									</div>
+								</div>
+							</li>
+						</div>
 					</div>
-				</div>
+				</template>
 			</div>
 		</div>
+
+		<script src="../../js/show/show-all.js"></script>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/utils/events.js" type="text/javascript"></script>
-		<script src="../../js/utils/vue.js"></script>
-		<script src="../../js/show/show-all.js"></script>
-
 		<script src="../../js/publicProtocol.js"></script>
 		<script src="../../js/show/show-list.js"></script>
 		<script type="text/javascript">
@@ -92,6 +94,7 @@
 			function pullupRefresh() {
 				if(showCity.pageIndex > showCity.totalPage) {
 					mui('#show-all').pullRefresh().endPullupToRefresh(true);
+					mui('#show-all').pullRefresh().disablePullupToRefresh();
 					return;
 				}
 				console.log("上拉加载更多")
