@@ -39,9 +39,9 @@
 				</div>
 			</div>
 		</div>
-		<script src="../../js/mui.js"></script>
-		<script src="../../js/utils/events.js" type="text/javascript"></script>
-		<script src="../../js/utils/vue.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/utils/events.js"></script>
+		<script src="../../js/utils/vue.min.js"></script>
 		<script type="text/javascript">
 			var showAtt = new Vue({
 				el: '#show-att',
@@ -62,7 +62,15 @@
 								console.log("错误", err);
 							})
 						} else {
-//							mui('#show-att').pullRefresh().endPulldown();
+							//							mui('#show-att').pullRefresh().endPulldown();
+						}
+					},
+					listData: function(val) {
+						console.log("监听展现关注的东东：",val);
+						if(val.length > 0) {
+							mui('#show-att').pullRefresh().enablePullupToRefresh();
+						} else {
+//							mui('#show-att').pullRefresh().disablePullupToRefresh();
 						}
 					}
 				},
@@ -163,14 +171,21 @@
 					showAtt.addData(showCity.pageIndex, data);
 					showCity.pageIndex++;
 					mui('#show-att').pullRefresh().endPulldown();
+					mui('#show-att').pullRefresh().refresh(true);
 				}, function(err) {
 					mui.toast(err.RspTxt);
+					mui('#show-att').pullRefresh().refresh(true);
 					mui('#show-att').pullRefresh().endPulldown();
 				})
 			}
 
 			function pullupRefresh() {
 				console.log("上拉加载更多")
+				if(showCity.pageIndex > showCity.totalPage) {
+					mui('#show-att').pullRefresh().endPullupToRefresh(true);
+					return;
+				}
+
 				show_list.getShowList(showCity, function(showCity, data) {
 					console.log('获取的关注数据：', data);
 					showAtt.addData(showCity.pageIndex, data);
@@ -182,6 +197,7 @@
 				})
 			}
 			mui.plusReady(function() {
+//				mui('#show-att').pullRefresh().disablePullupToRefresh();
 				showAtt.detailReady = plus.webview.currentWebview().detailReady;
 				showAtt.isAttended = plus.webview.currentWebview().isAttended;
 				console.log("showAtt.detailReady" + showAtt.detailReady);
@@ -205,8 +221,8 @@
 					console.log("信息更改？？？？？？？？？？？？？？？？？？？？？？？？")
 					showCity.pageIndex = 1;
 					show_list.getShowList(showCity, function(showCity, data) {
-						console.log("show-attended传过来的值:",data)
-						if(data&&data.length > 0) {
+						console.log("show-attended传过来的值:", data)
+						if(data && data.length > 0) {
 							if(showAtt.isAttended == 1) {
 								showCity.pageIndex = 1;
 								show_list.getShowList(showCity, function(showCity, data) {
@@ -223,7 +239,7 @@
 						}
 
 					}, function(err) {
-						console.log("show-attended传过来的值:",err)
+						console.log("show-attended传过来的值:", err)
 						mui.toast(err.RspTxt);
 					})
 				})

@@ -47,7 +47,7 @@
 			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
-		<script src="../../js/utils/vue.js"></script>
+		<script src="../../js/utils/vue.min.js"></script>
 		<script type="text/javascript">
 			var courseAtt = new Vue({
 				el: "#course-att",
@@ -171,13 +171,19 @@
 				course_list.getData(courseInfo, function(data) {
 					addData(data);
 					mui("#course-att").pullRefresh().endPulldown();
+					mui('#course-att').pullRefresh().refresh(true);
 				}, function(err) {
 					mui("#course-att").pullRefresh().endPulldown();
+					mui('#course-att').pullRefresh().refresh(true);
 					mui.toast(err.RspTxt);
 				})
 			}
 
 			function pullupRefresh() {
+				if(courseInfo.pageIndex>courseInfo.totalPage){
+					mui('#course-att').pullRefresh().endPullupToRefresh(true);
+					return ;
+				}
 				if(!courseAtt.isAttended) {
 					mui("#course-att").pullRefresh().endPullupToRefresh();
 					return;
@@ -202,6 +208,7 @@
 				courseInfo.pageIndex++;
 			}
 			mui.plusReady(function() {
+//				mui("#course-att").pullRefresh().disablePullupToRefresh();
 				courseAtt.isAttended = Number(plus.webview.currentWebview().isAttended);
 				console.log("主界面传过来的值：", courseAtt.isAttended);
 				setListener();
