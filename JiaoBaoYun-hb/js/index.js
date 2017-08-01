@@ -115,7 +115,7 @@ var setListener = function() {
 			document.getElementById("publish-show").style.display = 'none';
 			setTitle(myStorage.getItem(storageKeyName.COURSETYPE));
 		} else {
-			document.getElementById("publish-show").style.display = 'inline-block';
+			document.getElementById("publish-show").style.display = 'none';
 			setTitle(myStorage.getItem(storageKeyName.SHOWTYPE));
 			console.log("展现获取的类型信息："+myStorage.getItem(storageKeyName.SHOWTYPE));
 		}
