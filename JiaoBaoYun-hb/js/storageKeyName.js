@@ -2,10 +2,10 @@
 
 var storageKeyName = (function(mod) {
 
-	mod.key = 1; //0,开发;1,测试;2,移动版 3外网
+	mod.key = 2; //0,开发;1,测试--教宝云;2,测试--微视学堂 3外网--微视学堂 4外网--教宝云
 	var exLog = console.log;
 	console.log = function(hint, object) {
-		if(mod.key === 1) {
+		if(mod.key === 0) {
 			var argus = hint;
 			if(object) {
 				argus = hint + JSON.stringify(object);
@@ -23,7 +23,6 @@ var storageKeyName = (function(mod) {
 			mod.MAINQIUZHI = 'http://192.168.1.200:8081/JiaoBaoCloudService/'; //求知主url
 			mod.MAINMICROCLASS = 'http://192.168.1.200:8081/JiaoBaoCloudService/'; //微课主url
 			//---开发---end---
-
 			//---七牛空间和接口---开发---start---
 			mod.QNPB = 'http://qn-kfpb.jiaobaowang.net/'; //公开空间域名
 			mod.QNGETUPLOADTOKEN = 'http://114.215.222.186:8004/Api/QiNiu/GetUpLoadToKen';
@@ -33,7 +32,7 @@ var storageKeyName = (function(mod) {
 			mod.QNGETTOKENDELETE = 'http://114.215.222.186:8004/Api/QiNiu/Delete'; //获取批量（或者一个）删除七牛文件的token的url
 			//	---七牛空间和接口---开发---end---
 			break;
-		case 1: //测试
+		case 1: //测试--教宝云
 			//---测试---start---
 			mod.MAINEDU = 'http://192.168.1.178:8511/'; //科教图片url
 			mod.MAINURL = 'http://192.168.1.178:8511/api/CloudApi/'; //主url
@@ -52,14 +51,34 @@ var storageKeyName = (function(mod) {
 			mod.QNGETTOKENDELETE = 'http://114.215.222.186:8005/Api/QiNiu/Delete'; //获取批量（或者一个）删除七牛文件的token的url
 			//---七牛空间和接口---测试---end---
 			break;
-		case 2: //移动版
+			
+		case 2: //测试--微视学堂
+			//---移动版---start---
+			mod.MAINEDU = 'http://192.168.1.178:8020/'; //科教图片url
+			mod.MAINURL = 'http://192.168.1.178:8020/api/CloudApi/'; //主url
+			mod.MAINJIAOXIAOURL = 'http://192.168.1.178:8080/JiaoBaoCloudService/'; //家校圈url
+			mod.MAINHOMEWORKURL = 'http://192.168.1.178:8021/'; //作业主url
+			mod.MAINQIUZHI = 'http://192.168.1.178:8080/JiaoBaoCloudService/'; //求知主url
+			mod.MAINMICROCLASS = 'http://192.168.1.178:8080/JiaoBaoCloudService/'; //微课主url
+			//---内网---end---
+
+			//---七牛空间和接口---测试---start---
+			mod.QNPB = 'http://qn-cspb.jiaobaowang.net/'; //公开空间域名
+			mod.QNGETUPLOADTOKEN = 'http://114.215.222.186:8005/Api/QiNiu/GetUpLoadToKen';
+			mod.QNGETUPTOKENHEADIMGE = 'http://114.215.222.186:8005/Api/QiNiu/GetUpLoadToKen'; //获取上传个人头像，群头像，资料头像到七牛的token的url
+			mod.QNGETUPTOKENFILE = 'http://114.215.222.186:8005/Api/QiNiu/GetUpLoadToKen'; //获取上传文件（云存储）到七牛的token的url
+			mod.QNGETDOWNTOKENFILE = 'http://114.215.222.186:8005/Api/QiNiu/GetAccess'; //获取下载文件（云存储）的token的url，url+七牛文件url
+			mod.QNGETTOKENDELETE = 'http://114.215.222.186:8005/Api/QiNiu/Delete'; //获取批量（或者一个）删除七牛文件的token的url
+			break;
+
+		case 3: //外网--微视学堂
 			//---移动版---start---
 			mod.MAINEDU = 'http://114.215.222.186:8009/'; //科教图片url
 			mod.MAINURL = 'http://114.215.222.186:8009/api/CloudApi/'; //主url
-			mod.MAINJIAOXIAOURL = 'http://114.215.222.194:8080/YDJiaoBaoCloudService/'; //家校圈url
+			mod.MAINJIAOXIAOURL = 'http://114.215.222.194:8080/YiDongJiaoBaoCloudService/'; //家校圈url
 			mod.MAINHOMEWORKURL = 'http://114.215.222.186:8008/'; //作业主url
-			mod.MAINQIUZHI = 'http://114.215.222.194:8080/YDJiaoBaoCloudService/'; //求知主url
-			mod.MAINMICROCLASS = 'http://114.215.222.194:8080/YDJiaoBaoCloudService/'; //微课主url
+			mod.MAINQIUZHI = 'http://114.215.222.194:8080/YiDongJiaoBaoCloudService/'; //求知主url
+			mod.MAINMICROCLASS = 'http://114.215.222.194:8080/YiDongJiaoBaoCloudService/'; //微课主url
 			//---外网---end---
 
 			//---七牛空间和接口---测试---start---
@@ -70,7 +89,7 @@ var storageKeyName = (function(mod) {
 			mod.QNGETDOWNTOKENFILE = 'http://114.215.222.186:8005/Api/QiNiu/GetAccess'; //获取下载文件（云存储）的token的url，url+七牛文件url
 			mod.QNGETTOKENDELETE = 'http://114.215.222.186:8005/Api/QiNiu/Delete'; //获取批量（或者一个）删除七牛文件的token的url
 			break;
-		case 3: //外网
+		case 4: //外网--教宝云
 			//---外网---start---
 			mod.MAINEDU = 'http://114.215.222.186:8002/'; //科教图片url
 			mod.MAINURL = 'http://114.215.222.186:8002/api/CloudApi/'; //主url
@@ -107,8 +126,8 @@ var storageKeyName = (function(mod) {
 	mod.COURSELASTTIME = "courseLastTime";
 	mod.SHOWTYPE = "showType";
 	mod.COURSETYPE = "courseType";
-	mod.ISSHOWDETAILREADY="isDetailReady";//预加载是否完成
-	mod.VIEWCANCLICK='viewCanClick';
+	mod.ISSHOWDETAILREADY = "isDetailReady"; //预加载是否完成
+	mod.VIEWCANCLICK = 'viewCanClick';
 
 	mod.MAINHOMEWORKURLTEACHER = mod.MAINHOMEWORKURL + 'TeacherService.svc/'; //老师作业url
 	mod.MAINHOMEWORKURLSTUDENT = mod.MAINHOMEWORKURL + 'StudentService.svc/'; //学生作业url
