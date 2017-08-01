@@ -8,6 +8,7 @@
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link href="../../css/utils/common.css" rel="stylesheet" />
 		<link rel="stylesheet" href="../../css/micro-course/course-list.css" />
+		<script src="../../js/utils/vue.min.js"></script>
 		<style>
 			.mui-slider-indicator {
 				margin-left: -10px;
@@ -20,34 +21,36 @@
 		</style>
 	</head>
 
-	<body>
+	<body style="background-color: white;">
 		<!--下拉刷新容器-->
-		<div id="course-att" class="mui-content mui-scroll-wrapper">
-			<div class="mui-scroll">
+		<div id="course-att" class="mui-fullscreen mui-scroll-wrapper">
+			<div class="mui-scroll mui-fullscreen">
 				<div v-if="isAttended==0" class="" style="min-height:300px;text-align: center;padding-top: 20%;">
 					<img src="../../image/mine/invite_none_0.png" width="50%" height="auto">
 					<p style="margin: auto 0;padding: 10px;">暂无关注的课程~~</p>
 				</div>
 				<!--数据列表-->
-				<ul v-else v-show="listData.length>0" class="mui-table-view">
-					<li v-for="li of listData" v-if="li.IsFocus" class="mui-table-view-cell" v-on:tap="jumpToPage(li)">
-						<div class="course-container">
-							<div class="img-container"><img class="course-img" v-bind:src='li.CoursePic' />
-								<span class="red-circle" v-bind:class="{'display-none':li.IsUpdate==0}"></span></div>
-							<div class="course-detail">
-								<div class="courseName-button">
-									<p class="course-name single-line">{{li.CourseName}}</p>
-									<button id="btn-focused" type="button" class="input-btn" v-bind:class="[li.IsFocus?'btn-focused':'btn-unfocus']" v-on:tap.stop="toggleFocus(li)">{{li.IsFocus?'已关注':'关注'}}</button>
+				<template v-else>
+					<ul v-show="listData.length>0" class="mui-table-view">
+						<li v-for="li of listData" v-if="li.IsFocus" class="mui-table-view-cell" v-on:tap="jumpToPage(li)">
+							<div class="course-container">
+								<div class="img-container"><img class="course-img" v-bind:src='li.CoursePic' />
+									<span class="red-circle" v-bind:class="{'display-none':li.IsUpdate==0}"></span></div>
+								<div class="course-detail">
+									<div class="courseName-button">
+										<p class="course-name single-line">{{li.CourseName}}</p>
+										<button id="btn-focused" type="button" class="input-btn" v-bind:class="[li.IsFocus?'btn-focused':'btn-unfocus']" v-on:tap.stop="toggleFocus(li)">{{li.IsFocus?'已关注':'关注'}}</button>
+									</div>
+									<p class="course-info double-line">{{li.SecName}}</p>
 								</div>
-								<p class="course-info double-line">{{li.SecName}}</p>
 							</div>
-						</div>
-					</li>
-				</ul>
+						</li>
+					</ul>
+				</template>
 			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
-		<script src="../../js/utils/vue.min.js"></script>
+
 		<script type="text/javascript">
 			var courseAtt = new Vue({
 				el: "#course-att",
@@ -69,6 +72,7 @@
 							}, function(err) {
 								mui.toast(err.RspTxt);
 							})
+							document.body.style.backgroundColor="transparent";
 						}
 					}
 				},
@@ -180,9 +184,10 @@
 			}
 
 			function pullupRefresh() {
-				if(courseInfo.pageIndex>courseInfo.totalPage){
+				if(courseInfo.pageIndex > courseInfo.totalPage) {
 					mui('#course-att').pullRefresh().endPullupToRefresh(true);
-					return ;
+					mui('#course-att').pullRefresh().disablePullupToRefresh();
+					return;
 				}
 				if(!courseAtt.isAttended) {
 					mui("#course-att").pullRefresh().endPullupToRefresh();
@@ -208,7 +213,7 @@
 				courseInfo.pageIndex++;
 			}
 			mui.plusReady(function() {
-//				mui("#course-att").pullRefresh().disablePullupToRefresh();
+				//				mui("#course-att").pullRefresh().disablePullupToRefresh();
 				courseAtt.isAttended = Number(plus.webview.currentWebview().isAttended);
 				console.log("主界面传过来的值：", courseAtt.isAttended);
 				setListener();
@@ -234,10 +239,10 @@
 					}
 				})
 				window.addEventListener("infoChanged", function() {
-					console.log("courseAtt传值********:"+events.getUtid());
+					console.log("courseAtt传值********:" + events.getUtid());
 					courseInfo.pageIndex = 1;
 					course_list.getData(courseInfo, function(data) {
-						console.log("courseAtt获取的数据信息:",data)
+						console.log("courseAtt获取的数据信息:", data)
 						if(data.length > 0) {
 							if(courseAtt.isAttended == 1) {
 								courseInfo.pageIndex = 1;
@@ -248,7 +253,7 @@
 								})
 							}
 							courseAtt.isAttended = 1;
-						}else{
+						} else {
 							courseAtt.isAttended = 0;
 						}
 					}, function(err) {

@@ -528,7 +528,7 @@
 				};
 				//45.通过区域代码获取对应区域的分页新闻
 				postDataPro_PostTnews(comData, wd, function(data) {
-					//console.log('45 通过区域代码获取对应区域的分页新闻 PostTnews ' + JSON.stringify(data));
+					console.log('45 通过区域代码获取对应区域的分页新闻 PostTnews ',data);
 					if(data.RspCode == 0) {
 						//记录页数
 						pageAndInfo[cityCode].page = {

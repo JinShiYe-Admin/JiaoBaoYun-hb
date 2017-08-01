@@ -53,18 +53,6 @@ var publishIsReady = false;
 var stuWorkReady = false;
 //document.getElementById('tabs-class').style.display = "none";
 mui.init({
-//	pullRefresh: {
-//		container: '#pullrefresh',
-//		down: {
-//			style: 'circle',
-//			callback: pulldownRefresh
-//		},
-//		up: {
-//			auto: true,
-//			contentrefresh: '正在加载...',
-//			callback: pullupRefresh
-//		}
-//	}
 });
 //mui的plusready监听
 mui.plusReady(function() {
@@ -106,15 +94,6 @@ mui.plusReady(function() {
 	//console.log("传过来的值：" + JSON.stringify(data));
 	//设置界面
 	setChoices(title, roles, btn_more);
-	//相机点击事件
-	//	events.addTap('icon-camero', function() {
-	//		events.fireToPageWithData('publish-answer.html', 'roleInfo', {
-	//			role: role,
-	//			studentClasses: studentClasses,
-	//			teacherClasses: teacherClasses
-	//		})
-	//	})
-
 	//角色选择的监听
 	roles.addEventListener("toggle", function(event) {
 		events.showWaiting();
@@ -175,10 +154,12 @@ function showNoData(type) {
 		document.querySelector("#list-container").style.display = "none";
 		document.querySelector(".noDataDisplay").style.display = "block";
 		mui(".mui-pull-loading")[0].style.display = "none";
+		document.body.style.backgroundColor="white";
 	} else {
 		document.querySelector("#list-container").style.display = "block";
 		document.querySelector(".noDataDisplay").style.display = "none";
 		mui(".mui-pull-loading")[0].style.display = "block";
+		document.body.style.backgroundColor="transparent";
 	}
 }
 /**
