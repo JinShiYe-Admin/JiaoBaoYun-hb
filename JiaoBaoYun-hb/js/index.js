@@ -77,7 +77,7 @@ var addSubPages = function() {
 	for(var i = 0; i < 2; i++) {
 		//设置子页面距离顶部的位置
 		var subpage_style = events.getWebStyle(subpages[i]);
-		subpage_style.top = (localStorage.getItem('StatusHeightNo') * 1) + 44 + 'px';
+		subpage_style.top = '44px';
 		subpage_style.bottom = '51px';
 		//console.log("子页面样式：" + JSON.stringify(subpage_style));
 		var temp = {};

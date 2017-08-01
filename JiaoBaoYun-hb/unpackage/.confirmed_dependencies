@@ -93,7 +93,9 @@
 			"image/mine/invite_none_0.png",
 			"js/utils/vue.js",
 			"css/mui.min.css",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"js/libs/crypto-js/crypto-js.js",
+			"js/utils/vue.min.js"
 		]
 	},
 	"html/show/show-attended.html": {
@@ -106,7 +108,8 @@
 			"js/mui.js",
 			"css/mui.min.css",
 			"css/utils/common.css",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"js/utils/vue.min.js"
 		]
 	},
 	"html/quan/classSpace-persons.html": {
@@ -124,7 +127,9 @@
 			"css/utils/common.css",
 			"js/show/show-all.js",
 			"js/libs/crypto-js/crypto-js.js",
-			"image/show/show-default-large.png"
+			"image/show/show-default-large.png",
+			"js/utils/vue.js",
+			"image/show/show-default-small.png"
 		]
 	},
 	"html/show/show-detail.html": {
