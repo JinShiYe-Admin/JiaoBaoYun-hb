@@ -668,7 +668,8 @@
 		"resources": [
 			"css/mui.min.css",
 			"css/utils/common.css",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"fonts/mui.ttf"
 		]
 	},
 	"html/quan/pub-dynamic.html": {
@@ -752,6 +753,9 @@
 			"css/mui.min.css",
 			"js/libs/crypto-js/crypto-js.js",
 			"css/utils/common.css"
+		],
+		"refer": [
+			"html/sciedu/sciedu_show_main.html"
 		]
 	}
 }

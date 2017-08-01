@@ -36,7 +36,7 @@
 					console.log("sciedu-home.html获取的订制的城市:", data);
 					if(data.RspCode == 0) {
 						if(data.RspData[0]) {
-							rechargeData(data.RspData[0]);
+							rechargeCities(data.RspData[0].citys);
 						} else {
 							addAll(cities);
 						}
@@ -44,7 +44,6 @@
 						var cityInfo = myStorage.getItem(storageKeyName.PERSONALINFO).uarea;
 						console.log("sciedu-home.html获取的城市信息：", cityInfo);
 					}
-					rechargeCities()
 				})
 			}
 			/**
@@ -71,6 +70,7 @@
 					cityCode: '000000',
 					cityName: '全部'
 				})
+				setTitle();
 			}
 			/**
 			 * 设置标题
@@ -80,7 +80,7 @@
 				for(var i = 0; i < cities.length; i++) {
 
 				}
-				mui.fireToPageNone("sciedu-list.html", "seCities", cities);
+				events.fireToPageNone("sciedu-list.html", "seCities", cities);
 			}
 		</script>
 	</body>

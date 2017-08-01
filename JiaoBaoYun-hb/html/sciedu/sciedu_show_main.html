@@ -74,36 +74,7 @@
 		<script type="text/javascript">
 			mui.init();
 			mui.plusReady(function() {
-				var wd = events.showWaiting();
-				var main = plus.webview.currentWebview(); //获取当前窗体对象
-				//console.log(main.id + ' ' + JSON.stringify(main.data));
 
-				document.getElementById("news_title").innerText = main.data.title;
-				var tips = main.data.rotips.split("|");
-				var from = tips[1];
-
-				var times = tips[0].split(" ");
-				var year = times[0];
-				var newsDate = times[1].split(':');
-				var newsTips = from + " | " + year + " " + newsDate[0] + ":" + newsDate[1]
-				document.getElementById("news_tips").innerText = newsTips;
-				var comData = {
-					top: '1', //每页行数，
-					vvl: main.data.acode + "|" + main.data.tabId, //查询的区域代码,省份截取城市代码前两位,城市截取城市代码的前4位
-					vvl1: '1' //页码,获取第几页
-				};
-				//45.通过区域代码获取对应区域的分页新闻
-				postDataPro_PostTnews(comData, wd, function(data) {
-					//console.log('45 PostTnews ' + JSON.stringify(data));
-					if(data.RspCode == 0) {
-						if(data.RspData.dt[0] && data.RspData.dt[0].content != undefined && data.RspData.dt[0].content != null) {
-							document.getElementById("news_content").innerHTML = data.RspData.dt[0].content;
-						}
-					} else {
-						mui.toast(data.RspTxt);
-					}
-					wd.close();
-				});
 			});
 		</script>
 	</body>

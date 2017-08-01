@@ -5519,7 +5519,9 @@
 					"js/libs/crypto-js/crypto-js.js",
 					"css/utils/common.css"
 				],
-				"refer": [],
+				"refer": [
+					"html/sciedu/sciedu_show_main.html"
+				],
 				"priority": 0
 			}
 		},
