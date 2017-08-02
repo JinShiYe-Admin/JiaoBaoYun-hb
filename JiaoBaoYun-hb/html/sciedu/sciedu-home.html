@@ -11,6 +11,7 @@
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
+			<a id="changeCity" class="mui-icon mui-icon-list mui-pull-left"></a>
 			<h1 id="title" class="mui-title"></h1>
 		</header>
 		<script src="../../js/mui.min.js"></script>
@@ -18,11 +19,45 @@
 		<script src="../../js/publicProtocol.js"></script>
 		<script type="text/javascript">
 			var cities;
-			mui.init();
+			mui.init({
+				subpages: [{
+					url: "sciedu-list.html",
+					id: "sciedu-list.html",
+					styles: {
+						top: "44px",
+						bottom: 0
+					}
+				}]
+			});
 			mui.plusReady(function() {
 				events.preload("sciedu_show_main.html", 500);
 				requireFocusCities();
+				setListeners()
 			});
+
+			function setListeners() {
+				window.addEventListener("curCity", function(e) {
+					console.log("sciedu获取当前的城市：", e.detail.data);
+					setTitle(e.detail.data);
+				});
+				//进入订制城市界面
+				document.getElementById('changeCity').addEventListener('tap', function() {
+					events.openNewWindowWithData('../utils/customizeCity.html', {
+						id: '0', //0科教，1展现
+						webid: 'sciedu-home.html', //当前webview的id
+						cities: cities //已经定制的城市数组
+					});
+				});
+
+				//退出订制城市界面返回的数据
+				window.addEventListener('customizeCity', function(e) {
+					var data = e.detail.data;
+					console.log('获取的修改后的城市信息:', data);
+					cities = data.cities;
+					curIndex = 0;
+					setTitle();
+				});
+			}
 			//获取定制的城市
 			function requireFocusCities() {
 				if(!events.getUtid()) {
@@ -55,8 +90,8 @@
 				cities = citiesCNA.map(function(cityCN, index, array) {
 					var cityInfo = cityCN.split('_');
 					return {
-						cityCode: cityInfo[0],
-						cityName: cityInfo[1]
+						acode: cityInfo[0],
+						aname: cityInfo[1]
 					}
 				})
 				addAll(cities);
@@ -67,19 +102,17 @@
 			 */
 			function addAll(cities) {
 				cities.push({
-					cityCode: '000000',
-					cityName: '全部'
+					acode: '000000',
+					aname: '全部'
 				})
-				setTitle();
+				setTitle(0);
 			}
 			/**
 			 * 设置标题
 			 */
-			function setTitle() {
-				document.getElementById("title").innerText = cities[0].cityName;
-				for(var i = 0; i < cities.length; i++) {
-
-				}
+			function setTitle(index) {
+				document.getElementById("title").innerText = cities[index].aname;
+				console.log("sciedu-home.html传递给子页面的值:", cities);
 				events.fireToPageNone("sciedu-list.html", "seCities", cities);
 			}
 		</script>

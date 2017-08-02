@@ -336,7 +336,7 @@ var events = (function(mod) {
 	mod.fireToPageWithData = function(tarPage, listener, datas) {
 
 		tarPage = tarPage.split('/')[tarPage.split('/').length - 1];
-		//console.log('tarPage:' + tarPage + ",listener:" + listener);
+		console.log('tarPage:' + tarPage + ",listener:" + listener);
 		var targetPage = null;
 		//获得目标页面
 		if(!targetPage) {
@@ -355,10 +355,10 @@ var events = (function(mod) {
 	 */
 	mod.fireToPageNone = function(tarPage, listener, datas) {
 		tarPage = tarPage.split('/')[tarPage.split('/').length - 1];
-		if(!datas) {
+		if(typeof(datas)==="undefined") {
 			datas = null;
 		}
-		//console.log('tarPage:' + tarPage);
+		console.log('tarPage:' + tarPage);
 		var targetPage = null;
 		//获得目标页面
 		if(!targetPage) {
@@ -370,7 +370,7 @@ var events = (function(mod) {
 				data: datas
 			});
 		} else {
-			//console.log('目标页面不存在' + tarPage);
+			console.log('目标页面不存在' + tarPage);
 		}
 
 	}
