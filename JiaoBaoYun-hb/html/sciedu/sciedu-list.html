@@ -56,7 +56,7 @@
 					}
 				}
 			});
-			setListeners();
+		
 			/**
 			 * 下拉刷新回调方法
 			 */
@@ -81,12 +81,14 @@
 			}
 			mui.plusReady(function() {
 				console.log("****sciedu-list.html准备完毕")
-
+				setListeners();
+				mui.fire(plus.webview.currentWebview().opener(),"listReady");
 			});
 
 			function setListeners() {
 				window.addEventListener("seCities", function(e) {
 					cities = e.detail.data;
+					curIndex=0;
 					console.log("****sciedu-list获取的城市信息:", cities)
 					scieduList.cityInfo = cities[curIndex];
 				})
@@ -104,6 +106,9 @@
 			 * @param {Object} dir 0为向左滑 1为右滑
 			 */
 			function changeCity(dir) {
+				if(cities.length===1){
+					return;
+				}
 				scieduList.isSwiping = true;
 				console.log("sciedu-list cities的长度：" + cities.length + ";" + typeof(cities.length))
 				if(dir) {
@@ -113,7 +118,6 @@
 				}
 				console.log("sciedu-list.html传递的index值：" + curIndex)
 				scieduList.cityInfo = cities[curIndex];
-
 				events.fireToPageNone("sciedu-home.html", "curCity", curIndex);
 			}
 		</script>

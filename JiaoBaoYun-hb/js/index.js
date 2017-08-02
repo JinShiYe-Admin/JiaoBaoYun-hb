@@ -148,7 +148,7 @@ var setConditionbyRole = function(role) {
 	} else { //游客
 		cloudIcon.style.display = "none";
 		sceIcon.className = "mui-tab-item mui-active";
-		activeTab = "../sciedu/sciedu_home.html";
+		activeTab = "../sciedu/sciedu-home.html";
 	}
 	//显示活动的界面
 	setActivePage();

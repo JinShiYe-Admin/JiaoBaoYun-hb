@@ -415,14 +415,13 @@ var events = (function(mod) {
 		events.fireToPageNone('../../index/mine.html', 'infoChanged');
 		events.fireToPageNone('../cloud/cloud_home.html', 'infoChanged');
 		mui.fire(plus.webview.getWebviewById("index.html"), 'infoChanged');
-		events.fireToPageNone('qiuzhi_home.html', 'infoChanged');
-		events.fireToPageNone('aboutme_sub.html', 'infoChanged');
 		events.fireToPageNone("course-all.html", "infoChanged");
 		events.fireToPageNone("course-attended.html", "infoChanged");
 		events.fireToPageNone("show-all.html", "infoChanged");
 		events.fireToPageNone("show-attended.html", "infoChanged");
 		events.fireToPageNone("show-home.html", "infoChanged");
 		events.fireToPageNone("course-home.html", "infoChanged");
+		events.fireToPageNone("sciedu-home.html","infoChanged");
 	}
 	mod.shortForString = function(str, len) {
 		if(!str) {

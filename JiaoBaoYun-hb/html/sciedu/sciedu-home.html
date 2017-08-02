@@ -19,6 +19,7 @@
 		<script src="../../js/publicProtocol.js"></script>
 		<script type="text/javascript">
 			var cities;
+			var listReady = false;
 			mui.init({
 				subpages: [{
 					url: "sciedu-list.html",
@@ -36,6 +37,15 @@
 			});
 
 			function setListeners() {
+				//换人啦
+				window.addEventListener('infoChanged', function() {
+					console.log("*******sciedu-home.html获取的用户切换的监听");
+					cities=[];
+					requireFocusCities();
+				});
+				window.addEventListener("listReady", function(e) {
+					listReady = true;
+				});
 				window.addEventListener("curCity", function(e) {
 					console.log("sciedu获取当前的城市：", e.detail.data);
 					setTitle(e.detail.data);
@@ -55,13 +65,19 @@
 					console.log('获取的修改后的城市信息:', data);
 					cities = data.cities;
 					curIndex = 0;
-					setTitle();
+					if(!events.getUtid()) {
+						myStorage.setItem(storageKeyName.SECITY, cities);
+					}else if(cities.length===0){
+						addLocal();
+					}
+					addAll(); //
 				});
 			}
 			//获取定制的城市
 			function requireFocusCities() {
 				if(!events.getUtid()) {
 					cities = myStorage.getItem(storageKeyName.SECITY) || [];
+					console.log("sciedu-home获取的城市数组：", cities);
 					addAll(cities);
 					return;
 				}
@@ -70,16 +86,26 @@
 				}, null, function(data) {
 					console.log("sciedu-home.html获取的订制的城市:", data);
 					if(data.RspCode == 0) {
-						if(data.RspData[0]) {
+						if(data.RspData[0].citys) {
 							rechargeCities(data.RspData[0].citys);
 						} else {
-							addAll(cities);
+							addLocal();
+							addAll();
 						}
 					} else if(data.RspCode == 9) {
 						var cityInfo = myStorage.getItem(storageKeyName.PERSONALINFO).uarea;
 						console.log("sciedu-home.html获取的城市信息：", cityInfo);
 					}
 				})
+			}
+
+			function addLocal() {
+				var localArea = myStorage.getItem(storageKeyName.PERSONALINFO).uarea;
+				console.log("获取的本地localArea", localArea);
+				cities = [{
+					acode: localArea.acode,
+					aname: localArea.aname
+				}];
 			}
 			/**
 			 * 重组城市信息
@@ -94,26 +120,32 @@
 						aname: cityInfo[1]
 					}
 				})
-				addAll(cities);
+				addAll();
 			}
 			/**
 			 * 加载全部
-			 * @param {Object} cities
 			 */
-			function addAll(cities) {
+			function addAll() {
 				cities.push({
 					acode: '000000',
 					aname: '全部'
 				})
 				setTitle(0);
+				sendToSub();
 			}
 			/**
 			 * 设置标题
 			 */
 			function setTitle(index) {
 				document.getElementById("title").innerText = cities[index].aname;
-				console.log("sciedu-home.html传递给子页面的值:", cities);
-				events.fireToPageNone("sciedu-list.html", "seCities", cities);
+			}
+
+			function sendToSub() {
+				if(listReady) {
+					events.fireToPageNone("sciedu-list.html", "seCities", cities);
+				} else {
+					setTimeout(arguments.callee, 500);
+				}
 			}
 		</script>
 	</body>

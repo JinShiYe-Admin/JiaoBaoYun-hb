@@ -39,15 +39,15 @@ var scieduList = new Vue({
 				if(data.RspCode == 0) {
 					if(pageInfo.pageIndex === 1) {
 						scieduList.resetData();
-						scieduList.isSwiping = false;
 					}
 					scieduList.pageInfo.pageIndex++;
 					pageInfo.totalPage = data.RspData.pg.PageCount;
 					scieduList.listData = scieduList.listData.concat(data.RspData.dt);
 					console.log("sciedu-list显示的最终值：", scieduList.listData);
 				} else {
-					mui.toast("获取数据失败:" + data.RspTxt);
+					scieduList.listData=[];
 				}
+				scieduList.isSwiping = false;
 				if(callback) {
 					callback();
 				}
