@@ -2080,7 +2080,8 @@
 					"html/register/login.html",
 					"html/cloud/order-member.html",
 					"html/micro-course/course-home.html",
-					"html/show/show-home2.html"
+					"html/show/show-home2.html",
+					"html/sciedu/sciedu-home.html"
 				],
 				"priority": 0
 			},
@@ -4929,7 +4930,10 @@
 					"css/utils/common.css",
 					"css/utils/fresh.css",
 					"image/utils/loading.gif",
-					"fonts/fangzheng.ttf"
+					"fonts/fangzheng.ttf",
+					"js/utils/vue.min.js",
+					"image/mine/invite_none_0.png",
+					"js/publicProtocol.js"
 				],
 				"refer": [
 					"html/micro-course/course_details.html"
@@ -4982,7 +4986,9 @@
 					"js/show/show-list.js",
 					"css/show/show-list-vue.css",
 					"fonts/mui.ttf",
-					"image/utils/playvideo.png"
+					"image/utils/playvideo.png",
+					"image/mine/invite_none_0.png",
+					"js/utils/vue.min.js"
 				],
 				"refer": [
 					"html/quan/space-detail.html",
@@ -5505,6 +5511,33 @@
 					"html/show/show-detail.html",
 					"html/quan/pub-dynamic.html"
 				],
+				"priority": 0
+			},
+			"html/sciedu/sciedu-home.html": {
+				"resources": [
+					"css/mui.min.css",
+					"js/libs/crypto-js/crypto-js.js",
+					"css/utils/common.css",
+					"html/sciedu/sciedu-list.html",
+					"fonts/mui.ttf"
+				],
+				"refer": [
+					"html/sciedu/sciedu_show_main.html",
+					"html/utils/customizeCity.html"
+				],
+				"priority": 0
+			},
+			"html/sciedu/sciedu-list.html": {
+				"resources": [
+					"js/sciedu/sciedu-list.js",
+					"js/utils/vue.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css",
+					"css/utils/common.css",
+					"js/libs/crypto-js/crypto-js.js",
+					"fonts/fangzheng.ttf"
+				],
+				"refer": [],
 				"priority": 0
 			}
 		},

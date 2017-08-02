@@ -336,7 +336,7 @@ var events = (function(mod) {
 	mod.fireToPageWithData = function(tarPage, listener, datas) {
 
 		tarPage = tarPage.split('/')[tarPage.split('/').length - 1];
-		//console.log('tarPage:' + tarPage + ",listener:" + listener);
+		console.log('tarPage:' + tarPage + ",listener:" + listener);
 		var targetPage = null;
 		//获得目标页面
 		if(!targetPage) {
@@ -355,10 +355,10 @@ var events = (function(mod) {
 	 */
 	mod.fireToPageNone = function(tarPage, listener, datas) {
 		tarPage = tarPage.split('/')[tarPage.split('/').length - 1];
-		if(!datas) {
+		if(typeof(datas)==="undefined") {
 			datas = null;
 		}
-		//console.log('tarPage:' + tarPage);
+		console.log('tarPage:' + tarPage);
 		var targetPage = null;
 		//获得目标页面
 		if(!targetPage) {
@@ -370,7 +370,7 @@ var events = (function(mod) {
 				data: datas
 			});
 		} else {
-			//console.log('目标页面不存在' + tarPage);
+			console.log('目标页面不存在' + tarPage);
 		}
 
 	}
@@ -415,14 +415,13 @@ var events = (function(mod) {
 		events.fireToPageNone('../../index/mine.html', 'infoChanged');
 		events.fireToPageNone('../cloud/cloud_home.html', 'infoChanged');
 		mui.fire(plus.webview.getWebviewById("index.html"), 'infoChanged');
-		events.fireToPageNone('qiuzhi_home.html', 'infoChanged');
-		events.fireToPageNone('aboutme_sub.html', 'infoChanged');
 		events.fireToPageNone("course-all.html", "infoChanged");
 		events.fireToPageNone("course-attended.html", "infoChanged");
 		events.fireToPageNone("show-all.html", "infoChanged");
 		events.fireToPageNone("show-attended.html", "infoChanged");
 		events.fireToPageNone("show-home.html", "infoChanged");
 		events.fireToPageNone("course-home.html", "infoChanged");
+		events.fireToPageNone("sciedu-home.html","infoChanged");
 	}
 	mod.shortForString = function(str, len) {
 		if(!str) {
@@ -1405,6 +1404,11 @@ var events = (function(mod) {
 		} else {
 			if(arrayData[1] < 0) {
 				arrayData[0].push(value);
+				if(key===storageKeyName.SCIEDUREADED){
+					if(arrayData[0].length>=200){
+						arrayData[0].splice(0,1);
+					}
+				}
 				myStorage.setItem(key, arrayData[0]);
 			}
 			return false;
