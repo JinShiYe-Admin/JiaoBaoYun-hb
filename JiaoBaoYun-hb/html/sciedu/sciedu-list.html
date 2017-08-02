@@ -7,6 +7,23 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link href="../../css/utils/common.css" rel="stylesheet" />
+		<style>
+			.item-title{
+				font-size: 16px;
+				color: #323232;
+			}
+			.item-info{
+				font-size: 12px;
+				color: #B7B7B7;
+			}
+			.item-img{
+				float: right;
+			}
+			.item-imgs{
+				width: 30%;
+				height: auto;
+			}
+		</style>
 	</head>
 
 	<body>
@@ -21,12 +38,12 @@
 				<template v-else v-show="listData.length>0">
 					<ul class="mui-table-view">
 						<li v-for="item of listData" v-on:tap="showDetail(item)" class="mui-table-view-cell">
-							<p>{{item.title}}</p>
-							<p>{{getTips(item)}}</p>
+							<p class="item-title">{{item.title}}</p>
+							<p class="item-info">{{getTips(item)}}</p>
 							<template v-if="getImgs(item).length>0">
-								<img v-if="getImgs(item).length===1" v-bind:src="getImgs(item)[0]" />
+								<img class="item-img" v-if="getImgs(item).length===1" v-bind:src="getImgs(item)[0]" />
 								<div v-else class="imgs-container">
-									<img v-for="img of getImgs(item)" v-bind:src="img" />
+									<img class="item-imgs" v-for="img of getImgs(item)" v-bind:src="img" />
 								</div>
 							</template>
 						</li>
