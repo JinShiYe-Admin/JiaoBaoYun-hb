@@ -1404,6 +1404,11 @@ var events = (function(mod) {
 		} else {
 			if(arrayData[1] < 0) {
 				arrayData[0].push(value);
+				if(key===storageKeyName.SCIEDUREADED){
+					if(arrayData[0].length>=200){
+						arrayData[0].splice(0,1);
+					}
+				}
 				myStorage.setItem(key, arrayData[0]);
 			}
 			return false;

@@ -20,11 +20,11 @@
 				<!--数据列表-->
 				<template v-else v-show="listData.length>0">
 					<ul class="mui-table-view">
-						<li v-for="item of listData" class="mui-table-view-cell">
+						<li v-for="item of listData" v-on:tap="showDetail(item)" class="mui-table-view-cell">
 							<p>{{item.title}}</p>
 							<p>{{getTips(item)}}</p>
 							<template v-if="getImgs(item).length>0">
-								<img v-if="getImgs(item).length===1" v-bind:src="getImgs(item)[0]"/>
+								<img v-if="getImgs(item).length===1" v-bind:src="getImgs(item)[0]" />
 								<div v-else class="imgs-container">
 									<img v-for="img of getImgs(item)" v-bind:src="img" />
 								</div>
@@ -56,7 +56,7 @@
 					}
 				}
 			});
-		
+
 			/**
 			 * 下拉刷新回调方法
 			 */
@@ -82,13 +82,13 @@
 			mui.plusReady(function() {
 				console.log("****sciedu-list.html准备完毕")
 				setListeners();
-				mui.fire(plus.webview.currentWebview().opener(),"listReady");
+				mui.fire(plus.webview.currentWebview().opener(), "listReady");
 			});
 
 			function setListeners() {
 				window.addEventListener("seCities", function(e) {
 					cities = e.detail.data;
-					curIndex=0;
+					curIndex = 0;
 					console.log("****sciedu-list获取的城市信息:", cities)
 					scieduList.cityInfo = cities[curIndex];
 				})
@@ -100,13 +100,16 @@
 					console.log("sciedu-list.html的向右滑动事件")
 					changeCity(1);
 				})
+				window.addEventListener("detailReady", function() {
+					scieduList.isDetailReady = true;
+				})
 			}
 			/**
 			 * 
 			 * @param {Object} dir 0为向左滑 1为右滑
 			 */
 			function changeCity(dir) {
-				if(cities.length===1){
+				if(cities.length === 1) {
 					return;
 				}
 				scieduList.isSwiping = true;
