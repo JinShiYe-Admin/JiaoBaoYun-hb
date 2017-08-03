@@ -772,7 +772,8 @@
 			"js/libs/crypto-js/crypto-js.js",
 			"fonts/fangzheng.ttf",
 			"image/utils/default_load_2_1.gif",
-			"js/libs/jquery.lazyload.min.js"
+			"js/libs/jquery.lazyload.min.js",
+			"js/utils/vue.min.js"
 		]
 	}
 }
