@@ -18,6 +18,12 @@
 			.mui-slider-indicator .mui-indicator {
 				margin: 1px 2px;
 			}
+			.padding-top0{
+				padding-top: 0;
+			}
+			.padding-top20{
+				padding-top: 20%;
+			}
 		</style>
 	</head>
 
@@ -25,9 +31,11 @@
 		<!--下拉刷新容器-->
 		<div id="course-all" class="mui-content mui-scroll-wrapper" v-bind:class="{'background-white':listData.length==0}">
 			<div class="mui-scroll">
-				<div v-if="listData.length==0&&isRequired" class="" style="min-height:300px;text-align: center;padding-top: 20%;">
-					<img src="../../image/mine/invite_none_0.png" width="50%" height="auto">
-					<p style="margin: auto 0;padding-top: 10px;">没有获取到课程~~</p>
+				<div v-if="listData.length===0" class="" style="min-height:300px;text-align: center;" v-bind:class="[isRequired?'padding-top20':'padding-top0']">
+					<img v-if="isRequired" src="../../image/mine/invite_none_0.png" width="50%" height="auto">
+					<p style="margin: auto 0;padding: 10px;">
+						<span v-if="!isRequired" class="mui-spinner" style="vertical-align: center;height: 15px;width: 15px;margin-bottom: -4px;"></span> {{isRequired?'没有获取到展现内容~~':'数据加载中~~'}}
+					</p>
 				</div>
 				<!--数据列表-->
 				<template v-else>

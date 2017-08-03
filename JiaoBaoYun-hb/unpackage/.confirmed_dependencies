@@ -213,6 +213,9 @@
 			"css/utils/common.css",
 			"html/register/js/app.js",
 			"js/libs/crypto-js/crypto-js.js"
+		],
+		"refer": [
+			"html/register/register_phoneNumber.html"
 		]
 	},
 	"html/cloud/storage_transport.html": {
@@ -775,6 +778,19 @@
 			"image/utils/default_load_2_1.gif",
 			"js/libs/jquery.lazyload.min.js",
 			"js/utils/vue.min.js"
+		]
+	},
+	"html/register/register_phoneNumber.html": {
+		"resources": [
+			"js/libs/crypto-js/crypto-js.js"
+		],
+		"refer": [
+			"html/register/yanZhengMa.html"
+		]
+	},
+	"html/register/yanZhengMa.html": {
+		"resources": [
+			"js/libs/crypto-js/crypto-js.js"
 		]
 	}
 }
