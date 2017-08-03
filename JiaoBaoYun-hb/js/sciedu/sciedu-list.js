@@ -8,7 +8,8 @@ var scieduList = new Vue({
 		},
 		listData: [], //列表数据
 		isSwiping: false,
-		isDetailReady: false
+		isDetailReady: false,
+		imgsStyle: {}
 	},
 	watch: {
 		listData: function(val, pre) {
@@ -43,7 +44,7 @@ var scieduList = new Vue({
 					}
 					scieduList.pageInfo.pageIndex++;
 					pageInfo.totalPage = data.RspData.pg.PageCount;
-					scieduList.listData = scieduList.listData.concat(data.RspData.dt);
+					scieduList.listData = scieduList.listData.concat(scieduList.rechargeList(data.RspData.dt));
 					console.log("sciedu-list显示的最终值：", scieduList.listData);
 				} else {
 					scieduList.listData = [];
@@ -53,6 +54,18 @@ var scieduList = new Vue({
 					callback();
 				}
 			})
+		},
+		rechargeList: function(list) {
+			return list.map(function(item, index) {
+				item.imgs = scieduList.getImgs(item);
+				item.tips = scieduList.getTips(item);
+				if(item.imgs.length === 1) {
+					item.isFlex = true;
+				} else {
+					item.isFlex = false;
+				}
+				return item;
+			});
 		},
 		//获取是否已读
 		getReaded: function(item) {
@@ -68,7 +81,8 @@ var scieduList = new Vue({
 		//展示详情
 		showDetail: function(item) {
 			scieduList.setReaded(item);
-			events.readyToPage(this.isDetailReady, "sciedu_show_main.html", "scieduItemInfo", item);
+			
+			events.readyToPage(this.isDetailReady, "sciedu_show_main.html", "scieduItemInfo", mui.extend({},item,this.cityInfo));
 		},
 		getImgs: function(item) {
 			if(!item.timgs) {
@@ -90,6 +104,13 @@ var scieduList = new Vue({
 			var tips = item.tips.split("|");
 			tips[0] = events.shortForDate(tips[0]);
 			return tips.reverse().join('|');
+		},
+		getImgsStyle: function() {
+			var winWidth = document.body.clientWidth;
+			this.imgsStyle = {
+				width: winWidth / 3 - 30,
+				height: (winWidth / 3 - 30) * 0.6
+			}
 		}
 	}
 })

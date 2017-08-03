@@ -8,20 +8,33 @@
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link href="../../css/utils/common.css" rel="stylesheet" />
 		<style>
-			.item-title{
+			.item-title {
 				font-size: 16px;
 				color: #323232;
 			}
-			.item-info{
+			
+			.item-info {
 				font-size: 12px;
 				color: #B7B7B7;
 			}
-			.item-img{
-				float: right;
+			.li-flex{
+				display: flex;
+				display: -webkit-flex;
+				display: -webkit-box;
 			}
-			.item-imgs{
-				width: 30%;
-				height: auto;
+			.words-flex{
+				width: 50%;
+				flex-grow: 1;
+				-webkit-box-flex: 1;
+				-webkit-flex-grow: 1;
+			}
+			.item-img {
+				width: 100px;
+				height: 60px;
+			}
+			
+			.item-imgs {
+				display: inline-block;
 			}
 		</style>
 	</head>
@@ -37,13 +50,15 @@
 				<!--数据列表-->
 				<template v-else v-show="listData.length>0">
 					<ul class="mui-table-view">
-						<li v-for="item of listData" v-on:tap="showDetail(item)" class="mui-table-view-cell">
-							<p class="item-title">{{item.title}}</p>
-							<p class="item-info">{{getTips(item)}}</p>
-							<template v-if="getImgs(item).length>0">
-								<img class="item-img" v-if="getImgs(item).length===1" v-bind:src="getImgs(item)[0]" />
+						<li v-for="item of listData" v-on:tap="showDetail(item)" class="mui-table-view-cell" v-bind:class="[{'li-flex':item.isFlex}]">
+							<div class="item-words" v-bind:class="[{'words-flex':item.isFlex}]">
+								<p class="item-title">{{item.title}}</p>
+								<p class="item-info">{{item.tips}}</p>
+							</div>
+							<template v-if="item.imgs.length>0">
+								<div class="item-img" v-if="item.imgs.length===1" v-bind:style="{'background-image':'url('+item.imgs[0]+')'}"></div>
 								<div v-else class="imgs-container">
-									<img class="item-imgs" v-for="img of getImgs(item)" v-bind:src="img" />
+									<div class="item-imgs" v-for="img of item.imgs" v-bind:style="{'background-image':'url('+img+')',height:imgsStyle.height+'px',width:imgsStyle.width+'px'}"></div>
 								</div>
 							</template>
 						</li>
@@ -97,6 +112,7 @@
 				})
 			}
 			mui.plusReady(function() {
+				scieduList.getImgsStyle();
 				console.log("****sciedu-list.html准备完毕")
 				setListeners();
 				mui.fire(plus.webview.currentWebview().opener(), "listReady");
