@@ -14,6 +14,9 @@ var scieduList = new Vue({
 	watch: {
 		listData: function(val, pre) {
 			console.log("sciedu-list获取的新值：", val);
+			this.$nextTick(function(){
+				jQuery(".back-img").lazyload();
+			})
 		},
 		cityInfo: function(val, pre) {
 			scieduList.resetPageInfo();
@@ -108,8 +111,8 @@ var scieduList = new Vue({
 		getImgsStyle: function() {
 			var winWidth = document.body.clientWidth;
 			this.imgsStyle = {
-				width: winWidth / 3 - 30,
-				height: (winWidth / 3 - 30) * 0.6
+				width: winWidth / 3-20,
+				height: (winWidth / 3) * 0.6
 			}
 		}
 	}

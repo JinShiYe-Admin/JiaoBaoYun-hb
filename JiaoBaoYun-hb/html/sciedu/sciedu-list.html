@@ -17,17 +17,20 @@
 				font-size: 12px;
 				color: #B7B7B7;
 			}
-			.li-flex{
+			
+			.li-flex {
 				display: flex;
 				display: -webkit-flex;
 				display: -webkit-box;
 			}
-			.words-flex{
+			
+			.words-flex {
 				width: 50%;
 				flex-grow: 1;
 				-webkit-box-flex: 1;
 				-webkit-flex-grow: 1;
 			}
+			
 			.item-img {
 				width: 100px;
 				height: 60px;
@@ -35,6 +38,20 @@
 			
 			.item-imgs {
 				display: inline-block;
+			}
+			
+			.back-img {
+				background-position: center;
+				background-repeat: no-repeat;
+				background-size: cover;
+			}
+			
+			.imgs-container {
+				display: flex;
+				display: -webkit-flex;
+				justify-content: space-between;
+				-webkit-box-pack: justify;
+				-webkit-justify-content: space-between;
 			}
 		</style>
 	</head>
@@ -56,9 +73,9 @@
 								<p class="item-info">{{item.tips}}</p>
 							</div>
 							<template v-if="item.imgs.length>0">
-								<div class="item-img" v-if="item.imgs.length===1" v-bind:style="{'background-image':'url('+item.imgs[0]+')'}"></div>
+								<div class="item-img back-img" v-if="item.imgs.length===1" v-bind:data-original="item.imgs[0]" v-bind:style="{'background-image':'url('+'../../image/utils/default_load_2_1.gif'+')'}"></div>
 								<div v-else class="imgs-container">
-									<div class="item-imgs" v-for="img of item.imgs" v-bind:style="{'background-image':'url('+img+')',height:imgsStyle.height+'px',width:imgsStyle.width+'px'}"></div>
+									<div class="item-imgs back-img" v-for="img of item.imgs" v-bind:data-original="img" v-bind:style="{'background-image':'url('+'../../image/utils/default_load_2_1.gif'+')',height:imgsStyle.height+'px',width:imgsStyle.width+'px'}"></div>
 								</div>
 							</template>
 						</li>
@@ -66,10 +83,11 @@
 				</template>
 			</div>
 		</div>
-		<script src="../../js/utils/vue.js"></script>
+		<script src="../../js/utils/vue.min.js"></script>
 		<script src="../../js/sciedu/sciedu-list.js"></script>
 		<script src="../../js/utils/events.js"></script>
 		<script src="../../js/publicProtocol.js"></script>
+		<script src="../../js/libs/jquery.lazyload.min.js"></script>
 		<script src="../../js/mui.min.js"></script>
 		<script type="text/javascript">
 			var curIndex = 0;

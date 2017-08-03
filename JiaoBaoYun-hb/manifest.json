@@ -5535,7 +5535,9 @@
 					"css/mui.min.css",
 					"css/utils/common.css",
 					"js/libs/crypto-js/crypto-js.js",
-					"fonts/fangzheng.ttf"
+					"fonts/fangzheng.ttf",
+					"image/utils/default_load_2_1.gif",
+					"js/libs/jquery.lazyload.min.js"
 				],
 				"refer": [],
 				"priority": 0
