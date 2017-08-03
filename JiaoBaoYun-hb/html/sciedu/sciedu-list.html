@@ -7,6 +7,58 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link href="../../css/utils/common.css" rel="stylesheet" />
+		<style>
+			.item-title {
+				font-size: 16px;
+				color: #323232;
+			}
+			
+			.item-info {
+				font-size: 12px;
+				color: #B7B7B7;
+			}
+			.readed-color{
+				color:#B7B7B7;
+			}
+			.readed-background{
+				background-color:#FFFFFF ;
+			}
+			.li-flex {
+				display: flex;
+				display: -webkit-flex;
+				display: -webkit-box;
+			}
+			
+			.words-flex {
+				width: 50%;
+				flex-grow: 1;
+				-webkit-box-flex: 1;
+				-webkit-flex-grow: 1;
+			}
+			
+			.item-img {
+				width: 100px;
+				height: 60px;
+			}
+			
+			.item-imgs {
+				display: inline-block;
+			}
+			
+			.back-img {
+				background-position: center;
+				background-repeat: no-repeat;
+				background-size: cover;
+			}
+			
+			.imgs-container {
+				display: flex;
+				display: -webkit-flex;
+				justify-content: space-between;
+				-webkit-box-pack: justify;
+				-webkit-justify-content: space-between;
+			}
+		</style>
 	</head>
 
 	<body>
@@ -20,13 +72,15 @@
 				<!--数据列表-->
 				<template v-else v-show="listData.length>0">
 					<ul class="mui-table-view">
-						<li v-for="item of listData" v-on:tap="showDetail(item)" class="mui-table-view-cell">
-							<p>{{item.title}}</p>
-							<p>{{getTips(item)}}</p>
-							<template v-if="getImgs(item).length>0">
-								<img v-if="getImgs(item).length===1" v-bind:src="getImgs(item)[0]" />
+						<li v-for="(item,index) of listData" v-on:tap="showDetail(index)" class="mui-table-view-cell" v-bind:class="[{'li-flex':item.isFlex}]">
+							<div class="item-words" v-bind:class="[{'words-flex':item.isFlex}]">
+								<p class="item-title" v-bind:class="[{'readed-color':item.isReaded}]">{{item.title}}</p>
+								<p class="item-info">{{item.tips}}</p>
+							</div>
+							<template v-if="item.imgs.length>0">
+								<div class="item-img back-img" v-if="item.imgs.length===1" v-bind:data-original="item.imgs[0]" v-bind:style="{'background-image':'url('+'../../image/utils/default_load_2_1.gif'+')'}"></div>
 								<div v-else class="imgs-container">
-									<img v-for="img of getImgs(item)" v-bind:src="img" />
+									<div class="item-imgs back-img" v-for="img of item.imgs" v-bind:data-original="img" v-bind:style="{'background-image':'url('+'../../image/utils/default_load_2_1.gif'+')',height:imgsStyle.height+'px',width:imgsStyle.width+'px'}"></div>
 								</div>
 							</template>
 						</li>
@@ -34,10 +88,11 @@
 				</template>
 			</div>
 		</div>
-		<script src="../../js/utils/vue.js"></script>
+		<script src="../../js/utils/vue.min.js"></script>
 		<script src="../../js/sciedu/sciedu-list.js"></script>
 		<script src="../../js/utils/events.js"></script>
 		<script src="../../js/publicProtocol.js"></script>
+		<script src="../../js/libs/jquery.lazyload.min.js"></script>
 		<script src="../../js/mui.min.js"></script>
 		<script type="text/javascript">
 			var curIndex = 0;
@@ -80,6 +135,7 @@
 				})
 			}
 			mui.plusReady(function() {
+				scieduList.getImgsStyle();
 				console.log("****sciedu-list.html准备完毕")
 				setListeners();
 				mui.fire(plus.webview.currentWebview().opener(), "listReady");

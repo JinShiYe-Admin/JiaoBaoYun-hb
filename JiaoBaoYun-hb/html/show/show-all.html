@@ -10,17 +10,27 @@
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link href="../../css/utils/common.css" rel="stylesheet" />
 		<link href="../../css/show/show-list.css" rel="stylesheet" />
-		<script src="../../js/utils/vue.min.js"></script>
+		<style>
+			.padding-top0 {
+				padding-top: 0;
+			}
+			
+			.padding-top20 {
+				padding-top: 20%;
+			}
+		</style>
+
 	</head>
 
 	<body style="background-color: white;">
 		<!--下拉刷新容器-->
-		<div id="show-all" class="mui-content mui-fullscreen mui-scroll-wrapper" v-bind:class="{'background-white':listData.length==0&&isRequired}">
+		<div id="show-all" class="mui-content mui-fullscreen mui-scroll-wrapper" v-bind:class="{'background-white':listData.length==0}">
 			<div class="mui-scroll">
-				<div v-if="listData.length==0&&isRequired" class="" style="min-height:300px;text-align: center;padding-top: 20%;">
-					<img src="../../image/mine/invite_none_0.png" width="50%" height="auto">
+				<div v-if="listData.length==0" class="" style="min-height:300px;text-align: center;" v-bind:class="[isRequired?'padding-top20':'padding-top0']">
+					<img v-if="isRequired" src="../../image/mine/invite_none_0.png" width="50%" height="auto">
 					<p style="margin: auto 0;padding: 10px;">
-						没有获取到展现内容~~</p>
+						<span v-if="!isRequired" class="mui-spinner" style="vertical-align: center;height: 15px;width: 15px;margin-bottom: -4px;"></span> {{isRequired?'没有获取到展现内容~~':'数据加载中~~'}}
+					</p>
 				</div>
 				<!--数据列表-->
 				<template v-else-if="listData.length>0&&isRequired">
@@ -43,7 +53,7 @@
 				</template>
 			</div>
 		</div>
-
+		<script src="../../js/utils/vue.min.js"></script>
 		<script src="../../js/show/show-all.js"></script>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/utils/events.js" type="text/javascript"></script>
