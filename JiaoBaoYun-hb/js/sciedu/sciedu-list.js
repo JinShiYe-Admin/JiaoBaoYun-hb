@@ -62,6 +62,7 @@ var scieduList = new Vue({
 			return list.map(function(item, index) {
 				item.imgs = scieduList.getImgs(item);
 				item.tips = scieduList.getTips(item);
+				item.isReaded=scieduList.getReaded(item);
 				if(item.imgs.length === 1) {
 					item.isFlex = true;
 				} else {
@@ -73,19 +74,19 @@ var scieduList = new Vue({
 		//获取是否已读
 		getReaded: function(item) {
 			if(events.isExistInStorageArray(storageKeyName.SCIEDUREADED, item.tabid)[1] >= 0) {
-				item.isReaded = true;
+				return true;
 			}
+			return false;
 		},
 		//设置是否已读
-		setReaded: function(item) {
-			item.isReaded = true;
-			events.toggleStorageArray(storageKeyName.SCIEDUREADED, item.tabid, false);
+		setReaded: function(index) {
+			this.listData[index].isReaded = true;
+			events.toggleStorageArray(storageKeyName.SCIEDUREADED, this.listData[index].tabid, false);
 		},
 		//展示详情
-		showDetail: function(item) {
-			scieduList.setReaded(item);
-			
-			events.readyToPage(this.isDetailReady, "sciedu_show_main.html", "scieduItemInfo", mui.extend({},item,this.cityInfo));
+		showDetail: function(index) {
+			scieduList.setReaded(index);
+			events.readyToPage(this.isDetailReady, "sciedu_show_main.html", "scieduItemInfo", mui.extend({},this.listData[index],this.cityInfo));
 		},
 		getImgs: function(item) {
 			if(!item.timgs) {

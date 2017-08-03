@@ -17,7 +17,12 @@
 				font-size: 12px;
 				color: #B7B7B7;
 			}
-			
+			.readed-color{
+				color:#B7B7B7;
+			}
+			.readed-background{
+				background-color:#FFFFFF ;
+			}
 			.li-flex {
 				display: flex;
 				display: -webkit-flex;
@@ -67,9 +72,9 @@
 				<!--数据列表-->
 				<template v-else v-show="listData.length>0">
 					<ul class="mui-table-view">
-						<li v-for="item of listData" v-on:tap="showDetail(item)" class="mui-table-view-cell" v-bind:class="[{'li-flex':item.isFlex}]">
+						<li v-for="(item,index) of listData" v-on:tap="showDetail(index)" class="mui-table-view-cell" v-bind:class="[{'li-flex':item.isFlex}]">
 							<div class="item-words" v-bind:class="[{'words-flex':item.isFlex}]">
-								<p class="item-title">{{item.title}}</p>
+								<p class="item-title" v-bind:class="[{'readed-color':item.isReaded}]">{{item.title}}</p>
 								<p class="item-info">{{item.tips}}</p>
 							</div>
 							<template v-if="item.imgs.length>0">

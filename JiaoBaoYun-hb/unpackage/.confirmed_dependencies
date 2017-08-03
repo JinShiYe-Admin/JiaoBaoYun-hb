@@ -669,7 +669,8 @@
 			"css/mui.min.css",
 			"css/utils/common.css",
 			"js/libs/crypto-js/crypto-js.js",
-			"fonts/mui.ttf"
+			"fonts/mui.ttf",
+			"fonts/fangzheng.ttf"
 		]
 	},
 	"html/quan/pub-dynamic.html": {
