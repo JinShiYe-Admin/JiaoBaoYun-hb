@@ -2,7 +2,7 @@
 
 var storageKeyName = (function(mod) {
 
-	mod.key = 2; //0,开发;1,测试--教宝云;2,测试--微视学堂 3外网--微视学堂 4外网--教宝云
+	mod.key = 1; //0,开发;1,测试--教宝云;2,测试--微视学堂 3外网--微视学堂 4外网--教宝云
 	var exLog = console.log;
 	console.log = function(hint, object) {
 		if(mod.key === 0) {
@@ -128,6 +128,7 @@ var storageKeyName = (function(mod) {
 	mod.COURSETYPE = "courseType";
 	mod.ISSHOWDETAILREADY = "isDetailReady"; //预加载是否完成
 	mod.VIEWCANCLICK = 'viewCanClick';
+	mod.SCIEDUREADED='sciedu-readed';//科教已读
 
 	mod.MAINHOMEWORKURLTEACHER = mod.MAINHOMEWORKURL + 'TeacherService.svc/'; //老师作业url
 	mod.MAINHOMEWORKURLSTUDENT = mod.MAINHOMEWORKURL + 'StudentService.svc/'; //学生作业url
