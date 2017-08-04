@@ -54,10 +54,13 @@ var scieduList = new Vue({
 					scieduList.listData = scieduList.listData.concat(scieduList.rechargeList(data.RspData.dt));
 					console.log("sciedu-list显示的最终值：", scieduList.listData);
 				} else {
-					scieduList.pageInfo = scieduList.pageInfo;
+					scieduList.pageInfo = scieduList.oldPageInfo;
 					mui.toast("请求失败:" + data.RspTxt);
 				}
 				scieduList.isSwiping = false;
+				if(scieduList.pageInfo.totalPage) {
+					scieduList.oldPageInfo = scieduList.pageInfo;
+				}
 				if(callback) {
 					callback();
 				}

@@ -101,15 +101,19 @@
 			var curIndex = 0;
 			var cities = [];
 			mui.init({
+				swipeBack: false,
+				keyEventBind: {
+					backbutton: false //关闭back按键监听
+				},
 				pullRefresh: {
 					container: '#sciedu-list',
 					down: {
 						style: 'circle',
-						offset: 0,
 						callback: pulldownRefresh
 					},
 					up: {
-						contentrefresh: "上拉加载更多",
+						contentrefresh: '正在加载...',
+						contentnomore:'',
 						callback: pullupRefresh
 					}
 				}
@@ -119,25 +123,21 @@
 			 * 下拉刷新回调方法
 			 */
 			function pulldownRefresh() {
-				if(scieduList.pageInfo.totalPage) {
-					scieduList.oldPageInfo = scieduList.pageInfo;
-				}
 				scieduList.resetPageInfo();
 				scieduList.requireListData(function() {
 					mui('#sciedu-list').pullRefresh().endPulldown();
 					mui('#sciedu-list').pullRefresh().refresh(true);
+					document.querySelector(".mui-pull-bottom-pocket").style.height="40px";
 				})
 			}
 			/**
 			 * 上拉加载更多回调方法
 			 */
 			function pullupRefresh() {
-				if(scieduList.pageInfo.totalPage) {
-					scieduList.oldPageInfo = scieduList.pageInfo;
-				}
 				console.log("上拉加载时的pageInfo:", scieduList.pageInfo);
 				if(scieduList.pageInfo.pageIndex > scieduList.pageInfo.totalPage) {
-					mui('#sciedu-list').pullRefresh().disablePullupToRefresh();
+					mui('#sciedu-list').pullRefresh().endPullupToRefresh(true);
+					document.querySelector(".mui-pull-bottom-pocket").style.height=0;
 					return;
 				}
 				scieduList.requireListData(function() {
@@ -188,6 +188,8 @@
 				console.log("sciedu-list.html传递的index值：" + curIndex)
 				scieduList.cityInfo = cities[curIndex];
 				events.fireToPageNone("sciedu-home.html", "curCity", curIndex);
+				mui('#sciedu-list').pullRefresh().refresh(true);
+				document.querySelector(".mui-pull-bottom-pocket").style.height="40px";
 			}
 		</script>
 	</body>

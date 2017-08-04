@@ -70,11 +70,11 @@
 				</div>
 				<!--滑动组件-->
 				<div id="sliderSegmentedControl" class=" mui-segmented-control mui-segmented-control-inverted mui-segmented-control-primary">
-				
+
 					<a id="item1" class="mui-control-item mui-active" href="#div-finished">
 						已完成(0)
 					</a>
-			
+
 					<a id="item2" class="mui-control-item" href="#div-unfinish">
 						未完成(0)
 					</a>
@@ -98,9 +98,9 @@
 		</div>
 		<!--加载选项按钮-->
 
-		<script src="../../js/utils/vue.min.js"></script>
+		<!--<script src="../../js/utils/vue.min.js"></script>
 		<script type="text/javascript">
-			var workDetailTea = new Vue({
+			var workDetailTea<br /> = new Vue({
 				el: "#work-detail-tea",
 				data: {
 					workDetail: []
@@ -111,7 +111,7 @@
 					}
 				}
 			});
-		</script>
+		</script>-->
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/utils/events.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/publicHomeworkProtocol.js" type="text/javascript" charset="utf-8"></script>
@@ -126,7 +126,7 @@
 					if(mui.getPreviewImage().isShown()) {
 						return true;
 					}
-					workDetailTea.resetData();
+					//					workDetailTea.resetData();
 					return true;
 				}
 			});
@@ -500,7 +500,7 @@
 					}
 
 				}
-				workDetailTea.workDetail = uploadArray.length > 0 ? uploadArray : remainArray;
+				//				workDetailTea.workDetail = uploadArray.length > 0 ? uploadArray : remainArray;
 				if(allAlertFlag == remainArray.length) {
 					homeworkDetailNodes.alertAllBtn.disabled = 'disabled';
 				}
