@@ -213,6 +213,7 @@
 					showAtt.detailReady = true;
 				});
 				window.addEventListener("showAttended", function(e) {
+					mui('#show-att').pullRefresh().refresh(true);
 					if(e.detail.data == null) {
 						showAtt.isAttended = 0;
 					} else {
@@ -221,6 +222,7 @@
 					console.log("获取的关注信息：", showAtt.isAttended)
 				});
 				window.addEventListener("infoChanged", function() {
+					mui('#show-att').pullRefresh().refresh(true);
 					console.log("信息更改？？？？？？？？？？？？？？？？？？？？？？？？")
 					showCity.pageIndex = 1;
 					show_list.getShowList(showCity, function(showCity, data) {
