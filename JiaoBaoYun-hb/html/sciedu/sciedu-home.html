@@ -107,6 +107,8 @@
 					} else if(data.RspCode == 9) {
 						var cityInfo = myStorage.getItem(storageKeyName.PERSONALINFO).uarea;
 						console.log("sciedu-home.html获取的城市信息：", cityInfo);
+						addLocal();
+						addAll();
 					}
 				})
 			}
