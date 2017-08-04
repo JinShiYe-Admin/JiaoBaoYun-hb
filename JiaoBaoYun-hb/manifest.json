@@ -5051,7 +5051,8 @@
 					"js/libs/jquery.lazyload.min.js",
 					"image/mine/invite_none_0.png",
 					"js/mui.js",
-					"js/utils/vue.min.js"
+					"js/utils/vue.min.js",
+					"image/utils/default_load_2.gif"
 				],
 				"refer": [],
 				"priority": 0
