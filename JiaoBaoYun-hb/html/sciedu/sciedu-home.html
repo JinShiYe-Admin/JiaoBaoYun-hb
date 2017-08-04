@@ -80,7 +80,8 @@
 					if(!events.getUtid()) {
 						myStorage.setItem(storageKeyName.SECITY, cities);
 					} else if(cities.length === 0) {
-						addLocal();
+						cities=[];
+//						addLocal();
 					}
 					addAll(); //
 				});
@@ -101,26 +102,28 @@
 						if(data.RspData[0].citys) {
 							rechargeCities(data.RspData[0].citys);
 						} else {
-							addLocal();
+							cities=[];
+//							addLocal();
 							addAll();
 						}
 					} else if(data.RspCode == 9) {
 						var cityInfo = myStorage.getItem(storageKeyName.PERSONALINFO).uarea;
 						console.log("sciedu-home.html获取的城市信息：", cityInfo);
-						addLocal();
+						cities=[];
+//						addLocal();
 						addAll();
 					}
 				})
 			}
 
-			function addLocal() {
-				var localArea = myStorage.getItem(storageKeyName.PERSONALINFO).uarea;
-				console.log("获取的本地localArea", localArea);
-				cities = [{
-					acode: localArea.acode,
-					aname: localArea.aname
-				}];
-			}
+//			function addLocal\n() {
+//				var localArea = myStorage.getItem(storageKeyName.PERSONALINFO).uarea;
+//				console.log("获取的本地localArea", localArea);
+//				cities = [{
+//					acode: localArea.acode,
+//					aname: localArea.aname
+//				}];
+//			}
 			/**
 			 * 重组城市信息
 			 * @param {Object} citiesStr

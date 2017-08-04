@@ -26,7 +26,7 @@
 					<div class="show-list">
 						<div v-for="cardData of listData" class="mui-table-view cityNews-container">
 							<li v-for="(item,index) of cardData" class="mui-table-view-cell news-container" v-on:tap="jumpToPage(item)">
-								<div class="img-container news-img" v-bind:style="{'background-image':'url('+getBackImg(item,index)+')','background-position':'center','background-size':'cover','text-align':'center'}">
+								<div class="img-container news-img" v-bind:data-original="getBackImg(item,index)" v-bind:style="{'background-image':'url('+'../../image/utils/default_load_2.gif'+')','background-position':'center','background-size':'cover','text-align':'center'}">
 									<img class="play-video" v-if="isVideo(item)" src="../../image/utils/playvideo.png" />
 								</div>
 								<div class="news-words">
@@ -63,11 +63,13 @@
 							}, function(err) {
 								console.log("错误", err);
 							})
-							document.body.style.backgroundColor="transparent";
-						} else {
-						}
+							document.body.style.backgroundColor = "transparent";
+						} else {}
 					},
 					listData: function(val) {
+						this.$nextTick(function() {
+							jQuery('.news-img').lazyload();
+						})
 					}
 				},
 				methods: {

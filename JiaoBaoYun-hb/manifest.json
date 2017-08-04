@@ -3,7 +3,7 @@
 	"id": "H56171390",/*应用的标识，创建应用时自动生成，勿手动修改*/
 	"name": "教宝云",/*应用名称，程序桌面图标名称*/
 	"version": {
-		"name": "29.0",/*应用版本名称*/
+		"name": "29.0.0_2017",/*应用版本名称*/
 		"code": "83"
 	},
 	"description": "",/*应用描述信息*/
@@ -1215,7 +1215,8 @@
 					"/storage/emulated/0/tencent/TIMfile_recv/%DTPM%7DIV)030IUBXJ%7DUM%Z9.png",
 					"/storage/emulated/0/tencent/TIMfile_recv/%S]0@_9]P%7B07KEYX(U2X%7DTT.png",
 					"/storage/emulated/0/tencent/TIMfile_recv/%%7B%7D32Z3H~)Q@~F0~K3[U@]6.png",
-					"/storage/emulated/0/tencent/TIMfile_recv/%2PLKECVOE6LS%7BQ8W4%7D%7B$L3.png"
+					"/storage/emulated/0/tencent/TIMfile_recv/%2PLKECVOE6LS%7BQ8W4%7D%7B$L3.png",
+					"js/utils/vue.min.js"
 				],
 				"refer": [
 					"html/homework/classes-select.html"
@@ -2600,7 +2601,8 @@
 					"css/utils/preview.css",
 					"js/mui.zoom.js",
 					"fonts/fangzheng.ttf",
-					"js/mui.previewimage.js"
+					"js/mui.previewimage.js",
+					"js/utils/vue.min.js"
 				],
 				"refer": [
 					"html/homework/doHomework-stu.html"
@@ -4531,7 +4533,18 @@
 					"css/mui.min.css",
 					"css/utils/common.css",
 					"js/libs/crypto-js/crypto-js.js",
-					"fonts/fangzheng.ttf"
+					"fonts/fangzheng.ttf",
+					"js/storageKeyName.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"js/libs/myStorage/myStorage.js",
+					"js/publicProtocol.js",
+					"js/libs/jquery.js",
+					"js/libs/RSA/BigInt.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/signHmacSHA1.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -4863,7 +4876,8 @@
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
 					"fonts/fangzheng.ttf",
-					"js/libs/crypto-js/crypto-js.js"
+					"js/libs/crypto-js/crypto-js.js",
+					"js/publicProtocol.js"
 				],
 				"refer": [
 					"html/micro-course/course-search.html"
@@ -4989,7 +5003,8 @@
 					"fonts/mui.ttf",
 					"image/utils/playvideo.png",
 					"image/mine/invite_none_0.png",
-					"js/utils/vue.min.js"
+					"js/utils/vue.min.js",
+					"image/utils/default_load_2.gif"
 				],
 				"refer": [
 					"html/quan/space-detail.html",
@@ -5504,7 +5519,20 @@
 					"fonts/fangzheng.ttf",
 					"fonts/mui.ttf",
 					"html/show/show-all.html",
-					"js/libs/crypto-js/crypto-js.js"
+					"js/libs/crypto-js/crypto-js.js",
+					"js/publicProtocol.js",
+					"js/mui.min.js",
+					"js/utils/events.js",
+					"js/libs/myStorage/myStorage.js",
+					"js/storageKeyName.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"js/libs/jquery.js",
+					"js/libs/RSA/BigInt.js",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js"
 				],
 				"refer": [
 					"html/show/add-comment.html",
@@ -5520,7 +5548,20 @@
 					"js/libs/crypto-js/crypto-js.js",
 					"css/utils/common.css",
 					"html/sciedu/sciedu-list.html",
-					"fonts/mui.ttf"
+					"fonts/mui.ttf",
+					"js/publicProtocol.js",
+					"js/utils/events.js",
+					"js/libs/myStorage/myStorage.js",
+					"js/storageKeyName.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"js/libs/jquery.js",
+					"js/mui.min.js",
+					"js/libs/RSA/BigInt.js",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js"
 				],
 				"refer": [
 					"html/sciedu/sciedu_show_main.html",
@@ -5539,7 +5580,20 @@
 					"fonts/fangzheng.ttf",
 					"image/utils/default_load_2_1.gif",
 					"js/libs/jquery.lazyload.min.js",
-					"js/utils/vue.min.js"
+					"js/utils/vue.min.js",
+					"js/storageKeyName.js",
+					"js/utils/events.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"js/libs/myStorage/myStorage.js",
+					"js/publicProtocol.js",
+					"js/libs/jquery.js",
+					"js/mui.min.js",
+					"js/libs/RSA/BigInt.js",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js"
 				],
 				"refer": [],
 				"priority": 0
