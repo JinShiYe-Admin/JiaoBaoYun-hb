@@ -223,6 +223,7 @@
 
 			function setListener() {
 				window.addEventListener("courseAttended", function(e) {
+					mui('#course-att').pullRefresh().refresh(true);
 					console.log("传递的事件：", e.detail);
 					var oldValue = courseAtt.isAttended;
 					if(e.detail.data == null) {
@@ -241,6 +242,7 @@
 					}
 				})
 				window.addEventListener("infoChanged", function() {
+					mui('#course-att').pullRefresh().refresh(true);
 					console.log("courseAtt传值********:" + events.getUtid());
 					courseInfo.pageIndex = 1;
 					course_list.getData(courseInfo, function(data) {
