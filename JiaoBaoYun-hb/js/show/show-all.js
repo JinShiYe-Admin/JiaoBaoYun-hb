@@ -12,6 +12,9 @@ var showAll = new Vue({
 			}else{
 				document.body.style.backgroundColor="white";
 			}
+			this.$nextTick(function(){
+				jQuery('.news-img').lazyload();
+			})
 		}
 	},
 	methods: {

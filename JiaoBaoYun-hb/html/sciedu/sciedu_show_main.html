@@ -74,7 +74,7 @@
 				document.getElementById("news_tips").innerText = item.tips;
 				var comData = {
 					top: '1', //每页行数，
-					vvl: item.acode + "|" + item.tabid, //查询的区域代码,省份截取城市代码前两位,城市截取城市代码的前4位
+					vvl: item.acode.substring(0,4) + "|" + item.tabid, //查询的区域代码,省份截取城市代码前两位,城市截取城市代码的前4位
 					vvl1: '1' //页码,获取第几页
 				};
 				//45.通过区域代码获取对应区域的分页新闻
@@ -85,7 +85,7 @@
 							document.getElementById("news_content").innerHTML = data.RspData.dt[0].content;
 						}
 					} else {
-						mui.toast(data.RspTxt);
+//						mui.toast(data.RspTxt);
 					}
 				});
 			}

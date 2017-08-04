@@ -18,10 +18,12 @@
 			.mui-slider-indicator .mui-indicator {
 				margin: 1px 2px;
 			}
-			.padding-top0{
+			
+			.padding-top0 {
 				padding-top: 0;
 			}
-			.padding-top20{
+			
+			.padding-top20 {
 				padding-top: 20%;
 			}
 		</style>
@@ -31,15 +33,17 @@
 		<!--下拉刷新容器-->
 		<div id="course-all" class="mui-content mui-scroll-wrapper" v-bind:class="{'background-white':listData.length==0}">
 			<div class="mui-scroll">
-				<div v-if="listData.length===0" class="" style="min-height:300px;text-align: center;" v-bind:class="[isRequired?'padding-top20':'padding-top0']">
-					<img v-if="isRequired" src="../../image/mine/invite_none_0.png" width="50%" height="auto">
-					<p style="margin: auto 0;padding: 10px;">
-						<span v-if="!isRequired" class="mui-spinner" style="vertical-align: center;height: 15px;width: 15px;margin-bottom: -4px;"></span> {{isRequired?'没有获取到展现内容~~':'数据加载中~~'}}
-					</p>
-				</div>
+				<template v-if="listData.length===0">
+					<div class="" style="min-height:300px;text-align: center;" v-bind:class="[isRequired?'padding-top20':'padding-top0']">
+						<img v-if="isRequired" src="../../image/mine/invite_none_0.png" width="50%" height="auto">
+						<p style="margin: auto 0;padding: 10px;">
+							<span v-if="!isRequired" class="mui-spinner" style="vertical-align: center;height: 15px;width: 15px;margin-bottom: -4px;"></span> {{isRequired?'没有获取到展现内容~~':'数据加载中~~'}}
+						</p>
+					</div>
+				</template>
 				<!--数据列表-->
 				<template v-else>
-					<ul  class="mui-table-view">
+					<ul class="mui-table-view">
 						<li v-for="li of listData" class="mui-table-view-cell" v-on:tap="jumpToPage(li)">
 							<div class="course-container">
 								<div class="img-container"><img class="course-img" v-bind:src='li.CoursePic' />
@@ -65,12 +69,12 @@
 					listData: [],
 					isRequired: false
 				},
-				watch:{
-					listData:function(val){
-						if(val.length>0){
-							document.body.style.backgroundColor="transparent";
-						}else{
-							document.body.style.backgroundColor="white";
+				watch: {
+					listData: function(val) {
+						if(val.length > 0) {
+							document.body.style.backgroundColor = "transparent";
+						} else {
+							document.body.style.backgroundColor = "white";
 						}
 					}
 				},

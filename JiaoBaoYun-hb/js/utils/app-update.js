@@ -24,10 +24,10 @@ var appUpdate = (function(mod) {
 		var wd_0 = events.showWaiting();
 		postDataPro_PostVerInfo(comData9, wd_0, function(data) {
 			wd_0.close();
-			//console.log('获取APP版本号0:' + JSON.stringify(data));
+			console.log('获取APP版本号0:' ,data);
 			if(data.RspCode == 0) {
 				mod.getAppVersion(JSON.parse(data.RspData));
-				//console.log('获取APP版本号:' + JSON.stringify(data.RspData));
+				console.log('获取APP版本号:' , data);
 			} else {
 				mui.toast(data.RspTxt);
 			}
@@ -79,7 +79,7 @@ var appUpdate = (function(mod) {
 				//询问是否更新
 				setDialog('教宝云有新版本，是否下载？', "您已取消下载", function() {
 					mod.updateFlag = 1;
-					//console.log("下载APK路径：" + version.baseverurl)
+					console.log("下载APK路径：" + version.baseverurl)
 					if(plus.os.name = "Android") {
 						resolveFile(version.baseverurl, 1);
 					} else {
@@ -203,9 +203,9 @@ var appUpdate = (function(mod) {
 		var dtask = plus.downloader.createDownload(wgtUrl, {
 			filename: "_doc/update/"
 		}, function(d, status) {
-			//console.log("当前下载状态：" + status);
+			console.log("当前下载状态：" + status);
 			if(status == 200) {
-				//console.log("下载wgt成功：" + d.filename);
+				console.log("下载wgt成功：" + d.filename);
 				installWgt(d.filename); // 安装wgt包
 			} else {
 				//console.log("下载wgt失败！");
@@ -243,10 +243,11 @@ var appUpdate = (function(mod) {
 		plus.runtime.install(path, {
 			force: true
 		}, function() {
-			//console.log("安装wgt文件成功！");
+			removeFile(path);
+			console.log("安装wgt文件成功！");
 		}, function(e) {
 			plus.nativeUI.closeWaiting();
-			//console.log("安装wgt文件失败[" + e.code + "]：" + e.message);
+			console.log("安装wgt文件失败[" + e.code + "]：" + e.message);
 		});
 	}
 	/**
@@ -255,10 +256,11 @@ var appUpdate = (function(mod) {
 	 * @param {Object} type 0升级包 1apk整包
 	 */
 	var resolveFile = function(fileUrl, type) {
+		console.log("文件路径："+fileUrl+";type:"+type);
 		var filePath = "_doc/update/" + fileUrl.split('/')[fileUrl.split('/').length - 1]
 		plus.io.resolveLocalFileSystemURL(filePath, function(entry) {
 			// 可通过entry对象操作test.html文件 
-			//console.log('存在文件！' + entry.isFile);
+			console.log('存在文件！' + entry.isFile);
 			entry.getMetadata(function(metadata) {
 				if(myStorage.getItem("loadFileSize") == metadata.size) {
 					//console.log("Remove succeeded:" + myStorage.getItem("loadFileSize"));
@@ -298,6 +300,17 @@ var appUpdate = (function(mod) {
 				downWgt(fileUrl)
 			}
 		});
+	}
+	function removeFile(fileName,type){
+		plus.io.resolveLocalFileSystemURL(fileName,function(entry){
+			entry.remove(function(){
+				console.log("删除文件成功！")
+			},function(e){
+				
+			})
+		},function(e){
+			
+		})
 	}
 	return mod;
 })(appUpdate || {})

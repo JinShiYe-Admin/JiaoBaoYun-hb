@@ -6,6 +6,10 @@ var scieduList = new Vue({
 			pageIndex: 1,
 			totalPage: 0
 		},
+		oldPageInfo: {
+			pageIndex: 1,
+			totalPage: 0
+		},
 		listData: [], //列表数据
 		isSwiping: false,
 		isDetailReady: false,
@@ -14,7 +18,7 @@ var scieduList = new Vue({
 	watch: {
 		listData: function(val, pre) {
 			console.log("sciedu-list获取的新值：", val);
-			this.$nextTick(function(){
+			this.$nextTick(function() {
 				jQuery(".back-img").lazyload();
 			})
 		},
@@ -50,9 +54,13 @@ var scieduList = new Vue({
 					scieduList.listData = scieduList.listData.concat(scieduList.rechargeList(data.RspData.dt));
 					console.log("sciedu-list显示的最终值：", scieduList.listData);
 				} else {
-					scieduList.listData = [];
+					scieduList.pageInfo = scieduList.oldPageInfo;
+					mui.toast("请求失败:" + data.RspTxt);
 				}
 				scieduList.isSwiping = false;
+				if(scieduList.pageInfo.totalPage) {
+					scieduList.oldPageInfo = scieduList.pageInfo;
+				}
 				if(callback) {
 					callback();
 				}
@@ -62,7 +70,7 @@ var scieduList = new Vue({
 			return list.map(function(item, index) {
 				item.imgs = scieduList.getImgs(item);
 				item.tips = scieduList.getTips(item);
-				item.isReaded=scieduList.getReaded(item);
+				item.isReaded = scieduList.getReaded(item);
 				if(item.imgs.length === 1) {
 					item.isFlex = true;
 				} else {
@@ -86,7 +94,7 @@ var scieduList = new Vue({
 		//展示详情
 		showDetail: function(index) {
 			scieduList.setReaded(index);
-			events.readyToPage(this.isDetailReady, "sciedu_show_main.html", "scieduItemInfo", mui.extend({},this.listData[index],this.cityInfo));
+			events.readyToPage(this.isDetailReady, "sciedu_show_main.html", "scieduItemInfo", mui.extend({}, this.listData[index], this.cityInfo));
 		},
 		getImgs: function(item) {
 			if(!item.timgs) {
@@ -112,7 +120,7 @@ var scieduList = new Vue({
 		getImgsStyle: function() {
 			var winWidth = document.body.clientWidth;
 			this.imgsStyle = {
-				width: winWidth / 3-20,
+				width: winWidth / 3 - 20,
 				height: (winWidth / 3) * 0.6
 			}
 		}
