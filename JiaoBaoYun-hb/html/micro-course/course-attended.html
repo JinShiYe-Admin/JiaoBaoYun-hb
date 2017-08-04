@@ -5,10 +5,12 @@
 		<meta charset="UTF-8">
 		<title></title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link href="../../css/utils/common.css" rel="stylesheet" />
 		<link rel="stylesheet" href="../../css/micro-course/course-list.css" />
-		<script src="../../js/utils/vue.min.js"></script>
+
 		<style>
 			.mui-slider-indicator {
 				margin-left: -10px;
@@ -23,7 +25,7 @@
 
 	<body style="background-color: white;">
 		<!--下拉刷新容器-->
-		<div id="course-att" class="mui-fullscreen mui-scroll-wrapper">
+		<div id="course-att" class="mui-content mui-scroll-wrapper">
 			<div class="mui-scroll mui-fullscreen">
 				<div v-if="isAttended==0" class="" style="min-height:300px;text-align: center;padding-top: 20%;">
 					<img src="../../image/mine/invite_none_0.png" width="50%" height="auto">
@@ -50,7 +52,7 @@
 			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
-
+		<script src="../../js/utils/vue.min.js"></script>
 		<script type="text/javascript">
 			var courseAtt = new Vue({
 				el: "#course-att",
@@ -72,7 +74,7 @@
 							}, function(err) {
 								mui.toast(err.RspTxt);
 							})
-							document.body.style.backgroundColor="transparent";
+							document.body.style.backgroundColor = "transparent";
 						}
 					}
 				},
