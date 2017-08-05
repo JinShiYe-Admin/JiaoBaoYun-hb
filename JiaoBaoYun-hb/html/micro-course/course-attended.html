@@ -25,9 +25,9 @@
 
 	<body style="background-color: white;">
 		<!--下拉刷新容器-->
-		<div id="course-att" class="mui-content mui-scroll-wrapper" v-bind:class="{'background-white':isAttended==0}">
-			<div class="mui-scroll mui-fullscreen">
-				<div v-if="isAttended==0" class="" style="min-height:300px;text-align: center;padding-top: 20%;">
+		<div id="course-att" class="mui-content mui-scroll-wrapper" v-bind:class="{'background-white':!isAttended}">
+			<div class="mui-scroll">
+				<div v-if="isAttended===0" class="" style="min-height:300px;text-align: center;padding-top: 20%;">
 					<img src="../../image/mine/invite_none_0.png" width="50%" height="auto">
 					<p style="margin: auto 0;padding: 10px;">暂无关注的课程~~</p>
 				</div>
@@ -74,7 +74,9 @@
 							}, function(err) {
 								mui.toast(err.RspTxt);
 							})
-							document.body.style.backgroundColor = "transparent";
+							document.body.style.backgroundColor="#efeff4";
+						}else{
+							document.body.style.backgroundColor="#FFFFFF";
 						}
 					}
 				},
