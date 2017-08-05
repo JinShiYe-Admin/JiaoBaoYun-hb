@@ -76,6 +76,7 @@ mui.plusReady(function() {
 			}
 			events.fireToPageNone('mine.html', 'infoChanged');
 			mui.fire(plus.webview.currentWebview(), 'infoChanged');
+			events.fireToPageNone("cloud_home.html",'infoChanged');
 			events.fireToPageNone('class_space.html', 'infoChanged');
 		}, 2000);
 	}, function(errorCB) {
