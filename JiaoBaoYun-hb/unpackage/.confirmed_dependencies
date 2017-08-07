@@ -695,7 +695,10 @@
 			"css/utils/preview.css",
 			"js/utils/gallerypick.js",
 			"js/utils/recordvideoutil.js",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"css/utils/common.css",
+			"css/iconfont/iconfont.css",
+			"css/mui.min.css"
 		]
 	},
 	"html/mine/about.html": {
@@ -789,7 +792,9 @@
 	},
 	"html/register/register_phoneNumber.html": {
 		"resources": [
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		],
 		"refer": [
 			"html/register/yanZhengMa.html"
@@ -797,7 +802,18 @@
 	},
 	"html/register/yanZhengMa.html": {
 		"resources": [
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"css/mui.min.css",
+			"css/utils/common.css"
+		],
+		"refer": [
+			"html/register/modify_password.html"
+		]
+	},
+	"html/register/modify_password.html": {
+		"resources": [
+			"css/mui.min.css",
+			"css/utils/common.css"
 		]
 	}
 }
