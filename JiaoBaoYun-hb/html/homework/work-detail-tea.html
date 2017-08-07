@@ -7,6 +7,16 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link href="../../css/utils/common.css" rel="stylesheet" />
+		<style>
+			.mui-control-content {
+				background-color: white;
+				min-height: 215px;
+			}
+			
+			.mui-control-content .mui-loading {
+				margin-top: 50px;
+			}
+		</style>
 	</head>
 
 	<body>
@@ -29,27 +39,35 @@
 				<img />
 			</div>
 			<!--滑动组件-->
-			<div id="sliderSegmentedControl" class=" mui-segmented-control mui-segmented-control-inverted mui-segmented-control-primary">
-
-				<a id="item1" class="mui-control-item mui-active" href="#div-finished">
-					已完成(0)
-				</a>
-
-				<a id="item2" class="mui-control-item" href="#div-unfinish">
-					未完成(0)
-				</a>
-			</div>
-			<!--滑动内容-->
-			<div class="mui-slider-group">
-				<div id="div-finished" class="mui-slider-item mui-control-content mui-active">
-					<ul id="finished-list" class="mui-table-view">
-					</ul>
+			<div id="slider" class="mui-slider">
+				<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+					<a class="mui-control-item" href="#item1mobile">
+						已提交
+					</a>
+					<a class="mui-control-item" href="#item2mobile">
+						未提交
+					</a>
 				</div>
-				<div id="div-unfinish" class="mui-slider-item mui-control-content">
-					<ul id="unfinished-list" class="mui-table-view">
-
-					</ul>
-
+				<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-6"></div>
+				<div class="mui-slider-group">
+					<div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
+						<div id="scroll1" class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<ul class="mui-table-view">
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div id="item2mobile" class="mui-slider-item mui-control-content">
+						<div id="scroll2" class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<div class="mui-loading">
+									<div class="mui-spinner">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
