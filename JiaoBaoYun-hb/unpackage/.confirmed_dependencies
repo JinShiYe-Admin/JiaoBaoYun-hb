@@ -139,7 +139,8 @@
       "html/quan/class_space.html",
       "html/mine/qun_manage_a.html",
       "html/quan/zone_main.html",
-      "html/quan/studentdynamic_main.html"
+      "html/quan/studentdynamic_main.html",
+      "html/cloud/app_notes_main.html"
     ]
   },
   "html/sciedu/sciedu_home.html": {
@@ -843,5 +844,16 @@
       "css/utils/common.css"
     ],
     "refer": []
+  },
+  "html/cloud/app_notes_main.html": {
+    "resources": [
+      "js/utils/showaudio.js",
+      "image/cloud/notes_bg2.jpg",
+      "css/utils/pullToRefresh.css",
+      "css/mui.min.css",
+      "css/utils/audiopopover.css",
+      "css/utils/common.css",
+      "css/utils/preview.css"
+    ]
   }
 }
