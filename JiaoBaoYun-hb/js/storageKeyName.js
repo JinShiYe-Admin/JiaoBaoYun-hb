@@ -75,10 +75,10 @@ var storageKeyName = (function(mod) {
 			//---移动版---start---
 			mod.MAINEDU = 'http://114.215.222.186:8009/'; //科教图片url
 			mod.MAINURL = 'http://114.215.222.186:8009/api/CloudApi/'; //主url
-			mod.MAINJIAOXIAOURL = 'http://114.215.222.194:8080/YiDongJiaoBaoCloudService/'; //家校圈url
+			mod.MAINJIAOXIAOURL = 'http://114.215.222.194:8088/JiaoBaoCloudService/'; //家校圈url
 			mod.MAINHOMEWORKURL = 'http://114.215.222.186:8008/'; //作业主url
-			mod.MAINQIUZHI = 'http://114.215.222.194:8080/YiDongJiaoBaoCloudService/'; //求知主url
-			mod.MAINMICROCLASS = 'http://114.215.222.194:8080/YiDongJiaoBaoCloudService/'; //微课主url
+			mod.MAINQIUZHI = 'http://114.215.222.194:8088/JiaoBaoCloudService/'; //求知主url
+			mod.MAINMICROCLASS = 'http://114.215.222.194:8088/JiaoBaoCloudService/'; //微课主url
 			//---外网---end---
 
 			//---七牛空间和接口---测试---start---
