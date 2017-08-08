@@ -44,7 +44,7 @@
 				<!--数据列表-->
 				<template v-else>
 					<ul class="mui-table-view">
-						<li v-for="li of listData" class="mui-table-view-cell" v-on:tap="jumpToPage(li)">
+						<li v-for="(li,index) of listData" class="mui-table-view-cell" v-on:tap="jumpToPage(li)" v-bind:id="li.TabId" v-bind:value="index">
 							<div class="course-container">
 								<div class="img-container"><img class="course-img" v-bind:src='li.CoursePic' />
 									<span class="red-circle" v-bind:class="{'display-none':li.IsUpdate==0}"></span></div>
@@ -228,6 +228,15 @@
 					}, function(err) {
 						console.log("出现错误：", err);
 					})
+				});
+				//关注页面传值给全部页面
+				window.addEventListener("courseUnattend", function(e) {
+					var tabId = e.detail.data;
+					var item = document.getElementById(tabId);
+					if(item) {
+						console.log("&&&&&获取的item的id：", item.id);
+						courseAll.listData[parseInt(item.value)].IsFocus = false;
+					}
 				})
 			}
 		</script>

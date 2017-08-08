@@ -590,7 +590,8 @@
       "css/iconfont/iconfont.css",
       "image/qiuzhi/qiuzhi_noanswer.png",
       "image/utils/playvideo.png",
-      "js/utils/playutil.js"
+      "js/utils/playutil.js",
+      "image/utils/load-img-error.png"
     ],
     "refer": [
       "html/micro-course/course-info.html"
@@ -606,7 +607,8 @@
       "image/utils/default_personalimage.png",
       "css/mui.min.css",
       "css/utils/common.css",
-      "js/libs/crypto-js/crypto-js.js"
+      "js/libs/crypto-js/crypto-js.js",
+      "fonts/fangzheng.ttf"
     ],
     "refer": []
   },
@@ -854,6 +856,7 @@
       "css/utils/audiopopover.css",
       "css/utils/common.css",
       "css/utils/preview.css"
-    ]
+    ],
+    "refer": []
   }
 }

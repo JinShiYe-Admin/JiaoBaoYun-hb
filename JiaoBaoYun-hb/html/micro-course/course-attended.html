@@ -98,6 +98,7 @@
 							course.IsFocus = !course.IsFocus;
 							courseAtt.isAttended = Number(myStorage.getItem(storageKeyName.FOCUSECOURSES) && myStorage.getItem(storageKeyName.FOCUSECOURSES).length > 0);
 							console.log("是否已关注课程：" + courseAtt.isAttended)
+							courseAtt.fireToAll(course.TabId);
 							return;
 						}
 						//所需参数
@@ -112,12 +113,16 @@
 						postDataMCPro_setCourseFocus(comData, wd, function(data) {
 							//console.log('6.设置对某个课程关注:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 							if(data.RspCode == 0) { //成功
+								courseAtt.fireToAll(course.TabId);
 								course.IsFocus = !course.IsFocus;
 								courseAtt.isAttended = Number(data.RspData.FocusCnt > 0);
 							} else {
 								mui.toast(data.RspTxt);
 							}
 						});
+					},
+					fireToAll:function(tabId){
+						events.fireToPageNone("course-all.html","courseUnattend",tabId);
 					},
 					isUpdate: function(course) {
 						var courseTime = events.isExistInStorageMap(storageKeyName.COURSELASTTIME, course.TabId);
