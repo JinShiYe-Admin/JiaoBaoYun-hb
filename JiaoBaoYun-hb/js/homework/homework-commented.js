@@ -389,7 +389,7 @@ var getMatchedImgs = function(files) {
 }
 var getImgsInner = function(imgs) {
 	var imgInner = '';
-	var win_height = document.getElementById('brief-imgs').offsetWidth;
+	var win_height = document.body.offsetWidth-30;
 	var img_width = win_height / 3;
 	var random=Math.random(1000);
 	if(imgs && imgs.length > 0) {
