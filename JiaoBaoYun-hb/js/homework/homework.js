@@ -525,6 +525,7 @@ var setData = function(data, type) {
 var setPublishedData = function(publishedData) {
 	var fragment = document.createDocumentFragment();
 	var showType;
+	mui('#work-list').scroll().scrollTo(0,0,100);
 	//console.log("要放置的发布作业数据：" + JSON.stringify(publishedData));
 	if(publishedData && publishedData.length > 0) {
 		showType = 0;
@@ -718,6 +719,7 @@ var getHomeworkIcon = function(subject) {
 var setHomeworkData = function(homeworkData) {
 	var fragment = document.createDocumentFragment();
 	var showType;
+	mui('#work-list').scroll().scrollTo(0,0,100);
 	if(homeworkData && homeworkData.length > 0) {
 		showType = 0;
 		homeworkData.forEach(function(DateHM, i) {
