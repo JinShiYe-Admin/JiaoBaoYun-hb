@@ -34,7 +34,7 @@
 				<!--数据列表-->
 				<template v-else>
 					<ul v-show="listData.length>0" class="mui-table-view">
-						<li v-for="li of listData" v-if="li.IsFocus" class="mui-table-view-cell" v-on:tap="jumpToPage(li)">
+						<li v-for="(li,index) of listData" v-if="li.IsFocus" class="mui-table-view-cell" v-on:tap="jumpToPage(li)" v-bind:id="li.TabId" v-bind:value="index">
 							<div class="course-container">
 								<div class="img-container"><img class="course-img" v-bind:src='li.CoursePic' />
 									<span class="red-circle" v-bind:class="{'display-none':li.IsUpdate==0}"></span></div>
@@ -139,6 +139,7 @@
 					},
 					jumpToPage: function(course) {
 						course.IsUpdate = 0;
+						events.fireToPageNone("course-all.html","courseReaded",course.TabId);
 						events.singleWebviewInPeriod(undefined, 'course_details.html', course);
 						if(!events.getUtid()) {
 							events.setValueInMap(storageKeyName.COURSELASTTIME, course.TabId, Date.now());
@@ -270,6 +271,14 @@
 					}, function(err) {
 						console.log("出现错误:", err);
 					})
+				});
+				window.addEventListener("courseReaded",function(e){
+					var tabId = e.detail.data;
+					var item = document.getElementById(tabId);
+					if(item) {
+						console.log("&&&&&获取的item的id：", item.id);
+						courseAll.listData[parseInt(item.value)].IsUpdate = 0;
+					}
 				})
 			}
 		</script>

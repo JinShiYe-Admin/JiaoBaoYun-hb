@@ -135,6 +135,7 @@
 					},
 					jumpToPage: function(course) {
 						course.IsUpdate = 0;
+						events.fireToPageNone("course-attended.html","courseReaded",course.TabId);
 						events.singleWebviewInPeriod(undefined, 'course_details.html', course);
 						if(!events.getUtid()) {
 							events.setValueInMap(storageKeyName.COURSELASTTIME, course.TabId, Date.now());
@@ -236,6 +237,14 @@
 					if(item) {
 						console.log("&&&&&获取的item的id：", item.id);
 						courseAll.listData[parseInt(item.value)].IsFocus = false;
+					}
+				})
+				window.addEventListener("courseReaded",function(e){
+					var tabId = e.detail.data;
+					var item = document.getElementById(tabId);
+					if(item) {
+						console.log("&&&&&获取的item的id：", item.id);
+						courseAll.listData[parseInt(item.value)].IsUpdate = 0;
 					}
 				})
 			}
