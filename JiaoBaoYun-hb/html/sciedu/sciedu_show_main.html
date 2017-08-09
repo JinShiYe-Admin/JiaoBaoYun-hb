@@ -18,25 +18,35 @@
 				background-color: white;
 				word-break: break-all;
 			}
-			
+
 			#news_title {
-				font-size: 21px;
+				font-size: 18px;
 				color: #323232;
 				text-align: center;
-				padding: 10px 10px 0px 10px;
-				/*background-color: wheat;*/
+				line-height: 48px;
+				margin: 24px 10px;
 			}
-			
+
 			#news_tips {
-				margin-top: 5px;
-				font-size: 12px;
-				color: #B7B7B7;
+				font-size: 15px;
+				color: #323232;
 				text-align: center;
-				margin-bottom: 10px;
+				margin: 12px 10px;
 			}
-			
+
+			#news_content {
+				margin: 0 10px;
+			}
+
+			#news_content p {
+				color: #474747;
+				font-size: 15px;
+				line-height: 44px;
+			}
+
 			img {
 				width: 100%;
+				height: initial;
 			}
 		</style>
 	</head>
@@ -44,19 +54,32 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">新闻详情</h1>
+			<h1 id="title" class="mui-title">新闻详情</h1>
 		</header>
-		<div class="mui-content mui-content-padded">
-			<div id="news_title"></div>
-			<div id="news_tips"></div>
-			<div id="news_content">
+		<div class="mui-content mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<div id="news_title"></div>
+				<div id="news_tips"></div>
+				<div id="news_content"></div>
 			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script type="text/javascript" src="../../js/utils/events.js"></script>
 		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
 		<script type="text/javascript">
-			mui.init();
+			mui.init({
+				gestureConfig: {
+					doubletap: true, //默认为false
+				},
+				beforeback: function() {
+					console.log("beforeback");
+					document.getElementById("news_title").innerText = "";
+					document.getElementById("news_tips").innerText = "";
+					document.getElementById("news_content").innerHTML = "";
+					mui(".mui-scroll-wrapper").scroll().scrollTo(0, 0, 100);
+					return true;
+				}
+			});
 			mui.plusReady(function() {
 				events.fireToPageNone('sciedu-list.html', 'detailReady');
 				setListeners();
@@ -66,27 +89,40 @@
 				window.addEventListener("scieduItemInfo", function(e) {
 					console.log("list传过来的新闻信息:", e.detail.data);
 					setConetent(e.detail.data);
-				})
+				});
+				document.getElementById('title').addEventListener('doubletap', function() {
+					mui(".mui-scroll-wrapper").scroll().scrollTo(0, 0, 100);
+				});
+				var deceleration = mui.os.ios ? 0.003 : 0.0009;
+				mui(".mui-scroll-wrapper").scroll({
+					scrollY: true, //是否竖向滚动
+					scrollX: false, //是否横向滚动
+					indicators: true, //是否显示滚动条
+					deceleration: deceleration, //阻尼系数,系数越小滑动越灵敏
+					bounce: false, //是否启用回弹
+				});
 			}
 
 			function setConetent(item) {
 				document.getElementById("news_title").innerText = item.title;
 				document.getElementById("news_tips").innerText = item.tips;
+				var wd = events.showWaiting();
 				var comData = {
 					top: '1', //每页行数，
-					vvl: item.acode.substring(0,4) + "|" + item.tabid, //查询的区域代码,省份截取城市代码前两位,城市截取城市代码的前4位
+					vvl: item.acode.substring(0, 4) + "|" + item.tabid, //查询的区域代码,省份截取城市代码前两位,城市截取城市代码的前4位
 					vvl1: '1' //页码,获取第几页
 				};
 				//45.通过区域代码获取对应区域的分页新闻
-				postDataPro_PostTnews(comData, null, function(data) {
-					//console.log('45 PostTnews ' + JSON.stringify(data));
+				postDataPro_PostTnews(comData, wd, function(data) {
+					console.log('45 PostTnews', data);
 					if(data.RspCode == 0) {
 						if(data.RspData.dt[0] && data.RspData.dt[0].content != undefined && data.RspData.dt[0].content != null) {
 							document.getElementById("news_content").innerHTML = data.RspData.dt[0].content;
 						}
 					} else {
-//						mui.toast(data.RspTxt);
+						mui.toast(data.RspTxt);
 					}
+					wd.close();
 				});
 			}
 		</script>
