@@ -15,8 +15,12 @@ window.onerror = function(errorMessage, scriptURI, lineNumber, columnNumber, err
 		case "index.html": //主页
 		case "cloud_home.html": //云盘主页
 		case "sciedu-home.html": //科教主页
-		case "show-home1.html": //展现主页
-		case "course-home1.html": //微课主页
+		case "show-home.html": //展现主页
+		case "show-attended.html"://展现关注
+		case "show-all.html"://展现全部
+		case "course-home.html": //微课主页
+		case "course-attended.html"://课程关注
+		case "course-all.html"://课程全部
 		case "storage_transport.html": //预加载-传输列表页
 		case "sciedu_show_main.html": //预加载-科教新闻详情页
 			break;
