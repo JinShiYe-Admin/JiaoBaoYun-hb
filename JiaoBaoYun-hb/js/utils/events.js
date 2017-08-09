@@ -1,12 +1,29 @@
 //公共方法js
 window.onerror = function(errorMessage, scriptURI, lineNumber, columnNumber, errorObj) {
-	//	console.log("---ERROR---页面出现错误---start---");
 	//	console.log("错误信息-0:" + JSON.stringify(errorMessage.detail));
 	//	console.log("错误信息-1:" + errorMessage);
 	//	console.log("出错文件:" + scriptURI);
 	//	console.log("出错行号:" + lineNumber);
 	//	console.log("出错列号:" + columnNumber);
 	//	console.log("错误详情:" + errorObj);
+	var webUrl = window.location.toString();
+	var ids = webUrl.split("/");
+	var webId = ids[ids.length - 1];
+	var showAlert = false;
+	switch(webId) { //主页，预加载的页面
+		case "firstPage.html": //初始页
+		case "index.html": //主页
+		case "cloud_home.html": //云盘主页
+		case "sciedu-home.html": //科教主页
+		case "show-home1.html": //展现主页
+		case "course-home1.html": //微课主页
+		case "storage_transport.html": //预加载-传输列表页
+		case "sciedu_show_main.html": //预加载-科教新闻详情页
+			break;
+		default:
+			showAlert = true;
+			break;
+	}
 	var isMuiLazyError = false; //是否是mui懒加载的BUG
 	if(errorMessage.detail != undefined) {
 		//mui懒加载的BUG的判断逻辑
@@ -16,21 +33,21 @@ window.onerror = function(errorMessage, scriptURI, lineNumber, columnNumber, err
 			}
 		}
 	}
-	events.closeWaiting();
-	var webview = plus.webview.currentWebview();
-	//console.log("---ERROR---页面id--- " + webview.id + " ---");
-	if(isMuiLazyError) { //mui懒加载的BUG
-		//console.log("---ERROR---出错信息---mui懒加载的BUG---");
-	} else {
-		if(webview.id == "firstPage.html" || webview.id == "index.html" || webview.id == "cloud_home.html" || webview.id == "sciedu_home.html" || webview.id == "show-home1.html" || webview.id == "course-home1.html" || webview.id == "storage_transport.html") {
-			mui.toast('当前界面加载出现错误');
-		} else {
-			mui.alert('当前界面加载出现错误', 'ERROR', function() {
-				plus.webview.close(webview, events.getAniClose());
-			});
+	if(window.plus) {
+		if(isMuiLazyError) {
+			return;
 		}
+		if(showAlert) {
+			plus.nativeUI.alert('当前界面加载出现错误', function() {
+				plus.webview.close(webId, utils.getAniClose());
+			}, 'ERROR', '确定');
+		} else {
+			plus.nativeUI.toast('当前界面加载出现错误');
+		}
+		plus.nativeUI.closeWaiting();
+	} else {
+		window.alert("当前界面加载出现错误");
 	}
-	//console.log("---ERROR---页面出现错误---end---");
 }
 
 var events = (function(mod) {
@@ -355,7 +372,7 @@ var events = (function(mod) {
 	 */
 	mod.fireToPageNone = function(tarPage, listener, datas) {
 		tarPage = tarPage.split('/')[tarPage.split('/').length - 1];
-		if(typeof(datas)==="undefined") {
+		if(typeof(datas) === "undefined") {
 			datas = null;
 		}
 		console.log('tarPage:' + tarPage);
@@ -421,7 +438,7 @@ var events = (function(mod) {
 		events.fireToPageNone("show-attended.html", "infoChanged");
 		events.fireToPageNone("show-home.html", "infoChanged");
 		events.fireToPageNone("course-home.html", "infoChanged");
-		events.fireToPageNone("sciedu-home.html","infoChanged");
+		events.fireToPageNone("sciedu-home.html", "infoChanged");
 	}
 	mod.shortForString = function(str, len) {
 		if(!str) {
@@ -1404,9 +1421,9 @@ var events = (function(mod) {
 		} else {
 			if(arrayData[1] < 0) {
 				arrayData[0].push(value);
-				if(key===storageKeyName.SCIEDUREADED){
-					if(arrayData[0].length>=200){
-						arrayData[0].splice(0,1);
+				if(key === storageKeyName.SCIEDUREADED) {
+					if(arrayData[0].length >= 200) {
+						arrayData[0].splice(0, 1);
 					}
 				}
 				myStorage.setItem(key, arrayData[0]);
