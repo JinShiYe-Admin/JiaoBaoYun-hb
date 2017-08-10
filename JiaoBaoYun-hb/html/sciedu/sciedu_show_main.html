@@ -41,7 +41,7 @@
 				margin: 0 10px;
 			}
 
-			#news_content p {
+			#news_content div p {
 				color: #3E3E3E;
 				font-size: 15px;
 				letter-spacing: 1px;
@@ -49,9 +49,16 @@
 				word-spacing: 28px;
 			}
 
-			#news_content p img {
+			#news_content div p img {
 				width: 100%;
 				height: initial;
+			}
+
+			#news_content div>p {
+				text-indent: 32px;
+			}
+			#news_content div>p img{
+				margin-left: -32px;
 			}
 		</style>
 	</head>
@@ -118,7 +125,7 @@
 				};
 				//45.通过区域代码获取对应区域的分页新闻
 				postDataPro_PostTnews(comData, wd, function(data) {
-					console.log('45 PostTnews', data);
+					console.log('45 PostTnews', data.RspData.dt[0].content);
 					if(data.RspCode == 0) {
 						if(data.RspData.dt[0] && data.RspData.dt[0].content != undefined && data.RspData.dt[0].content != null) {
 							document.getElementById("news_content").innerHTML = data.RspData.dt[0].content;
