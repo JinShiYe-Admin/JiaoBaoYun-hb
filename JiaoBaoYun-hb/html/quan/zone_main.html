@@ -131,7 +131,8 @@
 						if(data.RspCode == 0) {
 							if(data.RspData.Data.length == 0) {
 								if(tempPage == 1) {
-									mui.toast('暂无动态')
+									wd.close();
+									mui.toast('暂无动态');
 								} else {
 									mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
 								}
@@ -239,23 +240,22 @@
 								//console.log('循环遍历后的值：' + JSON.stringify(tempRspData));
 								PostUmk(tempArray.join(), tempRspData);
 								if(wd) {
-								wd.close()
-							}
-								
+									wd.close()
+								}
 
-							});
-						} else {
-							if(wd) {
-								wd.close()
-							}
+								});
+								} else {
+									if(wd) {
+										wd.close()
+									}
 
-							mui.toast(data.RspTxt);
-						}
-					});
-				}
-			}
+									mui.toast(data.RspTxt);
+								}
+								});
+								}
+								}
 
-			var id = 0; //cell的id
+								var id = 0;//cell的id
 			mui.plusReady(function() {
 				events.preload("classSpace-persons.html");
 				SCREEN_WIDTH = plus.screen.resolutionWidth;
@@ -508,6 +508,9 @@
 					if(data.RspCode == 0) {
 						if(data.RspData.Data.length == 0) {
 							mui.toast('暂无动态')
+							if(wd){
+								wd.close();
+							}
 							return;
 						}
 						//								setUserSpaceReadByUser();
