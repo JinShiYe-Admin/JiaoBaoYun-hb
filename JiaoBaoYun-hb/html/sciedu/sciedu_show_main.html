@@ -16,7 +16,6 @@
 			body,
 			.mui-content {
 				background-color: white;
-				word-break: break-all;
 			}
 
 			#news_title {
@@ -27,6 +26,7 @@
 				line-height: 34px;
 				padding: 10px 10px 0 10px;
 				letter-spacing: 1px;
+				word-break: break-all;
 			}
 
 			#news_tips {
@@ -34,13 +34,14 @@
 				color: #B7B7B7;
 				text-align: center;
 				margin: 10px 10px;
+				word-break: break-all;
 			}
 
 			#news_content {
 				margin: 0 10px;
 			}
 
-			#news_content p {
+			#news_content div p {
 				color: #3E3E3E;
 				font-size: 15px;
 				letter-spacing: 1px;
@@ -48,9 +49,16 @@
 				word-spacing: 28px;
 			}
 
-			img {
+			#news_content div p img {
 				width: 100%;
 				height: initial;
+			}
+
+			#news_content div>p {
+				text-indent: 32px;
+			}
+			#news_content div>p img{
+				margin-left: -32px;
 			}
 		</style>
 	</head>
@@ -76,7 +84,6 @@
 					doubletap: true, //默认为false
 				},
 				beforeback: function() {
-					console.log("beforeback");
 					document.getElementById("news_title").innerText = "";
 					document.getElementById("news_tips").innerText = "";
 					document.getElementById("news_content").innerHTML = "";
@@ -118,7 +125,7 @@
 				};
 				//45.通过区域代码获取对应区域的分页新闻
 				postDataPro_PostTnews(comData, wd, function(data) {
-					console.log('45 PostTnews', data);
+					console.log('45 PostTnews', data.RspData.dt[0].content);
 					if(data.RspCode == 0) {
 						if(data.RspData.dt[0] && data.RspData.dt[0].content != undefined && data.RspData.dt[0].content != null) {
 							document.getElementById("news_content").innerHTML = data.RspData.dt[0].content;
