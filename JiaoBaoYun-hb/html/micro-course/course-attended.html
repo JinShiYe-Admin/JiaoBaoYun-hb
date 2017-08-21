@@ -74,9 +74,9 @@
 							}, function(err) {
 								mui.toast(err.RspTxt);
 							})
-							document.body.style.backgroundColor="#efeff4";
-						}else{
-							document.body.style.backgroundColor="#FFFFFF";
+							document.body.style.backgroundColor = "#efeff4";
+						} else {
+							document.body.style.backgroundColor = "#FFFFFF";
 						}
 					}
 				},
@@ -121,8 +121,8 @@
 							}
 						});
 					},
-					fireToAll:function(tabId){
-						events.fireToPageNone("course-all.html","courseUnattend",tabId);
+					fireToAll: function(tabId) {
+						events.fireToPageNone("course-all.html", "courseUnattend", tabId);
 					},
 					isUpdate: function(course) {
 						var courseTime = events.isExistInStorageMap(storageKeyName.COURSELASTTIME, course.TabId);
@@ -139,7 +139,7 @@
 					},
 					jumpToPage: function(course) {
 						course.IsUpdate = 0;
-						events.fireToPageNone("course-all.html","courseReaded",course.TabId);
+						events.fireToPageNone("course-all.html", "courseReaded", course.TabId);
 						events.singleWebviewInPeriod(undefined, 'course_details.html', course);
 						if(!events.getUtid()) {
 							events.setValueInMap(storageKeyName.COURSELASTTIME, course.TabId, Date.now());
@@ -230,6 +230,17 @@
 			})
 
 			function setListener() {
+				window.addEventListener('focus', function(e) {
+					console.log('course-attended中focus事件的监听');
+					courseInfo.pageIndex = 1;
+					course_list.getData(courseInfo, function(data) {
+						courseAtt.isAttended = 1;
+						console.log("course-attended.html获取的关注的课程:", data);
+						addData(data);
+					}, function(err) {
+						//					mui.toast(err.RspTxt);
+					})
+				})
 				window.addEventListener("courseAttended", function(e) {
 					mui('#course-att').pullRefresh().refresh(true);
 					console.log("传递的事件：", e.detail);
@@ -272,7 +283,7 @@
 						console.log("出现错误:", err);
 					})
 				});
-				window.addEventListener("courseReaded",function(e){
+				window.addEventListener("courseReaded", function(e) {
 					var tabId = e.detail.data;
 					var item = document.getElementById(tabId);
 					if(item) {

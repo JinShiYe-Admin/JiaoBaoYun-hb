@@ -277,7 +277,8 @@
 			"css/show/show.css",
 			"image/dynamic/praise.png",
 			"js/mui.lazyload.js",
-			"js/mui.lazyload.img.js"
+			"js/mui.lazyload.img.js",
+			"image/utils/playvideo.png"
 		],
 		"refer": []
 	},
@@ -408,7 +409,8 @@
 			"js/quan/class-group1.js",
 			"css/utils/common.css",
 			"image/quan/add.png",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"css/mui.min.css"
 		],
 		"refer": [
 			"html/quan/group-pInfo.html",
@@ -420,7 +422,9 @@
 		"resources": [
 			"css/quan/group-pInfo.css",
 			"js/quan/group-pInfo.js",
-			"image/utils/default_personalimage.png"
+			"image/utils/default_personalimage.png",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		],
 		"refer": [
 			"html/quan/edit-remark.html"
@@ -445,11 +449,13 @@
 			"css/utils/preview.css",
 			"css/quan/class_space.css",
 			"js/libs/crypto-js/crypto-js.js",
-			"js/libs/jquery.lazyload.min.js"
+			"js/libs/jquery.lazyload.min.js",
+			"image/utils/playvideo.png"
 		],
 		"refer": [
 			"html/quan/class-group.html",
-			"html/quan/class-dynamic.html"
+			"html/quan/class-dynamic.html",
+			"html/quan/zone_main.html"
 		]
 	},
 	"html/homework/homework-commented.html": {

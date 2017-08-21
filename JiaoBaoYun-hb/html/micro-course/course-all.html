@@ -135,7 +135,7 @@
 					},
 					jumpToPage: function(course) {
 						course.IsUpdate = 0;
-						events.fireToPageNone("course-attended.html","courseReaded",course.TabId);
+						events.fireToPageNone("course-attended.html", "courseReaded", course.TabId);
 						events.singleWebviewInPeriod(undefined, 'course_details.html', course);
 						if(!events.getUtid()) {
 							events.setValueInMap(storageKeyName.COURSELASTTIME, course.TabId, Date.now());
@@ -222,6 +222,14 @@
 			})
 
 			function setListener() {
+				window.addEventListener('focus', function(e) {
+					courseInfo.pageIndex = 1;
+					course_list.getData(courseInfo, function(data) {
+						addData(data);
+					}, function(err) {
+						//					mui.toast(err.RspTxt);
+					})
+				});
 				window.addEventListener("infoChanged", function() {
 					courseInfo.pageIndex = 1;
 					course_list.getData(courseInfo, function(data) {
@@ -239,7 +247,7 @@
 						courseAll.listData[parseInt(item.value)].IsFocus = false;
 					}
 				})
-				window.addEventListener("courseReaded",function(e){
+				window.addEventListener("courseReaded", function(e) {
 					var tabId = e.detail.data;
 					var item = document.getElementById(tabId);
 					if(item) {
