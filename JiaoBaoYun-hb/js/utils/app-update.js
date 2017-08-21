@@ -77,7 +77,7 @@ var appUpdate = (function(mod) {
 		if(appVersionMinMax.max < newestVersionMinMax.max) { //整包更新
 			if(mod.updateFlag == 0) {
 				//询问是否更新
-				setDialog('教宝云有新版本，是否下载？', "您已取消下载", function() {
+				setDialog('微视学堂有新版本，是否下载？', "您已取消下载", function() {
 					mod.updateFlag = 1;
 					console.log("下载APK路径：" + version.baseverurl)
 					if(plus.os.name = "Android") {
@@ -103,7 +103,7 @@ var appUpdate = (function(mod) {
 					resolveFile(version.addverurl, 0);
 				} else {
 					if(mod.updateFlag == 0) {
-						setDialog('教宝云有新版本，是否下载？', "您已取消下载", function() {
+						setDialog('微视学堂有新版本，是否下载？', "您已取消下载", function() {
 							mod.updateFlag = 1;
 						}, function() {
 							mod.updateFlag = 2;
@@ -126,7 +126,7 @@ var appUpdate = (function(mod) {
 	 */
 	var setDialog = function(hint, cancelToast, callback, cancelCallback) {
 		var btnArray = ['是', '否'];
-		mui.confirm(hint, '教宝云', btnArray, function(e) {
+		mui.confirm(hint, '微视学堂', btnArray, function(e) {
 			//console.log("当前点击的东东：" + JSON.stringify(e));
 			if(e.index == 0) {
 				callback();
