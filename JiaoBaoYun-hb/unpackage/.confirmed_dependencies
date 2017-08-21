@@ -16,7 +16,20 @@
 			"css/mui.min.css",
 			"css/utils/common.css",
 			"css/iconfont/iconfont.css",
-			"image/utils/default_personalimage.png"
+			"image/utils/default_personalimage.png",
+			"js/utils/events.js",
+			"js/publicProtocol.js",
+			"js/mui.min.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/myStorage/myStorage.js",
+			"js/utils/signHmacSHA1.js",
+			"js/utils/postData.js",
+			"js/storageKeyName.js",
+			"js/libs/crypto-js/require.js",
+			"js/libs/jquery.js",
+			"js/libs/RSA/BigInt.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/RSAEncrypt.js"
 		],
 		"refer": [
 			"html/quan/zone_main.html",
@@ -183,7 +196,17 @@
 			"js/quan/classSpace-persons.js",
 			"css/mui.min.css",
 			"css/utils/common.css",
-			"fonts/mui.ttf"
+			"fonts/mui.ttf",
+			"js/libs/jquery.js",
+			"js/storageKeyName.js",
+			"js/libs/RSA/BigInt.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js",
+			"js/libs/myStorage/myStorage.js"
 		],
 		"refer": []
 	},
@@ -450,7 +473,8 @@
 			"css/quan/class_space.css",
 			"js/libs/crypto-js/crypto-js.js",
 			"js/libs/jquery.lazyload.min.js",
-			"image/utils/playvideo.png"
+			"image/utils/playvideo.png",
+			"image/utils/loading.gif"
 		],
 		"refer": [
 			"html/quan/class-group.html",
@@ -809,7 +833,17 @@
 			"js/libs/crypto-js/crypto-js.js",
 			"css/utils/common.css",
 			"html/sciedu/sciedu-list.html",
-			"fonts/mui.ttf"
+			"fonts/mui.ttf",
+			"js/libs/jquery.js",
+			"js/storageKeyName.js",
+			"js/libs/RSA/BigInt.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js",
+			"js/libs/myStorage/myStorage.js"
 		],
 		"refer": [
 			"html/sciedu/sciedu_show_main.html",
