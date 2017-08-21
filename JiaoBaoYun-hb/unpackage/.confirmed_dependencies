@@ -406,11 +406,14 @@
 	"html/quan/class-group.html": {
 		"resources": [
 			"js/quan/class-group1.js",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"image/quan/add.png",
+			"js/libs/crypto-js/crypto-js.js"
 		],
 		"refer": [
 			"html/quan/group-pInfo.html",
-			"html/quan/edit-remark.html"
+			"html/quan/edit-remark.html",
+			"html/mine/QRCode.html"
 		]
 	},
 	"html/quan/group-pInfo.html": {
@@ -445,7 +448,8 @@
 			"js/libs/jquery.lazyload.min.js"
 		],
 		"refer": [
-			"html/quan/class-group.html"
+			"html/quan/class-group.html",
+			"html/quan/class-dynamic.html"
 		]
 	},
 	"html/homework/homework-commented.html": {
@@ -860,5 +864,21 @@
 			"css/utils/preview.css"
 		],
 		"refer": []
+	},
+	"html/quan/class-dynamic.html": {
+		"resources": [
+			"js/utils/load.js",
+			"css/quan/custom-textarea.css",
+			"js/utils/compress.js",
+			"js/utils/camera.js",
+			"js/utils/gallerypick.js"
+		]
+	},
+	"html/mine/QRCode.html": {
+		"resources": [
+			"js/utils/jquery.qrcode.min.js",
+			"css/mui.min.css",
+			"css/utils/common.css"
+		]
 	}
 }
