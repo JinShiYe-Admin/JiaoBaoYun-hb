@@ -10,7 +10,7 @@
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link href="../../css/utils/common.css" rel="stylesheet" />
 		<link href="../../css/show/show-list.css" rel="stylesheet" />
-		
+
 	</head>
 
 	<body style="background-color:white;">
@@ -64,7 +64,10 @@
 								console.log("错误", err);
 							})
 							document.body.style.backgroundColor = "transparent";
-						} else {}
+						} else {
+							mui('#show-att').pullRefresh().endPullupToRefresh(true);
+							mui('#show-att').pullRefresh().disablePullupToRefresh();
+						}
 					},
 					listData: function(val) {
 						this.$nextTick(function() {
@@ -134,7 +137,7 @@
 		<script src="../../js/publicProtocol.js"></script>
 		<script src="../../js/libs/jquery.lazyload.min.js"></script>
 		<script src="../../js/show/show-list.js"></script>
-		
+
 		<script type="text/javascript">
 			var showCity = {
 				pageFlag: 0, //关注

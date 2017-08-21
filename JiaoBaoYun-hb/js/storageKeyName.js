@@ -5,7 +5,7 @@ var storageKeyName = (function(mod) {
 	mod.key = 2; //0,开发;1,测试--教宝云;2,测试--微视学堂 3外网--微视学堂 4外网--教宝云
 	var exLog = console.log;
 	console.log = function(hint, object) {
-		if(mod.key === 0) {
+		if(mod.key === 1) {
 			var argus = hint;
 			if(object) {
 				argus = hint + JSON.stringify(object);
@@ -51,7 +51,6 @@ var storageKeyName = (function(mod) {
 			mod.QNGETTOKENDELETE = 'http://114.215.222.186:8005/Api/QiNiu/Delete'; //获取批量（或者一个）删除七牛文件的token的url
 			//---七牛空间和接口---测试---end---
 			break;
-			
 		case 2: //测试--微视学堂
 			//---移动版---start---
 			mod.MAINEDU = 'http://192.168.1.178:8020/'; //科教图片url
@@ -70,7 +69,6 @@ var storageKeyName = (function(mod) {
 			mod.QNGETDOWNTOKENFILE = 'http://114.215.222.186:8005/Api/QiNiu/GetAccess'; //获取下载文件（云存储）的token的url，url+七牛文件url
 			mod.QNGETTOKENDELETE = 'http://114.215.222.186:8005/Api/QiNiu/Delete'; //获取批量（或者一个）删除七牛文件的token的url
 			break;
-
 		case 3: //外网--微视学堂
 			//---移动版---start---
 			mod.MAINEDU = 'http://114.215.222.186:8009/'; //科教图片url

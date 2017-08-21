@@ -36,7 +36,8 @@ var courseInfo = new Vue({
 				//console.log('6.设置对某个课程关注:' + JSON.stringify(data));
 				//console.log("是否已关注："+this.isFocused);
 				if(data.RspCode == 0) {
-					events.fireToPageNone('course-home1.html', 'focus');
+					events.fireToPageNone('course-all.html', 'focus');
+					events.fireToPageNone('course-attended.html', 'focus');
 					callback();
 				} else {
 					mui.toast(data.RspTxt);

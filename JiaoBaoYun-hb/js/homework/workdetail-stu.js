@@ -129,8 +129,9 @@ var setContentView = function() {
  * @param {Object} id
  */
 var getImgsInner = function(imgs, id) {
+	console.log("要放置的图片：",imgs)
 	var imgInner = '';
-	var win_height = document.getElementById('brief-imgs').offsetWidth;
+	var win_height = document.body.offsetWidth-30;
 	var img_width = win_height / 3;
 	if(imgs && imgs.length > 0) {
 		for(var i in imgs) {
