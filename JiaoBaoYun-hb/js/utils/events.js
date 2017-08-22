@@ -37,11 +37,14 @@ window.onerror = function(errorMessage, scriptURI, lineNumber, columnNumber, err
 			}
 		}
 	}
+	if(!scriptURI) {
+		return;
+	}
 	if(window.plus) {
 		if(isMuiLazyError) {
 			return;
 		}
-		if(showAlert && scriptURI) {
+		if(showAlert) {
 			console.log("界面id:" + plus.webview.currentWebview().id);
 			plus.nativeUI.alert('当前界面加载出现错误', function() {
 				console.log("界面id:" + webId);

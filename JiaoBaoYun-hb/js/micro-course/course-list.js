@@ -36,7 +36,7 @@ var course_list = (function(mod) {
 				//游客关注的课程
 				var focuseTemp = window.myStorage.getItem(window.storageKeyName.FOCUSECOURSES);
 				if(!focuseTemp || focuseTemp.length == 0) {
-					callback([]);
+					errBack();
 					return;
 				}
 				//所需参数
