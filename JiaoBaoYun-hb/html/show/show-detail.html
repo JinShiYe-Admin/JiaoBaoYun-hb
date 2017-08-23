@@ -19,8 +19,7 @@
 			<a id="del-dynamic" class="mui-pull-right iconfont icon-moreandroid display-none" style="font-size: 20px;"></a>
 		</header>
 		<div id="show-detail" v-show="showDetail.TabId>0" class="mui-content">
-			<div v-if="showDetail.content === null" v-html="showDetail.turl"></div>
-			<div v-else>
+			<div>
 				<h4 class="detail-head triple-line" v-if="showDetail.MsgTitle">{{showDetail.MsgTitle}}</h4>
 				<div class="publisher-container">
 					<img class="publisher-img" v-bind:src="showDetail.PublisherImg" v-on:tap="openPersonSpace(showDetail.PublisherId)" />
