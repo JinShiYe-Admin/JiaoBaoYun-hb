@@ -19,7 +19,8 @@
 			<a id="del-dynamic" class="mui-pull-right iconfont icon-moreandroid display-none" style="font-size: 20px;"></a>
 		</header>
 		<div id="show-detail" v-show="showDetail.TabId>0" class="mui-content">
-			<div>
+			<div v-if="showDetail.content === null" v-html="showDetail.turl"></div>
+			<div v-else>
 				<h4 class="detail-head triple-line" v-if="showDetail.MsgTitle">{{showDetail.MsgTitle}}</h4>
 				<div class="publisher-container">
 					<img class="publisher-img" v-bind:src="showDetail.PublisherImg" v-on:tap="openPersonSpace(showDetail.PublisherId)" />
@@ -125,8 +126,8 @@
 				ShowVideoUtil.initVideo(document.getElementById("video"));
 				events.preload('../quan/classSpace-persons.html', 50);
 				events.fireToPageNone("../quan/aboutme.html", "detailReady");
-				events.fireToPageNone("show-home.html","detailReady");
-				myStorage.setItem(storageKeyName.ISSHOWDETAILREADY,true);
+				events.fireToPageNone("show-home.html", "detailReady");
+				myStorage.setItem(storageKeyName.ISSHOWDETAILREADY, true);
 				window.addEventListener('showDetail', function(e) {
 					pageIndex = 1;
 					//console.log("获取的数据:" + JSON.stringify(e.detail.data));
@@ -270,16 +271,17 @@
 						}
 					}
 				}
-				//console.log("获取人员信息后的展现详情：" + JSON.stringify(showDetail));
+				
 				//console.log("pageIndex:" + pageIndex);
 				if((pageIndex - 1) === 1) {
 					commentList.showDetail = showDetail;
-					commentList.showDetail.IsFocused=commentList.getFocused(showDetail);
+					commentList.showDetail.IsFocused = commentList.getFocused(showDetail);
 				} else {
 					if(commentList.TabId) {
 						commentList.Comments = commentList.Comments.concat(showDetail.Comments);
 					}
 				}
+				console.log("获取人员信息后的展现详情：" + JSON.stringify(commentList.showDetail));
 
 			}
 

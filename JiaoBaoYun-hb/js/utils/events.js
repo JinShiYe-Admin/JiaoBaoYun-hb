@@ -1,11 +1,11 @@
 //公共方法js
 window.onerror = function(errorMessage, scriptURI, lineNumber, columnNumber, errorObj) {
-		console.log("错误信息-0:" ,errorMessage.detail);
-		console.log("错误信息-1:" + errorMessage);
-		console.log("出错文件:" + scriptURI);
-		console.log("出错行号:" + lineNumber);
-		console.log("出错列号:" + columnNumber);
-		console.log("错误详情:" + errorObj);
+	console.log("错误信息-0:", errorMessage.detail);
+	console.log("错误信息-1:" + errorMessage);
+	console.log("出错文件:" + scriptURI);
+	console.log("出错行号:" + lineNumber);
+	console.log("出错列号:" + columnNumber);
+	console.log("错误详情:" + errorObj);
 	var webUrl = window.location.toString();
 	var ids = webUrl.split("/");
 	var webId = ids[ids.length - 1];
@@ -16,11 +16,11 @@ window.onerror = function(errorMessage, scriptURI, lineNumber, columnNumber, err
 		case "cloud_home.html": //云盘主页
 		case "sciedu-home.html": //科教主页
 		case "show-home.html": //展现主页
-		case "show-attended.html"://展现关注
-		case "show-all.html"://展现全部
+		case "show-attended.html": //展现关注
+		case "show-all.html": //展现全部
 		case "course-home.html": //微课主页
-		case "course-attended.html"://课程关注
-		case "course-all.html"://课程全部
+		case "course-attended.html": //课程关注
+		case "course-all.html": //课程全部
 		case "storage_transport.html": //预加载-传输列表页
 		case "sciedu_show_main.html": //预加载-科教新闻详情页
 			break;
@@ -37,12 +37,17 @@ window.onerror = function(errorMessage, scriptURI, lineNumber, columnNumber, err
 			}
 		}
 	}
+	if(!scriptURI) {
+		return;
+	}
 	if(window.plus) {
 		if(isMuiLazyError) {
 			return;
 		}
 		if(showAlert) {
+			console.log("界面id:" + plus.webview.currentWebview().id);
 			plus.nativeUI.alert('当前界面加载出现错误', function() {
+				console.log("界面id:" + webId);
 				plus.webview.close(webId, utils.getAniClose());
 			}, 'ERROR', '确定');
 		} else {

@@ -176,6 +176,7 @@
 			function pulldownRefresh() {
 				courseInfo.pageIndex = 1;
 				course_list.getData(courseInfo, function(data) {
+					console.log("#############全部课程刷新##########")
 					addData(data);
 					mui("#course-all").pullRefresh().endPulldown();
 					mui("#course-all").pullRefresh().refresh(true);
@@ -222,7 +223,7 @@
 			})
 
 			function setListener() {
-				window.addEventListener('focus', function(e) {
+				window.addEventListener('t-focus', function(e) {
 					courseInfo.pageIndex = 1;
 					course_list.getData(courseInfo, function(data) {
 						addData(data);

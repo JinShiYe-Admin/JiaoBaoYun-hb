@@ -70,7 +70,7 @@
 									courseAtt.isAttended = 0;
 									return;
 								}
-								addData(data);
+								addData(data, 1);
 							}, function(err) {
 								mui.toast(err.RspTxt);
 							})
@@ -183,7 +183,8 @@
 				}
 				courseInfo.pageIndex = 1;
 				course_list.getData(courseInfo, function(data) {
-					addData(data);
+					console.log("#####关注的课程的刷新######");
+					addData(data, 1);
 					mui("#course-att").pullRefresh().endPulldown();
 					mui('#course-att').pullRefresh().refresh(true);
 				}, function(err) {
@@ -212,11 +213,11 @@
 				})
 			}
 
-			function addData(data) {
+			function addData(data, flag) {
 				data.map(function(course, index, data) {
 					return courseAtt.isFocus(course);
 				});
-				if(courseInfo.pageIndex === 1) {
+				if(flag) {
 					courseAtt.listData = [];
 				}
 				courseAtt.listData = courseAtt.listData.concat(data);
@@ -230,14 +231,15 @@
 			})
 
 			function setListener() {
-				window.addEventListener('focus', function(e) {
+				window.addEventListener('t-focus', function(e) {
 					console.log('course-attended中focus事件的监听');
 					courseInfo.pageIndex = 1;
 					course_list.getData(courseInfo, function(data) {
 						courseAtt.isAttended = 1;
 						console.log("course-attended.html获取的关注的课程:", data);
-						addData(data);
+						addData(data, 1);
 					}, function(err) {
+						courseAtt.isAttended = 0;
 						//					mui.toast(err.RspTxt);
 					})
 				})
@@ -254,7 +256,7 @@
 					if(courseAtt.isAttended && oldValue) {
 						courseInfo.pageIndex = 1;
 						course_list.getData(courseInfo, function(data) {
-							addData(data);
+							addData(data, 1);
 						}, function(err) {
 							console.log("出现错误：", err);
 						})
@@ -270,7 +272,7 @@
 							if(courseAtt.isAttended == 1) {
 								courseInfo.pageIndex = 1;
 								course_list.getData(courseInfo, function(data) {
-									addData(data);
+									addData(data, 1);
 								}, function(err) {
 									console.log("出现错误：", err);
 								})
@@ -288,7 +290,7 @@
 					var item = document.getElementById(tabId);
 					if(item) {
 						console.log("&&&&&获取的item的id：", item.id);
-						courseAll.listData[parseInt(item.value)].IsUpdate = 0;
+						courseAtt.listData[parseInt(item.value)].IsUpdate = 0;
 					}
 				})
 			}
