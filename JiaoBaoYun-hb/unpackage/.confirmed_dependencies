@@ -82,7 +82,21 @@
 			"fonts/mui.ttf",
 			"image/utils/default_personalimage.png",
 			"html/show/show-home.html",
-			"js/main/off-canvas.js"
+			"js/main/off-canvas.js",
+			"js/storageKeyName.js",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"js/utils/app-update.js",
+			"js/libs/myStorage/myStorage.js",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"js/libs/RSA/BigInt.js",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
 		],
 		"refer": [
 			"html/cloud/cloud_home.html",
@@ -92,7 +106,8 @@
 			"html/show/show-home.html",
 			"html/micro-course/course-home.html",
 			"html/sciedu/sciedu-home.html",
-			"html/index/mine.html"
+			"html/index/mine.html",
+			"html/show/show-home2.html"
 		]
 	},
 	"html/micro-course/course-home1.html": {
@@ -107,7 +122,10 @@
 			"css/mui.min.css",
 			"css/utils/common.css",
 			"image/utils/loading.gif",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"js/mui.min.js",
+			"js/utils/events.js",
+			"js/publicProtocol.js"
 		],
 		"refer": [
 			"html/micro-course/course_details.html"
@@ -143,7 +161,20 @@
 			"image/cloud/cloud_0_zuoye.png",
 			"image/cloud/cloud_0_wenjianjia_1.png",
 			"js/libs/crypto-js/crypto-js.js",
-			"image/cloud/cloud_0_dangan.png"
+			"image/cloud/cloud_0_dangan.png",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/myStorage/myStorage.js",
+			"fonts/iconfont.ttf",
+			"js/utils/signHmacSHA1.js",
+			"js/utils/postData.js",
+			"js/storageKeyName.js",
+			"js/libs/crypto-js/require.js",
+			"js/libs/jquery.js",
+			"js/libs/RSA/BigInt.js",
+			"js/publicHomeworkProtocol.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/RSAEncrypt.js",
+			"js/publicProtocol.js"
 		],
 		"refer": [
 			"html/index/mine.html",
@@ -260,7 +291,21 @@
 			"fonts/fangzheng.ttf",
 			"css/mui.min.css",
 			"css/utils/common.css",
-			"css/iconfont/iconfont.css"
+			"css/iconfont/iconfont.css",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/myStorage/myStorage.js",
+			"js/mui.min.js",
+			"js/utils/signHmacSHA1.js",
+			"js/utils/postData.js",
+			"js/storageKeyName.js",
+			"js/libs/crypto-js/require.js",
+			"js/cloud/cloud.js",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/libs/RSA/BigInt.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/RSAEncrypt.js"
 		],
 		"refer": []
 	},
@@ -856,7 +901,10 @@
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
-			"js/libs/myStorage/myStorage.js"
+			"js/libs/myStorage/myStorage.js",
+			"js/publicProtocol.js",
+			"js/mui.min.js",
+			"js/utils/events.js"
 		],
 		"refer": [
 			"html/sciedu/sciedu_show_main.html",
@@ -875,7 +923,20 @@
 			"fonts/fangzheng.ttf",
 			"image/utils/default_load_2_1.gif",
 			"js/libs/jquery.lazyload.min.js",
-			"js/utils/vue.min.js"
+			"js/utils/vue.min.js",
+			"js/storageKeyName.js",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"js/libs/myStorage/myStorage.js",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"js/libs/RSA/BigInt.js",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
 		],
 		"refer": []
 	},
@@ -932,6 +993,21 @@
 			"js/utils/jquery.qrcode.min.js",
 			"css/mui.min.css",
 			"css/utils/common.css"
+		]
+	},
+	"html/show/show-home2.html": {
+		"resources": [
+			"css/show/show-list.css",
+			"js/utils/vue.js",
+			"js/libs/jquery.lazyload.min.js",
+			"js/show/find-list.js",
+			"js/utils/vue-router.js",
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"fonts/fangzheng.ttf",
+			"js/show/show-list.js",
+			"js/mui.min.js",
+			"js/publicProtocol.js"
 		]
 	}
 }

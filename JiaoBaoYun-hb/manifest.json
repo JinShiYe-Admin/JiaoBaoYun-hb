@@ -5367,7 +5367,9 @@
 					"image/utils/loading.gif",
 					"fonts/fangzheng.ttf",
 					"image/show/show-default-small.png",
-					"image/show/show-default-large.png"
+					"image/show/show-default-large.png",
+					"js/show/find-list.js",
+					"js/utils/vue-router.js"
 				],
 				"refer": [
 					"html/register/login.html",
