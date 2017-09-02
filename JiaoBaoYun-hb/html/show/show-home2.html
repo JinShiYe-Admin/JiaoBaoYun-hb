@@ -35,7 +35,7 @@
 			</div>
 			<a id="publish-show" class="mui-pull-right" style="">发布</a>
 		</header>
-		<div id="find-list" class="mui-content">
+		<div id="show-list" class="mui-content">
 			<transition>
 				<keep-alive>
 					<router-view></router-view>
@@ -96,7 +96,7 @@
 
 			}
 			const findList = {
-				template: '<find-list v-bind:findInfo="$root.findInfo"></find-list>',
+				template: '<find-list v-bind:findInfo="$root.showInfo"></find-list>',
 				methods: {
 
 				}
@@ -115,7 +115,8 @@
 				setListener();
 				getFocusedPerson(function(hasFocused) {
 					showList.hasAttended = hasFocused;
-					showList.routerTo(hasFocused?0:1);
+					console.log("show-home2.html 关注的状况：" + hasFocused);
+					showList.routerTo((hasFocused + 1) % 2);
 				})
 			})
 
@@ -123,12 +124,12 @@
 				//左滑
 				window.addEventListener("swipeleft", function(e) {
 					console.log("show-home2.html的向左滑动事件");
-					changePart(0);
+					showList.changePart(0);
 				})
 				//右滑
 				window.addEventListener("swiperight", function(e) {
 					console.log("show-home2.html的向右滑动事件")
-					changePart(1);
+					showList.changePart(1);
 				})
 			}
 			/**
@@ -136,9 +137,7 @@
 			 * @param {Object} dir 0为向左滑 1为右滑
 			 */
 			function changePart(dir) {
-				if(showList.hasAttended === 0) {
-					return;
-				}
+
 			}
 			/**
 			 * 获取关注的人
@@ -169,10 +168,10 @@
 			 */
 			function setVue() {
 				showList = new Vue({
-					el: '#find-list',
+					el: '#show-list',
 					router: router,
 					data: {
-						findInfo: {},
+						showInfo: {},
 						hasAttended: 0,
 						listData: []
 					},
@@ -181,6 +180,7 @@
 					},
 					watch: {
 						'$route' (to, from) {
+							this.setFindInfo(this.$route.params.id);
 							console.log("当前router的id:" + this.$route.params.id);
 							if(this.$route.params.id) {
 								if(this.hasAttended) {
@@ -203,7 +203,7 @@
 					methods: {
 						setFindInfo: function(type) { //0关注 1全部
 							if(type) {
-								this.findInfo = {
+								this.showInfo = {
 									pageFlag: 1, //全部
 									acode: 1,
 									aname: '全部',
@@ -212,7 +212,7 @@
 									totalPage: 0
 								}
 							} else {
-								this.findInfo = {
+								this.showInfo = {
 									pageFlag: 0, //关注
 									acode: 1,
 									aname: '关注',
@@ -253,6 +253,13 @@
 								default:
 									break;
 							}
+						},
+						changePart: function(dir) {
+							if(this.hasAttended === 0) {
+								return;
+							}
+							console.log("show-home2.html:" + this.$route.params.id);
+							this.routerTo((this.$route.params.id + 1) % 2);
 						},
 						/**
 						 * 路由跳转

@@ -12,6 +12,7 @@ Vue.component('find-list', {
 		}
 	},
 	created: function() {
+		console.log("组件创建时的数值：" + this.$route.params.id);
 		this.showInfo.pageIndex = 1;
 		//当创建时且确定为关注或全部时 请求数据
 		this.requireData();
