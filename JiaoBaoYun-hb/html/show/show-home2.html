@@ -35,15 +35,9 @@
 			</div>
 			<a id="publish-show" class="mui-pull-right" style="">发布</a>
 		</header>
-		<div id="show-list" class="mui-content">
-			<transition>
-				<keep-alive>
-					<router-view></router-view>
-				</keep-alive>
-			</transition>
-		</div>
-		<template id="show-list">
-			<div class="show-list">
+		<div id="pullrefresh" class="mui-content">
+
+			<div id="show-list" class="show-list">
 				<div v-for="cardData of listData" class="mui-table-view cityNews-container">
 					<li v-for="(item,index) of cardData" class="mui-table-view-cell news-container" v-on:tap="jumpToPage(item)">
 						<div class="img-container news-img" v-bind:data-original="getBackImg(item,index)" v-bind:style="{'background-image':'url('+'../../image/utils/default_load_2.gif'+')','background-position':'center','background-size':'cover','text-align':'center'}">
@@ -59,68 +53,72 @@
 					</li>
 				</div>
 			</div>
-		</template>
+		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/utils/vue.js"></script>
-		<script src="../../js/utils/vue-router.js"></script>
 		<script src="../../js/utils/events.js"></script>
 		<script src="../../js/publicProtocol.js"></script>
 		<script src="../../js/show/show-list.js"></script>
 		<script src="../../js/libs/jquery.js"></script>
 		<script src="../../js/libs/jquery.lazyload.min.js"></script>
-		<script src="../../js/show/find-list.js"></script>
 		<script type="text/javascript">
+			var detailReady = false;
 			mui.init({
 				keyEventBind: {
 					backbutton: false //关闭back按键监听
 				},
 				pullRefresh: {
-					container: '#find-list',
+					container: '#pullrefresh',
 					down: {
 						style: 'circle',
-						offset: 0,
+						offset: 50,
 						callback: pulldownRefresh
 					},
 					up: {
-						contentrefresh: '正在加载...',
+						contentrefresh: '上拉加载更多',
 						callback: pullupRefresh
 					}
 				}
 			});
 
 			function pulldownRefresh() {
-
+				console.log("下拉刷新中...")
+				showList.pulldown = true;
+				console.log("show-home2要刷新的數值：", showList.showInfo);
+				showList.showInfo.pageIndex = 1;
+				showList.requireData();
 			}
 
 			function pullupRefresh() {
-
-			}
-			const findList = {
-				template: '<find-list v-bind:findInfo="$root.showInfo"></find-list>',
-				methods: {
-
+				console.log("上拉加載更多...")
+				if(showList.showInfo.pageIndex > showList.showInfo.totalPage) {
+					mui('#pullrefresh').pullRefresh().endPullup(true);
+				} else {
+					showList.requireData();
 				}
 			}
-			const router = new VueRouter({
-				mode: '',
-				routes: [{
-					path: 'find/:id',
-					name: 'find',
-					component: findList
-				}]
-			});
 			var showList;
 			mui.plusReady(function() {
+				events.preload('show-detail.html', 100);
 				setVue();
 				setListener();
 				getFocusedPerson(function(hasFocused) {
 					showList.hasAttended = hasFocused;
 					console.log("show-home2.html 关注的状况：" + hasFocused);
-					showList.routerTo((hasFocused + 1) % 2);
+					showList.setShowInfo((hasFocused+1)%2);
 				})
 			})
 
 			function setListener() {
+				//关注或取消关注的监听
+				window.addEventListener("focus", function() {
+					getFocusedPerson(function(hasFocused) {
+						showList.hasAttended = hasFocused;
+					})
+				});
+				window.addEventListener('detailReady', function(e) {
+					detailReady = e.detail;
+				})
 				//左滑
 				window.addEventListener("swipeleft", function(e) {
 					console.log("show-home2.html的向左滑动事件");
@@ -131,13 +129,6 @@
 					console.log("show-home2.html的向右滑动事件")
 					showList.changePart(1);
 				})
-			}
-			/**
-			 * 左右滑动响应事件
-			 * @param {Object} dir 0为向左滑 1为右滑
-			 */
-			function changePart(dir) {
-
 			}
 			/**
 			 * 获取关注的人
@@ -169,39 +160,67 @@
 			function setVue() {
 				showList = new Vue({
 					el: '#show-list',
-					router: router,
 					data: {
 						showInfo: {},
 						hasAttended: 0,
-						listData: []
+						listData: [],
+						pulldown: false,
+						pullup: false
 					},
 					created: function() {
 
 					},
 					watch: {
-						'$route' (to, from) {
-							this.setFindInfo(this.$route.params.id);
-							console.log("当前router的id:" + this.$route.params.id);
-							if(this.$route.params.id) {
-								if(this.hasAttended) {
+						showInfo: function(newVal, oldVal) {
+							if(newVal.pageFlag) {
+								if(this.hasAttended) { //有关注
 									this.setTitle(10);
 								} else {
 									this.setTitle(0);
 								}
 							} else {
-								if(this.hasAttended) {
+								if(this.hasAttended) { //有关注
 									this.setTitle(11);
 								} else {
 									console.log("邏輯錯誤")
 								}
 							}
+							console.log("show-home2.html展現模塊新值：", newVal);
+							this.requireData();
+						},
+						listData: function(newVal, oldVal) {
+							this.$nextTick(function() {
+								jQuery('.news-img').lazyload();
+							})
 						},
 						hasAttended: function(newVal, oldVal) {
 							console.log("有关注的人：" + newVal + ',旧值：' + oldVal);
+							if(typeof(this.showInfo.pageFlag) !== 'undefined') {
+								if(!newVal) { //無關注的人
+									if(this.showInfo.pageFlag === 0) {
+										this.setShowInfo(1);
+										this.setTitle(0);
+									}
+								} else { //新增關注
+									this.setTitle(10);
+								}
+							}
+						},
+						pulldown: function(newVal) {
+							if(!newVal) {
+								mui('#pullrefresh').pullRefresh().endPulldown();
+								mui('#pullrefresh').pullRefresh().refresh();
+							}
+						},
+						pullup: function(newVal) {
+							if(!newVal) {
+								//								mui("#show-list").
+							}
 						}
 					},
 					methods: {
-						setFindInfo: function(type) { //0关注 1全部
+						setShowInfo: function(type) { //0关注 1全部
+							console.log("关注状态：" + type)
 							if(type) {
 								this.showInfo = {
 									pageFlag: 1, //全部
@@ -235,13 +254,13 @@
 									title.innerText = "全部";
 									indicator.style.display = "none";
 									break;
-								case 10: //全部
+								case 11: //全部
 									title.innerText = "全部";
 									indicator.style.display = "block";
 									indicator.firstElementChild.className = "mui-indicator";
 									indicator.lastElementChild.className = "mui-indicator mui-active";
 									break;
-								case 11: //关注
+								case 10: //关注
 									title.innerText = "关注";
 									indicator.style.display = "block";
 									indicator.firstElementChild.className = "mui-indicator mui-active";
@@ -258,22 +277,86 @@
 							if(this.hasAttended === 0) {
 								return;
 							}
-							console.log("show-home2.html:" + this.$route.params.id);
-							this.routerTo((this.$route.params.id + 1) % 2);
+							this.setShowInfo((this.showInfo.pageFlag + 1) % 2);
 						},
-						/**
-						 * 路由跳转
-						 * @param {Object} id 0关注 1全部
-						 */
-						routerTo: function(id) {
-							console.log("要导向的id：" + id);
-							router.replace({
-								name: 'find',
-								params: {
-									id: id
+
+						resetData: function() {
+							this.listData = [];
+						},
+						resetFreshState: function() {
+							this.pulldown = false;
+							this.pullup = false;
+						},
+						requireData: function() {
+							var com = this;
+							show_list.getShowList(this.showInfo, function(showCity, data) {
+								console.log('show-home2.html获取的关注数据：', data);
+								com.addData(showCity.pageIndex, data);
+								com.showInfo.pageIndex++;
+								com.resetFreshState();
+								console.log("show-home2.html获取数据后的showInfo:", com.showInfo)
+							}, function(err) {
+								console.log("错误", err);
+								if(com.showInfo.pageIndex === 1) {
+									com.resetData();
 								}
+								com.resetFreshState();
 							})
+
+						},
+						addData: function(pageIndex, dataArr) {
+							if(pageIndex == 1) {
+								this.listData = [];
+							}
+							for(var i = 0; i < dataArr.length; i += 6) {
+								this.listData.push(dataArr.slice(i, i + 6));
+							}
+							console.log("获取的展现列表数据：", this.listData)
+						},
+						getBackImg: function(item, index) {
+							if(item.EncImgAddr) {
+								return item.EncImgAddr.split('|')[0]
+							}
+							if(parseInt(index) > 0) {
+								return '../../image/show/show-default-small.png';
+							}
+							return '../../image/show/show-default-large.png';
+						},
+						jumpToPage: function(item) {
+							console.log("点击事件")
+							if(myStorage.getItem(storageKeyName.ISSHOWDETAILREADY)) {
+								events.fireToPageWithData("show-detail.html", "showDetail", item);
+							} else {
+								setTimeout(function() {
+									showList.jumpToPage(item)
+								}, 500);
+							}
+						},
+						isVideo: function(cell) {
+							var isVideo = false;
+							if(cell.EncType) {
+								switch(cell.EncType) {
+									case 2: //视频
+										isVideo = true;
+										break;
+									case 5: //图文混合
+										var addrs = cell.EncAddr.split(".");
+										switch(addrs[addrs.length - 1]) {
+											case "mp4":
+											case "MP4":
+												isVideo = true;
+												break;
+											default:
+												break;
+										}
+										break;
+									default:
+										break;
+								}
+							}
+							return isVideo
 						}
+
 					}
 				});
 			}

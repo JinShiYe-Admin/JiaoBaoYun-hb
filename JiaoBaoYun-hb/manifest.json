@@ -5375,11 +5375,14 @@
 					"image/show/show-default-small.png",
 					"image/show/show-default-large.png",
 					"js/show/find-list.js",
-					"js/utils/vue-router.js"
+					"js/utils/vue-router.js",
+					"image/utils/default_load_2.gif",
+					"fonts/mui.ttf"
 				],
 				"refer": [
 					"html/register/login.html",
-					"html/quan/space-detail.html"
+					"html/quan/space-detail.html",
+					"html/show/show-detail.html"
 				],
 				"priority": 0
 			},

@@ -23,7 +23,7 @@ var commentList = new Vue({
 	},
 	watch: {
 		showDetail: function(val) {
-			console.log("获取的展现详情：",val);
+			console.log("获取的展现详情：", val);
 			this.imgDivRe = commentList.getImgRe(commentList.getImgs(val));
 			//console.log("获取的图片宽高：" + JSON.stringify(this.imgDivRe));
 			this.isSelfDynamic = (parseInt(val.PublisherId) === events.getUtid());
@@ -32,7 +32,7 @@ var commentList = new Vue({
 	},
 	methods: {
 		getFocused: function(showDetail) {
-			if(!showDetail.TabId){
+			if(!showDetail.TabId) {
 				return 0;
 			}
 			var focused = 0;
@@ -40,7 +40,7 @@ var commentList = new Vue({
 				var index = events.isExistInStorageArray(storageKeyName.SHOWFOCUSEPERSEN, this.showDetail.PublisherId)[1];
 				if(index >= 0) {
 					focused = 1;
-					this.showDetail.IsFocused=1;
+					this.showDetail.IsFocused = 1;
 				}
 			} else {
 				focused = showDetail.IsFocused;
@@ -131,7 +131,7 @@ var commentList = new Vue({
 					//console.log("设置关注返回值：" + JSON.stringify(data));
 					if(data.RspCode == 0) {
 						if(data.RspData.Result) {
-							events.fireToPageNone('show-home.html', "focus");
+							events.fireToPageNone('show-home2.html', "focus");
 							//console.log("改变的值：" + JSON.stringify(showDetail));
 							if(showDetail.IsFocused) {
 								showDetail.IsFocused = 0;
@@ -146,7 +146,7 @@ var commentList = new Vue({
 			} else { //游客
 				events.toggleStorageArray(storageKeyName.SHOWFOCUSEPERSEN, this.showDetail.PublisherId, this.showDetail.IsFocused);
 				this.showDetail.IsFocused = !this.showDetail.IsFocused;
-				events.fireToPageNone('show-home.html', "focus");
+				events.fireToPageNone('show-home2.html', "focus");
 			}
 		},
 		//是否已点赞

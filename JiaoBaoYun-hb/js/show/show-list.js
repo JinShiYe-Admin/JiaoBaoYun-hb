@@ -5,7 +5,7 @@ var show_list = (function(mod) {
 	 * @param {Object} listContainer 列表
 	 * @param {Object} callback 回调
 	 */
-	mod.getShowList = function(showCity, callback,errBack) {
+	mod.getShowList = function(showCity, callback, errBack) {
 		//个人信息
 		if(showCity.pageFlag == 0) { //关注
 			//console.log('关注界面拉');
@@ -104,7 +104,7 @@ var show_list = (function(mod) {
 	 * @param {Object} showCity 地区信息
 	 * @param {Object} callback 回调
 	 */
-	function getFocusByUser(showCity, callback,errBack) {
+	function getFocusByUser(showCity, callback, errBack) {
 		//个人信息
 		var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
 		//所需参数
@@ -125,7 +125,7 @@ var show_list = (function(mod) {
 				//				//console.log('tempID=', tempID);
 				//74.(用户空间）获取多用户空间所有用户动态列表
 				if(tempID.length > 0) {
-					getAllUserSpacesByUser(showCity, tempID, callback,errBack);
+					getAllUserSpacesByUser(showCity, tempID, callback, errBack);
 				} else {
 
 				}
@@ -142,8 +142,8 @@ var show_list = (function(mod) {
 	 * @param {Object} callback 请求的回调
 	 */
 	function getAllUserSpacesByUser(showCity, paraModel, callback, errBack) {
-		if(!paraModel||paraModel.length==0){
-			callback(showCity,[]);
+		if(!paraModel || paraModel.length == 0) {
+			callback(showCity, []);
 			return;
 		}
 		//个人信息
@@ -165,6 +165,8 @@ var show_list = (function(mod) {
 						showArray = tempData;
 						callback(showCity, tempData);
 					});
+				} else {
+					errBack(data);
 				}
 			} else {
 				errBack(data);
@@ -172,8 +174,6 @@ var show_list = (function(mod) {
 
 		});
 	}
-
-
 
 	return mod;
 })(show_list || {})

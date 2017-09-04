@@ -1007,7 +1007,16 @@
 			"fonts/fangzheng.ttf",
 			"js/show/show-list.js",
 			"js/mui.min.js",
-			"js/publicProtocol.js"
+			"js/publicProtocol.js",
+			"js/libs/crypto-js/crypto-js.js",
+			"image/utils/default_load_2.gif",
+			"image/show/show-default-small.png",
+			"image/utils/playvideo.png",
+			"image/show/show-default-large.png",
+			"fonts/mui.ttf"
+		],
+		"refer": [
+			"html/show/show-detail.html"
 		]
 	}
 }
