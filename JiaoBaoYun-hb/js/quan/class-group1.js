@@ -116,11 +116,16 @@ var setButtonsListener = function() {
 		isPopoverShow = false;
 		resetRole();
 	})
+	/**
+	 * 
+	 */
 	document.getElementById("group-info").addEventListener("tap", function() {
-		events.fireToPageWithData("edit-remark.html", "editGroupInfo", {
-			gid: groupId,
-			info: groupNote
-		})
+		if(isMaster) {
+			events.fireToPageWithData("edit-remark.html", "editGroupInfo", {
+				gid: groupId,
+				info: groupNote
+			})
+		}
 	});
 	/**
 	 * 二维码点击事件
@@ -361,7 +366,7 @@ var createGride = function(gride, array) {
 	//console.log("是否显示按键："+isShowButton);
 	if(isShowButton) {
 		document.querySelector('.quit-container').style.display = 'block';
-	}else{
+	} else {
 		document.querySelector('.quit-container').style.display = 'none';
 	}
 	document.getElementById("info-container").style.display = "block";

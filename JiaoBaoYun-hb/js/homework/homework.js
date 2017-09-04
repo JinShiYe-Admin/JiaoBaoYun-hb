@@ -159,7 +159,7 @@ function showNoData(type) {
 		document.querySelector("#list-container").style.display = "block";
 		document.querySelector(".noDataDisplay").style.display = "none";
 		mui(".mui-pull-loading")[0].style.display = "block";
-		document.body.style.backgroundColor="transparent";
+		document.body.style.backgroundColor="#efeff4";
 	}
 }
 /**

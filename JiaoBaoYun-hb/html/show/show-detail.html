@@ -76,7 +76,7 @@
 			</div>
 		</div>
 		<div id="videoPopover" class="mui-popover" style="top: 0px;">
-			<video id="video" style="position: absolute;z-index: 999;" controls="controls" webkit-playsinline playsinline>
+			<video id="video" style="position: absolute;z-index: 999;" controls="controls">
 				您的浏览器不支持 video 标签。
 			</video>
 		</div>
@@ -125,8 +125,8 @@
 				ShowVideoUtil.initVideo(document.getElementById("video"));
 				events.preload('../quan/classSpace-persons.html', 50);
 				events.fireToPageNone("../quan/aboutme.html", "detailReady");
-				events.fireToPageNone("show-home.html","detailReady");
-				myStorage.setItem(storageKeyName.ISSHOWDETAILREADY,true);
+				events.fireToPageNone("show-home.html", "detailReady");
+				myStorage.setItem(storageKeyName.ISSHOWDETAILREADY, true);
 				window.addEventListener('showDetail', function(e) {
 					pageIndex = 1;
 					//console.log("获取的数据:" + JSON.stringify(e.detail.data));
@@ -270,16 +270,17 @@
 						}
 					}
 				}
-				//console.log("获取人员信息后的展现详情：" + JSON.stringify(showDetail));
+				
 				//console.log("pageIndex:" + pageIndex);
 				if((pageIndex - 1) === 1) {
 					commentList.showDetail = showDetail;
-					commentList.showDetail.IsFocused=commentList.getFocused(showDetail);
+					commentList.showDetail.IsFocused = commentList.getFocused(showDetail);
 				} else {
 					if(commentList.TabId) {
 						commentList.Comments = commentList.Comments.concat(showDetail.Comments);
 					}
 				}
+				console.log("获取人员信息后的展现详情：" + JSON.stringify(commentList.showDetail));
 
 			}
 

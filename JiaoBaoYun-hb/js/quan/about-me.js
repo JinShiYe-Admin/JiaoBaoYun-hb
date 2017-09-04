@@ -506,16 +506,16 @@ var replenishData = function(data, infos) {
 		if(!hashInfos[data[i].UserId]) {
 			continue;
 		}
-		data[i].UserName = hashInfos[data[i].UserId].unick;
+		data[i].UserName = hashInfos[data[i].UserId].unick?hashInfos[data[i].UserId].unick:'新用户';
 		data[i].UserImg = hashInfos[data[i].UserId].uimg;
 		if(data[i].MsgType != 6) {
-			data[i].MaxUserName = hashInfos[data[i].MaxUser].unick;
+			data[i].MaxUserName = hashInfos[data[i].MaxUser].unick?hashInfos[data[i].MaxUser].unick:'新用户';
 			data[i].MaxUserImg = hashInfos[data[i].MaxUser].uimg;
-			data[i].UserOwnerNick = hashInfos[data[i].UserOwnerId].unick;
+			data[i].UserOwnerNick = hashInfos[data[i].UserOwnerId].unick?hashInfos[data[i].UserOwnerId].unick:"新用户";
 			//		idsArray.push(tempRspData[i].MaxUser);
 			for(var j in data[i].MsgArray) {
-				data[i].MsgArray[j].MsgFromName = hashInfos[data[i].MsgArray[j].MsgFrom] ? hashInfos[data[i].MsgArray[j].MsgFrom].unick : '数据错误'
-				data[i].MsgArray[j].MsgToName = hashInfos[data[i].MsgArray[j].MsgTo] ? hashInfos[data[i].MsgArray[j].MsgTo].unick : '数据错误'
+				data[i].MsgArray[j].MsgFromName = hashInfos[data[i].MsgArray[j].MsgFrom] ? hashInfos[data[i].MsgArray[j].MsgFrom].unick : '新用户'
+				data[i].MsgArray[j].MsgToName = hashInfos[data[i].MsgArray[j].MsgTo] ? hashInfos[data[i].MsgArray[j].MsgTo].unick : '新用户'
 			}
 		}
 

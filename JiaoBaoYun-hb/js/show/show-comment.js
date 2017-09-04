@@ -23,6 +23,7 @@ var commentList = new Vue({
 	},
 	watch: {
 		showDetail: function(val) {
+			console.log("获取的展现详情：",val);
 			this.imgDivRe = commentList.getImgRe(commentList.getImgs(val));
 			//console.log("获取的图片宽高：" + JSON.stringify(this.imgDivRe));
 			this.isSelfDynamic = (parseInt(val.PublisherId) === events.getUtid());
