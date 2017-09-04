@@ -9,8 +9,7 @@
 	</head>
 
 	<body>
-		<div  style="background-image:url(../../image/ios_1242-2208.png);background-position: center; background-size: cover;background-repeat: no-repeat;"
-			 class="mui-fullscreen" style="width: 100%;height: 100%;" ></div>
+		<div style="background-image:url(../../image/ios_1242-2208.png);background-position: center; background-size: cover;background-repeat: no-repeat;" class="mui-fullscreen" style="width: 100%;height: 100%;"></div>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/utils/events.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/publicProtocol.js" type="text/javascript" charset="utf-8"></script>
@@ -23,6 +22,9 @@
 				statusBarBackground: '#13b7f6'
 			});
 			mui.plusReady(function() {
+				document.addEventListener('plusready', function() {
+					checkArguments();
+				}, false);
 				//获取APP的_documents文件夹对象,并清理文件
 				plus.io.resolveLocalFileSystemURL("_documents/", function(docEntry) {
 					//console.log("获取_documents文件操作对象成功 " + docEntry.fullPath);
@@ -62,9 +64,9 @@
 						//console.log('没有网络！！！！');
 						mui.toast("网络异常，请检查网络设置！");
 					} else {
-//						if(!plus.webview.currentWebview().canJump) {
-//							appUpdate.updateApp();
-//						}
+						//						if(!plus.webview.currentWebview().canJump) {
+						//							appUpdate.updateApp();
+						//						}
 						//console.log('网络连接拉！！！！');
 						//判断上次有没有登录，如果登录，就不执行登录协议
 						if(loginFlag == 0) {
@@ -110,6 +112,15 @@
 				//默认自动登录
 				login();
 			});
+			// 判断启动方式
+			function checkArguments() {
+				alert("plus.runtime.launcher: " + plus.runtime.launcher);
+				var args = plus.runtime.arguments;
+				alert('arguments:'+args);
+				if(args) {
+					// 处理args参数，如打开新页面等
+				}
+			}
 
 			//登录
 			function login() {
