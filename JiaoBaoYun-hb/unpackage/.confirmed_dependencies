@@ -107,7 +107,8 @@
 			"html/micro-course/course-home.html",
 			"html/sciedu/sciedu-home.html",
 			"html/index/mine.html",
-			"html/show/show-home2.html"
+			"html/show/show-home2.html",
+			"html/micro-course/course-home2.html"
 		]
 	},
 	"html/micro-course/course-home1.html": {
@@ -1016,7 +1017,20 @@
 			"fonts/mui.ttf"
 		],
 		"refer": [
-			"html/show/show-detail.html"
+			"html/show/show-detail.html",
+			"html/register/login.html"
+		]
+	},
+	"html/micro-course/course-home2.html": {
+		"resources": [
+			"js/utils/vue.js",
+			"js/publicMicroClass.js",
+			"css/mui.min.css",
+			"js/utils/vue-router.js",
+			"js/micro-course/course-list2.js",
+			"fonts/fangzheng.ttf",
+			"css/utils/common.css",
+			"css/micro-course/course-list.css"
 		]
 	}
 }

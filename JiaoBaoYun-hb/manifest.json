@@ -2124,7 +2124,8 @@
 					"html/cloud/order-member.html",
 					"html/micro-course/course-home.html",
 					"html/show/show-home2.html",
-					"html/sciedu/sciedu-home.html"
+					"html/sciedu/sciedu-home.html",
+					"html/micro-course/course-home2.html"
 				],
 				"priority": 0
 			},
@@ -5642,6 +5643,20 @@
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/micro-course/course-home2.html": {
+				"resources": [
+					"js/utils/vue.js",
+					"js/publicMicroClass.js",
+					"css/mui.min.css",
+					"js/utils/vue-router.js",
+					"js/micro-course/course-list2.js",
+					"fonts/fangzheng.ttf",
+					"css/utils/common.css",
+					"css/micro-course/course-list.css"
 				],
 				"refer": [],
 				"priority": 0

@@ -92,8 +92,10 @@
 			function pullupRefresh() {
 				console.log("上拉加載更多...")
 				if(showList.showInfo.pageIndex > showList.showInfo.totalPage) {
-					mui('#pullrefresh').pullRefresh().endPullup(true);
+					mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
+					mui('#pullrefresh').pullRefresh().disablePullupToRefresh();
 				} else {
+					mui('#pullrefresh').pullRefresh().endPullupToRefresh();
 					showList.requireData();
 				}
 			}
@@ -105,11 +107,27 @@
 				getFocusedPerson(function(hasFocused) {
 					showList.hasAttended = hasFocused;
 					console.log("show-home2.html 关注的状况：" + hasFocused);
-					showList.setShowInfo((hasFocused+1)%2);
+					showList.setShowInfo((hasFocused + 1) % 2);
 				})
 			})
 
 			function setListener() {
+				document.getElementById('publish-show').addEventListener('tap', function(e) {
+					var item = e.target;
+					if(events.judgeLoginMode(item)) {
+						return;
+					}
+					item.disabled = true;
+					events.singleWebviewInPeriod(item, "../quan/pub-dynamic.html", "zx");
+				})
+				//加载用户登陆的监听
+				window.addEventListener("infoChanged", function() {
+					getFocusedPerson(function(hasFocused) {
+						showList.hasAttended = hasFocused;
+						console.log("show-home2.html 关注的状况：" + hasFocused);
+						showList.setShowInfo((hasFocused + 1) % 2);
+					})
+				})
 				//关注或取消关注的监听
 				window.addEventListener("focus", function() {
 					getFocusedPerson(function(hasFocused) {
@@ -172,6 +190,7 @@
 					},
 					watch: {
 						showInfo: function(newVal, oldVal) {
+							console.log("showInfo的转变:" + JSON.stringify(newVal) + ",旧的关注信息：" + JSON.stringify(oldVal))
 							if(newVal.pageFlag) {
 								if(this.hasAttended) { //有关注
 									this.setTitle(11);
@@ -182,9 +201,10 @@
 								if(this.hasAttended) { //有关注
 									this.setTitle(10);
 								} else {
-									console.log("邏輯錯誤")
+									console.log("邏輯錯誤");
 								}
 							}
+							mui('#pullrefresh').pullRefresh().refresh(true);
 							console.log("show-home2.html展現模塊新值：", newVal);
 							this.requireData();
 						},
@@ -195,6 +215,7 @@
 						},
 						hasAttended: function(newVal, oldVal) {
 							console.log("有关注的人：" + newVal + ',旧值：' + oldVal);
+							console.log("展示请求信息：" + JSON.stringify(this.showInfo));
 							if(typeof(this.showInfo.pageFlag) !== 'undefined') {
 								if(!newVal) { //無關注的人
 									if(this.showInfo.pageFlag === 0) {
@@ -202,14 +223,14 @@
 										this.setTitle(0);
 									}
 								} else { //新增關注
-									this.setTitle(11);
+									this.setTitle(12);
 								}
 							}
 						},
 						pulldown: function(newVal) {
 							if(!newVal) {
 								mui('#pullrefresh').pullRefresh().endPulldown();
-								mui('#pullrefresh').pullRefresh().refresh();
+								mui('#pullrefresh').pullRefresh().refresh(true);
 							}
 						},
 						pullup: function(newVal) {
@@ -299,6 +320,8 @@
 								console.log("错误", err);
 								if(com.showInfo.pageIndex === 1) {
 									com.resetData();
+									mui.scrollTo(0)
+									//									mui('.mui-content').scroll().scrollTo(0, 0)
 								}
 								com.resetFreshState();
 							})

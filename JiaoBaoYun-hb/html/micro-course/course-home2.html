@@ -1,0 +1,289 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>微学</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/utils/common.css" rel="stylesheet" />
+		<link href="../../css/micro-course/course-list.css" rel="stylesheet" />
+		<style>
+			.mui-slider-indicator {
+				margin-left: -10px;
+				bottom: -3px;
+			}
+			
+			.mui-slider-indicator .mui-indicator {
+				margin: 1px 2px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<h1 class="mui-title">全部</h1>
+			<div id="header-indicator" class="mui-slider-indicator display-none">
+				<div class="mui-indicator"></div>
+				<div class="mui-indicator mui-active"></div>
+			</div>
+		</header>
+		<div id="course-container" class="mui-content">
+			<transition>
+				<keep-alive>
+					<router-view></router-view>
+				</keep-alive>
+			</transition>
+		</div>
+
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/utils/vue.js"></script>
+		<script src="../../js/utils/events.js"></script>
+		<script src="../../js/utils/vue-router.js"></script>
+		<script src="../../js/micro-course/course-list2.js"></script>
+		<script src="../../js/publicProtocol.js"></script>
+		<script src="../../js/publicProtocol.js"></script>
+		<script src="../../js/publicMicroClass.js"></script>
+		<script src="../../js/micro-course/course-list.js"></script>
+		<script type="text/javascript">
+			const courseList = {
+				template: '<course-list></course-list>',
+				methods: {
+
+				}
+			}
+			const router = new VueRouter({
+				routes: [{
+					path: 'course-list/:id',
+					name: 'course-list',
+					component: courseList
+				}]
+			})
+			mui.init();
+			var coureContainer;
+			mui.plusReady(function() {
+				mui.fire(plus.webview.getLaunchWebview(), "indexReady");
+				coureContainer = new Vue({
+					el: '#course-container',
+					router: router,
+					data: {
+						courseType: 1, //0关注 1全部 默认为全部
+						hasAttened: 0 //默认无关注的人
+					},
+					created: function() {
+						var com = this;
+						this.getAttendedClasses(function(isFocused) {
+							com.hasAttended = isFocused;
+							com.routerTo((isFocused + 1) % 2);
+							if(isFocused) {
+								com.setTitle(10);
+							} else {
+								com.setTitle(0);
+							}
+						})
+					},
+					watch: {
+						courseType: function(newVal, oldVal) {
+							console.log("course-home2界面當前課程類型：" + newVal);
+							if(newVal) { //全部
+								if(this.hasAttended) { //有关注
+									setTitle(11);
+								} else {
+									setTitle(0)
+								}
+							} else { //关注
+								if(this.hasAttended) {
+									setTitle(10)
+								} else {
+									console.log("标题设置错误！");
+								}
+							}
+							this.routerTo(this.courseType); //路由跳转
+						},
+						hasAttended: function(newVal, oldVal) {
+							console.log("course-home获取的是否有关注的人：" + newVal + ",以前的值：" + oldVal);
+							if(newVal) {
+								this.setTitle(12); //顯示下面的點點
+							} else {
+								this.setTitle(13); //隱藏下面的點點
+							}
+						}
+					},
+					methods: {
+						routerTo: function(id) {
+							router.replace({
+								name: 'course-list',
+								params: {
+									id: id
+								}
+							})
+						},
+						/**
+						 * 获取关注的课程
+						 * @param {Object} callback
+						 */
+						getAttendedClasses: function(callback) {
+							if(events.getUtid()) {
+								// 等待的对话框
+								var wd = events.showWaiting();
+								postDataMCPro_getAllFocusCourses({
+									userId: events.getUtid(), //用户ID,登录用户
+									pageIndex: 1, //当前页数
+									pageSize: 1 //每页记录数,传入0，获取总记录数
+								}, wd, function(data) {
+									wd.close();
+									console.log("course-home微课主界面：", data);
+									if(data.RspCode == 0 && data.RspData.totalCount) {
+										callback(1); //有关注的人
+									} else {
+										callback(0); //无关注的课程
+									}
+								})
+							} else {
+								if(myStorage.getItem(storageKeyName.FOCUSECOURSES) && myStorage.getItem(storageKeyName.FOCUSECOURSES).length > 0) {
+									callback(1);
+								} else {
+									callback(0);
+								}
+							}
+
+						},
+						/**
+						 * 是否關注
+						 * @param {Object} course
+						 */
+						isFocus: function(course) {
+							var isFocused = false;
+							if(events.getUtid()) {
+								isFocused = Boolean(course.IsFocus);
+							} else {
+								console.log("保存的数组：", myStorage.getItem(storageKeyName.FOCUSECOURSES))
+								console.log("events的判断", events.isExistInStorageArray(storageKeyName.FOCUSECOURSES, parseInt(course.TabId))[1])
+								isFocused = (parseInt(events.isExistInStorageArray(storageKeyName.FOCUSECOURSES, parseInt(course.TabId))[1]) >= 0);
+								courseAll.isUpdate(course);
+							}
+							course.IsFocus = isFocused;
+							console.log("获取的课程关注信息:", course);
+							return course;
+						},
+						/**
+						 * 关注 与取消关注事件
+						 * @param {Object} course
+						 */
+						toggleFocus: function(course) {
+							if(!events.getUtid()) {
+								events.toggleStorageArray(storageKeyName.FOCUSECOURSES, course.TabId, course.IsFocus);
+								course.IsFocus = !course.IsFocus;
+								events.fireToPageNone("course-attended.html", "courseAttended", (myStorage.getItem(storageKeyName.FOCUSECOURSES) && myStorage.getItem(storageKeyName.FOCUSECOURSES).length > 0));
+								return;
+							}
+							//所需参数
+							var comData = {
+								userId: events.getUtid(), //用户ID,登录用户
+								courseId: course.TabId, //课程ID
+								status: course.IsFocus ? 0 : 1 //关注状态，0 不关注，1 关注
+							};
+							// 等待的对话框
+							var wd = null;
+							//6.设置对某个课程关注
+							postDataMCPro_setCourseFocus(comData, wd, function(data) {
+								//console.log('6.设置对某个课程关注:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+								if(data.RspCode == 0) { //成功
+									course.IsFocus = !course.IsFocus;
+									var isAttended = data.RspData.FocusCnt > 0;
+									events.fireToPageNone("course-attended.html", "courseAttended", isAttended);
+								} else {
+									mui.toast(data.RspTxt);
+								}
+							});
+						},
+						/**
+						 * 是否有更新
+						 * @param {Object} course
+						 */
+						isUpdate: function(course) {
+							var courseTime = events.isExistInStorageMap(storageKeyName.COURSELASTTIME, course.TabId);
+							//console.log("获取的更新时间：" + JSON.stringify(courseTime));
+							if(courseTime) {
+								if(courseTime < Date.parse(course.UpdateTime)) {
+									course.IsUpdate = 1;
+								} else {
+									course.IsUpdate = 0;
+								}
+							} else {
+								course.IsUpdate = 1;
+							}
+						},
+						/**
+						 * 跳转到课程详情页
+						 * @param {Object} course
+						 */
+						jumpToPage: function(course) {
+							course.IsUpdate = 0;
+							events.fireToPageNone("course-attended.html", "courseReaded", course.TabId);
+							events.singleWebviewInPeriod(undefined, 'course_details.html', course);
+							if(!events.getUtid()) {
+								events.setValueInMap(storageKeyName.COURSELASTTIME, course.TabId, Date.now());
+							}
+						},
+						/**
+						 * 设置标题
+						 * @param {Object} type 0 只有全部 10 显示全部 11 显示关注
+						 */
+						setTitle: function(type) {
+							var title = document.querySelector(".mui-title");
+							var indicator = document.querySelector("#header-indicator");
+							switch(type) {
+								case 0: //全部
+									title.innerText = "全部";
+									indicator.style.display = "none";
+									break;
+								case 11: //全部
+									title.innerText = "全部";
+									indicator.style.display = "block";
+									indicator.firstElementChild.className = "mui-indicator";
+									indicator.lastElementChild.className = "mui-indicator mui-active";
+									break;
+								case 10: //关注
+									title.innerText = "关注";
+									indicator.style.display = "block";
+									indicator.firstElementChild.className = "mui-indicator mui-active";
+									indicator.lastElementChild.className = "mui-indicator";
+									break;
+								case 12:
+									indicator.style.display = "block";
+									break;
+								case 13:
+									indicator.style.display = "none";
+									break;
+								default:
+									break;
+							}
+						},
+						changePart: function() {
+							if(!this.hasAttended) {
+								return;
+							}
+							this.courseType = (this.courseType + 1) % 2;
+						}
+					}
+				});
+				setListener();
+			})
+
+			function setListener() {
+				//左滑
+				window.addEventListener("swipeleft", function(e) {
+					console.log("show-home2.html的向左滑动事件");
+					coureContainer.changePart(1);
+				})
+				//右滑
+				window.addEventListener("swiperight", function(e) {
+					console.log("show-home2.html的向右滑动事件")
+					coureContainer.changePart(1);
+				})
+			}
+		</script>
+	</body>
+
+</html>
