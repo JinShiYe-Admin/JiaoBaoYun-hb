@@ -174,13 +174,13 @@
 						showInfo: function(newVal, oldVal) {
 							if(newVal.pageFlag) {
 								if(this.hasAttended) { //有关注
-									this.setTitle(10);
+									this.setTitle(11);
 								} else {
 									this.setTitle(0);
 								}
 							} else {
 								if(this.hasAttended) { //有关注
-									this.setTitle(11);
+									this.setTitle(10);
 								} else {
 									console.log("邏輯錯誤")
 								}
@@ -202,7 +202,7 @@
 										this.setTitle(0);
 									}
 								} else { //新增關注
-									this.setTitle(10);
+									this.setTitle(11);
 								}
 							}
 						},
