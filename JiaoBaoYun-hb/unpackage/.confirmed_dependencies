@@ -1030,7 +1030,13 @@
 			"js/micro-course/course-list2.js",
 			"fonts/fangzheng.ttf",
 			"css/utils/common.css",
-			"css/micro-course/course-list.css"
+			"css/micro-course/course-list.css",
+			"js/micro-course/course-list.js",
+			"js/libs/crypto-js/crypto-js.js",
+			"fonts/mui.ttf"
+		],
+		"refer": [
+			"html/micro-course/course_details.html"
 		]
 	}
 }
