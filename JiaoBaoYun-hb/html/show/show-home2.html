@@ -95,7 +95,7 @@
 					mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
 					mui('#pullrefresh').pullRefresh().disablePullupToRefresh();
 				} else {
-					mui('#pullrefresh').pullRefresh().endPullupToRefresh();
+					showList.pullup = true;
 					showList.requireData();
 				}
 			}
@@ -235,7 +235,7 @@
 						},
 						pullup: function(newVal) {
 							if(!newVal) {
-								//								mui("#show-list").
+								mui('#pullrefresh').pullRefresh().endPullupToRefresh();
 							}
 						}
 					},
@@ -321,7 +321,6 @@
 								if(com.showInfo.pageIndex === 1) {
 									com.resetData();
 									mui.scrollTo(0)
-									//									mui('.mui-content').scroll().scrollTo(0, 0)
 								}
 								com.resetFreshState();
 							})

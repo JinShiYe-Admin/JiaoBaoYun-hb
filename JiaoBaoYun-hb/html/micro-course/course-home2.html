@@ -33,7 +33,7 @@
 			</div>
 		</header>
 		<div id="pullrefresh" class="mui-content">
-			<ul id="course-container" class="mui-table-view">
+			<ul id="course-container" v-if="listData.length>0" class="mui-table-view">
 				<li v-for="(li,index) of listData" class="mui-table-view-cell" v-on:tap="jumpToPage(li)" v-bind:id="li.TabId" v-bind:value="index">
 					<div class="course-container">
 						<div class="img-container"><img class="course-img" v-bind:src='li.CoursePic' />
