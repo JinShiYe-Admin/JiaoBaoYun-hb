@@ -116,21 +116,7 @@
 						pullup: false
 					},
 					created: function() {
-						var com = this;
-						this.getAttendedClasses(function(isFocused) {
-							console.log("course-home2获取的是否有关注的课程：" + isFocused);
-							com.hasAttended = isFocused;
-							if(isFocused) { //有关注
-								com.setTitle(10); //设置标题为关注
-							} else {
-								com.setTitle(0); //设置标题为全部
-							}
-							if(isFocused) {
-								com.courseType = 0;
-							} else {
-								com.courseType = 1;
-							}
-						})
+						this.getAttendedClasses(this.setAttType);
 					},
 					watch: {
 						courseType: function(newVal, oldVal) {
@@ -167,6 +153,21 @@
 						}
 					},
 					methods: {
+						setAttType: function(isFocused) {
+							var com = this;
+							console.log("course-home2获取的是否有关注的课程：" + isFocused);
+							com.hasAttended = isFocused;
+							if(isFocused) { //有关注
+								com.setTitle(10); //设置标题为关注
+							} else {
+								com.setTitle(0); //设置标题为全部
+							}
+							if(isFocused) {
+								com.courseType = 0;
+							} else {
+								com.courseType = 1;
+							}
+						},
 						/**
 						 * 获取关注的课程
 						 * @param {Object} callback
@@ -352,6 +353,11 @@
 			}
 
 			function setListener() {
+				//信息更新
+				window.addEventListener("infoChanged", function() {
+					courseContainer.getAttendedClasses(courseContainer.setAttType);
+				})
+				//course-info
 				window.addEventListener('t-focus', function() {
 					courseContainer.changeAttended();
 					courseContainer.courseInfo.pageIndex = 1;

@@ -1018,7 +1018,8 @@
 		],
 		"refer": [
 			"html/show/show-detail.html",
-			"html/register/login.html"
+			"html/register/login.html",
+			"html/quan/pub-dynamic.html"
 		]
 	},
 	"html/micro-course/course-home2.html": {

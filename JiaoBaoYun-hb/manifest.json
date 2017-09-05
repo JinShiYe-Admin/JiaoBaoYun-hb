@@ -5383,7 +5383,8 @@
 				"refer": [
 					"html/register/login.html",
 					"html/quan/space-detail.html",
-					"html/show/show-detail.html"
+					"html/show/show-detail.html",
+					"html/quan/pub-dynamic.html"
 				],
 				"priority": 0
 			},

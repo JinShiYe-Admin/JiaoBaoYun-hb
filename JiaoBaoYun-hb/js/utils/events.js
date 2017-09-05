@@ -441,10 +441,10 @@ var events = (function(mod) {
 		events.fireToPageNone('../../index/mine.html', 'infoChanged');
 		events.fireToPageNone('../cloud/cloud_home.html', 'infoChanged');
 		mui.fire(plus.webview.getWebviewById("index.html"), 'infoChanged');
-		events.fireToPageNone("course-all.html", "infoChanged");
-		events.fireToPageNone("course-attended.html", "infoChanged");
-		events.fireToPageNone("show-all.html", "infoChanged");
-		events.fireToPageNone("show-attended.html", "infoChanged");
+		//		events.fireToPageNone("course-all.html", "infoChanged");
+		//		events.fireToPageNone("course-attended.html", "infoChanged");
+		//		events.fireToPageNone("show-all.html", "infoChanged");
+		//		events.fireToPageNone("show-attended.html", "infoChanged");                                                                                  
 		events.fireToPageNone("show-home2.html", "infoChanged");
 		events.fireToPageNone("course-home2.html", "infoChanged");
 		events.fireToPageNone("sciedu-home.html", "infoChanged");
