@@ -609,7 +609,11 @@
 			"image/utils/default_personalimage.png",
 			"css/mui.min.css",
 			"css/utils/common.css",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"js/utils/cryption.js",
+			"js/utils/CloudFileUtil.js",
+			"js/qiniu/qiniu.js",
+			"js/cloud/AndroidFileSystem.js"
 		],
 		"refer": []
 	},
@@ -728,7 +732,10 @@
 	},
 	"html/mine/about.html": {
 		"resources": [
-			"image/mine/jiaobaoyun.png"
+			"image/mine/jiaobaoyun.png",
+			"css/iconfont/iconfont.css",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		],
 		"refer": []
 	},
