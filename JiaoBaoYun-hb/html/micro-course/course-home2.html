@@ -100,13 +100,15 @@
 					type: courseContainer.courseInfo.type,
 					pageIndex: 1,
 					pageSize: (courseContainer.courseInfo.pageIndex - 1) * 10
-				}, function(data,model) {
-					if(model.IsUpdate){
-						courseContainer.listData = [];
-						courseContainer.addData(data);
+				}, function(data, model) {
+					if(model.IsUpdate) {
+						if(model.type === courseContainer.courseInfo.type) {
+							courseContainer.listData = [];
+							courseContainer.addData(data);
+						}
 					}
 				}, function(err) {
-						console.log("获取失败！")
+					console.log("获取失败！");
 				})
 			}
 
