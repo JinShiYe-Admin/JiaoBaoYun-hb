@@ -54,7 +54,8 @@ var course_list = (function(mod) {
 						//总页数
 						model.totalPage = data.RspData.totalPage;
 						if(comData.pageIndex === model.pageIndex) {
-							callback(data.RspData.Data);
+							model.IsUpdate=data.RspData.IsUpdate;
+							callback(data.RspData.Data,model);
 						}
 					} else {
 						errBack(data);
@@ -72,8 +73,9 @@ var course_list = (function(mod) {
 				//console.log('2.获取所有关注的课程:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 				if(data.RspCode == 0) {
 					//总页数
+					model.IsUpdate=data.RspData.IsUpdate;
 					model.totalPage = data.RspData.totalPage;
-					callback(data.RspData.Data);
+					callback(data.RspData.Data,model);
 				} else {
 					errBack(data);
 				}
