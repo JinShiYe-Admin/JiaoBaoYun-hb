@@ -94,6 +94,22 @@
 				}
 			}
 
+			function getCoursesIsUpDate() {
+				console.log("course-home2.html间歇性神经获取课程");
+				course_list.getData({
+					type: courseContainer.courseInfo.type,
+					pageIndex: 1,
+					pageSize: (courseContainer.courseInfo.pageIndex - 1) * 10
+				}, function(data,model) {
+					if(model.IsUpdate){
+						courseContainer.listData = [];
+						courseContainer.addData(data);
+					}
+				}, function(err) {
+						console.log("获取失败！")
+				})
+			}
+
 			mui.plusReady(function() {
 				mui.fire(plus.webview.getLaunchWebview(), "indexReady");
 				setVue();
@@ -110,7 +126,8 @@
 						courseInfo: {
 							type: this.courseType,
 							pageIndex: 1,
-							totalPage: 0
+							totalPage: 0,
+							pageSize: 10
 						},
 						pulldown: false,
 						pullup: false
@@ -283,8 +300,6 @@
 							course_list.getData(com.courseInfo, function(data) {
 								console.log("course-list2获取的数据", data);
 								com.addData(data);
-								//				mui(".mui-content").pullRefresh().endPulldown();
-								//				mui(".mui-content").pullRefresh().refresh(true);
 							}, function(err) {
 								com.endFresh();
 							})
@@ -353,6 +368,13 @@
 			}
 
 			function setListener() {
+				var interval;
+				plus.webview.currentWebview().addEventListener('show', function() {
+					interval = setInterval(getCoursesIsUpDate, 10000);
+				})
+				plus.webview.currentWebview().addEventListener('hide', function() {
+					clearInterval(interval);
+				})
 				//信息更新
 				window.addEventListener("infoChanged", function() {
 					courseContainer.getAttendedClasses(courseContainer.setAttType);

@@ -12,19 +12,20 @@ var course_list = (function(mod) {
 		var comData = {
 			userId: events.getUtid(), //用户ID,登录用户
 			pageIndex: model.pageIndex, //当前页数
-			pageSize: 10 //每页记录数,传入0，获取总记录数
+			pageSize: model.pageSize //每页记录数,传入0，获取总记录数
 		};
 		// 等待的对话框
 		var wd = null;
 		if(model.type) { //关注0，全部1
 			//1.获取所有课程
 			postDataMCPro_getAllCourses(comData, wd, function(data) {
-				//console.log('1.获取所有课程:' + JSON.stringify(data));
+				console.log('course-list获取所有课程:', data);
 				if(data.RspCode == 0) {
 					//总页数
 					model.totalPage = data.RspData.totalPage;
 					if(model.pageIndex === comData.pageIndex) {
-						callback(data.RspData.Data);
+						model.IsUpdate = data.RspData.IsUpdate;
+						callback(data.RspData.Data, model);
 					}
 				} else {
 					errBack(data);

@@ -479,7 +479,8 @@
 			"css/utils/common.css",
 			"image/quan/add.png",
 			"js/libs/crypto-js/crypto-js.js",
-			"css/mui.min.css"
+			"css/mui.min.css",
+			"css/quan/class_space.css"
 		],
 		"refer": [
 			"html/quan/group-pInfo.html",
