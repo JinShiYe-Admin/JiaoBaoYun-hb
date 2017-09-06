@@ -125,7 +125,7 @@
 				ShowVideoUtil.initVideo(document.getElementById("video"));
 				events.preload('../quan/classSpace-persons.html', 50);
 				events.fireToPageNone("../quan/aboutme.html", "detailReady");
-				events.fireToPageNone("show-home.html", "detailReady");
+				events.fireToPageNone("show-home2.html", "detailReady");
 				myStorage.setItem(storageKeyName.ISSHOWDETAILREADY, true);
 				window.addEventListener('showDetail', function(e) {
 					pageIndex = 1;
@@ -270,11 +270,11 @@
 						}
 					}
 				}
-				
+
 				//console.log("pageIndex:" + pageIndex);
 				if((pageIndex - 1) === 1) {
 					commentList.showDetail = showDetail;
-					commentList.showDetail.IsFocused = commentList.getFocused(showDetail);
+					commentList.showDetail.Ised = commentList.getFocused(showDetail);
 				} else {
 					if(commentList.TabId) {
 						commentList.Comments = commentList.Comments.concat(showDetail.Comments);

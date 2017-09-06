@@ -1,0 +1,388 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/utils/common.css" rel="stylesheet" />
+		<link href="../../css/show/show-list.css" rel="stylesheet" />
+		<style>
+			html,
+			body {
+				background-color: #efeff4;
+			}
+			
+			.mui-slider-indicator {
+				margin-left: -10px;
+				bottom: -3px;
+			}
+			
+			.mui-slider-indicator .mui-indicator {
+				margin: 1px 2px;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<header class="mui-bar mui-bar-nav">
+			<h1 class="mui-title">关注</h1>
+			<div id="header-indicator" class="mui-slider-indicator">
+				<div class="mui-indicator mui-active"></div>
+				<div class="mui-indicator"></div>
+			</div>
+			<a id="publish-show" class="mui-pull-right" style="">发布</a>
+		</header>
+		<div id="pullrefresh" class="mui-content">
+
+			<div id="show-list" class="show-list">
+				<div v-for="cardData of listData" class="mui-table-view cityNews-container">
+					<li v-for="(item,index) of cardData" class="mui-table-view-cell news-container" v-on:tap="jumpToPage(item)">
+						<div class="img-container news-img" v-bind:data-original="getBackImg(item,index)" v-bind:style="{'background-image':'url('+'../../image/utils/default_load_2.gif'+')','background-position':'center','background-size':'cover','text-align':'center'}">
+							<img class="play-video" v-if="isVideo(item)" src="../../image/utils/playvideo.png" />
+						</div>
+						<div class="news-words">
+							<p class="news-title single-line">{{item.MsgTitle}}</p>
+							<div class="anthor-date">
+								<p class="news-anthor single-line">{{item.unick}}</p>
+								<p class="news-date">{{item.PublishDate}}</p>
+							</div>
+						</div>
+					</li>
+				</div>
+			</div>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/utils/vue.js"></script>
+		<script src="../../js/utils/events.js"></script>
+		<script src="../../js/publicProtocol.js"></script>
+		<script src="../../js/show/show-list.js"></script>
+		<script src="../../js/libs/jquery.js"></script>
+		<script src="../../js/libs/jquery.lazyload.min.js"></script>
+		<script type="text/javascript">
+			var detailReady = false;
+			mui.init({
+				keyEventBind: {
+					backbutton: false //关闭back按键监听
+				},
+				pullRefresh: {
+					container: '#pullrefresh',
+					down: {
+						style: 'circle',
+						offset: 50,
+						callback: pulldownRefresh
+					},
+					up: {
+						contentrefresh: '上拉加载更多',
+						callback: pullupRefresh
+					}
+				}
+			});
+
+			function pulldownRefresh() {
+				console.log("下拉刷新中...")
+				showList.pulldown = true;
+				console.log("show-home2要刷新的數值：", showList.showInfo);
+				showList.showInfo.pageIndex = 1;
+				showList.requireData();
+			}
+
+			function pullupRefresh() {
+				console.log("上拉加載更多...")
+				if(showList.showInfo.pageIndex > showList.showInfo.totalPage) {
+					mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
+					mui('#pullrefresh').pullRefresh().disablePullupToRefresh();
+				} else {
+					showList.pullup = true;
+					showList.requireData();
+				}
+			}
+			var showList;
+			mui.plusReady(function() {
+				events.preload('show-detail.html', 100);
+				setVue();
+				setListener();
+				getFocusedPerson(function(hasFocused) {
+					showList.hasAttended = hasFocused;
+					console.log("show-home2.html 关注的状况：" + hasFocused);
+					showList.setShowInfo((hasFocused + 1) % 2);
+				})
+			})
+
+			function setListener() {
+				document.getElementById('publish-show').addEventListener('tap', function(e) {
+					var item = e.target;
+					if(events.judgeLoginMode(item)) {
+						return;
+					}
+					item.disabled = true;
+					events.singleWebviewInPeriod(item, "../quan/pub-dynamic.html", "zx");
+				})
+				//加载用户登陆的监听
+				window.addEventListener("infoChanged", function() {
+					getFocusedPerson(function(hasFocused) {
+						showList.hasAttended = hasFocused;
+						console.log("show-home2.html 关注的状况：" + hasFocused);
+						showList.setShowInfo((hasFocused + 1) % 2);
+					})
+				})
+				//关注或取消关注的监听
+				window.addEventListener("focus", function() {
+					getFocusedPerson(function(hasFocused) {
+						showList.hasAttended = hasFocused;
+					})
+				});
+				window.addEventListener('detailReady', function(e) {
+					detailReady = e.detail;
+				})
+				//左滑
+				window.addEventListener("swipeleft", function(e) {
+					console.log("show-home2.html的向左滑动事件");
+					showList.changePart(0);
+				})
+				//右滑
+				window.addEventListener("swiperight", function(e) {
+					console.log("show-home2.html的向右滑动事件")
+					showList.changePart(1);
+				})
+			}
+			/**
+			 * 获取关注的人
+			 * @param {Object} callback 回调方法
+			 */
+			function getFocusedPerson(callback) {
+				if(!events.getUtid()) {
+					var showFocusedPersen = myStorage.getItem(storageKeyName.SHOWFOCUSEPERSEN);
+					if(showFocusedPersen && showFocusedPersen.length > 0) {
+						callback(1);
+					} else {
+						callback(0);
+					}
+					return;
+				}
+				postDataPro_getFocusByUser({
+					userId: events.getUtid()
+				}, null, function(data) {
+					if(data.RspCode == 0 && data.RspData.Users.length > 0) {
+						callback(1);
+					} else {
+						callback(0);
+					}
+				})
+			}
+			/**
+			 * 设置Vue组件
+			 */
+			function setVue() {
+				showList = new Vue({
+					el: '#show-list',
+					data: {
+						showInfo: {},
+						hasAttended: 0,
+						listData: [],
+						pulldown: false,
+						pullup: false
+					},
+					created: function() {
+
+					},
+					watch: {
+						showInfo: function(newVal, oldVal) {
+							console.log("showInfo的转变:" + JSON.stringify(newVal) + ",旧的关注信息：" + JSON.stringify(oldVal))
+							if(newVal.pageFlag) {
+								if(this.hasAttended) { //有关注
+									this.setTitle(11);
+								} else {
+									this.setTitle(0);
+								}
+							} else {
+								if(this.hasAttended) { //有关注
+									this.setTitle(10);
+								} else {
+									console.log("邏輯錯誤");
+								}
+							}
+							mui('#pullrefresh').pullRefresh().refresh(true);
+							console.log("show-home2.html展現模塊新值：", newVal);
+							this.requireData();
+						},
+						listData: function(newVal, oldVal) {
+							this.$nextTick(function() {
+								jQuery('.news-img').lazyload();
+							})
+						},
+						hasAttended: function(newVal, oldVal) {
+							console.log("有关注的人：" + newVal + ',旧值：' + oldVal);
+							console.log("展示请求信息：" + JSON.stringify(this.showInfo));
+							if(typeof(this.showInfo.pageFlag) !== 'undefined') {
+								if(!newVal) { //無關注的人
+									if(this.showInfo.pageFlag === 0) {
+										this.setShowInfo(1);
+										this.setTitle(0);
+									}
+								} else { //新增關注
+									this.setTitle(12);
+								}
+							}
+						},
+						pulldown: function(newVal) {
+							if(!newVal) {
+								mui('#pullrefresh').pullRefresh().endPulldown();
+								mui('#pullrefresh').pullRefresh().refresh(true);
+							}
+						},
+						pullup: function(newVal) {
+							if(!newVal) {
+								mui('#pullrefresh').pullRefresh().endPullupToRefresh();
+							}
+						}
+					},
+					methods: {
+						setShowInfo: function(type) { //0关注 1全部
+							console.log("关注状态：" + type)
+							if(type) {
+								this.showInfo = {
+									pageFlag: 1, //全部
+									acode: 1,
+									aname: '全部',
+									aflag: 1,
+									pageIndex: 1,
+									totalPage: 0
+								}
+							} else {
+								this.showInfo = {
+									pageFlag: 0, //关注
+									acode: 1,
+									aname: '关注',
+									aflag: 1,
+									pageIndex: 1,
+									totalPage: 0
+								}
+							}
+
+						},
+						/**
+						 * 设置标题
+						 * @param {Object} type 0 只有全部 10 显示全部 11 显示关注
+						 */
+						setTitle: function(type) {
+							var title = document.querySelector(".mui-title");
+							var indicator = document.querySelector("#header-indicator");
+							switch(type) {
+								case 0: //全部
+									title.innerText = "全部";
+									indicator.style.display = "none";
+									break;
+								case 11: //全部
+									title.innerText = "全部";
+									indicator.style.display = "block";
+									indicator.firstElementChild.className = "mui-indicator";
+									indicator.lastElementChild.className = "mui-indicator mui-active";
+									break;
+								case 10: //关注
+									title.innerText = "关注";
+									indicator.style.display = "block";
+									indicator.firstElementChild.className = "mui-indicator mui-active";
+									indicator.lastElementChild.className = "mui-indicator";
+									break;
+								case 12:
+									indicator.style.display = "block";
+									break;
+								default:
+									break;
+							}
+						},
+						changePart: function(dir) {
+							if(this.hasAttended === 0) {
+								return;
+							}
+							this.setShowInfo((this.showInfo.pageFlag + 1) % 2);
+						},
+
+						resetData: function() {
+							this.listData = [];
+						},
+						resetFreshState: function() {
+							this.pulldown = false;
+							this.pullup = false;
+						},
+						requireData: function() {
+							var com = this;
+							show_list.getShowList(this.showInfo, function(showCity, data) {
+								console.log('show-home2.html获取的关注数据：', data);
+								com.addData(showCity.pageIndex, data);
+								com.showInfo.pageIndex++;
+								com.resetFreshState();
+								console.log("show-home2.html获取数据后的showInfo:", com.showInfo)
+							}, function(err) {
+								console.log("错误", err);
+								if(com.showInfo.pageIndex === 1) {
+									com.resetData();
+									mui.scrollTo(0)
+								}
+								com.resetFreshState();
+							})
+
+						},
+						addData: function(pageIndex, dataArr) {
+							if(pageIndex == 1) {
+								this.listData = [];
+							}
+							for(var i = 0; i < dataArr.length; i += 6) {
+								this.listData.push(dataArr.slice(i, i + 6));
+							}
+							console.log("获取的展现列表数据：", this.listData)
+						},
+						getBackImg: function(item, index) {
+							if(item.EncImgAddr) {
+								return item.EncImgAddr.split('|')[0]
+							}
+							if(parseInt(index) > 0) {
+								return '../../image/show/show-default-small.png';
+							}
+							return '../../image/show/show-default-large.png';
+						},
+						jumpToPage: function(item) {
+							console.log("点击事件")
+							if(myStorage.getItem(storageKeyName.ISSHOWDETAILREADY)) {
+								events.fireToPageWithData("show-detail.html", "showDetail", item);
+							} else {
+								setTimeout(function() {
+									showList.jumpToPage(item)
+								}, 500);
+							}
+						},
+						isVideo: function(cell) {
+							var isVideo = false;
+							if(cell.EncType) {
+								switch(cell.EncType) {
+									case 2: //视频
+										isVideo = true;
+										break;
+									case 5: //图文混合
+										var addrs = cell.EncAddr.split(".");
+										switch(addrs[addrs.length - 1]) {
+											case "mp4":
+											case "MP4":
+												isVideo = true;
+												break;
+											default:
+												break;
+										}
+										break;
+									default:
+										break;
+								}
+							}
+							return isVideo
+						}
+
+					}
+				});
+			}
+		</script>
+	</body>
+
+</html>

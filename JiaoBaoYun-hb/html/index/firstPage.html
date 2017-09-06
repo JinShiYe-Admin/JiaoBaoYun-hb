@@ -25,7 +25,6 @@
 				document.addEventListener('plusready', function() {
 					checkArguments();
 				}, false);
-
 				//获取APP的_documents文件夹对象,并清理文件
 				plus.io.resolveLocalFileSystemURL("_documents/", function(docEntry) {
 					//console.log("获取_documents文件操作对象成功 " + docEntry.fullPath);
@@ -113,6 +112,15 @@
 				//默认自动登录
 				login();
 			});
+			// 判断启动方式
+			function checkArguments() {
+				alert("plus.runtime.launcher: " + plus.runtime.launcher);
+				var args = plus.runtime.arguments;
+				alert('arguments:'+args);
+				if(args) {
+					// 处理args参数，如打开新页面等
+				}
+			}
 
 			// 判断启动方式
 			function checkArguments() {

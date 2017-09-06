@@ -70,8 +70,8 @@ var addSubPages = function() {
 	//设置默认打开首页显示的子页序号；
 	var Index = 0;
 	//把子页的路径写在数组里面（空间，求知，剪辑，云盘 ）四个个子页面
-	var subpages = ['../show/show-home.html', '../micro-course/course-home.html'];
 
+	var subpages = ['../show/show-home.html', '../micro-course/course-home2.html'];
 	//创建子页面，首个选项卡页面显示，其它均隐藏；
 	var self = plus.webview.currentWebview();
 	for(var i = 0; i < 2; i++) {
@@ -103,7 +103,7 @@ var setListener = function() {
 		console.log("获取的数据：" + JSON.stringify(e.detail));
 		console.log("当前活动页面：" + activeTab);
 		var data = e.detail;
-		if((data.flag == 0 && activeTab == '../show/show-home.html') || (data.flag && activeTab == '../micro-course/course-home.html')) {
+		if((data.flag == 0 && activeTab == '../show/show-home.html') || (data.flag && activeTab == '../micro-course/course-home2.html')) {
 			setTitle(data.type);
 		}
 	})
@@ -188,16 +188,6 @@ var setConditionbyRole = function(role) {
 	//console.log("要隐藏的界面：" + active_tab);
 	plus.webview.hide(active_tab.split("/")[active_tab.split("/").length - 1]);
 	document.querySelector(".mui-tab-item.mui-active").className = "mui-tab-item";
-
-	//	if(role) { //正常用户
-	//		cloudIcon.style.display = "table-cell";
-	//		cloudIcon.className = "mui-tab-item mui-active";
-	//		activeTab = "../cloud/cloud_home.html";
-	//	} else { //游客
-	//		cloudIcon.style.display = "none";
-	//		sceIcon.className = "mui-tab-item mui-active";
-	//		activeTab = "../sciedu/sciedu_home.html";
-	//	}
 	//显示活动的界面
 	setActivePage();
 }
