@@ -2108,7 +2108,8 @@
 					"js/main/off-canvas.js",
 					"html/show/show-home1.html",
 					"fonts/fangzheng.ttf",
-					"html/show/show-home.html"
+					"html/show/show-home.html",
+					"html/show/show-home2.html"
 				],
 				"refer": [
 					"html/mine.html",
@@ -2123,8 +2124,8 @@
 					"html/register/login.html",
 					"html/cloud/order-member.html",
 					"html/micro-course/course-home.html",
-					"html/show/show-home2.html",
-					"html/sciedu/sciedu-home.html"
+					"html/sciedu/sciedu-home.html",
+					"html/micro-course/course-home2.html"
 				],
 				"priority": 0
 			},
@@ -5373,11 +5374,14 @@
 					"image/utils/loading.gif",
 					"fonts/fangzheng.ttf",
 					"image/show/show-default-small.png",
-					"image/show/show-default-large.png"
+					"image/show/show-default-large.png",
+					"image/utils/default_load_2.gif",
+					"fonts/mui.ttf"
 				],
 				"refer": [
 					"html/register/login.html",
-					"html/quan/space-detail.html"
+					"html/quan/space-detail.html",
+					"html/show/show-detail.html"
 				],
 				"priority": 0
 			},
@@ -5637,6 +5641,20 @@
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/micro-course/course-home2.html": {
+				"resources": [
+					"js/utils/vue.js",
+					"fonts/fangzheng.ttf",
+					"js/publicMicroClass.js",
+					"css/mui.min.css",
+					"css/micro-course/course-list.css",
+					"js/micro-course/course-list.js",
+					"css/utils/common.css",
+					"js/libs/crypto-js/crypto-js.js"
 				],
 				"refer": [],
 				"priority": 0

@@ -5,7 +5,7 @@ var storageKeyName = (function(mod) {
 	mod.key = 2; //0,开发;1,测试--教宝云;2,测试--微视学堂 3外网--微视学堂 4外网--教宝云
 	var exLog = console.log;
 	console.log = function(hint, object) {
-		if(mod.key === 1) {
+		if(mod.key === 2) {
 			var argus = hint;
 			if(object) {
 				argus = hint + JSON.stringify(object);
@@ -186,3 +186,7 @@ var storageKeyName = (function(mod) {
 	return mod;
 
 })(storageKeyName || {});
+var consts=(function(mod){
+	mod.NOOPEN="此功能暂未开放！";
+	return mod;
+})(consts||{})

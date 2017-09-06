@@ -71,7 +71,7 @@ var addSubPages = function() {
 	var Index = 0;
 	//把子页的路径写在数组里面（空间，求知，剪辑，云盘 ）四个个子页面
 
-	var subpages = ['../show/show-home.html', '../micro-course/course-home2.html'];
+	var subpages = ['../show/show-home.html', '../micro-course/course-home.html'];
 	//创建子页面，首个选项卡页面显示，其它均隐藏；
 	var self = plus.webview.currentWebview();
 	for(var i = 0; i < 2; i++) {
@@ -103,7 +103,7 @@ var setListener = function() {
 		console.log("获取的数据：" + JSON.stringify(e.detail));
 		console.log("当前活动页面：" + activeTab);
 		var data = e.detail;
-		if((data.flag == 0 && activeTab == '../show/show-home.html') || (data.flag && activeTab == '../micro-course/course-home2.html')) {
+		if((data.flag == 0 && activeTab == '../show/show-home.html') || (data.flag && activeTab == '../micro-course/course-home.html')) {
 			setTitle(data.type);
 		}
 	})

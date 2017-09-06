@@ -118,6 +118,8 @@ var commentList = new Vue({
 		},
 		//是否已关注
 		toggleFocus: function() {
+			mui.toast(consts.NOOPEN);
+			return;
 			if(events.getUtid()) {
 				//console.log("获取当前状态：" + this.showDetail.IsFocused);
 				var wd = events.showWaiting();
@@ -151,6 +153,8 @@ var commentList = new Vue({
 		},
 		//是否已点赞
 		toggleLike: function() {
+			mui.toast(consts.NOOPEN);
+			return;
 			if(!events.getUtid()) {
 				events.judgeLoginMode();
 				return;
@@ -207,6 +211,8 @@ var commentList = new Vue({
 		//type为类型 0为留言 1为回复
 		//如果是回复 index0是要回复的留言的index,index1为要回复的回复的index.
 		openComment: function(type, index0, index1) {
+			mui.toast(consts.NOOPEN);
+			return;
 			if(!events.getUtid()) { //判断是否为游客，游客跳转登陆界面
 				events.judgeLoginMode();
 				return;
@@ -238,6 +244,8 @@ var commentList = new Vue({
 		},
 		//打开个人主页
 		openPersonSpace: function(usrId) {
+			mui.toast(consts.NOOPEN);
+			return;
 			mui.openWindow({
 				url: "../quan/zone_main.html",
 				id: "zone_main.html",
@@ -254,6 +262,8 @@ var commentList = new Vue({
 			})
 		},
 		openLikers: function() {
+			mui.toast(consts.NOOPEN);
+			return;
 			events.fireToPageWithData("../quan/classSpace-persons.html", "personsList", {
 				userSpaceId: this.showDetail.TabId,
 				type: 3

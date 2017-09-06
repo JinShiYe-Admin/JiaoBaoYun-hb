@@ -240,6 +240,8 @@
 							this.courseType = (this.courseType + 1) % 2;
 						},
 						toggleFocus: function(course) {
+							mui.toast(consts.NOOPEN);
+							return;
 							var com = this;
 							if(!events.getUtid()) {
 								events.toggleStorageArray(storageKeyName.FOCUSECOURSES, course.TabId, course.IsFocus);

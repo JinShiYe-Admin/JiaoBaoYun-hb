@@ -11,6 +11,8 @@ var courseInfo = new Vue({
 
 		},
 		toggleFocus: function() {
+			mui.toast(consts.NOOPEN);
+			return;
 			var com = this;
 			if(events.getUtid()) {
 				com.setCourseFocus(function() {
