@@ -20,43 +20,43 @@
 			.mui-content {
 				background-color: #f2f3f5;
 			}
-
+			
 			#topPopover {
 				position: fixed;
 				top: 46px;
 				right: 6px;
 				width: 150px;
 			}
-
+			
 			#topPopover .mui-popover-arrow {
 				left: auto;
 				right: 6px;
 			}
-
+			
 			.mui-popover {
 				height: 80px;
 				width: 150;
 			}
-
+			
 			.mui-backdrop {
 				/*选择排序的遮罩*/
 				background-color: rgba(0, 0, 0, 0.05);
 			}
-
+			
 			#refreshContainer .mui-table-view:before,
 			#refreshContainer .mui-table-view:after,
 			#refreshContainer .mui-table-view-cell:after {
 				height: 0px;
 			}
-
+			
 			#refreshContainer .mui-table-view {
 				background-color: white;
 			}
-
+			
 			.cloud-item {
 				background-color: white;
 			}
-
+			
 			.cloud-item-left {
 				width: 16%;
 				border-right: 1px solid #D9D9D9;
@@ -65,7 +65,7 @@
 				font-weight: bold;
 				font-size: 1.6rem;
 			}
-
+			
 			.cloud-item-right {
 				/*margin-left: 16%;*/
 				width: 84%;
@@ -83,27 +83,27 @@
 			/*每一项的第二行*/
 			/*background-color: blue;*/
 			/*}*/
-
+			
 			.mui-plus-pullrefresh .mui-scroll {
 				position: absolute;
 				/*width: 100%;*/
 			}
-
+			
 			.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
 				color: black;
 				border: none;
 			}
-
+			
 			#refreshContainer .mui-table-view-cell {
 				display: inline-block;
 				width: auto;
 				padding: 1px 1px;
 			}
-
+			
 			.mui-slider-indicator .mui-table-view-cell.mui-active {
 				background: white;
 			}
-
+			
 			.cloud-red-point {
 				position: absolute;
 				background: red;
@@ -112,27 +112,27 @@
 				border-radius: 50%;
 				display: none;
 			}
-
+			
 			img {
 				border-radius: 50%;
 			}
-
+			
 			#cloudstorage_1 img {
 				border-radius: 0px;
 			}
-
+			
 			.icon-jiaxiabiao {
 				color: #0ABAF5;
 			}
-
+			
 			.icon-banxiabiao {
 				color: #FFBA00;
 			}
-
+			
 			.icon-re {
 				color: #FD681E;
 			}
-
+			
 			.icon-re,
 			.icon-banxiabiao,
 			.icon-jiaxiabiao {
@@ -140,30 +140,30 @@
 				border: none !important;
 				top: 0px;
 			}
-
+			
 			.mui-popup-input input {
 				/*popup 输入框*/
 				height: 34px;
 				border-color: #E4E4E4;
 				margin-top: 5px;
 			}
-
+			
 			.mui-bar-nav.mui-bar .mui-icon.img-icon {
 				padding-top: 7px;
 			}
-
+			
 			.mui-backdrop {
 				bottom: -50px;
 			}
 			/*分情况来做,不是所有页面都需要字体随着屏幕大小改变而改变的.*/
-
+			
 			@media only screen and (min-width:320px) and (max-width:359px) {
 				.mui-popup {
 					top: 30%;
 				}
 			}
 			/*三星大屏幕机最低宽度:note2-note3,S2-S4*/
-
+			
 			@media only screen and (min-width:360px) {
 				.mui-popup {
 					top: 40%;
@@ -357,6 +357,7 @@
 			var topStudentArr = [];
 			//未读数model
 			var noReadModel = {};
+			var updateFlag = 0;
 
 			var homeworkReady = false;
 			//存储档案文件夹
@@ -366,13 +367,13 @@
 			//设置全局beforeSend
 			mui.ajaxSettings.beforeSend = function(xhr, setting) {
 				httpFlag++
-				console.log('发送前httpFlag=========='+httpFlag)
+				console.log('发送前httpFlag==========' + httpFlag)
 			};
 
 			//设置全局complete
 			mui.ajaxSettings.complete = function(xhr, status) {
 				httpFlag--;
-				console.log('完成后httpFlag=========='+httpFlag)
+				console.log('完成后httpFlag==========' + httpFlag)
 				if(httpFlag <= 0) { //所有请求完毕
 					httpFlag = 0;
 					wd.close();
@@ -380,13 +381,17 @@
 			}
 
 			mui.plusReady(function() {
+									//重复执行某个方法 
+					var timer = window.setInterval(updateUnread, 10000);
+					//去掉定时器的方法 
+//					window.clearInterval(t1);
 				var webHeight = localStorage.getItem('resolutionHeight') * 1 - (localStorage.getItem('getStatusbarHeight') * 1 + 50);
 				plus.webview.currentWebview().setStyle({
 					height: webHeight + 'px'
 				})
 				//发送协议
 				changeData();
-				
+
 				addcloudapps_0(); //应用
 				off_canvas.add('../index/mine.html', 200);
 				document.querySelector(".img-icon>img").src = updateHeadImg(myStorage.getItem(storageKeyName.PERSONALINFO).uimg, 2);
@@ -1261,6 +1266,29 @@
 						//wd.close();
 					});
 				}
+				
+
+				function updateUnread() {
+					console.log('刷新未读数')
+
+					if(!parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid)) {
+						return;
+					}
+
+					if(plus.networkinfo.getCurrentType() == plus.networkinfo.CONNECTION_NONE) {
+						//console.log('没有网络');
+						mui.toast("网络异常，请检查网络设置！");
+						return;
+					}
+					httpFlag = 0;
+					//获取学生
+					getStuList();
+					//获取班级
+					getGroupList();
+					updateFlag =1;
+					getAboutMe();
+
+				}
 			});
 			// 通过群ID获取群的正常用户
 			function getAllClassMember(gids, gidArr) {
@@ -1417,6 +1445,11 @@
 					pageSize: '1' //每页记录数
 				};
 				wd = events.showWaiting();
+				if(updateFlag==1){
+					wd.close();
+					updateFlag=0;
+				}
+				
 				//返回model：model_homeSchoolList，model_userSpaceAboutMe
 				//var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 				//24.获取与我相关

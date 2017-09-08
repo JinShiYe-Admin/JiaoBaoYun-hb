@@ -175,7 +175,8 @@
 			"js/publicHomeworkProtocol.js",
 			"js/libs/RSA/RSA.js",
 			"js/utils/RSAEncrypt.js",
-			"js/publicProtocol.js"
+			"js/publicProtocol.js",
+			"js/utils/events.js"
 		],
 		"refer": [
 			"html/index/mine.html",
@@ -238,7 +239,10 @@
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
-			"js/libs/myStorage/myStorage.js"
+			"js/libs/myStorage/myStorage.js",
+			"js/utils/events.js",
+			"js/publicProtocol.js",
+			"js/mui.min.js"
 		],
 		"refer": []
 	},

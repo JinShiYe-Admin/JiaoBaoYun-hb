@@ -103,7 +103,7 @@ var setListener = function() {
 	mui('.mui-bar-tab').on('tap', 'a', function(e) {
 		var targetTab = this.getAttribute('href');
 		if(activeTab == '../cloud/cloud_home.html') {
-			events.fireToPageWithData('../cloud/cloud_home.html', 'topPopover', {})
+//			events.fireToPageWithData('../cloud/cloud_home.html', 'topPopover', {})
 		}
 		//console.log("活动的页面：" + activeTab)
 		if(targetTab == activeTab) {
