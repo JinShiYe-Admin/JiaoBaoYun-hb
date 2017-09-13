@@ -74,7 +74,7 @@
 				</div>
 				<!--数据列表-->
 				<template v-else v-show="listData.length>0">
-					<ul class="mui-table-view">
+					<ul class="mui-table-view" v-bind:class="[{'right-in':isRightIn},{'left-in':!isRightIn}]">
 						<li v-for="(item,index) of listData" v-on:tap="showDetail(index)" class="mui-table-view-cell" v-bind:class="[{'li-flex':item.isFlex}]">
 							<div class="item-words" v-bind:class="[{'words-flex':item.isFlex}]">
 								<p class="item-title" v-bind:class="[{'readed-color':item.isReaded}]">{{item.title}}</p>
@@ -113,7 +113,7 @@
 					},
 					up: {
 						contentrefresh: '正在加载...',
-						contentnomore:'',
+						contentnomore: '',
 						callback: pullupRefresh
 					}
 				}
@@ -127,7 +127,7 @@
 				scieduList.requireListData(function() {
 					mui('#sciedu-list').pullRefresh().endPulldown();
 					mui('#sciedu-list').pullRefresh().refresh(true);
-					document.querySelector(".mui-pull-bottom-pocket").style.height="40px";
+					document.querySelector(".mui-pull-bottom-pocket").style.height = "40px";
 				})
 			}
 			/**
@@ -137,7 +137,7 @@
 				console.log("上拉加载时的pageInfo:", scieduList.pageInfo);
 				if(scieduList.pageInfo.pageIndex > scieduList.pageInfo.totalPage) {
 					mui('#sciedu-list').pullRefresh().endPullupToRefresh(true);
-					document.querySelector(".mui-pull-bottom-pocket").style.height=0;
+					document.querySelector(".mui-pull-bottom-pocket").style.height = 0;
 					return;
 				}
 				scieduList.requireListData(function() {
@@ -160,10 +160,12 @@
 				})
 				window.addEventListener("swipeleft", function(e) {
 					console.log("sciedu-list.html的向左滑动事件");
+
 					changeCity(0);
 				})
 				window.addEventListener("swiperight", function(e) {
 					console.log("sciedu-list.html的向右滑动事件")
+
 					changeCity(1);
 				})
 				window.addEventListener("detailReady", function() {
@@ -178,6 +180,11 @@
 				if(cities.length === 1) {
 					return;
 				}
+				if(dir === 1) {
+					scieduList.isRightIn = false;
+				} else {
+					scieduList.isRightIn = true;
+				}
 				scieduList.isSwiping = true;
 				console.log("sciedu-list cities的长度：" + cities.length + ";" + typeof(cities.length))
 				if(dir) {
@@ -189,7 +196,7 @@
 				scieduList.cityInfo = cities[curIndex];
 				events.fireToPageNone("sciedu-home.html", "curCity", curIndex);
 				mui('#sciedu-list').pullRefresh().refresh(true);
-				document.querySelector(".mui-pull-bottom-pocket").style.height="40px";
+				document.querySelector(".mui-pull-bottom-pocket").style.height = "40px";
 			}
 		</script>
 	</body>

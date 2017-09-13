@@ -49,13 +49,18 @@ var course_list = (function(mod) {
 				};
 				//13.根据课程列表获取所有关注的课程
 				postDataMCPro_getAllFocusCoursesByIds(comData, wd, function(data) {
-					//console.log('13.根据课程列表获取所有关注的课程:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					console.log('13.根据课程列表获取所有关注的课程:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
 						//总页数
 						model.totalPage = data.RspData.totalPage;
 						if(comData.pageIndex === model.pageIndex) {
-							model.IsUpdate=data.RspData.IsUpdate;
-							callback(data.RspData.Data,model);
+							if(data.RspData.Data.length>0&&data.RspData.Data[0].UpdateTime) {
+								model.IsUpdate = mod.isCustomCourseUpadate(data.RspData.Data[0]);
+							} else {
+								model.IsUpdate = false;
+							}
+							myStorage.setItem(storageKeyName.CUSTOMREQUESTTIME, Date.now());
+							callback(data.RspData.Data, model);
 						}
 					} else {
 						errBack(data);
@@ -73,14 +78,21 @@ var course_list = (function(mod) {
 				//console.log('2.获取所有关注的课程:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 				if(data.RspCode == 0) {
 					//总页数
-					model.IsUpdate=data.RspData.IsUpdate;
+					model.IsUpdate = data.RspData.IsUpdate;
 					model.totalPage = data.RspData.totalPage;
-					callback(data.RspData.Data,model);
+					callback(data.RspData.Data, model);
 				} else {
 					errBack(data);
 				}
 			});
 		}
 	};
+	mod.isCustomCourseUpadate = function(UpdateTime) {
+		var lastTime = parseInt(myStorage.getItem(storageKeyName.CUSTOMREQUESTTIME));
+		if(Date.parse(UpdateTime) > lastTime) {
+			return true;
+		}
+		return false;
+	}
 	return mod;
 })(course_list || {})

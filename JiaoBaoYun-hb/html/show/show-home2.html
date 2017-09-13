@@ -22,6 +22,34 @@
 			.mui-slider-indicator .mui-indicator {
 				margin: 1px 2px;
 			}
+			
+			.left-in {
+				animation-duration: 0.5s;
+				animation-name: sliderleftin;
+				animation-timing-function: ease-in;
+			}
+			
+			@keyframes sliderleftin {
+				from {
+					margin-left: -100%;
+					width: 100%;
+				}
+				to {
+					margin-left: 0%;
+					width: 100%;
+				}
+			}
+			
+			@keyframes sliderightin {
+				from {
+					margin-left: 100%;
+					width: 300%;
+				}
+				to {
+					margin-left: 0%;
+					width: 100%;
+				}
+			}
 		</style>
 	</head>
 
@@ -36,21 +64,26 @@
 			<a id="publish-show" class="mui-pull-right" style="">发布</a>
 		</header>
 		<div id="pullrefresh" class="mui-content">
-
-			<div id="show-list" class="show-list">
-				<div v-for="cardData of listData" class="mui-table-view cityNews-container">
-					<li v-for="(item,index) of cardData" class="mui-table-view-cell news-container" v-on:tap="jumpToPage(item)">
-						<div class="img-container news-img" v-bind:data-original="getBackImg(item,index)" v-bind:style="{'background-image':'url('+'../../image/utils/default_load_2.gif'+')','background-position':'center','background-size':'cover','text-align':'center'}">
-							<img class="play-video" v-if="isVideo(item)" src="../../image/utils/playvideo.png" />
-						</div>
-						<div class="news-words">
-							<p class="news-title single-line">{{item.MsgTitle}}</p>
-							<div class="anthor-date">
-								<p class="news-anthor single-line">{{item.unick}}</p>
-								<p class="news-date">{{item.PublishDate}}</p>
+			<div id="show-list">
+				<div v-if="listData.length>0" v-bind:class="[{'right-in':isRightIn},{'left-in':!isRightIn}]" class="show-list">
+					<div v-for="cardData of listData" class="mui-table-view cityNews-container">
+						<li v-for="(item,index) of cardData" class="mui-table-view-cell news-container" v-on:tap="jumpToPage(item)">
+							<div class="img-container news-img" v-bind:data-original="getBackImg(item,index)" v-bind:style="{'background-image':'url('+'../../image/utils/default_load_2.gif'+')','background-position':'center','background-size':'cover','text-align':'center'}">
+								<img class="play-video" v-if="isVideo(item)" src="../../image/utils/playvideo.png" />
 							</div>
-						</div>
-					</li>
+							<div class="news-words">
+								<p class="news-title single-line">{{item.MsgTitle}}</p>
+								<div class="anthor-date">
+									<p class="news-anthor single-line">{{item.unick}}</p>
+									<p class="news-date">{{item.PublishDate}}</p>
+								</div>
+							</div>
+						</li>
+					</div>
+				</div>
+				<div v-else v-show="isSwiping" style="text-align: center;margin-top: 50%;">
+					<p><span class="mui-spinner"></span></p>
+					<p>数据加载中...</p>
 				</div>
 			</div>
 		</div>
@@ -140,12 +173,12 @@
 				//左滑
 				window.addEventListener("swipeleft", function(e) {
 					console.log("show-home2.html的向左滑动事件");
-					showList.changePart(0);
+					showList.changePart(true);
 				})
 				//右滑
 				window.addEventListener("swiperight", function(e) {
 					console.log("show-home2.html的向右滑动事件")
-					showList.changePart(1);
+					showList.changePart(false);
 				})
 			}
 			/**
@@ -183,7 +216,9 @@
 						hasAttended: 0,
 						listData: [],
 						pulldown: false,
-						pullup: false
+						pullup: false,
+						isRightIn: true,
+						isSwiping: false
 					},
 					created: function() {
 
@@ -204,6 +239,7 @@
 									console.log("邏輯錯誤");
 								}
 							}
+							this.listData = [];
 							mui('#pullrefresh').pullRefresh().refresh(true);
 							console.log("show-home2.html展現模塊新值：", newVal);
 							this.requireData();
@@ -294,10 +330,15 @@
 									break;
 							}
 						},
-						changePart: function(dir) {
+						changePart: function(type) {
 							if(this.hasAttended === 0) {
 								return;
 							}
+							if(this.isSwiping) {
+								return;
+							}
+							this.isSwiping = true;
+							this.isRightIn = type;
 							this.setShowInfo((this.showInfo.pageFlag + 1) % 2);
 						},
 
@@ -315,12 +356,14 @@
 								com.addData(showCity.pageIndex, data);
 								com.showInfo.pageIndex++;
 								com.resetFreshState();
+								com.isSwiping = false;
 								console.log("show-home2.html获取数据后的showInfo:", com.showInfo)
 							}, function(err) {
 								console.log("错误", err);
 								if(com.showInfo.pageIndex === 1) {
 									com.resetData();
 									mui.scrollTo(0)
+									com.isSwiping = false;
 								}
 								com.resetFreshState();
 							})

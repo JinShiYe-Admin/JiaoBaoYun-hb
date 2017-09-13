@@ -4920,7 +4920,8 @@
 					"js/utils/RSAEncrypt.js",
 					"fonts/fangzheng.ttf",
 					"js/libs/crypto-js/crypto-js.js",
-					"js/publicProtocol.js"
+					"js/publicProtocol.js",
+					"js/utils/vue.js"
 				],
 				"refer": [
 					"html/micro-course/course-search.html"
