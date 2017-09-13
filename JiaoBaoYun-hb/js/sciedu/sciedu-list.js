@@ -13,7 +13,8 @@ var scieduList = new Vue({
 		listData: [], //列表数据
 		isSwiping: false,
 		isDetailReady: false,
-		imgsStyle: {}
+		imgsStyle: {},
+		isRightIn:true
 	},
 	watch: {
 		listData: function(val, pre) {
@@ -36,6 +37,7 @@ var scieduList = new Vue({
 				pageIndex: 1,
 				totalPage: 0
 			}
+			this.resetData();
 		},
 		requireListData: function(callback) { //请求数据
 			var pageInfo = this.pageInfo;

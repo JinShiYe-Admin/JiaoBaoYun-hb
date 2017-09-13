@@ -697,7 +697,9 @@
 			"js/libs/crypto-js/crypto-js.js",
 			"fonts/fangzheng.ttf"
 		],
-		"refer": []
+		"refer": [
+			"html/mine/edit-info.html"
+		]
 	},
 	"html/show/add-comment.html": {
 		"resources": [
@@ -716,7 +718,8 @@
 			"html/micro-course/course-attended.html",
 			"html/micro-course/course-all.html",
 			"js/publicMicroClass.js",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"js/utils/vue.js"
 		],
 		"refer": [
 			"html/micro-course/course-attended.html",
@@ -1043,6 +1046,12 @@
 		],
 		"refer": [
 			"html/micro-course/course_details.html"
+		]
+	},
+	"html/mine/edit-info.html": {
+		"resources": [
+			"js/utils/self-adaptive-input.js",
+			"css/mine/edit-info.css"
 		]
 	}
 }

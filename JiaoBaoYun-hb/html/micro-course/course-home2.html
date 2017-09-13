@@ -8,6 +8,7 @@
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link href="../../css/utils/common.css" rel="stylesheet" />
 		<link href="../../css/micro-course/course-list.css" rel="stylesheet" />
+		<script src="../../js/utils/vue.js"></script>
 		<style>
 			.mui-slider-indicator {
 				margin-left: -10px;
@@ -33,24 +34,29 @@
 			</div>
 		</header>
 		<div id="pullrefresh" class="mui-content">
-			<ul id="course-container" v-if="listData.length>0" class="mui-table-view">
-				<li v-for="(li,index) of listData" class="mui-table-view-cell" v-on:tap="jumpToPage(li)" v-bind:id="li.TabId" v-bind:value="index">
-					<div class="course-container">
-						<div class="img-container"><img class="course-img" v-bind:src='li.CoursePic' />
-							<span class="red-circle" v-bind:class="{'display-none':li.IsUpdate==0}"></span></div>
-						<div class="course-detail">
-							<div class="courseName-button">
-								<p class="course-name single-line">{{li.CourseName}}</p>
-								<button id="btn-focused" type="button" class="input-btn" v-bind:class="[li.IsFocus?'btn-focused':'btn-unfocus']" v-on:tap.stop="toggleFocus(li)">{{li.IsFocus?'已关注':'关注'}}</button>
+			<div id="course-container">
+				<ul v-if="listData.length>0" class="mui-table-view" v-bind:class="[{'right-in':isRightIn},{'left-in':!isRightIn}]">
+					<li v-for="(li,index) of listData" v-bind:key='index' class="mui-table-view-cell" v-on:tap="jumpToPage(li)" v-bind:id="li.TabId" v-bind:value="index">
+						<div class="course-container">
+							<div class="img-container"><img class="course-img" v-bind:src='li.CoursePic' />
+								<span class="red-circle" v-bind:class="{'display-none':li.IsUpdate==0}"></span></div>
+							<div class="course-detail">
+								<div class="courseName-button">
+									<p class="course-name single-line">{{li.CourseName}}</p>
+									<button id="btn-focused" type="button" class="input-btn" v-bind:class="[li.IsFocus?'btn-focused':'btn-unfocus']" v-on:tap.stop="toggleFocus(li)">{{li.IsFocus?'已关注':'关注'}}</button>
+								</div>
+								<p class="course-info double-line">{{li.SecName}}</p>
 							</div>
-							<p class="course-info double-line">{{li.SecName}}</p>
 						</div>
-					</div>
-				</li>
-			</ul>
+					</li>
+				</ul>
+				<div v-else v-show="isSwiping" style="text-align: center;margin-top: 50%;">
+					<p><span class="mui-spinner"></span></p>
+					<p>数据加载中...</p>
+				</div>
+			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
-		<script src="../../js/utils/vue.js"></script>
 		<script src="../../js/utils/events.js"></script>
 		<script src="../../js/publicProtocol.js"></script>
 		<script src="../../js/publicMicroClass.js"></script>
@@ -132,7 +138,9 @@
 							pageSize: 10
 						},
 						pulldown: false,
-						pullup: false
+						pullup: false,
+						isRightIn: true,
+						isSwiping: false
 					},
 					created: function() {
 						this.getAttendedClasses(this.setAttType);
@@ -154,6 +162,8 @@
 								}
 							}
 							this.courseInfo.pageIndex = 1;
+							this.listData = [];
+							mui("#pullrefresh").pullRefresh().refresh(true);
 							this.courseInfo.type = newVal;
 							this.requestData();
 						},
@@ -169,6 +179,9 @@
 								this.courseType = 1;
 								this.setTitle(13);
 							}
+						},
+						listData: function(newVal, oldVal) {
+							console.log("获取的listData的长度：" + newVal.length);
 						}
 					},
 					methods: {
@@ -255,6 +268,11 @@
 							if(!this.hasAttended) {
 								return;
 							}
+							if(this.isSwiping) {
+								return;
+							}
+							this.isSwiping = true;
+							this.isRightIn = type;
 							console.log("关注和全部页面的切换");
 							this.courseType = (this.courseType + 1) % 2;
 						},
@@ -307,6 +325,7 @@
 							})
 						},
 						endFresh: function() {
+							
 							if(this.pulldown) {
 								mui("#pullrefresh").pullRefresh().endPulldown();
 								mui("#pullrefresh").pullRefresh().refresh(true);
@@ -316,6 +335,7 @@
 								mui('#pullrefresh').pullRefresh().endPullupToRefresh();
 								this.pullup = false;
 							}
+							this.isSwiping = false;
 						},
 						addData: function(data) {
 							var com = this;
@@ -390,12 +410,13 @@
 				//左滑
 				window.addEventListener("swipeleft", function(e) {
 					console.log("course-home2.html的向左滑动事件");
-					courseContainer.changePart(1);
+
+					courseContainer.changePart(true);
 				})
 				//右滑
 				window.addEventListener("swiperight", function(e) {
 					console.log("course-home2.html的向右滑动事件");
-					courseContainer.changePart(1);
+					courseContainer.changePart(false);
 				})
 			}
 		</script>

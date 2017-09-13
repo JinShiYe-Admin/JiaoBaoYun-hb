@@ -18,10 +18,10 @@ var storageKeyName = (function(mod) {
 			//---开发---start---
 			mod.MAINEDU = 'http://192.168.1.44:8511/'; //科教图片url
 			mod.MAINURL = 'http://192.168.1.44:8511/api/CloudApi/'; //主url
-			mod.MAINJIAOXIAOURL = 'http://192.168.1.200:8081/JiaoBaoCloudService/'; //家校圈url
+			mod.MAINJIAOXIAOURL = 'http://192.168.1.113:8081/JiaoBaoCloudService/'; //家校圈url
 			mod.MAINHOMEWORKURL = 'http://192.168.1.44:8513/'; //作业主url
-			mod.MAINQIUZHI = 'http://192.168.1.200:8081/JiaoBaoCloudService/'; //求知主url
-			mod.MAINMICROCLASS = 'http://192.168.1.200:8081/JiaoBaoCloudService/'; //微课主url
+			mod.MAINQIUZHI = 'http://192.168.1.113:8081/JiaoBaoCloudService/'; //求知主url
+			mod.MAINMICROCLASS = 'http://192.168.1.113:8081/JiaoBaoCloudService/'; //微课主url
 			//---开发---end---
 			//---七牛空间和接口---开发---start---
 			mod.QNPB = 'http://qn-kfpb.jiaobaowang.net/'; //公开空间域名
@@ -40,6 +40,7 @@ var storageKeyName = (function(mod) {
 			mod.MAINHOMEWORKURL = 'http://192.168.1.178:8088/'; //作业主url
 			mod.MAINQIUZHI = 'http://192.168.1.178:8080/JiaoBaoCloudService/'; //求知主url
 			mod.MAINMICROCLASS = 'http://192.168.1.178:8080//JiaoBaoCloudService/'; //微课主url
+			
 			//---测试---end---
 
 			//---七牛空间和接口---测试---start---
@@ -127,6 +128,7 @@ var storageKeyName = (function(mod) {
 	mod.ISSHOWDETAILREADY = "isDetailReady"; //预加载是否完成
 	mod.VIEWCANCLICK = 'viewCanClick';
 	mod.SCIEDUREADED='sciedu-readed';//科教已读
+	mod.CUSTOMREQUESTTIME='customer-request-time';
 
 	mod.MAINHOMEWORKURLTEACHER = mod.MAINHOMEWORKURL + 'TeacherService.svc/'; //老师作业url
 	mod.MAINHOMEWORKURLSTUDENT = mod.MAINHOMEWORKURL + 'StudentService.svc/'; //学生作业url
