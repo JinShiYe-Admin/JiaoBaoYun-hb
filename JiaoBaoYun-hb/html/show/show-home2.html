@@ -240,7 +240,9 @@
 								}
 							}
 							this.listData = [];
-							mui('#pullrefresh').pullRefresh().refresh(true);
+							if(this.isSwiping) {
+								mui('#pullrefresh').pullRefresh().refresh(true);
+							}
 							console.log("show-home2.html展現模塊新值：", newVal);
 							this.requireData();
 						},

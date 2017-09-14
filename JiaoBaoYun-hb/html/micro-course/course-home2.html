@@ -163,7 +163,9 @@
 							}
 							this.courseInfo.pageIndex = 1;
 							this.listData = [];
-							mui("#pullrefresh").pullRefresh().refresh(true);
+							if(this.isSwiping){
+								mui("#pullrefresh").pullRefresh().refresh(true);
+							}
 							this.courseInfo.type = newVal;
 							this.requestData();
 						},

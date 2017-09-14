@@ -180,6 +180,9 @@
 				if(cities.length === 1) {
 					return;
 				}
+				if(isSwiping){
+					return;
+				}
 				if(dir === 1) {
 					scieduList.isRightIn = false;
 				} else {
