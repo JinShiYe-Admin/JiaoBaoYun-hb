@@ -1629,7 +1629,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		handle: handle,
 		options: {
 			swipeMaxTime: 300,
-			swipeMinDistince:160
+			swipeMinDistince:100
 		}
 	});
 })(mui, 'swipe');
