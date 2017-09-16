@@ -410,16 +410,24 @@
 					courseContainer.requestData();
 				})
 				//左滑
-				window.addEventListener("swipeleft", function(e) {
+//				window.addEventListener("swipeleft", function(e) {
+//					console.log("course-home2.html的向左滑动事件");
+//
+//					courseContainer.changePart(true);
+//				})
+				jQuery(window).addEventListener("swipeleft",function(e){
 					console.log("course-home2.html的向左滑动事件");
-
 					courseContainer.changePart(true);
 				})
-				//右滑
-				window.addEventListener("swiperight", function(e) {
+				jQuery(window).addEventListener("swiperight",function(e){
 					console.log("course-home2.html的向右滑动事件");
 					courseContainer.changePart(false);
 				})
+//				//右滑
+//				window.addEventListener("swiperight", function(e) {
+//					console.log("course-home2.html的向右滑动事件");
+//					courseContainer.changePart(false);
+//				})
 			}
 		</script>
 	</body>
