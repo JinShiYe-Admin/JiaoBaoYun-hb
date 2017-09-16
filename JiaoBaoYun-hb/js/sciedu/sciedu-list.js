@@ -14,8 +14,7 @@ var scieduList = new Vue({
 		isSwiping: false,
 		isDetailReady: false,
 		imgsStyle: {},
-		isRightIn:true,
-		isSwiping:false
+		isRightIn:true
 	},
 	watch: {
 		listData: function(val, pre) {
