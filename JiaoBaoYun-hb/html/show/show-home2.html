@@ -89,8 +89,6 @@
 		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/utils/vue.js"></script>
-		<script src="../../js/libs/jquery.min.js"></script>
-		<script src="../../js/libs/jquery.mobile-1.4.5.js"></script>
 		<script src="../../js/utils/events.js"></script>
 		<script src="../../js/publicProtocol.js"></script>
 		<script src="../../js/show/show-list.js"></script>
@@ -173,12 +171,12 @@
 					detailReady = e.detail;
 				})
 				//左滑
-				$(window).on("swipeleft", function(e) {
+				window.addEventListener("swipeleft", function(e) {
 					console.log("show-home2.html的向左滑动事件");
 					showList.changePart(true);
 				})
 				//右滑
-				$(window).on("swiperight", function(e) {
+				window.addEventListener("swiperight", function(e) {
 					console.log("show-home2.html的向右滑动事件")
 					showList.changePart(false);
 				})

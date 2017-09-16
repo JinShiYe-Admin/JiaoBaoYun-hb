@@ -92,8 +92,6 @@
 			</div>
 		</div>
 		<script src="../../js/utils/vue.min.js"></script>
-		<script src="../../js/libs/jquery.min.js"></script>
-		<script src="../../js/libs/jquery.mobile-1.4.5.js"></script>
 		<script src="../../js/sciedu/sciedu-list.js"></script>
 		<script src="../../js/utils/events.js"></script>
 		<script src="../../js/publicProtocol.js"></script>
@@ -160,12 +158,12 @@
 					console.log("****sciedu-list获取的城市信息:", cities)
 					scieduList.cityInfo = cities[curIndex];
 				})
-				$(window).on("swipeleft", function(e) {
+				window.addEventListener("swipeleft", function(e) {
 					console.log("sciedu-list.html的向左滑动事件");
 
 					changeCity(0);
 				})
-				$(window).on("swiperight", function(e) {
+				window.addEventListener("swiperight", function(e) {
 					console.log("sciedu-list.html的向右滑动事件")
 
 					changeCity(1);

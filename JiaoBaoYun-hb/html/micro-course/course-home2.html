@@ -58,8 +58,6 @@
 		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/utils/events.js"></script>
-		<script src="../../js/libs/jquery.min.js"></script>
-		<script src="../../js/libs/jquery.mobile-1.4.5.js"></script>
 		<script src="../../js/publicProtocol.js"></script>
 		<script src="../../js/publicMicroClass.js"></script>
 		<script src="../../js/micro-course/course-list.js"></script>
@@ -417,11 +415,11 @@
 //
 //					courseContainer.changePart(true);
 //				})
-				$(window).on("swipeleft",function(e){
+				jQuery(window).addEventListener("swipeleft",function(e){
 					console.log("course-home2.html的向左滑动事件");
 					courseContainer.changePart(true);
 				})
-				$(window).on("swiperight",function(e){
+				jQuery(window).addEventListener("swiperight",function(e){
 					console.log("course-home2.html的向右滑动事件");
 					courseContainer.changePart(false);
 				})
