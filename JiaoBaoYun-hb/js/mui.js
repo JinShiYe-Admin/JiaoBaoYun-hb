@@ -1612,6 +1612,16 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		if (event.type === $.EVENT_END || event.type === $.EVENT_CANCEL) {
 			var options = this.options;
 			touch.swipe = false;
+			console.log("获取的touch信息："+JSON.stringify(touch));
+			if(Math.abs(touch.deltaX)/Math.abs(touch.deltaY)<=1){
+				return;
+			}
+			if(Math.abs(touch.angle)>20&&Math.abs(touch.angle)<160){
+				return; 
+			}
+			if(touch.offsetDirection==='up'||touch.offsetDirection==='down'){
+				return;
+			}
 			//TODO 后续根据velocity计算
 			if (touch.direction && options.swipeMaxTime > touch.deltaTime && touch.distance > options.swipeMinDistince) {
 				touch.swipe = true;

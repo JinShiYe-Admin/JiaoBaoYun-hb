@@ -87,7 +87,7 @@
 				</div>
 			</div>
 		</div>
-		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/mui.js"></script>
 		<script src="../../js/utils/vue.js"></script>
 		<script src="../../js/utils/events.js"></script>
 		<script src="../../js/publicProtocol.js"></script>
@@ -213,7 +213,7 @@
 					el: '#show-list',
 					data: {
 						showInfo: {},
-						hasAttended: 0,
+						hasAttended: -1,
 						listData: [],
 						pulldown: false,
 						pullup: false,
@@ -226,7 +226,8 @@
 					watch: {
 						showInfo: function(newVal, oldVal) {
 							console.log("showInfo的转变:" + JSON.stringify(newVal) + ",旧的关注信息：" + JSON.stringify(oldVal))
-							if(newVal.pageFlag) {
+							console.log("是否已关注：" + this.hasAttended)
+							if(newVal.pageFlag) { //全部
 								if(this.hasAttended) { //有关注
 									this.setTitle(11);
 								} else {
@@ -254,14 +255,14 @@
 						hasAttended: function(newVal, oldVal) {
 							console.log("有关注的人：" + newVal + ',旧值：' + oldVal);
 							console.log("展示请求信息：" + JSON.stringify(this.showInfo));
-							if(typeof(this.showInfo.pageFlag) !== 'undefined') {
+							if(oldVal !== -1) {
 								if(!newVal) { //無關注的人
 									if(this.showInfo.pageFlag === 0) {
-										this.setShowInfo(1);
-										this.setTitle(0);
+										this.setShowInfo(1);	
 									}
+									this.setTitle(0);
 								} else { //新增關注
-									this.setTitle(12);
+									this.setTitle(11);
 								}
 							}
 						},
@@ -306,6 +307,7 @@
 						 * @param {Object} type 0 只有全部 10 显示全部 11 显示关注
 						 */
 						setTitle: function(type) {
+							console.log("要设置的标题类型：" + type);
 							var title = document.querySelector(".mui-title");
 							var indicator = document.querySelector("#header-indicator");
 							switch(type) {
@@ -350,6 +352,7 @@
 						resetFreshState: function() {
 							this.pulldown = false;
 							this.pullup = false;
+							this.isSwiping = false;
 						},
 						requireData: function() {
 							var com = this;
@@ -358,14 +361,12 @@
 								com.addData(showCity.pageIndex, data);
 								com.showInfo.pageIndex++;
 								com.resetFreshState();
-								com.isSwiping = false;
 								console.log("show-home2.html获取数据后的showInfo:", com.showInfo)
 							}, function(err) {
 								console.log("错误", err);
 								if(com.showInfo.pageIndex === 1) {
 									com.resetData();
 									mui.scrollTo(0)
-									com.isSwiping = false;
 								}
 								com.resetFreshState();
 							})
