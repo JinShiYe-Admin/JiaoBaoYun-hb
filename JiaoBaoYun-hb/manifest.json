@@ -143,10 +143,11 @@
 				"frameworks": []
 			},
 			"google": {
-				"packagename": "",/*Android应用包名，如io.dcloud.HelloH5*/
+				"packagename": "com.jiaobao",/*Android应用包名，如io.dcloud.HelloH5*/
 				"keystore": "",/*Android应用打包使用的密钥库文件*/
 				"password": "",/*Android应用打包使用密钥库中证书的密码*/
 				"aliasname": "",/*Android应用打包使用密钥库中证书的别名*/
+				"schemes":["jiaobaoyun"],
 				"permissions": [
 					"<uses-permission android:name=\"android.permission.CHANGE_NETWORK_STATE\"/>",
 					"<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\"/>",
@@ -5379,7 +5380,8 @@
 					"js/show/find-list.js",
 					"js/utils/vue-router.js",
 					"image/utils/default_load_2.gif",
-					"fonts/mui.ttf"
+					"fonts/mui.ttf",
+					"js/mui.js"
 				],
 				"refer": [
 					"html/register/login.html",
@@ -5661,7 +5663,8 @@
 					"css/micro-course/course-list.css",
 					"js/micro-course/course-list.js",
 					"js/libs/crypto-js/crypto-js.js",
-					"fonts/mui.ttf"
+					"fonts/mui.ttf",
+					"js/mui.js"
 				],
 				"refer": [
 					"html/micro-course/course_details.html"
