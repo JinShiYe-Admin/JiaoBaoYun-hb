@@ -155,6 +155,8 @@
 				})
 				//加载用户登陆的监听
 				window.addEventListener("infoChanged", function() {
+					console.log("*****show-home2.html的监听*****");
+					showList.isNewPerson=true;
 					getFocusedPerson(function(hasFocused) {
 						showList.hasAttended = hasFocused;
 						console.log("show-home2.html 关注的状况：" + hasFocused);
@@ -218,7 +220,8 @@
 						pulldown: false,
 						pullup: false,
 						isRightIn: true,
-						isSwiping: false
+						isSwiping: false,
+						isNewPerson: true
 					},
 					created: function() {
 
@@ -255,10 +258,11 @@
 						hasAttended: function(newVal, oldVal) {
 							console.log("有关注的人：" + newVal + ',旧值：' + oldVal);
 							console.log("展示请求信息：" + JSON.stringify(this.showInfo));
-							if(oldVal !== -1) {
+							if(!this.isNewPerson) {
+								this.isNewPerson=false;
 								if(!newVal) { //無關注的人
 									if(this.showInfo.pageFlag === 0) {
-										this.setShowInfo(1);	
+										this.setShowInfo(1);
 									}
 									this.setTitle(0);
 								} else { //新增關注
