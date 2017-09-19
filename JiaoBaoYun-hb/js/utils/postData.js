@@ -89,7 +89,6 @@ function postDataEncry66(url, commonData, flag, callback) {
 		var tempData = $.extend({}, commonData);
 		//添加签名
 		tempData.sign = sign;
-		console.log('最终的model:'+JSON.stringify(tempData));
 		//发送协议
 		mui.ajax(url, {
 			data: tempData,
@@ -116,7 +115,6 @@ function postDataEncry66(url, commonData, flag, callback) {
 			}
 		});
 	});
-
 }
 
 //url,

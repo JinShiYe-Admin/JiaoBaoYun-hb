@@ -47,11 +47,11 @@
 				});
 
 				//如果之前登录成功，则重新获取token，获取个人信息，则为登录成功
-				var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
+//				var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
 				//console.log('person===' + JSON.stringify(personal));
-				if(!personal) { //没有账号 设置游客账号信息，并保存到本地
-					defalutPerson();
-				}
+//				if(!personal) { //没有账号 设置游客账号信息，并保存到本地
+//					defalutPerson();
+//				}
 				document.addEventListener("netchange", wainshow, false);
 				window.addEventListener("indexReady", function() {
 					indexReady = true;
@@ -68,27 +68,27 @@
 						//						}
 						//console.log('网络连接拉！！！！');
 						//判断上次有没有登录，如果登录，就不执行登录协议
-						if(loginFlag == 0) {
-							loginFlag = 1;
-							events.defaultLogin(function(data) {
-								if(data.value == 1) {
-									events.preload('index.html');
-									events.showWaiting();
-									showIndex();
-								} else if(data.value == -1) { //登录失败,用游客登录
-									defalutPerson();
-									events.defaultLogin(function(data) {
-										if(data.value == 1) {
-											events.preload('index.html');
-											events.showWaiting();
-											showIndex();
-										} else if(data.value == -1) { //登录失败
-
-										}
-									});
-								}
-							});
-						}
+//						if(loginFlag == 0) {
+//							loginFlag = 1;
+//							events.defaultLogin(function(data) {
+//								if(data.value == 1) {
+//									events.preload('index.html');
+//									events.showWaiting();
+//									showIndex();
+//								} else if(data.value == -1) { //登录失败,用游客登录
+//									defalutPerson();
+//									events.defaultLogin(function(data) {
+//										if(data.value == 1) {
+//											events.preload('index.html');
+//											events.showWaiting();
+//											showIndex();
+//										} else if(data.value == -1) { //登录失败
+//
+//										}
+//									});
+//								}
+//							});
+//						}
 					}
 				}
 				//安卓的连续点击两次退出程序
@@ -109,15 +109,15 @@
 				//判断是否需要更新
 				setTimeout(appUpdate.updateApp, 5000);
 				//默认自动登录
-				login();
+//				login();
 			});
 
 			// 判断启动方式
 			function checkArguments() {
 				var args = plus.runtime.arguments;
-				alert('arguments:' + args);
-//				var args = 'jsyweishixuetang://?token=4f679b06-4d19-44e8-9c86-7f9e56903739&channel=sdhjy';
-//				console.log('args:'+args);
+//				alert('arguments:' + args);
+//				var args = 'jsyweishixuetang://?token=21b1beed-3cba-41ee-874d-e59be578dcd8&channel=sdhjy';
+				console.log('args:'+args);
 				if(args) {
 					// 处理args参数，如打开新页面等
 					//在？的地方，转为数组，
@@ -132,12 +132,16 @@
 								tempModel.channel = tempArr1[i].split("=")[1];
 							}
 						}
-						alert('tempModel:'+JSON.stringify(tempModel));
+						console.log('tempModel:'+JSON.stringify(tempModel));
 						var tempData = {
 							cptoken:tempModel.token
 						}
 						postDataPro_getPersonInfo(tempData,function(data){
-							alert('移动个人信息:'+JSON.stringify(data));
+							if (data.RspCode == 0) {
+								data.RspData.token = tempModel.token;
+								data.RspData.channel = tempModel.channel;
+								window.myStorage.setItem(window.storageKeyName.PERSONALINFO, data.RspData);
+							}
 						});
 					}
 				}
