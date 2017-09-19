@@ -22,9 +22,6 @@
 				statusBarBackground: '#13b7f6'
 			});
 			mui.plusReady(function() {
-//				document.addEventListener('plusready', function() {
-//					checkArguments();
-//				}, false);
 				//获取APP的_documents文件夹对象,并清理文件
 				plus.io.resolveLocalFileSystemURL("_documents/", function(docEntry) {
 					//console.log("获取_documents文件操作对象成功 " + docEntry.fullPath);
@@ -57,7 +54,7 @@
 				window.addEventListener("indexReady", function() {
 					indexReady = true;
 				})
-
+				
 				function wainshow() {
 					var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
 					if(plus.networkinfo.getCurrentType() == plus.networkinfo.CONNECTION_NONE) {

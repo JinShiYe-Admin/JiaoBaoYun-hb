@@ -1612,7 +1612,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		if (event.type === $.EVENT_END || event.type === $.EVENT_CANCEL) {
 			var options = this.options;
 			touch.swipe = false;
-			console.log("获取的touch信息："+JSON.stringify(touch));
+//			console.log("获取的touch信息："+JSON.stringify(touch));
 			if(Math.abs(touch.deltaX)/Math.abs(touch.deltaY)<=1){
 				return;
 			}
