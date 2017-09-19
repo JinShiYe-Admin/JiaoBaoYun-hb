@@ -115,6 +115,10 @@
 			});
 
 			function pulldownRefresh() {
+				if(showList.isSwiping) {
+					mui('#pullrefresh').pullRefresh().endPulldown();
+					return;
+				}
 				console.log("下拉刷新中...")
 				showList.pulldown = true;
 				console.log("show-home2要刷新的數值：", showList.showInfo);
@@ -123,6 +127,10 @@
 			}
 
 			function pullupRefresh() {
+				if(showList.isSwiping) {
+					mui('#pullrefresh').pullRefresh().endPullupToRefresh();
+					return;
+				}
 				console.log("上拉加載更多...")
 				if(showList.showInfo.pageIndex > showList.showInfo.totalPage) {
 					mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
@@ -156,7 +164,7 @@
 				//加载用户登陆的监听
 				window.addEventListener("infoChanged", function() {
 					console.log("*****show-home2.html的监听*****");
-					showList.isNewPerson=true;
+					showList.isNewPerson = true;
 					getFocusedPerson(function(hasFocused) {
 						showList.hasAttended = hasFocused;
 						console.log("show-home2.html 关注的状况：" + hasFocused);
@@ -259,7 +267,6 @@
 							console.log("有关注的人：" + newVal + ',旧值：' + oldVal);
 							console.log("展示请求信息：" + JSON.stringify(this.showInfo));
 							if(!this.isNewPerson) {
-								this.isNewPerson=false;
 								if(!newVal) { //無關注的人
 									if(this.showInfo.pageFlag === 0) {
 										this.setShowInfo(1);
@@ -268,6 +275,8 @@
 								} else { //新增關注
 									this.setTitle(11);
 								}
+							}else{
+								this.isNewPerson = false;
 							}
 						},
 						pulldown: function(newVal) {
@@ -354,9 +363,12 @@
 							this.listData = [];
 						},
 						resetFreshState: function() {
+							var com=this;
 							this.pulldown = false;
 							this.pullup = false;
-							this.isSwiping = false;
+							setTimeout(function(){
+								com.isSwiping = false;
+							},500)
 						},
 						requireData: function() {
 							var com = this;

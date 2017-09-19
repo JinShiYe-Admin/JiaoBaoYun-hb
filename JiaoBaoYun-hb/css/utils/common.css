@@ -336,13 +336,13 @@ header>a {
 }
 
 .right-in {
-	animation-duration: 0.3s;
+	animation-duration: 0.2s;
 	animation-name: sliderightin;
 	animation-timing-function: ease-in;
 }
 
 .left-in {
-	animation-duration: 0.3s;
+	animation-duration: 0.2s;
 	animation-name: sliderleftin;
 	animation-timing-function: ease-in;
 }

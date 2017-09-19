@@ -4,8 +4,12 @@
       "image/utils/default_load_2_1.gif",
       "js/utils/vue.min.js",
       "js/sciedu/sciedu-list.js",
-      "js/libs/crypto-js/crypto-js.js"
-    ]
+      "js/libs/crypto-js/crypto-js.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "css/utils/common.css"
+    ],
+    "refer": []
   },
   "html/micro-course/course-home2.html": {
     "resources": [
@@ -17,7 +21,11 @@
       "js/micro-course/course-list.js",
       "js/mui.js",
       "css/utils/common.css",
-      "js/libs/crypto-js/crypto-js.js"
+      "js/libs/crypto-js/crypto-js.js",
+      "fonts/mui.ttf"
+    ],
+    "refer": [
+      "html/micro-course/course_details.html"
     ]
   },
   "html/cloud/cloud_home.html": {
@@ -52,7 +60,8 @@
       "js/quan/classSpace-persons.js",
       "css/mui.min.css",
       "css/utils/common.css"
-    ]
+    ],
+    "refer": []
   },
   "html/sciedu/sciedu-home.html": {
     "resources": [
@@ -78,7 +87,10 @@
       "image/utils/playvideo.png",
       "js/mui.js",
       "css/utils/common.css",
-      "js/libs/crypto-js/crypto-js.js"
+      "js/libs/crypto-js/crypto-js.js",
+      "image/show/show-default-small.png",
+      "image/show/show-default-large.png",
+      "fonts/mui.ttf"
     ],
     "refer": [
       "html/show/show-detail.html"
@@ -118,8 +130,11 @@
       "css/home/index-menu.css",
       "image/mine/about.png",
       "image/mine/my-space.png",
-      "image/mine/my-points.png"
-    ]
+      "image/mine/my-points.png",
+      "js/libs/crypto-js/crypto-js.js",
+      "fonts/mui.ttf"
+    ],
+    "refer": []
   },
   "html/index/index.html": {
     "resources": [
@@ -148,7 +163,8 @@
       "js/qiniu/qiniu.js",
       "js/cloud/AndroidFileSystem.js",
       "js/utils/playutil.js"
-    ]
+    ],
+    "refer": []
   },
   "html/show/show-detail.html": {
     "resources": [
@@ -160,10 +176,29 @@
       "js/utils/showvideoutil.js",
       "js/mui.previewimage.js",
       "css/utils/preview.css",
-      "js/utils/all-preview.js"
+      "js/utils/all-preview.js",
+      "js/libs/crypto-js/crypto-js.js",
+      "fonts/mui.ttf"
     ],
     "refer": [
       "html/quan/classSpace-persons.html"
     ]
+  },
+  "html/sciedu/sciedu_show_main.html": {
+    "resources": [
+      "fonts/mui.ttf",
+      "js/libs/crypto-js/crypto-js.js"
+    ],
+    "refer": []
+  },
+  "html/micro-course/course_details.html": {
+    "resources": [
+      "image/qiuzhi/qiuzhi_noanswer.png",
+      "css/mui.min.css",
+      "css/utils/common.css",
+      "js/libs/crypto-js/crypto-js.js",
+      "js/micro-course/coursedetails.js"
+    ],
+    "refer": []
   }
 }
