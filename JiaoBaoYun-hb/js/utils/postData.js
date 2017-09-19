@@ -6,15 +6,15 @@ function postData(url, data, callback, waitingDialog) {
 	if(plus.networkinfo.getCurrentType() == plus.networkinfo.CONNECTION_NONE) {
 		//console.log('没有网络');
 		var data = {
-				RspCode: '404',
-				RspData: '',
-				RspTxt: '网络异常，请检查网络设置！'
-			}
+			RspCode: '404',
+			RspData: '',
+			RspTxt: '网络异常，请检查网络设置！'
+		}
 
-			callback(data);
-			if(waitingDialog != null) {
-				waitingDialog.close();
-			}
+		callback(data);
+		if(waitingDialog != null) {
+			waitingDialog.close();
+		}
 		return;
 	}
 	var tepTime = tempTime();
@@ -67,6 +67,58 @@ function tempTime() {
 	}
 }
 
+//
+function postDataEncry66(url, commonData, flag, callback) {
+	if(plus.networkinfo.getCurrentType() == plus.networkinfo.CONNECTION_NONE) {
+		var data = {
+			RspCode: '404',
+			RspData: '',
+			RspTxt: '网络异常，请检查网络设置！'
+		}
+		callback(data);
+		return;
+	}
+	var tepTime = tempTime();
+	//拼接登录需要的签名
+	var signTemp = postDataEncry1({}, commonData, flag);
+	console.log(url + ':commonData:' + JSON.stringify(commonData));
+	//生成签名，返回值sign则为签名
+	signHmacSHA1.sign(signTemp, storageKeyName.SIGNKEY, function(sign) {
+		//组装发送握手协议需要的data
+		//合并对象
+		var tempData = $.extend({}, commonData);
+		//添加签名
+		tempData.sign = sign;
+		console.log('最终的model:'+JSON.stringify(tempData));
+		//发送协议
+		mui.ajax(url, {
+			data: tempData,
+			dataType: 'json',
+			type: 'post',
+			contentType: "application/json",
+			timeout: tepTime,
+			success: function(data) {
+				console.log(url + "接口获取的值:" + JSON.stringify(data));
+				if(data.code == 6) {
+					renewToken(url, commonData, flag, callback);
+				} else {
+					callback(data);
+				}
+			},
+			error: function(xhr, type, errorThrown) {
+				console.log("网络连接失败" + url + ":" + type + "," + errorThrown + ":" + xhr);
+				var data = {
+					RspCode: '404',
+					RspData: '',
+					RspTxt: '网络连接失败，请重新尝试一下'
+				}
+				callback(data);
+			}
+		});
+	});
+
+}
+
 //url,
 //encryData,需要加密的字段
 //commonData,不需要加密的对象
@@ -76,15 +128,15 @@ function tempTime() {
 function postDataEncry(url, encryData, commonData, flag, waitingDialog, callback) {
 	if(plus.networkinfo.getCurrentType() == plus.networkinfo.CONNECTION_NONE) {
 		var data = {
-				RspCode: '404',
-				RspData: '',
-				RspTxt: '网络异常，请检查网络设置！'
-			}
+			RspCode: '404',
+			RspData: '',
+			RspTxt: '网络异常，请检查网络设置！'
+		}
 
-			callback(data);
-			if(waitingDialog != null) {
-				waitingDialog.close();
-			}
+		callback(data);
+		if(waitingDialog != null) {
+			waitingDialog.close();
+		}
 		return;
 	}
 	//拼接登录需要的签名
@@ -172,7 +224,15 @@ function postDataEncry1(encryData, commonData, flag) {
 		encryData[tempData] = encryptStr;
 	}
 	//判断是否需要添加共用数据
-	if(flag == 1) {
+	if(flag == 0) {
+		//获取个人信息
+		var comData = {
+			uuid: plus.device.uuid,
+			token: commonData.cptoken,
+			appid: plus.runtime.appid
+		};
+		commonData = $.extend(commonData, comData);
+	} else if(flag == 1) {
 		//获取个人信息
 		var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 		var personalToken = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).token;

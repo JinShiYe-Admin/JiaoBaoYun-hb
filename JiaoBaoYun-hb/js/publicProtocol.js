@@ -81,6 +81,12 @@ var modifyTimeFormat = function(str) {
 	return tempStr;
 }
 
+//通过移动的token，获取个人信息
+var postDataPro_getPersonInfo = function(commonData, callback) {
+	//发送网络请求，data为网络返回值
+	postDataEncry66('http://114.215.222.194:8088/MobileCpService/getUserData', commonData, 0, callback);
+}
+
 //10.Token续订(之前有过相同登陆数据的才能续订成功)
 //修改本地存储中的值，返回值
 //window.myStorage.getItem(window.storageKeyName.PERSONALINFO).token = data.RspData;
