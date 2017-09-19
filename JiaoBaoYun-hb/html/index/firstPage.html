@@ -22,9 +22,8 @@
 				statusBarBackground: '#13b7f6'
 			});
 			mui.plusReady(function() {
-				document.addEventListener('plusready', function() {
-					checkArguments();
-				}, false);
+				checkArguments();
+
 				//获取APP的_documents文件夹对象,并清理文件
 				plus.io.resolveLocalFileSystemURL("_documents/", function(docEntry) {
 					//console.log("获取_documents文件操作对象成功 " + docEntry.fullPath);
