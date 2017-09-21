@@ -69,7 +69,7 @@ var addSubPages = function() {
 	//把子页的路径写在数组里面（空间，求知，剪辑，云盘 ）四个个子页面
 //	var subpages = ['../cloud/cloud_home.html', '../sciedu/sciedu_home.html', '../show/show_home_1.html', '../qiuzhi/qiuzhi_home.html'];
 //	var titles = ['云盘', '科教', '展现', '求知'];
-	var subpages = ['../cloud/cloud_home.html', '../sciedu/sciedu-home.html', '../show/show-home2.html', '../micro-course/course-home2.html'];
+	var subpages = ['../cloud/cloud_home.html', '../sciedu/sciedu_home.html', '../show/show-home.html', '../micro-course/course-home.html'];
 	var titles = ['云盘', '科教', '发现', '微学'];
 	//创建子页面，首个选项卡页面显示，其它均隐藏；
 	var self = plus.webview.currentWebview();
@@ -148,7 +148,7 @@ var setConditionbyRole = function(role) {
 	} else { //游客
 		cloudIcon.style.display = "none";
 		sceIcon.className = "mui-tab-item mui-active";
-		activeTab = "../sciedu/sciedu-home.html";
+		activeTab = "../sciedu/sciedu_home.html";
 	}
 	//显示活动的界面
 	setActivePage();
