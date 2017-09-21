@@ -19,7 +19,7 @@ var courseInfo = new Vue({
 			} else {
 				events.toggleStorageArray(storageKeyName.FOCUSECOURSES, com.courseInfo.TabId, this.isFocused);
 				com.isFocused = com.isFocused ? 0 : 1;
-				events.fireToPageNone('course-home.html', 't-focus');
+				events.fireToPageNone('course-home2.html', 't-focus');
 			}
 
 		},
@@ -39,7 +39,7 @@ var courseInfo = new Vue({
 				//console.log('6.设置对某个课程关注:' + JSON.stringify(data));
 				//console.log("是否已关注："+this.isFocused);
 				if(data.RspCode == 0) {
-					events.fireToPageNone('course-home.html', 't-focus');
+					events.fireToPageNone('course-home2.html', 't-focus');
 					callback();
 				} else {
 					mui.toast(data.RspTxt);
