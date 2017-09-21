@@ -96,7 +96,6 @@
 			var show = true; //是否显示科教的内容
 			var sliderId = ''; //记录显示的城市
 			var pageAndInfo = {}; //保存对应的城市信息和页码
-			var detailReady=false;
 			//pageAndInfo={
 			//	info:{},//城市信息
 			//	page:{},//页码
@@ -109,7 +108,6 @@
 			});
 
 			mui.plusReady(function() {
-				events.preload("sciedu_show_main.html", 500);
 				initListener();
 				initData();
 			});
@@ -136,9 +134,6 @@
 			 * 初始化监听
 			 */
 			function initListener() {
-				window.addEventListener("detailReady",function(){
-					detailReady=true;
-				})
 				//进入订制城市界面
 				document.getElementById('changeCity').addEventListener('tap', function() {
 					events.openNewWindowWithData('../utils/customizeCity.html', {
@@ -234,7 +229,7 @@
 					});
 
 					//点击每一项的监听
-					mui('#sliderGroup').on('tap', '.mui-table-view-cell', function(e) {
+					mui('#sliderGroup').on('tap', '.mui-table-view-cell', function() {
 						var id = this.getAttribute('id');
 						var tabid = this.getAttribute('data-tabid');
 						var turl = this.getAttribute('data-turl');
@@ -260,15 +255,14 @@
 							////console.log('tap seHistory ' + JSON.stringify(History));
 						}
 						document.getElementById("title_" + id).style.color = 'darkgray';
-						events.readyToPage(detailReady, "sciedu_show_main.html", "scieduItemInfo", mui.extend({},listData[index],cityInfo));
-//						events.openNewWindowWithData('sciedu_show_main.html', {
-//							acode: sliderId,
-//							tabId: tabid,
-//							title: title,
-//							tips: tips,
-//							rotips: rotips,
-//							turl: turl
-//						});
+						events.openNewWindowWithData('sciedu_show_main.html', {
+							acode: sliderId,
+							tabId: tabid,
+							title: title,
+							tips: tips,
+							rotips: rotips,
+							turl: turl
+						});
 					});
 
 					//获取定制的城市
