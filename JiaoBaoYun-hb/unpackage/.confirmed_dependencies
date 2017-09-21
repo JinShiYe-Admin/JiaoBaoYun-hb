@@ -22,8 +22,7 @@
       "js/mui.js",
       "css/utils/common.css",
       "js/libs/crypto-js/crypto-js.js",
-      "fonts/mui.ttf",
-      "js/libs/zepto-1.2.0.js"
+      "fonts/mui.ttf"
     ],
     "refer": [
       "html/micro-course/course_details.html"
@@ -133,8 +132,7 @@
       "image/mine/my-space.png",
       "image/mine/my-points.png",
       "js/libs/crypto-js/crypto-js.js",
-      "fonts/mui.ttf",
-      "css/iconfont/iconfont.css"
+      "fonts/mui.ttf"
     ],
     "refer": []
   },
@@ -164,9 +162,7 @@
       "js/utils/CloudFileUtil.js",
       "js/qiniu/qiniu.js",
       "js/cloud/AndroidFileSystem.js",
-      "js/utils/playutil.js",
-      "css/iconfont/iconfont.css",
-      "css/cloud/file.css"
+      "js/utils/playutil.js"
     ],
     "refer": []
   },
@@ -182,8 +178,7 @@
       "css/utils/preview.css",
       "js/utils/all-preview.js",
       "js/libs/crypto-js/crypto-js.js",
-      "fonts/mui.ttf",
-      "css/iconfont/iconfont.css"
+      "fonts/mui.ttf"
     ],
     "refer": [
       "html/quan/classSpace-persons.html"

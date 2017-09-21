@@ -33,8 +33,8 @@
 				<div class="mui-indicator mui-active"></div>
 			</div>
 		</header>
-		<div id="pullrefresh" class="mui-content" >
-			<div id="course-container" style="min-height: 100%;">
+		<div id="pullrefresh" class="mui-content">
+			<div id="course-container">
 				<ul v-if="listData.length>0" class="mui-table-view" v-bind:class="[{'right-in':isRightIn},{'left-in':!isRightIn}]">
 					<li v-for="(li,index) of listData" v-bind:key='index' class="mui-table-view-cell" v-on:tap="jumpToPage(li)" v-bind:id="li.TabId" v-bind:value="index">
 						<div class="course-container">
@@ -57,12 +57,10 @@
 			</div>
 		</div>
 		<script src="../../js/mui.js"></script>
-		<script src="../../js/libs/zepto-1.2.0.js"></script>
 		<script src="../../js/utils/events.js"></script>
 		<script src="../../js/publicProtocol.js"></script>
 		<script src="../../js/publicMicroClass.js"></script>
 		<script src="../../js/micro-course/course-list.js"></script>
-		
 		<script type="text/javascript">
 			var courseContainer;
 			mui.init({
@@ -411,20 +409,12 @@
 					courseContainer.courseInfo.pageIndex = 1;
 					courseContainer.requestData();
 				})
-				Zepto(window).swipeLeft(function(){
-					console.log('左滑')
+				//左滑
+				window.addEventListener("swipeleft", function(e) {
+					console.log("course-home2.html的向左滑动事件");
+
 					courseContainer.changePart(true);
 				})
-				Zepto(window).swipeRight(function(){
-					console.log("右滑")
-					courseContainer.changePart(false);
-				})
-				//左滑
-//				window.addEventListener("swipeleft", function(e) {
-//					console.log("course-home2.html的向左滑动事件");
-//
-//					courseContainer.changePart(true);
-//				})
 //				jQuery(window).addEventListener("swipeleft",function(e){
 //					console.log("course-home2.html的向左滑动事件");
 //					courseContainer.changePart(true);
@@ -434,10 +424,10 @@
 //					courseContainer.changePart(false);
 //				})
 				//右滑
-//				window.addEventListener("swiperight", function(e) {
-//					console.log("course-home2.html的向右滑动事件");
-//					courseContainer.changePart(false);
-//				})
+				window.addEventListener("swiperight", function(e) {
+					console.log("course-home2.html的向右滑动事件");
+					courseContainer.changePart(false);
+				})
 			}
 		</script>
 	</body>

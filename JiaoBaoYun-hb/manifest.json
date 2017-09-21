@@ -5664,8 +5664,7 @@
 					"js/micro-course/course-list.js",
 					"js/libs/crypto-js/crypto-js.js",
 					"fonts/mui.ttf",
-					"js/mui.js",
-					"js/libs/zepto-1.2.0.js"
+					"js/mui.js"
 				],
 				"refer": [
 					"html/micro-course/course_details.html"
