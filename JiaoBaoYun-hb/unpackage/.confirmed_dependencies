@@ -132,7 +132,10 @@
 			"image/mine/my-space.png",
 			"image/mine/my-points.png",
 			"js/libs/crypto-js/crypto-js.js",
-			"fonts/mui.ttf"
+			"fonts/mui.ttf",
+			"css/iconfont/iconfont.css",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		],
 		"refer": []
 	},
@@ -166,7 +169,11 @@
 			"js/utils/CloudFileUtil.js",
 			"js/qiniu/qiniu.js",
 			"js/cloud/AndroidFileSystem.js",
-			"js/utils/playutil.js"
+			"js/utils/playutil.js",
+			"css/iconfont/iconfont.css",
+			"css/cloud/file.css",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		],
 		"refer": []
 	},
@@ -184,7 +191,10 @@
 			"js/libs/crypto-js/crypto-js.js",
 			"fonts/mui.ttf",
 			"js/utils/vue.min.js",
-			"image/utils/playvideo.png"
+			"image/utils/playvideo.png",
+			"css/utils/common.css",
+			"css/iconfont/iconfont.css",
+			"css/mui.min.css"
 		],
 		"refer": [
 			"html/quan/classSpace-persons.html"
@@ -193,7 +203,9 @@
 	"html/sciedu/sciedu_show_main.html": {
 		"resources": [
 			"fonts/mui.ttf",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		],
 		"refer": []
 	},
@@ -212,7 +224,9 @@
 			"js/utils/vue.min.js",
 			"image/mine/invite_none_0.png",
 			"css/micro-course/course-list.css",
-			"js/micro-course/course-list.js"
+			"js/micro-course/course-list.js",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		]
 	},
 	"html/show/show-attended.html": {
@@ -223,7 +237,10 @@
 			"image/utils/default_load_2.gif",
 			"js/libs/jquery.lazyload.min.js",
 			"js/show/show-list.js",
-			"image/show/show-default-small.png"
+			"image/show/show-default-small.png",
+			"js/libs/crypto-js/crypto-js.js",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		]
 	},
 	"html/sciedu/sciedu_home.html": {
@@ -242,6 +259,9 @@
 			"/image/utils/default_load_2.gif",
 			"css/mui.min.css",
 			"image/utils/loading.gif"
+		],
+		"refer": [
+			"html/sciedu/sciedu_show_main.html"
 		]
 	},
 	"html/show/show-home.html": {
