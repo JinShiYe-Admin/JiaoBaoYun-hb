@@ -10,10 +10,17 @@ var appUpdate = (function(mod) {
 		//版本升级模块
 		//47.获取APP版本号
 		//console.log('plus.os.name:' + plus.os.name);
-		var tempVVL = 'android';
-		if(plus.os.name == 'iOS') {
-			tempVVL = "ios";
+		if(plus.os.name == 'iOS') {//ios
+			XMLHttpRequest request = new XMLHttpRequest();
+			request.onload = function(response) {
+				console.log(JSON.stringify(response));
+				mod.getAppVersion(response.Results[0]);
+			}
+			request.open("post", "https://itunes.apple.com/us/app/%E6%95%99%E5%AE%9D/id958950234?l=zh&ls=1&mt=8", true);
+			request.send();
+			return;
 		}
+		var tempVVL = 'android';
 		//所需参数
 		var comData9 = {
 			uuid: plus.device.uuid, //用户设备号
@@ -24,10 +31,10 @@ var appUpdate = (function(mod) {
 		var wd_0 = events.showWaiting();
 		postDataPro_PostVerInfo(comData9, wd_0, function(data) {
 			wd_0.close();
-			console.log('获取APP版本号0:' ,data);
+			console.log('获取APP版本号0:', data);
 			if(data.RspCode == 0) {
 				mod.getAppVersion(JSON.parse(data.RspData));
-				console.log('获取APP版本号:' , data);
+				console.log('获取APP版本号:', data);
 			} else {
 				mui.toast(data.RspTxt);
 			}
@@ -70,54 +77,55 @@ var appUpdate = (function(mod) {
 	var getUpCondition = function(version) {
 		//console.log("服务器版本信息：" + JSON.stringify(version))
 		var appVersions = mod.appVersion.split('.');
-		var newestVersions = version.ver.split('.');
-		//console.log("当前版本号和服务端版本号：" + JSON.stringify(appVersions) + JSON.stringify(newestVersions))
-		var appVersionMinMax = getMinMax(appVersions);
-		var newestVersionMinMax = getMinMax(newestVersions);
-		if(appVersionMinMax.max < newestVersionMinMax.max) { //整包更新
-			if(mod.updateFlag == 0) {
-				//询问是否更新
-				setDialog('教宝云有新版本，是否下载？', "您已取消下载", function() {
-					mod.updateFlag = 1;
-					console.log("下载APK路径：" + version.baseverurl)
-					if(plus.os.name = "Android") {
+		var newestVersions;
+		if(mui.os.android) {//android
+			newestVersions = version.ver.split('.');
+			var appVersionMinMax = getMinMax(appVersions);
+			var newestVersionMinMax = getMinMax(newestVersions);
+			if(appVersionMinMax.max < newestVersionMinMax.max) { //整包更新
+				if(mod.updateFlag == 0) {
+					//询问是否更新
+					setDialog('教宝云有新版本，是否下载？', "您已取消下载", function() {
+						mod.updateFlag = 1;
+						console.log("下载APK路径：" + version.baseverurl)
 						resolveFile(version.baseverurl, 1);
-					} else {
-						//					plus.webview.currentWebview().canJump = true;
+					}, function() {
+						mod.updateFlag = 2;
+					})
+				} else if(mod.updateFlag == 1) {
+						resolveFile(version.baseverurl, 1);
 					}
-				}, function() {
-					mod.updateFlag = 2;
-				})
-			} else if(mod.updateFlag == 1) {
-				if(plus.os.name = "Android") {
-					resolveFile(version.baseverurl, 1);
-				} else {
-					//					plus.webview.currentWebview().canJump = true;
 				}
-			}
-
-		} else if(appVersionMinMax.max == newestVersionMinMax.max) {
-			if(appVersionMinMax.min < newestVersionMinMax.min) { //在线更新
-				if(plus.os.name = "Android") {
-					//					plus.webview.currentWebview().canJump = true;
-					resolveFile(version.addverurl, 0);
-				} else {
-					if(mod.updateFlag == 0) {
-						setDialog('教宝云有新版本，是否下载？', "您已取消下载", function() {
-							mod.updateFlag = 1;
-						}, function() {
-							mod.updateFlag = 2;
-						});
+			} else if(appVersionMinMax.max == newestVersionMinMax.max) {
+				if(appVersionMinMax.min < newestVersionMinMax.min) { //在线更新
+					if(plus.os.name = "Android") {
+						//					plus.webview.currentWebview().canJump = true;
+						resolveFile(version.addverurl, 0);
 					} else {
-
+						if(mod.updateFlag == 0) {
+							setDialog('教宝云有新版本，是否下载？', "您已取消下载", function() {
+								mod.updateFlag = 1;
+							}, function() {
+								mod.updateFlag = 2;
+							});
+						}
 					}
+				} else {
+					plus.webview.currentWebview().canJump = true;
 				}
 			} else {
 				plus.webview.currentWebview().canJump = true;
 			}
-		} else {
-			plus.webview.currentWebview().canJump = true;
+		} else {//ios
+			newestVersions = version.version.split('.');
+			var hasNewerVersion=newestVersions.some(function(verNo,index){
+				return parseInt(verNo)>parseInt(appVersions[index]);
+			})
+			if(hasNewerVersion){//如果有新版本
+				
+			}
 		}
+
 	}
 	/**
 	 * 设置提示对话框
@@ -256,7 +264,7 @@ var appUpdate = (function(mod) {
 	 * @param {Object} type 0升级包 1apk整包
 	 */
 	var resolveFile = function(fileUrl, type) {
-		console.log("文件路径："+fileUrl+";type:"+type);
+		console.log("文件路径：" + fileUrl + ";type:" + type);
 		var filePath = "_doc/update/" + fileUrl.split('/')[fileUrl.split('/').length - 1]
 		plus.io.resolveLocalFileSystemURL(filePath, function(entry) {
 			// 可通过entry对象操作test.html文件 
@@ -268,9 +276,9 @@ var appUpdate = (function(mod) {
 						if(mod.installFlag == 0) {
 							setDialog("新版app文件已下载，是否安装？", "您已取消安装app", function() {
 								installApk(filePath);
-								mod.installFlag=1;
-							},function(){
-								mod.installFlag=2;
+								mod.installFlag = 1;
+							}, function() {
+								mod.installFlag = 2;
 							})
 						} else if(mod.installFlag == 1) {
 							installApk(filePath);
@@ -301,15 +309,16 @@ var appUpdate = (function(mod) {
 			}
 		});
 	}
-	function removeFile(fileName,type){
-		plus.io.resolveLocalFileSystemURL(fileName,function(entry){
-			entry.remove(function(){
+
+	function removeFile(fileName, type) {
+		plus.io.resolveLocalFileSystemURL(fileName, function(entry) {
+			entry.remove(function() {
 				console.log("删除文件成功！")
-			},function(e){
-				
+			}, function(e) {
+
 			})
-		},function(e){
-			
+		}, function(e) {
+
 		})
 	}
 	return mod;
