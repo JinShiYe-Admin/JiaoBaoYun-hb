@@ -469,7 +469,7 @@ var dynamiclistitem = (function($, mod) {
 				var btn = document.getElementById(tempId);
 				btn.innerHTML = '已关注'
 				btn.className = 'mui-btn mui-pull-right btn-attentioned'
-				events.fireToPageNone('show-home1.html', 'focus', {
+				events.fireToPageNone('show-home.html', 'focus', {
 					flag: 1
 				})
 				return;
@@ -492,7 +492,7 @@ var dynamiclistitem = (function($, mod) {
 					var btn = document.getElementById(tempId);
 					btn.innerHTML = '已关注'
 					btn.className = 'mui-btn mui-pull-right btn-attentioned'
-					events.fireToPageNone('show-home1.html', 'focus', {
+					events.fireToPageNone('show-home.html', 'focus', {
 						flag: 1
 					})
 				}
@@ -513,7 +513,7 @@ var dynamiclistitem = (function($, mod) {
 				var btn = document.getElementById(tempId);
 				btn.innerHTML = '关注'
 				btn.className = 'mui-btn mui-pull-right btn-attention'
-				events.fireToPageNone('show-home1.html', 'focus', {
+				events.fireToPageNone('show-home.html', 'focus', {
 					flag: 0
 				})
 				return;
@@ -536,7 +536,7 @@ var dynamiclistitem = (function($, mod) {
 					var btn = document.getElementById(tempId);
 					btn.innerHTML = '关注'
 					btn.className = 'mui-btn mui-pull-right btn-attention'
-					events.fireToPageNone('show-home1.html', 'focus', {
+					events.fireToPageNone('show-home.html', 'focus', {
 						flag: 0
 					})
 
