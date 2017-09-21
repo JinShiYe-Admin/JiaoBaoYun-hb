@@ -1639,7 +1639,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		handle: handle,
 		options: {
 			swipeMaxTime: 300,
-			swipeMinDistince:100
+			swipeMinDistince:60
 		}
 	});
 })(mui, 'swipe');
