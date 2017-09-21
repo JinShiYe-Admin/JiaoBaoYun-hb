@@ -10,11 +10,13 @@ var appUpdate = (function(mod) {
 		//版本升级模块
 		//47.获取APP版本号
 		//console.log('plus.os.name:' + plus.os.name);
-		if(plus.os.name == 'iOS') {//ios
+		if(plus.os.name == 'iOS') { //ios
 			XMLHttpRequest request = new XMLHttpRequest();
-			request.onload = function(response) {
-				console.log(JSON.stringify(response));
-				mod.getAppVersion(response.Results[0]);
+			request.onreadystatechange = function() {
+				if(request.readyState == 4 && request.status == 200) {
+					console.log(JSON.stringify(request.responseText));
+					mod.getAppVersion(request.responseText.Results[0]);
+				}
 			}
 			request.open("post", "https://itunes.apple.com/us/app/%E6%95%99%E5%AE%9D/id958950234?l=zh&ls=1&mt=8", true);
 			request.send();
@@ -78,7 +80,7 @@ var appUpdate = (function(mod) {
 		//console.log("服务器版本信息：" + JSON.stringify(version))
 		var appVersions = mod.appVersion.split('.');
 		var newestVersions;
-		if(mui.os.android) {//android
+		if(mui.os.android) { //android
 			newestVersions = version.ver.split('.');
 			var appVersionMinMax = getMinMax(appVersions);
 			var newestVersionMinMax = getMinMax(newestVersions);
@@ -93,233 +95,233 @@ var appUpdate = (function(mod) {
 						mod.updateFlag = 2;
 					})
 				} else if(mod.updateFlag == 1) {
-						resolveFile(version.baseverurl, 1);
-					}
+					resolveFile(version.baseverurl, 1);
 				}
-			} else if(appVersionMinMax.max == newestVersionMinMax.max) {
-				if(appVersionMinMax.min < newestVersionMinMax.min) { //在线更新
-					if(plus.os.name = "Android") {
-						//					plus.webview.currentWebview().canJump = true;
-						resolveFile(version.addverurl, 0);
-					} else {
-						if(mod.updateFlag == 0) {
-							setDialog('教宝云有新版本，是否下载？', "您已取消下载", function() {
-								mod.updateFlag = 1;
-							}, function() {
-								mod.updateFlag = 2;
-							});
-						}
-					}
+			}
+		} else if(appVersionMinMax.max == newestVersionMinMax.max) {
+			if(appVersionMinMax.min < newestVersionMinMax.min) { //在线更新
+				if(plus.os.name = "Android") {
+					//					plus.webview.currentWebview().canJump = true;
+					resolveFile(version.addverurl, 0);
 				} else {
-					plus.webview.currentWebview().canJump = true;
+					if(mod.updateFlag == 0) {
+						setDialog('教宝云有新版本，是否下载？', "您已取消下载", function() {
+							mod.updateFlag = 1;
+						}, function() {
+							mod.updateFlag = 2;
+						});
+					}
 				}
 			} else {
 				plus.webview.currentWebview().canJump = true;
 			}
-		} else {//ios
-			newestVersions = version.version.split('.');
-			var hasNewerVersion=newestVersions.some(function(verNo,index){
-				return parseInt(verNo)>parseInt(appVersions[index]);
-			})
-			if(hasNewerVersion){//如果有新版本
-				
+		} else {
+			plus.webview.currentWebview().canJump = true;
+		}
+	} else { //ios
+		newestVersions = version.version.split('.');
+		var hasNewerVersion = newestVersions.some(function(verNo, index) {
+			return parseInt(verNo) > parseInt(appVersions[index]);
+		})
+		if(hasNewerVersion) { //如果有新版本
+
+		}
+	}
+
+}
+/**
+ * 设置提示对话框
+ * @param {Object} hint 提示语
+ * @param {Object} callback 确认后的回调函数
+ */
+var setDialog = function(hint, cancelToast, callback, cancelCallback) {
+	var btnArray = ['是', '否'];
+	mui.confirm(hint, '教宝云', btnArray, function(e) {
+		//console.log("当前点击的东东：" + JSON.stringify(e));
+		if(e.index == 0) {
+			callback();
+		} else {
+			mui.toast(cancelToast);
+			if(cancelCallback) {
+				cancelCallback();
 			}
 		}
-
+	});
+}
+/**
+ * 获取大版本号和小版本号
+ * @param {Object} numArray
+ */
+var getMinMax = function(numArray) {
+	var minMax = {};
+	//console.log(JSON.stringify(numArray))
+	var min = '';
+	for(var i in numArray) {
+		if(i == 0) {
+			minMax.max = parseInt(numArray[i]);
+		} else if(i < 3) {
+			min += numArray[i];
+		} else {
+			break;
+		}
 	}
-	/**
-	 * 设置提示对话框
-	 * @param {Object} hint 提示语
-	 * @param {Object} callback 确认后的回调函数
-	 */
-	var setDialog = function(hint, cancelToast, callback, cancelCallback) {
-		var btnArray = ['是', '否'];
-		mui.confirm(hint, '教宝云', btnArray, function(e) {
-			//console.log("当前点击的东东：" + JSON.stringify(e));
-			if(e.index == 0) {
-				callback();
-			} else {
-				mui.toast(cancelToast);
-				if(cancelCallback) {
-					cancelCallback();
+	minMax.min = parseInt(min);
+	return minMax;
+}
+/**
+ * 下载整包
+ * @param {Object} ApkUrl 整包地址
+ */
+function downApk(ApkUrl) {
+	//console.log(plus.os.name);
+	if(plus.os.name == "Android") {
+		//console.log("下载APK路径：" + ApkUrl)
+		var url = "_doc/update/"; // 下载文件地址
+		var dtask = plus.downloader.createDownload(ApkUrl, {
+			filename: "_doc/update/"
+		}, function(d, status) {
+			//console.log("下载状态：" + status);
+			if(status == 200) { // 下载成功
+				var path = d.filename;
+				//console.log(d.filename);
+				if(mod.installFlag == 0) {
+					setDialog("新版app文件已下载，是否安装？", "您已取消安装", function() {
+						installApk(path);
+						mod.installFlag = 1;
+					}, function() {
+						mod.installFlag = 2;
+					})
+				} else if(mod.installFlag == 1) {
+					installApk(path);
 				}
+
+			} else { //下载失败
+				mui.toast("Download failed: " + status);
 			}
 		});
+		dtask.addEventListener("statechanged", onStateChanged, false);
+		dtask.start();
+		//console.log("开始下载!")
 	}
-	/**
-	 * 获取大版本号和小版本号
-	 * @param {Object} numArray
-	 */
-	var getMinMax = function(numArray) {
-		var minMax = {};
-		//console.log(JSON.stringify(numArray))
-		var min = '';
-		for(var i in numArray) {
-			if(i == 0) {
-				minMax.max = parseInt(numArray[i]);
-			} else if(i < 3) {
-				min += numArray[i];
-			} else {
-				break;
-			}
+}
+/**
+ * 下载在线更新的资源
+ * @param {Object} wgtUrl
+ */
+function downWgt(wgtUrl) {
+	//		plus.nativeUI.showWaiting("下载wgt文件...");
+	var dtask = plus.downloader.createDownload(wgtUrl, {
+		filename: "_doc/update/"
+	}, function(d, status) {
+		console.log("当前下载状态：" + status);
+		if(status == 200) {
+			console.log("下载wgt成功：" + d.filename);
+			installWgt(d.filename); // 安装wgt包
+		} else {
+			//console.log("下载wgt失败！");
+			//				plus.nativeUI.alert("下载wgt失败！");
 		}
-		minMax.min = parseInt(min);
-		return minMax;
+	});
+	dtask.addEventListener("statechanged", onStateChanged, false);
+	dtask.start();
+}
+var onStateChanged = function(download, status) {
+	//		//console.log("当前下载状态：" + download.state + ":" + status + ":" + download.totalSize)
+	if(download.state == 3) {
+		if(!myStorage.getItem("loadFileSize") || myStorage.getItem("loadFileSize") != download.totalSize) {
+			myStorage.setItem("loadFileSize", download.totalSize);
+		}
 	}
-	/**
-	 * 下载整包
-	 * @param {Object} ApkUrl 整包地址
-	 */
-	function downApk(ApkUrl) {
-		//console.log(plus.os.name);
-		if(plus.os.name == "Android") {
-			//console.log("下载APK路径：" + ApkUrl)
-			var url = "_doc/update/"; // 下载文件地址
-			var dtask = plus.downloader.createDownload(ApkUrl, {
-				filename: "_doc/update/"
-			}, function(d, status) {
-				//console.log("下载状态：" + status);
-				if(status == 200) { // 下载成功
-					var path = d.filename;
-					//console.log(d.filename);
+}
+/**
+ * 装载正整包
+ * @param {Object} path
+ */
+function installApk(path) {
+	if(plus.os.name == "Android") {
+		plus.runtime.install(path); // 安装下载的apk文件
+	} else {
+		var url = 'itms-apps://itunes.apple.com/cn/app/hello-h5+/id682211190?l=zh&mt=8'; // HelloH5应用在appstore的地址
+		plus.runtime.openURL(url);
+	}
+}
+/**
+ * 加载在线安装包
+ * @param {Object} path
+ */
+function installWgt(path) {
+	plus.runtime.install(path, {
+		force: true
+	}, function() {
+		removeFile(path);
+		console.log("安装wgt文件成功！");
+	}, function(e) {
+		plus.nativeUI.closeWaiting();
+		console.log("安装wgt文件失败[" + e.code + "]：" + e.message);
+	});
+}
+/**
+ * 
+ * @param {Object} fileUrl
+ * @param {Object} type 0升级包 1apk整包
+ */
+var resolveFile = function(fileUrl, type) {
+	console.log("文件路径：" + fileUrl + ";type:" + type);
+	var filePath = "_doc/update/" + fileUrl.split('/')[fileUrl.split('/').length - 1]
+	plus.io.resolveLocalFileSystemURL(filePath, function(entry) {
+		// 可通过entry对象操作test.html文件 
+		console.log('存在文件！' + entry.isFile);
+		entry.getMetadata(function(metadata) {
+			if(myStorage.getItem("loadFileSize") == metadata.size) {
+				//console.log("Remove succeeded:" + myStorage.getItem("loadFileSize"));
+				if(type) {
 					if(mod.installFlag == 0) {
-						setDialog("新版app文件已下载，是否安装？", "您已取消安装", function() {
-							installApk(path);
+						setDialog("新版app文件已下载，是否安装？", "您已取消安装app", function() {
+							installApk(filePath);
 							mod.installFlag = 1;
 						}, function() {
 							mod.installFlag = 2;
 						})
 					} else if(mod.installFlag == 1) {
-						installApk(path);
-					}
-
-				} else { //下载失败
-					mui.toast("Download failed: " + status);
-				}
-			});
-			dtask.addEventListener("statechanged", onStateChanged, false);
-			dtask.start();
-			//console.log("开始下载!")
-		}
-	}
-	/**
-	 * 下载在线更新的资源
-	 * @param {Object} wgtUrl
-	 */
-	function downWgt(wgtUrl) {
-		//		plus.nativeUI.showWaiting("下载wgt文件...");
-		var dtask = plus.downloader.createDownload(wgtUrl, {
-			filename: "_doc/update/"
-		}, function(d, status) {
-			console.log("当前下载状态：" + status);
-			if(status == 200) {
-				console.log("下载wgt成功：" + d.filename);
-				installWgt(d.filename); // 安装wgt包
-			} else {
-				//console.log("下载wgt失败！");
-				//				plus.nativeUI.alert("下载wgt失败！");
-			}
-		});
-		dtask.addEventListener("statechanged", onStateChanged, false);
-		dtask.start();
-	}
-	var onStateChanged = function(download, status) {
-		//		//console.log("当前下载状态：" + download.state + ":" + status + ":" + download.totalSize)
-		if(download.state == 3) {
-			if(!myStorage.getItem("loadFileSize") || myStorage.getItem("loadFileSize") != download.totalSize) {
-				myStorage.setItem("loadFileSize", download.totalSize);
-			}
-		}
-	}
-	/**
-	 * 装载正整包
-	 * @param {Object} path
-	 */
-	function installApk(path) {
-		if(plus.os.name == "Android") {
-			plus.runtime.install(path); // 安装下载的apk文件
-		} else {
-			var url = 'itms-apps://itunes.apple.com/cn/app/hello-h5+/id682211190?l=zh&mt=8'; // HelloH5应用在appstore的地址
-			plus.runtime.openURL(url);
-		}
-	}
-	/**
-	 * 加载在线安装包
-	 * @param {Object} path
-	 */
-	function installWgt(path) {
-		plus.runtime.install(path, {
-			force: true
-		}, function() {
-			removeFile(path);
-			console.log("安装wgt文件成功！");
-		}, function(e) {
-			plus.nativeUI.closeWaiting();
-			console.log("安装wgt文件失败[" + e.code + "]：" + e.message);
-		});
-	}
-	/**
-	 * 
-	 * @param {Object} fileUrl
-	 * @param {Object} type 0升级包 1apk整包
-	 */
-	var resolveFile = function(fileUrl, type) {
-		console.log("文件路径：" + fileUrl + ";type:" + type);
-		var filePath = "_doc/update/" + fileUrl.split('/')[fileUrl.split('/').length - 1]
-		plus.io.resolveLocalFileSystemURL(filePath, function(entry) {
-			// 可通过entry对象操作test.html文件 
-			console.log('存在文件！' + entry.isFile);
-			entry.getMetadata(function(metadata) {
-				if(myStorage.getItem("loadFileSize") == metadata.size) {
-					//console.log("Remove succeeded:" + myStorage.getItem("loadFileSize"));
-					if(type) {
-						if(mod.installFlag == 0) {
-							setDialog("新版app文件已下载，是否安装？", "您已取消安装app", function() {
-								installApk(filePath);
-								mod.installFlag = 1;
-							}, function() {
-								mod.installFlag = 2;
-							})
-						} else if(mod.installFlag == 1) {
-							installApk(filePath);
-						}
-					} else {
-						installWgt(filePath);
+						installApk(filePath);
 					}
 				} else {
-					entry.remove(function(entry) {
-						if(type) {
-							downApk(fileUrl);
-						} else {
-							downWgt(fileUrl);
-						}
-					}, function(e) {
-						alert(e.message);
-					});
-
+					installWgt(filePath);
 				}
-			}, function() {
-				//console.log("文件错误");
-			});
-		}, function(e) {
-			if(type) {
-				downApk(fileUrl);
 			} else {
-				downWgt(fileUrl)
+				entry.remove(function(entry) {
+					if(type) {
+						downApk(fileUrl);
+					} else {
+						downWgt(fileUrl);
+					}
+				}, function(e) {
+					alert(e.message);
+				});
+
 			}
+		}, function() {
+			//console.log("文件错误");
 		});
-	}
+	}, function(e) {
+		if(type) {
+			downApk(fileUrl);
+		} else {
+			downWgt(fileUrl)
+		}
+	});
+}
 
-	function removeFile(fileName, type) {
-		plus.io.resolveLocalFileSystemURL(fileName, function(entry) {
-			entry.remove(function() {
-				console.log("删除文件成功！")
-			}, function(e) {
-
-			})
+function removeFile(fileName, type) {
+	plus.io.resolveLocalFileSystemURL(fileName, function(entry) {
+		entry.remove(function() {
+			console.log("删除文件成功！")
 		}, function(e) {
 
 		})
-	}
-	return mod;
+	}, function(e) {
+
+	})
+}
+return mod;
 })(appUpdate || {})
