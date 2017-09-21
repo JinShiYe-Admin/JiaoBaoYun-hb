@@ -240,7 +240,8 @@
 			"image/show/show-default-small.png",
 			"js/libs/crypto-js/crypto-js.js",
 			"css/mui.min.css",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"image/utils/playvideo.png"
 		]
 	},
 	"html/sciedu/sciedu_home.html": {

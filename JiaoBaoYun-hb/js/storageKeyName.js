@@ -7,7 +7,7 @@ var storageKeyName = (function(mod) {
 	console.log = function(hint, object) {
 		if(mod.key === 1) {
 			var argus = hint;
-			if(object) {
+			if(typeof(object)!=='undefined') {
 				argus = hint + JSON.stringify(object);
 			}
 			exLog.apply(this, [argus]);
