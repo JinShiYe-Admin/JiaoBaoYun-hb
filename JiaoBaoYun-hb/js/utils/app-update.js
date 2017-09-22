@@ -20,7 +20,7 @@ var appUpdate = (function(mod) {
 					mod.getAppVersion(request.response.results[0]);
 				}
 			}
-			request.open("post", "http://itunes.apple.com/lookup?id=958950234", true);
+			request.open("post", "http://itunes.apple.com/lookup?id=1281905607", true);
 			request.send();
 
 			return;
@@ -107,21 +107,22 @@ var appUpdate = (function(mod) {
 				}
 			}
 		} else { //ios
-			newestVersions = version.version.split('.');
-			var hasNewerVersion = newestVersions.some(function(verNo, index) {
-				return parseInt(verNo) > parseInt(appVersions[index]);
-			})
-			if(hasNewerVersion && mod.updateFlag == 0) { //如果有新版本
-				setDialog('教宝云有新版本，是否下载？', "您已取消下载", function() {
-					mod.updateFlag = 1;
-					console.log("下载APK路径：")
-					plus.runtime.openURL('https://itunes.apple.com/us/app/%E6%95%99%E5%AE%9D%E4%BA%91/id1281905607?l=zh&ls=1&mt=8');
-				}, function() {
-					mod.updateFlag = 2;
+			if(version) {
+				newestVersions = version.version.split('.');
+				var hasNewerVersion = newestVersions.some(function(verNo, index) {
+					return parseInt(verNo) > parseInt(appVersions[index]);
 				})
+				if(hasNewerVersion && mod.updateFlag == 0) { //如果有新版本
+					setDialog('教宝云有新版本，是否下载？', "您已取消下载", function() {
+						mod.updateFlag = 1;
+						console.log("下载APK路径：")
+						plus.runtime.openURL('https://itunes.apple.com/us/app/%E6%95%99%E5%AE%9D%E4%BA%91/id1281905607?l=zh&ls=1&mt=8');
+					}, function() {
+						mod.updateFlag = 2;
+					})
+				}
 			}
 		}
-
 	}
 	/**
 	 * 设置提示对话框
