@@ -34,12 +34,10 @@
 		<div class="mui-content">
 			<div id="slider" class="mui-slider mui-fullscreen">
 				<div class="mui-slider-group">
-					<div id="course-all" class="mui-slider-item">
-						<div class="mui-scroll-wrapper">
-							<div class="mui-scroll">
-								<ul class="mui-table-view">
-								</ul>
-							</div>
+					<div id="course-all" class="mui-slider-item mui-scroll-wrapper">
+						<div class="mui-scroll">
+							<ul class="mui-table-view">
+							</ul>
 						</div>
 					</div>
 				</div>
@@ -279,13 +277,11 @@
 			function createAttendedFragment() {
 				var div = document.createElement("div");
 				div.id = "course-attended";
-				div.className = "mui-slider-item"
-				div.innerHTML = '<div id="scroll1" class="mui-scroll-wrapper">\
-							<div class="mui-scroll">\
+				div.className = "mui-slider-item mui-scroll-wrapper"
+				div.innerHTML = '<div class="mui-scroll">\
 								<ul class="mui-table-view">\
 								</ul>\
-							</div>\
-						</div>';
+							</div>';
 				return div;
 			}
 		</script>

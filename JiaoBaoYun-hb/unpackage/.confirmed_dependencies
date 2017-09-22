@@ -159,7 +159,9 @@
 			"html/show/show-home2.html",
 			"html/sciedu/sciedu_home.html",
 			"html/show/show-home.html",
-			"html/micro-course/course-home.html"
+			"html/micro-course/course-home.html",
+			"html/show/show-home1.html",
+			"html/micro-course/course-home1.html"
 		]
 	},
 	"html/cloud/storage_transport.html": {
@@ -173,7 +175,8 @@
 			"css/iconfont/iconfont.css",
 			"css/cloud/file.css",
 			"css/mui.min.css",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"js/utils/vue.js"
 		],
 		"refer": []
 	},
@@ -262,7 +265,8 @@
 			"image/utils/loading.gif"
 		],
 		"refer": [
-			"html/sciedu/sciedu_show_main.html"
+			"html/sciedu/sciedu_show_main.html",
+			"html/utils/customizeCity.html"
 		]
 	},
 	"html/show/show-home.html": {
@@ -310,6 +314,51 @@
 			"css/micro-course/course-list.css",
 			"css/utils/common.css",
 			"js/libs/crypto-js/crypto-js.js"
+		]
+	},
+	"html/utils/customizeCity.html": {
+		"resources": [
+			"css/mui.min.css",
+			"image/utils/delete.png",
+			"css/utils/common.css",
+			"js/libs/crypto-js/crypto-js.js"
+		]
+	},
+	"html/show/show-home1.html": {
+		"resources": [
+			"css/show/show-list.css",
+			"js/mui.pullToRefresh.js",
+			"image/utils/img-loading.gif",
+			"fonts/fangzheng.ttf",
+			"js/mui.pullToRefresh.material.js",
+			"image/utils/video-loading.gif",
+			"js/libs/jquery.lazyload.min.js",
+			"css/mui.min.css",
+			"js/show/show_listnew.js",
+			"css/utils/common.css",
+			"css/utils/fresh.css",
+			"js/libs/crypto-js/crypto-js.js",
+			"image/show/show-default-large.png",
+			"image/show/show-default-small.png",
+			"image/utils/loading.gif",
+			"image/utils/playvideo.png"
+		],
+		"refer": [
+			"html/show/show-detail.html"
+		]
+	},
+	"html/micro-course/course-home1.html": {
+		"resources": [
+			"js/mui.pullToRefresh.js",
+			"fonts/fangzheng.ttf",
+			"js/mui.pullToRefresh.material.js",
+			"js/publicMicroClass.js",
+			"js/micro-course/course-listnew.js",
+			"css/mui.min.css",
+			"css/micro-course/course-list.css",
+			"css/utils/common.css",
+			"css/utils/fresh.css",
+			"image/utils/loading.gif"
 		]
 	}
 }
