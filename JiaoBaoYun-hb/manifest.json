@@ -5049,7 +5049,8 @@
 					"image/utils/playvideo.png",
 					"image/mine/invite_none_0.png",
 					"js/utils/vue.min.js",
-					"image/utils/default_load_2.gif"
+					"image/utils/default_load_2.gif",
+					"js/libs/jquery.lazyload.min.js"
 				],
 				"refer": [
 					"html/quan/space-detail.html",

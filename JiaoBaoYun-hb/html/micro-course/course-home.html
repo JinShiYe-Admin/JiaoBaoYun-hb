@@ -60,7 +60,7 @@
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
-			<h1 class="mui-title">关注</h1>
+			<h1 class="mui-title">全部</h1>
 			<div id="header-indicator" class="mui-slider-indicator">
 				<div class="mui-indicator mui-active"></div>
 				<div class="mui-indicator"></div>
@@ -106,7 +106,7 @@
 				},
 				extras: {}
 			}
-			var items = [];
+			var items = [allItem,attendedItem];
 			mui.init();
 			var courseHome = new Vue({
 				el: '#course-home',
@@ -115,29 +115,16 @@
 					canReload: false
 				},
 				watch: {
-					isAttended: function(newVal, oldVal) {
-						if(this.canReload) {
-							console.log("执行reload方法")
-							window.location.reload(true);
-						}
-					}
 				}
 			})
 			mui.plusReady(function() {
 				mui.fire(plus.webview.getLaunchWebview(), "indexReady");
 				getAttendedClasses(function(isShow) {
 					courseHome.canReload = false;
-					if(isShow) {
-						attendedItem.extras.isAttended = 1;
-						items = [attendedItem, allItem];
-					} else {
-						attendedItem.extras.isAttended = 0;
-
-						items = [allItem];
-					}
+					attendedItem.extras.isAttended = isShow;
 					console.log("展现主界面加载的items", items);
 					setWebGroup();
-					setTitle(11);
+					setTitle(10);
 				})
 				setListener();
 			});
@@ -148,21 +135,20 @@
 				})
 				window.addEventListener('focus', function() {
 					getAttendedClasses(function(isShow) {
+						console.log("getAttendedClasses获取的值：",isShow);
 						attendedItem.extras.isAttended = isShow;
 						courseHome.canReload = true;
 						courseHome.isAttended = isShow;
 						console.log("course-home.html获取关注事件" + isShow)
 						events.fireToPageNone("course-attended.html", "courseAttended", isShow);
-						console.log("获取的加载网页：" + items.length, items);
 					})
 				})
 				window.addEventListener('courseAttended', function(e) {
 					console.log("######course-home.html传过来的值："+e.detail.data);
 					var isShow = parseInt(e.detail.data);
 					attendedItem.extras.isAttended = isShow;
-					courseHome.canReload = true;
 					courseHome.isAttended = isShow;
-					events.fireToPageNone("course-attended.html", "courseAttended", isShow);
+//					events.fireToPageNone("course-attended.html", "courseAttended", isShow);
 				})
 			}
 
@@ -173,10 +159,10 @@
 					onChange: function(obj) {
 						console.log("当前界面index:" + parseInt(obj.index));
 						if(items.length > 1) {
-							if(parseInt(obj.index) == 1) {
-								setTitle(10);
-							} else {
+							if(parseInt(obj.index) === 1) {
 								setTitle(11);
+							} else {
+								setTitle(10);
 							}
 						}
 					}
@@ -227,14 +213,14 @@
 					case 10: //全部
 						title.innerText = "全部";
 						indicator.style.display = "block";
-						indicator.firstElementChild.className = "mui-indicator";
-						indicator.lastElementChild.className = "mui-indicator mui-active";
+						indicator.firstElementChild.className = "mui-indicator mui-active";
+						indicator.lastElementChild.className = "mui-indicator ";
 						break;
 					case 11: //关注
 						title.innerText = "关注";
 						indicator.style.display = "block";
-						indicator.firstElementChild.className = "mui-indicator mui-active";
-						indicator.lastElementChild.className = "mui-indicator";
+						indicator.firstElementChild.className = "mui-indicator";
+						indicator.lastElementChild.className = "mui-indicator mui-active";
 						break;
 					case 12:
 						indicator.style.display = "block";

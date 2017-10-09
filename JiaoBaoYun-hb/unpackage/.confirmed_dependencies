@@ -229,7 +229,8 @@
 			"css/micro-course/course-list.css",
 			"js/micro-course/course-list.js",
 			"css/mui.min.css",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"js/libs/crypto-js/crypto-js.js"
 		]
 	},
 	"html/show/show-attended.html": {
@@ -275,7 +276,8 @@
 			"js/utils/webviewGroup.js",
 			"fonts/fangzheng.ttf",
 			"css/mui.min.css",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"html/show/show-all.html"
 		],
 		"refer": [
 			"html/show/show-attended.html",
@@ -291,7 +293,8 @@
 			"fonts/fangzheng.ttf",
 			"js/publicMicroClass.js",
 			"css/mui.min.css",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"html/micro-course/course-all.html"
 		],
 		"refer": [
 			"html/micro-course/course-attended.html",
@@ -305,7 +308,13 @@
 			"css/mui.min.css",
 			"css/utils/common.css",
 			"js/show/show-all.js",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"js/utils/vue.min.js",
+			"js/libs/jquery.lazyload.min.js",
+			"js/show/show-list.js",
+			"image/utils/default_load_2.gif",
+			"image/show/show-default-small.png",
+			"image/utils/playvideo.png"
 		]
 	},
 	"html/micro-course/course-all.html": {
@@ -313,7 +322,12 @@
 			"css/mui.min.css",
 			"css/micro-course/course-list.css",
 			"css/utils/common.css",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"js/utils/vue.min.js",
+			"js/micro-course/course-list.js"
+		],
+		"refer": [
+			"html/micro-course/course_details.html"
 		]
 	},
 	"html/utils/customizeCity.html": {

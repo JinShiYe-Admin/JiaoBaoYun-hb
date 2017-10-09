@@ -60,7 +60,7 @@
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
-			<h1 class="mui-title">关注</h1>
+			<h1 class="mui-title">全部</h1>
 			<div id="header-indicator" class="mui-slider-indicator">
 				<div class="mui-indicator mui-active"></div>
 				<div class="mui-indicator"></div>
@@ -105,7 +105,7 @@
 				},
 				extras: {}
 			}
-			var items = [attendedItem,allItem];
+			var items = [allItem,attendedItem];
 			mui.init();
 			mui.plusReady(function() {
 				events.preload("show-detail.html", 100);
@@ -117,7 +117,7 @@
 					}
 					console.log("展现主界面加载的items",items);
 					setWebGroup();
-					setTitle(11);
+					setTitle(10);
 				})
 				setListener();
 			});
@@ -126,8 +126,7 @@
 				window.addEventListener("detailReady", function() {
 					detailReady = true;
 				})
-				window.addEventListener('focus', function() {
-					
+				window.addEventListener('focus', function() {	
 					getFocusedPerson(function(isShow) {
 						console.log("show-home.html获取关注事件"+isShow)
 						events.fireToPageNone("show-attended.html","showAttended",isShow);
@@ -174,9 +173,9 @@
 						console.log("当前界面index:" + parseInt(obj.index));
 						if(items.length > 1) {
 							if(parseInt(obj.index) == 1) {
-								setTitle(10);
-							} else {
 								setTitle(11);
+							} else {
+								setTitle(10);
 							}
 						}
 					}
@@ -224,14 +223,14 @@
 					case 10: //全部
 						title.innerText = "全部";
 						indicator.style.display = "block";
-						indicator.firstElementChild.className = "mui-indicator";
-						indicator.lastElementChild.className = "mui-indicator mui-active";
+						indicator.firstElementChild.className = "mui-indicator mui-active";
+						indicator.lastElementChild.className = "mui-indicator";
 						break;
 					case 11: //关注
 						title.innerText = "关注";
 						indicator.style.display = "block";
-						indicator.firstElementChild.className = "mui-indicator mui-active";
-						indicator.lastElementChild.className = "mui-indicator";
+						indicator.firstElementChild.className = "mui-indicator";
+						indicator.lastElementChild.className = "mui-indicator mui-active";
 						break;
 					case 12:
 						indicator.style.display = "block";

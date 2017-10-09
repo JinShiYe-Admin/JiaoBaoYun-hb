@@ -97,8 +97,11 @@
 						if(!events.getUtid()) {
 							events.toggleStorageArray(storageKeyName.FOCUSECOURSES, course.TabId, course.IsFocus);
 							course.IsFocus = !course.IsFocus;
-							events.fireToPageNone("course-attended.html", "courseAttended", (myStorage.getItem(storageKeyName.FOCUSECOURSES) && myStorage.getItem(storageKeyName.FOCUSECOURSES).length > 0));
-							events.fireToPageNone("course-home.html", "courseAttended", (myStorage.getItem(storageKeyName.FOCUSECOURSES) && myStorage.getItem(storageKeyName.FOCUSECOURSES).length > 0));
+							var storageArr=myStorage.getItem(storageKeyName.FOCUSECOURSES)
+							console.log("本地存储的值：",storageArr)
+							console.log("要传递的值：",storageArr&&storageArr.length>0)
+							events.fireToPageNone("course-attended.html", "courseAttended", (storageArr&& storageArr.length > 0));
+							events.fireToPageNone("course-home.html", "courseAttended", (storageArr && storageArr.length > 0));
 							return;
 						}
 						//所需参数

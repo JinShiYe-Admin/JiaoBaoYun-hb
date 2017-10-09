@@ -249,7 +249,7 @@
 				})
 				window.addEventListener("courseAttended", function(e) {
 					mui('#course-att').pullRefresh().refresh(true);
-					console.log("传递的事件：", e.detail);
+					console.log("courseAttended传递的事件：", e.detail);
 					var oldValue = courseAtt.isAttended;
 					if(e.detail.data == null) {
 						courseAtt.isAttended = 0;
