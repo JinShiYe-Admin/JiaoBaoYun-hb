@@ -2,7 +2,7 @@ var courseInfo = new Vue({
 	el: "#course-info",
 	data: {
 		courseInfo: {
-
+			
 		},
 		isFocused: 0
 	},
@@ -14,7 +14,7 @@ var courseInfo = new Vue({
 			var com = this;
 			if(events.getUtid()) {
 				com.setCourseFocus(function() {
-					com.courseInfo.isFocused = com.courseInfo.isFocused ? 0 : 1;
+					com.isFocused = com.isFocused ? 0 : 1;
 				});
 			} else {
 				events.toggleStorageArray(storageKeyName.FOCUSECOURSES, com.courseInfo.TabId, this.isFocused);
@@ -40,6 +40,8 @@ var courseInfo = new Vue({
 				//console.log("是否已关注："+this.isFocused);
 				if(data.RspCode == 0) {
 					events.fireToPageNone('course-home.html', 't-focus');
+					events.fireToPageNone('course-all.html', 't-focus');
+					events.fireToPageNone('course-attended.html', 't-focus');
 					callback();
 				} else {
 					mui.toast(data.RspTxt);

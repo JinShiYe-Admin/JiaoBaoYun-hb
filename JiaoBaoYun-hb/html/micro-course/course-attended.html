@@ -228,9 +228,15 @@
 				}
 			}
 			mui.plusReady(function() {
-				//				mui("#course-att").pullRefresh().disablePullupToRefresh();
-				courseAtt.isAttended = Number(plus.webview.currentWebview().isAttended);
-				console.log("主界面传过来的值：", courseAtt.isAttended);
+				courseInfo.pageIndex = 1;
+				course_list.getData(courseInfo, function(data) {
+					console.log("#####关注的课程的刷新######");
+					courseAtt.isAttended=1;
+					addData(data, 1);
+				}, function(err) {
+					courseAtt.isAttended=0;
+					mui.toast(err.RspTxt);
+				})
 				setListener();
 			})
 

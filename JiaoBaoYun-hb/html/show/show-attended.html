@@ -203,9 +203,15 @@
 				})
 			}
 			mui.plusReady(function() {
-				//				mui('#show-att').pullRefresh().disablePullupToRefresh();
-				showAtt.detailReady = plus.webview.currentWebview().detailReady;
-				showAtt.isAttended = Number(plus.webview.currentWebview().isAttended);
+				showCity.pageIndex = 1;
+				show_list.getShowList(showCity, function(showCity, data) {
+					showAtt.addData(showCity.pageIndex, data);
+					showCity.pageIndex++;
+					showAtt.isAttended=1
+				}, function(err) {
+					showAtt.isAttended=0
+					mui.toast(err.RspTxt);
+				})
 				console.log("showAtt.detailReady" + showAtt.detailReady);
 				setListener();
 			})
