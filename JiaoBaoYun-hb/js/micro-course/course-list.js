@@ -16,7 +16,7 @@ var course_list = (function(mod) {
 		};
 		// 等待的对话框
 		var wd = null;
-		if(model.type) { //关注0，全部1
+		if(model.type) { //全部1
 			//1.获取所有课程
 			postDataMCPro_getAllCourses(comData, wd, function(data) {
 				console.log('course-list获取所有课程:', data);

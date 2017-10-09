@@ -4994,7 +4994,8 @@
 					"fonts/fangzheng.ttf",
 					"js/utils/vue.min.js",
 					"image/mine/invite_none_0.png",
-					"js/publicProtocol.js"
+					"js/publicProtocol.js",
+					"fonts/mui.ttf"
 				],
 				"refer": [
 					"html/micro-course/course_details.html"

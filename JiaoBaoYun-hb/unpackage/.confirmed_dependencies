@@ -74,7 +74,8 @@
 		"resources": [
 			"js/quan/classSpace-persons.js",
 			"css/mui.min.css",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"fonts/mui.ttf"
 		],
 		"refer": []
 	},
@@ -291,6 +292,9 @@
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
 			"fonts/mui.ttf"
+		],
+		"refer": [
+			"html/micro-course/course_details.html"
 		]
 	},
 	"html/show/show-attended.html": {
@@ -305,7 +309,8 @@
 			"js/libs/crypto-js/crypto-js.js",
 			"css/mui.min.css",
 			"css/utils/common.css",
-			"image/utils/playvideo.png"
+			"image/utils/playvideo.png",
+			"image/show/show-default-large.png"
 		]
 	},
 	"html/sciedu/sciedu_home.html": {
@@ -378,7 +383,8 @@
 			"image/utils/default_load_2.gif",
 			"image/show/show-default-small.png",
 			"image/utils/playvideo.png",
-			"fonts/fangzheng.ttf"
+			"fonts/fangzheng.ttf",
+			"fonts/mui.ttf"
 		]
 	},
 	"html/micro-course/course-all.html": {
@@ -389,7 +395,8 @@
 			"js/libs/crypto-js/crypto-js.js",
 			"js/utils/vue.min.js",
 			"js/micro-course/course-list.js",
-			"fonts/fangzheng.ttf"
+			"fonts/fangzheng.ttf",
+			"fonts/mui.ttf"
 		],
 		"refer": [
 			"html/micro-course/course_details.html"

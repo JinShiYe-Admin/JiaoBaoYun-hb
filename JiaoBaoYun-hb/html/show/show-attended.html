@@ -10,17 +10,29 @@
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link href="../../css/utils/common.css" rel="stylesheet" />
 		<link href="../../css/show/show-list.css" rel="stylesheet" />
-
+		<style>
+			.padding-top0 {
+				padding-top: 0;
+			}
+			
+			.padding-top20 {
+				padding-top: 20%;
+			}
+		</style>
 	</head>
 
 	<body style="background-color:white;">
 		<!--下拉刷新容器-->
 		<div id="show-att" class="mui-content mui-scroll-wrapper" v-bind:class="{'background-white':isAttended==0}">
 			<div class="mui-scroll">
-				<div v-if="isAttended==0" class="" style="min-height:300px;text-align: center;padding-top: 20%;">
-					<img src="../../image/mine/invite_none_0.png" width="50%" height="auto">
-					<p style="margin: auto 0;padding: 10px;">暂无关注的人~~</p>
-				</div>
+				<template v-if="listData.length==0||!isAttended">
+					<div class="" style="min-height:300px;text-align: center;" v-bind:class="[isRequired?'padding-top20':'padding-top0']">
+						<img v-if="isRequired" src="../../image/mine/invite_none_0.png" width="50%" height="auto">
+						<p style="margin: auto 0;padding: 10px;">
+							<span v-if="!isRequired" class="mui-spinner" style="vertical-align: center;height: 15px;width: 15px;margin-bottom: -4px;"></span> {{isRequired?'没有获取到展现内容~~':'数据加载中~~'}}
+						</p>
+					</div>
+				</template>
 				<!--数据列表-->
 				<template v-else-if="isAttended&&listData.length>0">
 					<div class="show-list">
@@ -49,7 +61,8 @@
 				data: {
 					listData: [],
 					detailReady: false,
-					isAttended: 0
+					isAttended: 0,
+					isRequired: false
 				},
 				watch: {
 					isAttended: function(val, oldVal) {
@@ -205,12 +218,19 @@
 			mui.plusReady(function() {
 				showCity.pageIndex = 1;
 				show_list.getShowList(showCity, function(showCity, data) {
+					console.log("获取的showCity信息：" + data)
 					showAtt.addData(showCity.pageIndex, data);
 					showCity.pageIndex++;
-					showAtt.isAttended=1
+					if(data.length > 0) {
+						showAtt.isAttended = 1
+					} else {
+						showAtt.isAttended = 0
+					}
+					showAtt.isRequired = true;
 				}, function(err) {
-					showAtt.isAttended=0
+					showAtt.isAttended = 0
 					mui.toast(err.RspTxt);
+					showAtt.isRequired = true
 				})
 				console.log("showAtt.detailReady" + showAtt.detailReady);
 				setListener();
