@@ -674,7 +674,7 @@
 
 				//点击评论区域
 				mui('.section-comment').on('tap', '.mui-table-view-cell', function(e) {
-					mui.toast(storageKeyName.NOOPEN) 
+					mui.toast(consts.NOOPEN) 
 					return;
 					//console.log('mui-table-view-cell id ' + this.id + " e " + e.target.getAttribute("data-type"));
 					var self = this;
@@ -745,7 +745,7 @@
 				//评论节次
 				document.getElementById('comment_section').addEventListener('tap', function() {
 					console.log("comment_section " + sectionId);
-					mui.toast(storageKeyName.NOOPEN)
+					mui.toast(consts.NOOPEN)
 					return;
 					
 					var self = this;
@@ -782,7 +782,7 @@
 
 				//顶部节次点赞按钮
 				mui('#section_top').on('tap', '.icon-zanzan1', function() {
-					mui.toast(storageKeyName.NOOPEN)
+					mui.toast(consts.NOOPEN)
 					return;
 					var self = this;
 					if(events.judgeLoginMode(self)) { //判断是否是游客身份登录
