@@ -20,6 +20,8 @@ var courseInfo = new Vue({
 				events.toggleStorageArray(storageKeyName.FOCUSECOURSES, com.courseInfo.TabId, this.isFocused);
 				com.isFocused = com.isFocused ? 0 : 1;
 				events.fireToPageNone('course-home.html', 't-focus');
+				events.fireToPageNone('course-all.html', 't-focus');
+				events.fireToPageNone('course-attended.html', 't-focus');
 			}
 
 		},

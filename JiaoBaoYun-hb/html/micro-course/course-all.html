@@ -230,6 +230,7 @@
 
 			function setListener() {
 				window.addEventListener('t-focus', function(e) {
+					console.log("course-all.html的关注事件监听")
 					courseInfo.pageIndex = 1;
 					course_list.getData(courseInfo, function(data) {
 						addData(data);
