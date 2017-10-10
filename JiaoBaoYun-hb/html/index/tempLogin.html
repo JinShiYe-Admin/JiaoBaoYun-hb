@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../../css/mui.min.css" />
+		<link rel="stylesheet" href="../../css/utils/common.css" />
+		<style>
+			.ui-page-login,
+			body {
+				width: 100%;
+				height: 100%;
+				margin: 0px;
+				padding: 0px;
+			}
+			
+			.mui-content {
+				height: 100%;
+			}
+			
+			.area {
+				margin: 20px auto 0px auto;
+			}
+			
+			.mui-input-group {
+				margin-top: 3px;
+			}
+			
+			.mui-input-group:first-child {
+				margin-top: 20px;
+			}
+			
+			.mui-input-group label {
+				width: 22%;
+			}
+			
+			.mui-input-row label~input,
+			.mui-input-row label~select,
+			.mui-input-row label~textarea {
+				width: 78%;
+			}
+			
+			.mui-checkbox input[type=checkbox],
+			.mui-radio input[type=radio] {
+				top: 6px;
+			}
+			
+			.mui-content-padded {
+				margin-top: 25px;
+			}
+			
+			.mui-btn {
+				padding: 10px;
+			}
+			
+			.link-area {
+				display: block;
+				margin-top: 25px;
+				text-align: center;
+			}
+			
+			.spliter {
+				color: #bbb;
+				padding: 0px 8px;
+			}
+			
+			.oauth-area {
+				position: absolute;
+				bottom: 20px;
+				left: 0px;
+				text-align: center;
+				width: 100%;
+				padding: 0px;
+				margin: 0px;
+			}
+			
+			.oauth-area .oauth-btn {
+				display: inline-block;
+				width: 50px;
+				height: 50px;
+				background-size: 30px 30px;
+				background-position: center center;
+				background-repeat: no-repeat;
+				margin: 0px 20px;
+				/*-webkit-filter: grayscale(100%); */
+				border: solid 1px #13b7f6;
+				border-radius: 25px;
+			}
+			
+			.oauth-area .oauth-btn:active {
+				border: solid 1px #aaa;
+			}
+			
+			.oauth-area .oauth-btn.disabled {
+				background-color: #ddd;
+			}
+			/*
+			 * athor:xbs
+			 *
+			 */
+			
+			.mui-input-group:after {
+				background-color: #fff;
+			}
+			
+			.mui-input-group:before {
+				background-color: #fff;
+			}
+			
+			.row1:after {
+				background-color: #e4e4e4;
+			}
+			
+			.mui-input-group .mui-input-row {
+				height: 45px;
+			}
+			
+			input::-webkit-input-placeholder {
+				color: #999999;
+			}
+			
+			input[type=tel],
+			input[type=password] {
+				height: 45px;
+			}
+			
+			.regesterAndForget {
+				color: #00A5E0;
+				font-size: 1.2em;
+			}
+			
+			.head-portrait {
+				width: 70px;
+				height: 70px;
+				border-radius: 70px;
+				margin-top: 10px;
+			}
+		</style>
+
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<h1 class="mui-title" style="color: white;">登录</h1>
+		</header>
+		<div class="mui-content">
+			<div align="center">
+
+			</div>
+			<form id='login-form' class="mui-input-group">
+				<p></p>
+				<div class="mui-input-row row1">
+					<!--<label style="font-size: 15px;">账号</label>-->
+					<input id='account' type="tel" class="mui-input-clear mui-input" placeholder="手机号码">
+				</div>
+				<div class="mui-input-row ">
+					<!--<label style="font-size: 15px;">密码</label>-->
+					<input id='password' type="password" class="mui-input-clear mui-input " placeholder="密码">
+				</div>
+			</form>
+
+			<div class="mui-content-padded">
+				<button id='login' class="mui-btn mui-btn-block mui-btn-primary" style="background: #13b7f6; border:
+none; margin-top: -15px;">登录</button>
+			</div>
+		</div>
+		<script src="../../js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/app.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/utils/events.js" type="text/javascript" charset="utf-8"></script>
+		<!--本地存储-->
+		<script src="../../js/libs/myStorage/myStorage.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/storageKeyName.js" type="text/javascript" charset="utf-8"></script>
+		<!--加密-->
+		<script src="../../js/libs/RSA/Barrett.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/libs/RSA/BigInt.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/libs/RSA/RSA.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/utils/RSAEncrypt.js" type="text/javascript" charset="utf-8"></script>
+
+		<script src="js/mui.enterfocus.js" type="text/javascript" charset="utf-8"></script>
+		<!--网络请求-->
+		<script src="../../js/utils/postData.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/publicProtocol.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/utils/events.js" type="text/javascript" charset="utf-8"></script>
+		<!--签名-->
+		<script src="../../js/libs/crypto-js/require.js"></script>
+		<script src="../../js/utils/app-update.js"></script>
+		<script src="../../js/utils/sortSign.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/utils/signHmacSHA1.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/libs/jquery.js" type="text/javascript" charset="utf-8"></script>
+
+		<script>
+			(function($, doc) {
+				mui.init({
+					statusBarBackground: '#13b7f6'
+				});
+				$.plusReady(function() {
+					//					plus.screen.lockOrientation("portrait-primary");
+					//					var settings = app.getSettings();
+					//					var state = app.getState();
+					//					setTimeout(function() {
+					//						//关闭 splash
+					//						plus.navigator.closeSplashscreen();
+					//					}, 600);
+					//检查 "登录状态/锁屏状态" 结束
+					var loginButton = doc.getElementById('login');
+					var accountBox = doc.getElementById('account');
+					accountBox.value = '';
+					var passwordBox = doc.getElementById('password');
+					passwordBox.value = '';
+					//					var autoLoginButton = doc.getElementById("autoLogin");
+					var regButton = doc.getElementById('reg');
+					//					var forgetButton = doc.getElementById('forgetPassword');
+					var moreButton = doc.getElementById('more');
+					accountBox.value = '';
+					passwordBox.value = '';
+
+					//登录按钮
+					loginButton.addEventListener('tap', function(event) {
+						document.activeElement.blur();
+						if(!accountBox.value) {
+							mui.toast('请输入账号')
+							return;
+						}
+						if(!passwordBox.value) {
+							mui.toast('请输入密码')
+							return;
+						}
+						if((accountBox.value == '15288888888' && passwordBox.value == '111111') || (accountBox.value == '15277777777' && passwordBox.value == '111111') || (accountBox.value == '15266666666' && passwordBox.value == '111111') || (accountBox.value == '15255555555' && passwordBox.value == '111111') || (accountBox.value == '15244444444' && passwordBox.value == '111111')) {
+							//							plus.webview.getWebviewById("index.html").show("slide-in-right", 300);
+							var model_area = {
+								procode: '00', //省份code，自己添加的参数
+								proname: '全国', //省份名称，自己添加的参数
+								acode: '000000', //节点代码,通用6位,前两位为省份编码,中间两位为城市编码,后两位为区县编码--城市代码
+								aname: '全国', //节点名称--城市名称
+								atype: '' //节点类型,0省1城市2区县
+							}
+							personal = {
+								utid: '0', //用户表ID
+								uid: '00000000000', //电话号码
+								uname: '测试用户', //姓名,账号,只能修改一次,且只能字母开头,字母与数字,定了就不能修改
+								uimg: '../../image/utils/default_personalimage.png', //用户头像地址
+								unick: '测试用户', //用户昵称
+								usex: '', //用户性别
+								utxt: '', //用户签名
+								uarea: model_area, //用户区域,省代码 市代码|省名称 市名称
+								token: '', //用户令牌
+								ispw: '1', //0无密码，1有密码
+								isLogin: '1' //是否登录，0没有登录过，1有登录过
+							}
+							window.myStorage.setItem(window.storageKeyName.PERSONALINFO, personal);
+							mui.openWindow('index.html', 'index.html', {});
+						} else {
+							mui.toast('请输入正确的账号和密码')
+							return;
+						}
+					});
+				});
+			}(mui, document));
+		</script>
+	</body>
+
+</html>
