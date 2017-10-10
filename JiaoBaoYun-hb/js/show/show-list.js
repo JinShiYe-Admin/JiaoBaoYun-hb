@@ -127,7 +127,7 @@ var show_list = (function(mod) {
 				if(tempID.length > 0) {
 					getAllUserSpacesByUser(showCity, tempID, callback, errBack);
 				} else {
-
+					errBack()
 				}
 			} else {
 				errBack(data);

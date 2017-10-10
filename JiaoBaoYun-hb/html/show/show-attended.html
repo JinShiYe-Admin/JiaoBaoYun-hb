@@ -229,8 +229,10 @@
 					showAtt.isRequired = true;
 				}, function(err) {
 					showAtt.isAttended = 0
-					mui.toast(err.RspTxt);
 					showAtt.isRequired = true
+					if(err && err.RspTxt) {
+						mui.toast(err.RspTxt);
+					}
 				})
 				console.log("showAtt.detailReady" + showAtt.detailReady);
 				setListener();
