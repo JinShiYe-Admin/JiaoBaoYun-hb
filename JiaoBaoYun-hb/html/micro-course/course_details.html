@@ -674,6 +674,8 @@
 
 				//点击评论区域
 				mui('.section-comment').on('tap', '.mui-table-view-cell', function(e) {
+					mui.toast(consts.NOOPEN) 
+					return;
 					//console.log('mui-table-view-cell id ' + this.id + " e " + e.target.getAttribute("data-type"));
 					var self = this;
 					if(events.judgeLoginMode(self)) { //判断是否是游客身份登录
@@ -742,7 +744,10 @@
 
 				//评论节次
 				document.getElementById('comment_section').addEventListener('tap', function() {
-					//console.log("comment_section " + sectionId);
+					console.log("comment_section " + sectionId);
+					mui.toast(consts.NOOPEN)
+					return;
+					
 					var self = this;
 					if(events.judgeLoginMode(self)) { //判断是否是游客身份登录
 						document.getElementById("audio").pause();
@@ -777,6 +782,8 @@
 
 				//顶部节次点赞按钮
 				mui('#section_top').on('tap', '.icon-zanzan1', function() {
+					mui.toast(consts.NOOPEN)
+					return;
 					var self = this;
 					if(events.judgeLoginMode(self)) { //判断是否是游客身份登录
 						document.getElementById("audio").pause();
@@ -794,6 +801,7 @@
 
 				//新增评论
 				window.addEventListener('addCommont', function(e) {
+			
 					//console.log("addCommont " + JSON.stringify(e.detail.data));
 					if(e.detail.data.replyId == 0) { //对节次评论
 						sectionComments.unshift({
