@@ -145,6 +145,8 @@ var off_canvas = (function($, mod) {
 	mod.setListener = function() {
 		//点击左上角侧滑图标，打开侧滑菜单；
 		document.querySelector('#user-img').addEventListener('tap', function(e) {
+			mui.toast(consts.NOOPEN);
+			return;
 			if(events.judgeLoginMode()){
 				return;
 			}
