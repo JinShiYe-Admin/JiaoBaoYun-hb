@@ -41,9 +41,6 @@
 			}
 			
 			.mui-pull-top-tips .mui-pull-loading {
-				/*-webkit-backface-visibility: hidden;
-				-webkit-transition-duration: 400ms;
-				transition-duration: 400ms;*/
 				margin: 0;
 			}
 			
@@ -109,16 +106,8 @@
 			mui.init();
 			mui.plusReady(function() {
 				events.preload("show-detail.html", 100);
-				getFocusedPerson(function(isShow) {
-					if(isShow) {
-						attendedItem.extras.isAttended=true;
-					} else {
-						attendedItem.extras.isAttended=false;
-					}
-					console.log("展现主界面加载的items",items);
-					setWebGroup();
-					setTitle(10);
-				})
+				setWebGroup();
+				setTitle(10);
 				setListener();
 			});
 
