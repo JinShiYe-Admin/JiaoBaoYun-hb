@@ -237,20 +237,33 @@ none; margin-top: -15px;">登录</button>
 								atype: '' //节点类型,0省1城市2区县
 							}
 							personal = {
-								utid: '1', //用户表ID
+								utid: '0', //用户表ID
 								uid: '00000000000', //电话号码
-								uname: '测试用户', //姓名,账号,只能修改一次,且只能字母开头,字母与数字,定了就不能修改
+								uname: '游客', //姓名,账号,只能修改一次,且只能字母开头,字母与数字,定了就不能修改
 								uimg: '../../image/utils/default_personalimage.png', //用户头像地址
-								unick: '测试用户', //用户昵称
+								unick: '游客', //用户昵称
 								usex: '', //用户性别
 								utxt: '', //用户签名
 								uarea: model_area, //用户区域,省代码 市代码|省名称 市名称
 								token: '', //用户令牌
-								ispw: '1', //0无密码，1有密码
-								isLogin: '1' //是否登录，0没有登录过，1有登录过
+								ispw: '', //0无密码，1有密码
+								isLogin: '' //是否登录，0没有登录过，1有登录过
 							}
 							window.myStorage.setItem(window.storageKeyName.PERSONALINFO, personal);
-							mui.openWindow('index.html', 'index.html', {});
+							events.defaultLogin(function(data) {
+								if(data.value == 1) {
+									//								events.showWaiting();
+									mui.openWindow('index.html', 'index.html', {});
+								} else if(data.value == 0) { //登录失败
+									var btn = ["确定"];
+									mui.confirm('可能网络出现问题，请检查网络后重试', '', btn, function(e) {
+										if(e.index == 0) {
+											login();
+										}
+									});
+								}
+							});
+
 						} else {
 							mui.toast('请输入正确的账号和密码')
 							return;
