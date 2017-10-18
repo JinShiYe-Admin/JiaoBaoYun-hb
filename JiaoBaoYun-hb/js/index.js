@@ -166,14 +166,14 @@ function setTitle(type) {
 		case 10: //全部
 			title.innerText = "全部";
 			indicator.style.display = "block";
-			indicator.firstElementChild.className = "mui-indicator";
-			indicator.lastElementChild.className = "mui-indicator mui-active";
+			indicator.firstElementChild.className = "mui-indicator mui-active";
+			indicator.lastElementChild.className = "mui-indicator ";
 			break;
 		case 11: //关注
 			title.innerText = "关注";
 			indicator.style.display = "block";
-			indicator.firstElementChild.className = "mui-indicator mui-active";
-			indicator.lastElementChild.className = "mui-indicator";
+			indicator.firstElementChild.className = "mui-indicator ";
+			indicator.lastElementChild.className = "mui-indicator mui-active";
 			break;
 		default:
 			break;

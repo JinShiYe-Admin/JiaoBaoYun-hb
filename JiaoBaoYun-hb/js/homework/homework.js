@@ -52,8 +52,7 @@ var publish;
 var publishIsReady = false;
 var stuWorkReady = false;
 //document.getElementById('tabs-class').style.display = "none";
-mui.init({
-});
+mui.init({});
 //mui的plusready监听
 mui.plusReady(function() {
 	publish = document.getElementById('iconPublish');
@@ -110,13 +109,13 @@ mui.plusReady(function() {
 	//重写返回按钮
 	var _back = mui.back;
 	mui.back = function() {
-		//console.log("作业界面的打开界面id:" + plus.webview.currentWebview().opener().id)
-		if(plus.webview.currentWebview().opener().id == "homework-commented.html") {
+		console.log("作业界面的打开界面id:" + plus.webview.currentWebview().opener().id)
+//		if(plus.webview.currentWebview().opener().id == "homework-commented.html") {
 			if(teacherClasses.length > 0 && studentClasses.length > 0) {
 				if(roles.classList.contains("mui-active")) {
 					mui('#workPage-roles').switch().toggle();
 				}
-			}
+//			}
 			events.hidePagesExIndex();
 		}
 		_back();

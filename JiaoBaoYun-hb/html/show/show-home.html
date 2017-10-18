@@ -41,9 +41,6 @@
 			}
 			
 			.mui-pull-top-tips .mui-pull-loading {
-				/*-webkit-backface-visibility: hidden;
-				-webkit-transition-duration: 400ms;
-				transition-duration: 400ms;*/
 				margin: 0;
 			}
 			
@@ -97,7 +94,7 @@
 				},
 				extras: {}
 			}
-			var items = [attendedItem, allItem];
+			var items = [allItem, attendedItem];
 			mui.init();
 			mui.plusReady(function() {
 				events.preload("show-detail.html", 100);
@@ -109,7 +106,7 @@
 					}
 					console.log("展现主界面加载的items", items);
 					setWebGroup();
-					setTitle(11);
+					setTitle(10);
 				})
 				setListener();
 			});
@@ -119,7 +116,6 @@
 					detailReady = true;
 				})
 				window.addEventListener('focus', function() {
-
 					getFocusedPerson(function(isShow) {
 						console.log("show-home.html获取关注事件" + isShow)
 						events.fireToPageNone("show-attended.html", "showAttended", isShow);
@@ -158,9 +154,9 @@
 						console.log("当前界面index:" + parseInt(obj.index));
 						if(items.length > 1) {
 							if(parseInt(obj.index) == 1) {
-								setTitle(10);
-							} else {
 								setTitle(11);
+							} else {
+								setTitle(10);
 							}
 						}
 					}

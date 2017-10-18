@@ -133,7 +133,7 @@ var commentList = new Vue({
 					//console.log("设置关注返回值：" + JSON.stringify(data));
 					if(data.RspCode == 0) {
 						if(data.RspData.Result) {
-							events.fireToPageNone('show-home2.html', "focus");
+							events.fireToPageNone('show-home.html', "focus");
 							//console.log("改变的值：" + JSON.stringify(showDetail));
 							if(showDetail.IsFocused) {
 								showDetail.IsFocused = 0;
@@ -148,7 +148,7 @@ var commentList = new Vue({
 			} else { //游客
 				events.toggleStorageArray(storageKeyName.SHOWFOCUSEPERSEN, this.showDetail.PublisherId, this.showDetail.IsFocused);
 				this.showDetail.IsFocused = !this.showDetail.IsFocused;
-				events.fireToPageNone('show-home2.html', "focus");
+				events.fireToPageNone('show-home.html', "focus");
 			}
 		},
 		//是否已点赞

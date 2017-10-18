@@ -99,7 +99,11 @@
 						if(!events.getUtid()) {
 							events.toggleStorageArray(storageKeyName.FOCUSECOURSES, course.TabId, course.IsFocus);
 							course.IsFocus = !course.IsFocus;
-							events.fireToPageNone("course-attended.html", "courseAttended", (myStorage.getItem(storageKeyName.FOCUSECOURSES) && myStorage.getItem(storageKeyName.FOCUSECOURSES).length > 0));
+							var storageArr=myStorage.getItem(storageKeyName.FOCUSECOURSES)
+							console.log("本地存储的值：",storageArr)
+							console.log("要传递的值：",storageArr&&storageArr.length>0)
+							events.fireToPageNone("course-attended.html", "courseAttended", (storageArr&& storageArr.length > 0));
+							events.fireToPageNone("course-home.html", "courseAttended", (storageArr && storageArr.length > 0));
 							return;
 						}
 						//所需参数
@@ -117,6 +121,7 @@
 								course.IsFocus = !course.IsFocus;
 								var isAttended = data.RspData.FocusCnt > 0;
 								events.fireToPageNone("course-attended.html", "courseAttended", isAttended);
+								events.fireToPageNone("course-home.html", "courseAttended", isAttended);
 							} else {
 								mui.toast(data.RspTxt);
 							}
@@ -155,6 +160,7 @@
 			var courseInfo = {
 				type: 1, //类型 1为全部 0为关注
 				pageIndex: 1, //页码
+				pageSize:10,
 				totalPage: 0 //总页码
 			}
 			mui.init({
@@ -226,6 +232,7 @@
 
 			function setListener() {
 				window.addEventListener('t-focus', function(e) {
+					console.log("course-all.html的关注事件监听")
 					courseInfo.pageIndex = 1;
 					course_list.getData(courseInfo, function(data) {
 						addData(data);

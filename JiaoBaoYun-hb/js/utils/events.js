@@ -14,11 +14,11 @@ window.onerror = function(errorMessage, scriptURI, lineNumber, columnNumber, err
 		case "firstPage.html": //初始页
 		case "index.html": //主页
 		case "cloud_home.html": //云盘主页
-		case "sciedu-home.html": //科教主页
-		case "show-home2.html": //展现主页
+		case "sciedu_home.html": //科教主页
+		case "show-home.html": //展现主页
 		case "show-attended.html": //展现关注
 		case "show-all.html": //展现全部
-		case "course-home2.html": //微课主页
+		case "course-home.html": //微课主页
 		case "course-attended.html": //课程关注
 		case "course-all.html": //课程全部
 		case "storage_transport.html": //预加载-传输列表页
@@ -441,13 +441,13 @@ var events = (function(mod) {
 		events.fireToPageNone('../../index/mine.html', 'infoChanged');
 		events.fireToPageNone('../cloud/cloud_home.html', 'infoChanged');
 		mui.fire(plus.webview.getWebviewById("index.html"), 'infoChanged');
-		//		events.fireToPageNone("course-all.html", "infoChanged");
-		//		events.fireToPageNone("course-attended.html", "infoChanged");
-		//		events.fireToPageNone("show-all.html", "infoChanged");
-		//		events.fireToPageNone("show-attended.html", "infoChanged");                                                                                  
-		events.fireToPageNone("show-home2.html", "infoChanged");
-		events.fireToPageNone("course-home2.html", "infoChanged");
-		events.fireToPageNone("sciedu-home.html", "infoChanged");
+		events.fireToPageNone("course-all.html", "infoChanged");
+		events.fireToPageNone("course-attended.html", "infoChanged");
+		events.fireToPageNone("show-all.html", "infoChanged");
+		events.fireToPageNone("show-attended.html", "infoChanged");
+		events.fireToPageNone("show-home.html", "infoChanged");
+		events.fireToPageNone("course-home.html", "infoChanged");
+		events.fireToPageNone("sciedu_home.html", "infoChanged");
 	}
 	mod.shortForString = function(str, len) {
 		if(!str) {
@@ -1243,9 +1243,9 @@ var events = (function(mod) {
 				case "index.html":
 				case "cloud_home.html": //云盘首页
 				case "sciedu_home.html": //科教首页
-				case "show-home2.html": //展现首页
+				case "show-home.html": //展现首页
 				case "mine.html": //我的，侧边栏
-				case "course-home2.html": //微课首页
+				case "course-home.html": //微课首页
 				case plus.webview.currentWebview().id:
 					break;
 				case "course_details.html": //微课节次详情和列表

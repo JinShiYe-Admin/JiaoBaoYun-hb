@@ -1,4 +1,4 @@
-//此js用于保存本地存储时，用到的key值
+﻿﻿//此js用于保存本地存储时，用到的key值
 
 var storageKeyName = (function(mod) {
 
@@ -7,7 +7,7 @@ var storageKeyName = (function(mod) {
 	console.log = function(hint, object) {
 		if(mod.key === 3) {
 			var argus = hint;
-			if(object) {
+			if(typeof(object)!=='undefined') {
 				argus = hint + JSON.stringify(object);
 			}
 			exLog.apply(this, [argus]);
@@ -18,10 +18,10 @@ var storageKeyName = (function(mod) {
 			//---开发---start---
 			mod.MAINEDU = 'http://192.168.1.44:8511/'; //科教图片url
 			mod.MAINURL = 'http://192.168.1.44:8511/api/CloudApi/'; //主url
-			mod.MAINJIAOXIAOURL = 'http://192.168.1.200:8081/JiaoBaoCloudService/'; //家校圈url
+			mod.MAINJIAOXIAOURL = 'http://192.168.1.113:8081/JiaoBaoCloudService/'; //家校圈url
 			mod.MAINHOMEWORKURL = 'http://192.168.1.44:8513/'; //作业主url
-			mod.MAINQIUZHI = 'http://192.168.1.200:8081/JiaoBaoCloudService/'; //求知主url
-			mod.MAINMICROCLASS = 'http://192.168.1.200:8081/JiaoBaoCloudService/'; //微课主url
+			mod.MAINQIUZHI = 'http://192.168.1.113:8081/JiaoBaoCloudService/'; //求知主url
+			mod.MAINMICROCLASS = 'http://192.168.1.113:8081/JiaoBaoCloudService/'; //微课主url
 			//---开发---end---
 			//---七牛空间和接口---开发---start---
 			mod.QNPB = 'http://qn-kfpb.jiaobaowang.net/'; //公开空间域名
@@ -40,6 +40,7 @@ var storageKeyName = (function(mod) {
 			mod.MAINHOMEWORKURL = 'http://192.168.1.178:8088/'; //作业主url
 			mod.MAINQIUZHI = 'http://192.168.1.178:8080/JiaoBaoCloudService/'; //求知主url
 			mod.MAINMICROCLASS = 'http://192.168.1.178:8080//JiaoBaoCloudService/'; //微课主url
+			
 			//---测试---end---
 
 			//---七牛空间和接口---测试---start---
@@ -89,21 +90,21 @@ var storageKeyName = (function(mod) {
 			break;
 		case 4: //外网--教宝云
 			//---外网---start---
-			mod.MAINEDU = 'http://114.215.222.186:8002/'; //科教图片url
-			mod.MAINURL = 'http://114.215.222.186:8002/api/CloudApi/'; //主url
-			mod.MAINJIAOXIAOURL = 'http://114.215.222.194:8080/JiaoBaoCloudService/'; //家校圈url
-			mod.MAINHOMEWORKURL = 'http://114.215.222.186:8001/'; //作业主url
-			mod.MAINQIUZHI = 'http://114.215.222.194:8080/JiaoBaoCloudService/'; //求知主url
-			mod.MAINMICROCLASS = 'http://114.215.222.194:8080/JiaoBaoCloudService/'; //微课主url
+			mod.MAINEDU = 'https://jbyc.jiaobaowang.net:8442/'; //科教图片url
+			mod.MAINURL = 'https://jbyc.jiaobaowang.net:8442/api/CloudApi/'; //主url
+			mod.MAINJIAOXIAOURL = 'https://jbyj.jiaobaowang.net/JiaoBaoCloudService/'; //家校圈url
+			mod.MAINHOMEWORKURL = 'https://jbyc.jiaobaowang.net:8441/'; //作业主url
+			mod.MAINQIUZHI = 'https://jbyj.jiaobaowang.net/JiaoBaoCloudService/'; //求知主url
+			mod.MAINMICROCLASS = 'https://jbyj.jiaobaowang.net/JiaoBaoCloudService/'; //微课主url
 			//---外网---end---
 
 			//---七牛空间和接口---测试---start---
 			mod.QNPB = 'http://qn-cspb.jiaobaowang.net/'; //公开空间域名
-			mod.QNGETUPLOADTOKEN = 'http://114.215.222.186:8005/Api/QiNiu/GetUpLoadToKen';
-			mod.QNGETUPTOKENHEADIMGE = 'http://114.215.222.186:8005/Api/QiNiu/GetUpLoadToKen'; //获取上传个人头像，群头像，资料头像到七牛的token的url
-			mod.QNGETUPTOKENFILE = 'http://114.215.222.186:8005/Api/QiNiu/GetUpLoadToKen'; //获取上传文件（云存储）到七牛的token的url
-			mod.QNGETDOWNTOKENFILE = 'http://114.215.222.186:8005/Api/QiNiu/GetAccess'; //获取下载文件（云存储）的token的url，url+七牛文件url
-			mod.QNGETTOKENDELETE = 'http://114.215.222.186:8005/Api/QiNiu/Delete'; //获取批量（或者一个）删除七牛文件的token的url
+			mod.QNGETUPLOADTOKEN = 'https://jbyc.jiaobaowang.net:8445/Api/QiNiu/GetUpLoadToKen';
+			mod.QNGETUPTOKENHEADIMGE = 'https://jbyc.jiaobaowang.net:8445/Api/QiNiu/GetUpLoadToKen'; //获取上传个人头像，群头像，资料头像到七牛的token的url
+			mod.QNGETUPTOKENFILE = 'https://jbyc.jiaobaowang.net:8445/Api/QiNiu/GetUpLoadToKen'; //获取上传文件（云存储）到七牛的token的url
+			mod.QNGETDOWNTOKENFILE = 'https://jbyc.jiaobaowang.net:8445/Api/QiNiu/GetAccess'; //获取下载文件（云存储）的token的url，url+七牛文件url
+			mod.QNGETTOKENDELETE = 'https://jbyc.jiaobaowang.net:8445/Api/QiNiu/Delete'; //获取批量（或者一个）删除七牛文件的token的url
 			//---七牛空间和接口---测试---end---
 			break;
 		default:
@@ -127,6 +128,7 @@ var storageKeyName = (function(mod) {
 	mod.ISSHOWDETAILREADY = "isDetailReady"; //预加载是否完成
 	mod.VIEWCANCLICK = 'viewCanClick';
 	mod.SCIEDUREADED='sciedu-readed';//科教已读
+	mod.CUSTOMREQUESTTIME='customer-request-time';
 
 
 	mod.MAINHOMEWORKURLTEACHER = mod.MAINHOMEWORKURL + 'TeacherService.svc/'; //老师作业url

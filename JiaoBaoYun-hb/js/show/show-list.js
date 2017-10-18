@@ -78,7 +78,7 @@ var show_list = (function(mod) {
 		//21.通过用户ID获取用户资料
 		postDataPro_PostUinf(tempData, wd, function(data1) {
 			//			wd.close();
-			//console.log('获取个人资料success:RspCode:' + data1.RspCode + ',RspData:' + JSON.stringify(data1.RspData) + ',RspTxt:' + data1.RspTxt);
+			console.log('获取个人资料success:RspCode:' + data1.RspCode + ',RspData:' + JSON.stringify(data1.RspData) + ',RspTxt:' + data1.RspTxt);
 			if(data1.RspCode == 0) {
 				for(var item in tempRspData) {
 					//当前循环的model
@@ -127,7 +127,7 @@ var show_list = (function(mod) {
 				if(tempID.length > 0) {
 					getAllUserSpacesByUser(showCity, tempID, callback, errBack);
 				} else {
-
+					errBack()
 				}
 			} else {
 				errBack(data);

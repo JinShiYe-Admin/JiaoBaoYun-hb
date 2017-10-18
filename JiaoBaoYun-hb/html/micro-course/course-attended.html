@@ -20,6 +20,14 @@
 			.mui-slider-indicator .mui-indicator {
 				margin: 1px 2px;
 			}
+			
+			.padding-top0 {
+				padding-top: 0;
+			}
+			
+			.padding-top20 {
+				padding-top: 20%;
+			}
 		</style>
 	</head>
 
@@ -27,10 +35,18 @@
 		<!--下拉刷新容器-->
 		<div id="course-att" class="mui-content mui-scroll-wrapper" v-bind:class="{'background-white':!isAttended}">
 			<div class="mui-scroll">
-				<div v-if="isAttended===0" class="" style="min-height:300px;text-align: center;padding-top: 20%;">
+				<template v-if="listData.length===0||!isAttended">
+					<div class="" style="min-height:300px;text-align: center;" v-bind:class="[isLoading?'padding-top0':'padding-top20']">
+						<img v-if="!isLoading" src="../../image/mine/invite_none_0.png" width="50%" height="auto">
+						<p style="margin: auto 0;padding: 10px;">
+							<span v-if="isLoading" class="mui-spinner" style="vertical-align: center;height: 15px;width: 15px;margin-bottom: -4px;"></span> {{isLoading?'数据加载中~~':'没有微课内容~~'}}
+						</p>
+					</div>
+				</template>
+				<!--<div v-if="isAttended===0" class="" style="min-height:300px;text-align: center;padding-top: 20%;">
 					<img src="../../image/mine/invite_none_0.png" width="50%" height="auto">
 					<p style="margin: auto 0;padding: 10px;">暂无关注的课程~~</p>
-				</div>
+				</div>-->
 				<!--数据列表-->
 				<template v-else>
 					<ul v-show="listData.length>0" class="mui-table-view">
@@ -58,7 +74,8 @@
 				el: "#course-att",
 				data: {
 					listData: [],
-					isAttended: 0
+					isAttended: 0,
+					isLoading: true
 				},
 				watch: {
 					isAttended: function(val, old) {
@@ -228,9 +245,20 @@
 				}
 			}
 			mui.plusReady(function() {
-				//				mui("#course-att").pullRefresh().disablePullupToRefresh();
-				courseAtt.isAttended = Number(plus.webview.currentWebview().isAttended);
-				console.log("主界面传过来的值：", courseAtt.isAttended);
+				courseInfo.pageIndex = 1;
+				course_list.getData(courseInfo, function(data) {
+					courseAtt.isLoading = false;
+					console.log("#####关注的课程的刷新######");
+					courseAtt.isAttended = 1;
+					addData(data, 1);
+				}, function(err) {
+					console.log("获取的错误信息：" + err)
+					courseAtt.isLoading = false;
+					courseAtt.isAttended = 0;
+					if(err && err.RspTxt) {
+						mui.toast(err.RspTxt);
+					}
+				})
 				setListener();
 			})
 
@@ -249,7 +277,7 @@
 				})
 				window.addEventListener("courseAttended", function(e) {
 					mui('#course-att').pullRefresh().refresh(true);
-					console.log("传递的事件：", e.detail);
+					console.log("courseAttended传递的事件：", e.detail);
 					var oldValue = courseAtt.isAttended;
 					if(e.detail.data == null) {
 						courseAtt.isAttended = 0;

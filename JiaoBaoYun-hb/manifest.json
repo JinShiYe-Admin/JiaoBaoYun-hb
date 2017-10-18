@@ -14,7 +14,7 @@
 	"icons": {
 		"72": "icon.png"
 	},
-	"launch_path": "html/index/tempLogin.html",/*应用的入口页面，默认为根目录下的index.html；支持网络地址，必须以http://或https://开头*/
+	"launch_path": "html/index/index.html",/*应用的入口页面，默认为根目录下的index.html；支持网络地址，必须以http://或https://开头*/
 	"developer": {
 		"name": "",/*开发者名称*/
 		"email": "",/*开发者邮箱地址*/
@@ -4921,7 +4921,8 @@
 					"js/utils/RSAEncrypt.js",
 					"fonts/fangzheng.ttf",
 					"js/libs/crypto-js/crypto-js.js",
-					"js/publicProtocol.js"
+					"js/publicProtocol.js",
+					"js/utils/vue.js"
 				],
 				"refer": [
 					"html/micro-course/course-search.html"
@@ -5048,7 +5049,8 @@
 					"image/utils/playvideo.png",
 					"image/mine/invite_none_0.png",
 					"js/utils/vue.min.js",
-					"image/utils/default_load_2.gif"
+					"image/utils/default_load_2.gif",
+					"js/libs/jquery.lazyload.min.js"
 				],
 				"refer": [
 					"html/quan/space-detail.html",
@@ -5656,6 +5658,31 @@
 					"js/micro-course/course-list.js",
 					"css/utils/common.css",
 					"js/libs/crypto-js/crypto-js.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/index/tempLogin.html": {
+				"resources": [
+					"js/storageKeyName.js",
+					"fonts/mui.ttf",
+					"js/utils/events.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"js/utils/app-update.js",
+					"css/utils/common.css",
+					"js/libs/myStorage/myStorage.js",
+					"js/publicProtocol.js",
+					"js/libs/jquery.js",
+					"js/mui.min.js",
+					"fonts/fangzheng.ttf",
+					"js/libs/RSA/BigInt.js",
+					"js/utils/sortSign.js",
+					"css/mui.min.css",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js"
 				],
 				"refer": [],
 				"priority": 0

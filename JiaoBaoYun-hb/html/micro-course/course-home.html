@@ -59,7 +59,7 @@
 	</head>
 
 	<body>
-		<div class="mui-content">
+		<div class="mui-content" id="course-home">
 			<div id="slider" class="mui-slider mui-fullscreen">
 				<div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
 					<div class="mui-scroll">
@@ -73,6 +73,7 @@
 			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/utils/vue.js"></script>
 		<script src="../../js/utils/webviewGroup.js"></script>
 		<script src="../../js/utils/events.js"></script>
 		<script src="../../js/publicProtocol.js"></script>
@@ -98,20 +99,21 @@
 				},
 				extras: {}
 			}
-			var items = [attendedItem, allItem];
+			var items = [allItem,attendedItem];
 			mui.init();
+			var courseHome = new Vue({
+				el: '#course-home',
+				data: {
+					isAttended: 0,
+					canReload: false
+				},
+				watch: {
+				}
+			})
 			mui.plusReady(function() {
 				mui.fire(plus.webview.getLaunchWebview(), "indexReady");
-				getAttendedClasses(function(isShow) {
-					if(isShow) {
-						attendedItem.extras.isAttended = 1;
-					} else {
-						attendedItem.extras.isAttended = 0;
-					}
-					console.log("展现主界面加载的items", items);
-					setWebGroup();
-					setTitle(11);
-				})
+				setWebGroup();
+				setTitle(10);
 				setListener();
 			});
 
@@ -121,24 +123,34 @@
 				})
 				window.addEventListener('focus', function() {
 					getAttendedClasses(function(isShow) {
-						console.log("show-home.html获取关注事件" + isShow)
+						console.log("getAttendedClasses获取的值：",isShow);
+						attendedItem.extras.isAttended = isShow;
+						courseHome.canReload = true;
+						courseHome.isAttended = isShow;
+						console.log("course-home.html获取关注事件" + isShow)
 						events.fireToPageNone("course-attended.html", "courseAttended", isShow);
-						console.log("获取的加载网页：" + items.length, items);
 					})
+				})
+				window.addEventListener('courseAttended', function(e) {
+					console.log("######course-home.html传过来的值："+e.detail.data);
+					var isShow = parseInt(e.detail.data);
+					attendedItem.extras.isAttended = isShow;
+					courseHome.isAttended = isShow;
+//					events.fireToPageNone("course-attended.html", "courseAttended", isShow);
 				})
 			}
 
 			function setWebGroup() {
-				console.log("获取的iten:" + items.length, items)
+				console.log("获取的item:" + items.length, items)
 				group = new webviewGroup("course-home.html", {
 					items: items,
 					onChange: function(obj) {
 						console.log("当前界面index:" + parseInt(obj.index));
 						if(items.length > 1) {
-							if(parseInt(obj.index) == 1) {
-								setTitle(10);
-							} else {
+							if(parseInt(obj.index) === 1) {
 								setTitle(11);
+							} else {
+								setTitle(10);
 							}
 						}
 					}
