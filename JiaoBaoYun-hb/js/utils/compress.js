@@ -6,7 +6,8 @@ var compress = (function(mod) {
 		var options = {
 			src: picPath, //压缩转换原始图片的路径
 			dst: getSavePath(picPath), //压缩转换目标图片的路径
-			overwrite: true
+			overwrite: true,
+			format:'jpg'
 		}
 		//获取图片类型
 		getPicType(picPath, function(picType) {
@@ -104,7 +105,8 @@ var compress = (function(mod) {
 	var getSavePath = function(picPath) {
 		var picPaths = picPath.split('/');
 		//console.log("路径：" + picPaths[picPaths.length - 1])
-		var compressPath = "_doc/savepath/" + picPaths[picPaths.length - 1]
+		var picName=picPaths[picPaths.length - 1];
+		var compressPath = "_doc/savepath/" + picName.split(".")[0]+".jpg";
 		//		picPaths.splice(picPaths.length - 1, 0, "savePath");
 		return compressPath;
 	}
