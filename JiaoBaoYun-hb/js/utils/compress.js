@@ -6,7 +6,7 @@ var compress = (function(mod) {
 		var options = {
 			src: picPath, //压缩转换原始图片的路径
 			dst: getSavePath(picPath), //压缩转换目标图片的路径
-			overwrite: true
+			overwrite: true,
 			format:'jpg'
 		}
 		//获取图片类型
