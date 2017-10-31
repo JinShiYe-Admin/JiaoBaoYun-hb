@@ -101,6 +101,9 @@ var compress = (function(mod) {
 			}
 			callback(picType);
 		}
+		img.onerror=function(){
+			callback(false);
+		}
 	}
 	var getSavePath = function(picPath) {
 		var picPaths = picPath.split('/');
