@@ -47,11 +47,11 @@
 				});
 
 				//如果之前登录成功，则重新获取token，获取个人信息，则为登录成功
-//				var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
-				//console.log('person===' + JSON.stringify(personal));
-//				if(!personal) { //没有账号 设置游客账号信息，并保存到本地
-//					defalutPerson();
-//				}
+				var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
+				console.log('person===' + JSON.stringify(personal));
+				if(!personal) { //没有账号 设置游客账号信息，并保存到本地
+					defalutPerson();
+				}
 				document.addEventListener("netchange", wainshow, false);
 				window.addEventListener("indexReady", function() {
 					indexReady = true;
@@ -68,27 +68,27 @@
 						//						}
 						//console.log('网络连接拉！！！！');
 						//判断上次有没有登录，如果登录，就不执行登录协议
-//						if(loginFlag == 0) {
-//							loginFlag = 1;
-//							events.defaultLogin(function(data) {
-//								if(data.value == 1) {
-//									events.preload('index.html');
-//									events.showWaiting();
-//									showIndex();
-//								} else if(data.value == -1) { //登录失败,用游客登录
-//									defalutPerson();
-//									events.defaultLogin(function(data) {
-//										if(data.value == 1) {
-//											events.preload('index.html');
-//											events.showWaiting();
-//											showIndex();
-//										} else if(data.value == -1) { //登录失败
-//
-//										}
-//									});
-//								}
-//							});
-//						}
+						if(loginFlag == 0) {
+							loginFlag = 1;
+							events.defaultLogin(function(data) {
+								if(data.value == 1) {
+									events.preload('index.html');
+									events.showWaiting();
+									showIndex();
+								} else if(data.value == -1) { //登录失败,用游客登录
+									defalutPerson();
+									events.defaultLogin(function(data) {
+										if(data.value == 1) {
+											events.preload('index.html');
+											events.showWaiting();
+											showIndex();
+										} else if(data.value == -1) { //登录失败
+
+										}
+									});
+								}
+							});
+						}
 					}
 				}
 				//安卓的连续点击两次退出程序
@@ -109,7 +109,7 @@
 				//判断是否需要更新
 				setTimeout(appUpdate.updateApp, 5000);
 				//默认自动登录
-//				login();
+				login();
 			});
 
 			// 判断启动方式
