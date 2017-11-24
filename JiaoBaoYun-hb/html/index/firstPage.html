@@ -115,37 +115,41 @@
 			// 判断启动方式
 			function checkArguments() {
 				var args = plus.runtime.arguments;
-//				alert('arguments:' + args);
-//				var args = 'jsyweishixuetang://?token=21b1beed-3cba-41ee-874d-e59be578dcd8&channel=sdhjy';
-				console.log('args:'+args);
+//				alert('arguments:' + args + typeof(args));
+				//				var args = 'jsyweishixuetang://?token=21b1beed-3cba-41ee-874d-e59be578dcd8&channel=sdhjy';
+				console.log('args:' + args);
+
 				if(args) {
+					if(JSON.parse(args).profile) {
+						return
+					}
 					// 处理args参数，如打开新页面等
 					//在？的地方，转为数组，
 					var tempArr = args.split('?');
-					if (tempArr.length>0) {
+					if(tempArr.length > 0) {
 						var tempArr1 = tempArr[1].split('&');
 						var tempModel = {};
-						for (var i = 0; i < tempArr1.length; i++) {
-							if (i == 0) {
+						for(var i = 0; i < tempArr1.length; i++) {
+							if(i == 0) {
 								tempModel.token = tempArr1[i].split("=")[1];
-							} else{
+							} else {
 								tempModel.channel = tempArr1[i].split("=")[1];
 							}
 						}
-						console.log('tempModel:'+JSON.stringify(tempModel));
+						console.log('tempModel:' + JSON.stringify(tempModel));
 						var tempData = {
-							cptoken:tempModel.token
+							cptoken: tempModel.token
 						}
-						postDataPro_getPersonInfo(tempData,function(data){
-							if (data.RspCode == 0) {
+						postDataPro_getPersonInfo(tempData, function(data) {
+							if(data.RspCode == 0) {
 								data.RspData.token = tempModel.token;
 								data.RspData.channel = tempModel.channel;
 								window.myStorage.setItem(window.storageKeyName.PERSONALINFO, data.RspData);
 							}
 						});
 					}
-				}else{
-					
+				} else {
+
 				}
 			}
 
