@@ -855,10 +855,10 @@
 					userId: myStorage.getItem(storageKeyName.PERSONALINFO).utid, //用户ID,登录用户
 					courseId: main.data.TabId, //课程ID
 					pageIndex: index, //当前页数
-					pageSize: 5 //每页记录数,传入0，获取总记录数
+					pageSize: 1000 //每页记录数,传入0，获取总记录数
 				};
 				postDataMCPro_getAllSectionsByCourse(comData, wd, function(data) {
-					//console.log('3 获取课程的节次 ' + JSON.stringify(data));
+					console.log('3 获取课程的节次 ' + JSON.stringify(data));
 					if(data.RspCode == 0) {
 						pageIndex = index;
 						if(data.RspData.Data.length != 0) {

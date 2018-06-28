@@ -67,7 +67,8 @@
 			"html/quan/zone_main.html",
 			"html/quan/studentdynamic_main.html",
 			"html/cloud/storage_main.html",
-			"html/quan/class_space.html"
+			"html/quan/class_space.html",
+			"html/cloud/app_notes_main.html"
 		]
 	},
 	"html/quan/classSpace-persons.html": {

@@ -181,7 +181,7 @@ var CloudFileUtil = (function($, mod) {
 					break;
 			}
 
-			//console.log("参数数据 param " + JSON.stringify(param));
+			console.log("参数数据 param " + JSON.stringify(param));
 			params.push(param);
 		}
 		configure.options = {
@@ -189,7 +189,7 @@ var CloudFileUtil = (function($, mod) {
 			Param: encryptByDES(desKey, JSON.stringify(params))
 		}
 
-		//console.log("参数数据：" + JSON.stringify(configure.options))
+		console.log("参数数据：" + JSON.stringify(configure.options))
 		//获取token
 		mod.getQNUpTokenWithManage(window.storageKeyName.QNGETUPLOADTOKEN, configure.options, function(data) {
 			callBack({
