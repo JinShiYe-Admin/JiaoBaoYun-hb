@@ -798,7 +798,9 @@
       "css/utils/common.css",
       "js/libs/crypto-js/crypto-js.js"
     ],
-    "refer": []
+    "refer": [
+      "html/micro-course/course_section.html"
+    ]
   },
   "html/check/area-choose.html": {
     "resources": [
@@ -969,5 +971,10 @@
       "js/utils/RSAEncrypt.js"
     ],
     "refer": []
+  },
+  "html/micro-course/course_section.html": {
+    "refer": [
+      "html/register/login.html"
+    ]
   }
 }

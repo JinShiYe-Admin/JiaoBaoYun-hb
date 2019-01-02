@@ -686,7 +686,11 @@
 
 				//评论节次
 				document.getElementById('comment_section').addEventListener('tap', function() {
+					mui.toast(consts.NOOPEN);
+					return;
 					//console.log("comment_section " + sectionId);
+					mui.toast(consts.NOOPEN);
+					return;
 					var self = this;
 					if(events.judgeLoginMode(self)) { //判断是否是游客身份登录
 						document.getElementById("audio").pause();
@@ -721,6 +725,8 @@
 
 				//顶部节次点赞按钮
 				mui('#section_top').on('tap', '.icon-zanzan1', function() {
+					mui.toast(consts.NOOPEN);
+					return;
 					var self = this;
 					if(events.judgeLoginMode(self)) { //判断是否是游客身份登录
 						document.getElementById("audio").pause();

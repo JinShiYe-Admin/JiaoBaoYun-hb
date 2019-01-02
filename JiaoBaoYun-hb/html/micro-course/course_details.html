@@ -468,7 +468,7 @@
 				<audio id="audio" preload="none"></audio>
 			</div>
 			<div id="video_area" class="video-area">
-				<video id="video" controls="controls" webkit-playsinline playsinline preload="none" poster="null">
+				<video id="video" controls="controls">
 					您的浏览器不支持video标签
 				</video>
 			</div>
@@ -674,7 +674,7 @@
 
 				//点击评论区域
 				mui('.section-comment').on('tap', '.mui-table-view-cell', function(e) {
-					mui.toast(consts.NOOPEN) 
+					mui.toast(consts.NOOPEN);
 					return;
 					//console.log('mui-table-view-cell id ' + this.id + " e " + e.target.getAttribute("data-type"));
 					var self = this;
@@ -745,7 +745,7 @@
 				//评论节次
 				document.getElementById('comment_section').addEventListener('tap', function() {
 					console.log("comment_section " + sectionId);
-					mui.toast(consts.NOOPEN)
+					mui.toast(consts.NOOPEN);
 					return;
 					
 					var self = this;
@@ -782,7 +782,7 @@
 
 				//顶部节次点赞按钮
 				mui('#section_top').on('tap', '.icon-zanzan1', function() {
-					mui.toast(consts.NOOPEN)
+					mui.toast(consts.NOOPEN);
 					return;
 					var self = this;
 					if(events.judgeLoginMode(self)) { //判断是否是游客身份登录
@@ -921,7 +921,7 @@
 						ele.className = ele.className.replace(" section-show", "");
 						var ele_show = document.getElementById("section_" + secId)
 						ele_show.className = ele_show.className + " section-show";
-						mui("#scroll_wrapper").scroll().scrollTo(0, 0, 0);
+						// mui("#scroll_wrapper").scroll().scrollTo(0, 0, 0);
 						sectionComments = data.RspData.Data;
 						if(secId != sectionId) { //显示新的课程详细
 							showTopData(data.RspData, wd);
